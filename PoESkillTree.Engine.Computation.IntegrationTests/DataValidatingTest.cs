@@ -1,0 +1,36 @@
+﻿using System.Threading.Tasks;
+using NUnit.Framework;
+using PoESkillTree.Engine.Computation.Parsing.Referencing;
+
+namespace PoESkillTree.Engine.Computation.IntegrationTests
+{
+    [TestFixture]
+    public class DataValidatingTest : CompositionRootTestBase
+    {
+        [Test]
+        public async Task ReferencesAreValid()
+        {
+            var parsingData = await ParsingDataTask;
+            var referencedMatchers = parsingData.ReferencedMatchers;
+            var statMatchers = parsingData.StatMatchers;
+
+            Assert.DoesNotThrow(() => ReferenceValidator.Validate(referencedMatchers, statMatchers));
+        }
+
+        [Test]
+        public async Task ReferencedMatchersHaveCorrectlyTypedData()
+        {
+            var parsingData = await ParsingDataTask;
+            var referencedMatchers = parsingData.ReferencedMatchers;
+
+            foreach (var matchers in referencedMatchers)
+            {
+                var type = matchers.MatchType;
+                foreach (var data in matchers.Data)
+                {
+                    Assert.IsInstanceOf(type, data.Match);
+                }
+            }
+        }
+    }
+}
