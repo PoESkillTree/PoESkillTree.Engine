@@ -64,8 +64,9 @@ namespace PoESkillTree.Engine.Computation.Console
                     case "add given":
                         await AddGivenStatsAsync();
                         break;
-                    case "update SkillTreeStatLines":
-                        TestDataUpdater.UpdateSkillTreeStatLines();
+                    case var s when s.StartsWith("update SkillTreeStatLines "):
+                        TestDataUpdater.UpdateSkillTreeStatLines(
+                            statLine.Substring("update SkillTreeStatLines ".Length));
                         break;
                     case "update ParseableBaseItems":
                         TestDataUpdater.UpdateParseableBaseItems(await _compositionRoot.GameData.BaseItems);

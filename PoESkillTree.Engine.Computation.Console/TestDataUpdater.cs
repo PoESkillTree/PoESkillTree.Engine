@@ -13,17 +13,19 @@ namespace PoESkillTree.Engine.Computation.Console
 {
     internal static class TestDataUpdater
     {
-        public static void UpdateSkillTreeStatLines()
+        /// <param name="skillTreeTxtPath">Path to the SkillTree.txt in your PoESkillTree repo or installation.
+        /// E.g. "C:/.../PoESkillTree/WPFSKillTree/bin/Debug/net462/Data/SkillTree.txt"
+        /// </param>
+        public static void UpdateSkillTreeStatLines(string skillTreeTxtPath)
         {
-            // From PoESkillTree.Engine.Computation.Console/bin/Debug/netcoreapp2.2/ to the same folder under WPFSKillTree
-            var treePath = "../../../../WPFSKillTree/bin/Debug/net462/Data/SkillTree.txt";
-            var json = JObject.Parse(File.ReadAllText(treePath));
+            var json = JObject.Parse(File.ReadAllText(skillTreeTxtPath));
             var nodes = json.Value<JObject>("nodes");
             var statLines = nodes.PropertyValues()
                 .OrderBy(t => t.Value<int>("id")) // Order for more useful diffs
                 .SelectMany(t => t["sd"].Values<string>())
                 .Select(s => s.Replace("\n", " "));
 
+            // Assuming running in PoESkillTree.Engine.Computation.Console/bin/Debug/netcoreapp2.2/
             var statLinesPath = "../../../../PoESkillTree.Engine.GameModel/Data/SkillTreeStatLines.txt";
             File.WriteAllLines(statLinesPath, statLines);
         }
