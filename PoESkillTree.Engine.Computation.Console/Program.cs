@@ -75,6 +75,9 @@ namespace PoESkillTree.Engine.Computation.Console
                         TestDataUpdater.UpdateItemAffixes(await _compositionRoot.GameData.Modifiers,
                             await _compositionRoot.GameData.StatTranslators);
                         break;
+                    case "update RePoE":
+                        await new RePoEUpdater().UpdateAsync();
+                        break;
                     default:
                         await HandleParseCommandAsync(statLine);
                         break;

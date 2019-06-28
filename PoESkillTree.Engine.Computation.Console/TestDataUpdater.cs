@@ -25,9 +25,8 @@ namespace PoESkillTree.Engine.Computation.Console
                 .SelectMany(t => t["sd"].Values<string>())
                 .Select(s => s.Replace("\n", " "));
 
-            // Assuming running in PoESkillTree.Engine.Computation.Console/bin/Debug/netcoreapp2.2/
-            var statLinesPath = "../../../../PoESkillTree.Engine.GameModel/Data/SkillTreeStatLines.txt";
-            File.WriteAllLines(statLinesPath, statLines);
+            var path = GetAbsoluteTargetPath("PoESkillTree.Engine.GameModel/Data/SkillTreeStatLines.txt");
+            File.WriteAllLines(path, statLines);
         }
 
         public static void UpdateParseableBaseItems(BaseItemDefinitions baseItemDefinitions)
@@ -40,8 +39,8 @@ namespace PoESkillTree.Engine.Computation.Console
                             || d.BuffStats.Any(s => seenBuffs.Add(s.StatId)))
                 .Select(d => d.MetadataId);
 
-            var parseablePath = "../../../../PoESkillTree.Engine.Computation.IntegrationTests/Data/ParseableBaseItems.txt";
-            File.WriteAllLines(parseablePath, baseIds);
+            var path = GetAbsoluteTargetPath("PoESkillTree.Engine.Computation.IntegrationTests/Data/ParseableBaseItems.txt");
+            File.WriteAllLines(path, baseIds);
         }
 
         public static void UpdateItemAffixes(ModifierDefinitions modifierDefinitions, StatTranslators statTranslators)
@@ -63,8 +62,12 @@ namespace PoESkillTree.Engine.Computation.Console
                 .OrderBy(t => t.Item2)
                 .Select(t => t.s);
 
-            var path = "../../../../PoESkillTree.Engine.GameModel/Data/ItemAffixes.txt";
+            var path = GetAbsoluteTargetPath("PoESkillTree.Engine.GameModel/Data/ItemAffixes.txt");
             File.WriteAllLines(path, affixLines);
         }
+
+        public static string GetAbsoluteTargetPath(string repositoryRelativeTargetPath)
+            => Regex.Replace(Directory.GetCurrentDirectory(),
+                @"PoESkillTree\.Engine\.Computation\.Console(/|\\).*", repositoryRelativeTargetPath);
     }
 }
