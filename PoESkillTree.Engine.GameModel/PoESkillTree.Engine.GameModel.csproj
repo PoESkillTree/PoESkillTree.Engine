@@ -23,6 +23,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Data\RePoE\**" />
     <EmbeddedResource Include="Data\custom_stat_translations.json" />
+    <EmbeddedResource Include="Data\Uniques.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PoESkillTree.Engine.Utils\PoESkillTree.Engine.Utils.csproj" />

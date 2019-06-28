@@ -16,7 +16,8 @@ namespace PoESkillTree.Engine.Computation.Console
         /// <param name="skillTreeTxtPath">Path to the SkillTree.txt in your PoESkillTree repo or installation.
         /// E.g. "C:/.../PoESkillTree/WPFSKillTree/bin/Debug/net462/Data/SkillTree.txt"
         /// </param>
-        public static void UpdateSkillTreeStatLines(string skillTreeTxtPath)
+        /// <param name="baseTargetPath"></param>
+        public static void UpdateSkillTreeStatLines(string skillTreeTxtPath, string baseTargetPath)
         {
             var json = JObject.Parse(File.ReadAllText(skillTreeTxtPath));
             var nodes = json.Value<JObject>("nodes");
@@ -25,11 +26,11 @@ namespace PoESkillTree.Engine.Computation.Console
                 .SelectMany(t => t["sd"].Values<string>())
                 .Select(s => s.Replace("\n", " "));
 
-            var path = GetAbsoluteTargetPath("PoESkillTree.Engine.GameModel/Data/SkillTreeStatLines.txt");
+            var path = baseTargetPath + "PoESkillTree.Engine.GameModel/Data/SkillTreeStatLines.txt";
             File.WriteAllLines(path, statLines);
         }
 
-        public static void UpdateParseableBaseItems(BaseItemDefinitions baseItemDefinitions)
+        public static void UpdateParseableBaseItems(BaseItemDefinitions baseItemDefinitions, string baseTargetPath)
         {
             var seenImplicits = new HashSet<string>();
             var seenBuffs = new HashSet<string>();
@@ -39,11 +40,12 @@ namespace PoESkillTree.Engine.Computation.Console
                             || d.BuffStats.Any(s => seenBuffs.Add(s.StatId)))
                 .Select(d => d.MetadataId);
 
-            var path = GetAbsoluteTargetPath("PoESkillTree.Engine.Computation.IntegrationTests/Data/ParseableBaseItems.txt");
+            var path = baseTargetPath + "PoESkillTree.Engine.Computation.IntegrationTests/Data/ParseableBaseItems.txt";
             File.WriteAllLines(path, baseIds);
         }
 
-        public static void UpdateItemAffixes(ModifierDefinitions modifierDefinitions, StatTranslators statTranslators)
+        public static void UpdateItemAffixes(
+            ModifierDefinitions modifierDefinitions, StatTranslators statTranslators, string baseTargetPath)
         {
             var domainWhitelist = new[]
                 { ModDomain.AbyssJewel, ModDomain.Crafted, ModDomain.Flask, ModDomain.Item, ModDomain.Misc };
@@ -62,12 +64,8 @@ namespace PoESkillTree.Engine.Computation.Console
                 .OrderBy(t => t.Item2)
                 .Select(t => t.s);
 
-            var path = GetAbsoluteTargetPath("PoESkillTree.Engine.GameModel/Data/ItemAffixes.txt");
+            var path = baseTargetPath + "PoESkillTree.Engine.GameModel/Data/ItemAffixes.txt";
             File.WriteAllLines(path, affixLines);
         }
-
-        public static string GetAbsoluteTargetPath(string repositoryRelativeTargetPath)
-            => Regex.Replace(Directory.GetCurrentDirectory(),
-                @"PoESkillTree\.Engine\.Computation\.Console(/|\\).*", repositoryRelativeTargetPath);
     }
 }

@@ -29,12 +29,14 @@ namespace PoESkillTree.Engine.Computation.Console
 
         private readonly CompositionRoot _compositionRoot;
         private readonly ICalculator _calculator;
+        private readonly Lazy<DataUpdater> _dataUpdater;
 
         private Program(CompositionRoot compositionRoot)
         {
             _compositionRoot = compositionRoot;
             _calculator = Calculator.Create();
             _calculator.ExplicitlyRegisteredStats.CollectionChanged += ExplicitlyRegisteredStatsOnCollectionChanged;
+            _dataUpdater = new Lazy<DataUpdater>(() => new DataUpdater(_compositionRoot.GameData));
         }
 
         private async Task LoopAsync()
@@ -48,10 +50,10 @@ namespace PoESkillTree.Engine.Computation.Console
             System.Console.WriteLine("- 'add <value> <stat>' to BaseAdd to stats");
             System.Console.WriteLine("- 'remove <modifier>' to remove modifiers");
             System.Console.Write("> ");
-            string statLine;
-            while ((statLine = System.Console.ReadLine()) != null)
+            string command;
+            while ((command = System.Console.ReadLine()) != null)
             {
-                switch (statLine)
+                switch (command)
                 {
                     case "exit":
                         return;
@@ -64,25 +66,39 @@ namespace PoESkillTree.Engine.Computation.Console
                     case "add given":
                         await AddGivenStatsAsync();
                         break;
-                    case var s when s.StartsWith("update SkillTreeStatLines "):
-                        TestDataUpdater.UpdateSkillTreeStatLines(
-                            statLine.Substring("update SkillTreeStatLines ".Length));
-                        break;
-                    case "update ParseableBaseItems":
-                        TestDataUpdater.UpdateParseableBaseItems(await _compositionRoot.GameData.BaseItems);
-                        break;
-                    case "update ItemAffixes":
-                        TestDataUpdater.UpdateItemAffixes(await _compositionRoot.GameData.Modifiers,
-                            await _compositionRoot.GameData.StatTranslators);
-                        break;
-                    case "update RePoE":
-                        await new RePoEUpdater().UpdateAsync();
-                        break;
                     default:
-                        await HandleParseCommandAsync(statLine);
+                        if (!(await HandleDataUpdateCommandAsync(command)))
+                        {
+                            await HandleParseCommandAsync(command);
+                        }
                         break;
                 }
                 System.Console.Write("> ");
+            }
+        }
+
+        private async Task<bool> HandleDataUpdateCommandAsync(string command)
+        {
+            switch (command)
+            {
+                case var s when s.StartsWith("update SkillTreeStatLines "):
+                    _dataUpdater.Value.UpdateSkillTreeStatLines(
+                        command.Substring("update SkillTreeStatLines ".Length));
+                    return true;
+                case "update ParseableBaseItems":
+                    await _dataUpdater.Value.UpdateParseableBaseItemsAsync();
+                    return true;
+                case "update ItemAffixes":
+                    await _dataUpdater.Value.UpdateItemAffixesAsync();
+                    return true;
+                case "update RePoE":
+                    await _dataUpdater.Value.UpdateRePoEAsync();
+                    return true;
+                case "update Uniques":
+                    await _dataUpdater.Value.UpdateUniquesAsync();
+                    return true;
+                default:
+                    return false;
             }
         }
 

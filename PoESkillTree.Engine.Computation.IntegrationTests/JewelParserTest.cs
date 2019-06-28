@@ -25,7 +25,7 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
         [OneTimeSetUp]
         public static void OneTimeSetUp()
         {
-            _uniqueDefinitionsTask = DataUtils.LoadXmlAsync<XmlUniqueList>("Equipment.Uniques.xml");
+            _uniqueDefinitionsTask = DataUtils.LoadXmlAsync<XmlUniqueList>("Uniques.xml");
         }
 
         [SetUp]

@@ -18,12 +18,14 @@ namespace PoESkillTree.Engine.Computation.Console
             "gems", "gem_tooltips", "base_items"
         };
 
-        private readonly string _savePath
-            = TestDataUpdater.GetAbsoluteTargetPath("PoESkillTree.Engine.GameModel/Data/RePoE");
+        private readonly HttpClient _httpClient;
+        private readonly string _savePath;
 
-        private readonly HttpClient _httpClient = new HttpClient {
-            DefaultRequestHeaders = { {"User-Agent", "PoESkillTree.Engine.Console"} }
-        };
+        public RePoEUpdater(HttpClient httpClient, string basePath)
+        {
+            _httpClient = httpClient;
+            _savePath = basePath + "PoESkillTree.Engine.GameModel/Data/RePoE";
+        }
 
         public async Task UpdateAsync()
         {
