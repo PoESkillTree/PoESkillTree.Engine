@@ -24,7 +24,10 @@ namespace PoESkillTree.Engine.Computation.Console
         {
             var compositionRoot = new CompositionRoot();
             var program = new Program(compositionRoot);
-            await program.LoopAsync();
+            if (args.Length > 0)
+                await program.HandleCommandAsync(args.ToDelimitedString(" "));
+            else
+                await program.LoopAsync();
         }
 
         private readonly CompositionRoot _compositionRoot;
@@ -53,27 +56,32 @@ namespace PoESkillTree.Engine.Computation.Console
             string command;
             while ((command = System.Console.ReadLine()) != null)
             {
-                switch (command)
-                {
-                    case "exit":
-                        return;
-                    case "benchmark":
-                        await Benchmark();
-                        break;
-                    case "profile":
-                        await Profile();
-                        break;
-                    case "add given":
-                        await AddGivenStatsAsync();
-                        break;
-                    default:
-                        if (!(await HandleDataUpdateCommandAsync(command)))
-                        {
-                            await HandleParseCommandAsync(command);
-                        }
-                        break;
-                }
+                if (command == "exit")
+                    return;
+                await HandleCommandAsync(command);
                 System.Console.Write("> ");
+            }
+        }
+
+        private async Task HandleCommandAsync(string command)
+        {
+            switch (command)
+            {
+                case "benchmark":
+                    await Benchmark();
+                    break;
+                case "profile":
+                    await Profile();
+                    break;
+                case "add given":
+                    await AddGivenStatsAsync();
+                    break;
+                default:
+                    if (!(await HandleDataUpdateCommandAsync(command)))
+                    {
+                        await HandleParseCommandAsync(command);
+                    }
+                    break;
             }
         }
 
