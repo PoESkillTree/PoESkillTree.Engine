@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <AssemblyTitle>PoESkillTree.Engine</AssemblyTitle>
+    <Product>PoESkillTree.Engine</Product>
+    <Copyright>Copyright © PoESkillTree Dev Team 2019</Copyright>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PoESkillTree.Engine.Utils\PoESkillTree.Engine.Utils.csproj" />
+    <ProjectReference Include="..\PoESkillTree.Engine.Computation.Builders\PoESkillTree.Engine.Computation.Builders.csproj" />
+    <ProjectReference Include="..\PoESkillTree.Engine.Computation.Common\PoESkillTree.Engine.Computation.Common.csproj" />
+    <ProjectReference Include="..\PoESkillTree.Engine.Computation.Core\PoESkillTree.Engine.Computation.Core.csproj" />
+    <ProjectReference Include="..\PoESkillTree.Engine.Computation.Data\PoESkillTree.Engine.Computation.Data.csproj" />
+    <ProjectReference Include="..\PoESkillTree.Engine.Computation.Parsing\PoESkillTree.Engine.Computation.Parsing.csproj" />
+    <ProjectReference Include="..\PoESkillTree.Engine.GameModel\PoESkillTree.Engine.GameModel.csproj" />
+  </ItemGroup>
+</Project>
