@@ -7,7 +7,7 @@ environment:
 dotnet_csproj:
   patch: true
   file: '**\*.csproj'
-  version: ${semantic_version}
+  version: $(semantic_version)
   file_version: '{version}'
 
 install:
