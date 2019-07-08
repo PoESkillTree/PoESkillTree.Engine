@@ -2,20 +2,20 @@ version: 0.1.0.{build}
 image: Visual Studio 2019
 configuration: Release
 environment:
-  version_prefix: '0.1.0'
+  semantic_version: '0.1.0'
 
 dotnet_csproj:
   patch: true
   file: '**\*.csproj'
-  version: ${version_prefix}
+  version: ${semantic_version}
+  package_version: ${semantic_version}
+  assembly_version: ${semantic_version}
   file_version: '{version}'
+  informational_version: ${semantic_version}
 
 install:
   - dotnet restore
 
 build:
   publish_nuget: true
-
-cache:
-  - packages -> **\*.csproj
-  - '%USERPROFILE%\.nuget\packages -> **\*.csproj'
+  publish_nuget_symbols: true 
