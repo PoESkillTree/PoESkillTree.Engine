@@ -8,7 +8,7 @@ dotnet_csproj:
   patch: true
   file: '**\*.csproj'
   version: ${version_prefix}
-  file_version: {version}
+  file_version: '{version}'
 
 cache:
   - packages -> **\*.csproj
