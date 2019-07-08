@@ -6,6 +6,7 @@
     <AssemblyTitle>PoESkillTree.Engine.Computation.Builders.Tests</AssemblyTitle>
     <Product>PoESkillTree.Engine.Computation.Builders.Tests</Product>
     <Copyright>Copyright ©  2018</Copyright>
+    <IsPackable>False</IsPackable>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.1.1" />
