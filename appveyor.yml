@@ -10,8 +10,9 @@ dotnet_csproj:
   version: ${version_prefix}
   file_version: '{version}'
 
+build:
+  publish_nuget: true
+
 cache:
   - packages -> **\*.csproj
   - '%USERPROFILE%\.nuget\packages -> **\*.csproj'
-
-publish_nuget: true
