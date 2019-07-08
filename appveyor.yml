@@ -9,5 +9,5 @@ build_script:
   - ps: dotnet pack -c Release /p:Version=$env:version /p:FileVersion=$env:version_file /p:PackageOutputPath=../artifacts
 
 cache:
-  - packages -> **/*.csproj
-  - '%USERPROFILE%/.nuget/packages -> **/*.csproj'
+  - packages -> **\*.csproj
+  - '%USERPROFILE%\.nuget\packages -> **\*.csproj'
