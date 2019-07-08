@@ -1,13 +1,17 @@
-version: 0.1.0-{build}
+version: 0.1.0.{build}
 image: Visual Studio 2019
 configuration: Release
 environment:
-  version: '0.1.0'
+  version_prefix: '0.1.0'
 
-build_script:
-  - ps: $env:version_file = $env:version + "." + $env:APPVEYOR_BUILD_NUMBER
-  - ps: dotnet pack -c Release /p:Version=$env:version /p:FileVersion=$env:version_file /p:PackageOutputPath=../artifacts
+dotnet_csproj:
+  patch: true
+  file: '**\*.csproj'
+  version: ${version_prefix}
+  file_version: {version}
 
 cache:
   - packages -> **\*.csproj
   - '%USERPROFILE%\.nuget\packages -> **\*.csproj'
+
+publish_nuget: true
