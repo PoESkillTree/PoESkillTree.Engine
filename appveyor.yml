@@ -8,14 +8,12 @@ dotnet_csproj:
   patch: true
   file: '**\*.csproj'
   version: ${semantic_version}
-  package_version: ${semantic_version}
-  assembly_version: ${semantic_version}
   file_version: '{version}'
-  informational_version: ${semantic_version}
 
 install:
   - dotnet restore
 
 build:
   publish_nuget: true
-  publish_nuget_symbols: true 
+  publish_nuget_symbols: true
+  verbosity: minimal

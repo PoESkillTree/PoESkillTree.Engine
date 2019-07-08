@@ -5,6 +5,8 @@
     <AssemblyTitle>PoESkillTree.Engine.GameModel</AssemblyTitle>
     <Product>PoESkillTree.Engine.GameModel</Product>
     <Copyright>Copyright ©  2018</Copyright>
+    <Version>1.0.0</Version>
+    <FileVersion>1.0.0.0</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="LibLog" Version="5.0.6">
