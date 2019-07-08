@@ -8,5 +8,6 @@ build_script:
   - ps: $env:version_file = $env:version + "." + $env:APPVEYOR_BUILD_NUMBER
   - ps: dotnet pack -c Release /p:Version=$env:version /p:FileVersion=$env:version_file /p:PackageOutputPath=../artifacts
 
-test_script:
-  - dotnet test -c Release
+cache:
+  - packages -> **/*.csproj
+  - '%USERPROFILE%/.nuget/packages -> **/*.csproj'
