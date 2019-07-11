@@ -6,8 +6,10 @@
     <AssemblyTitle>PoESkillTree.Engine.Computation.Common.Tests</AssemblyTitle>
     <Product>PoESkillTree.Engine.Computation.Common.Tests</Product>
     <Copyright>Copyright ©  2018</Copyright>
+    <IsPackable>False</IsPackable>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Appveyor.TestLogger" Version="2.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.1.1" />
   </ItemGroup>
   <ItemGroup>

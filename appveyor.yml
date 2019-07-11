@@ -1,12 +1,28 @@
-version: 0.1.0-{build}
+version: 0.1.0.{build}
 image: Visual Studio 2019
 configuration: Release
 environment:
-  version: '0.1.0'
+  semantic_version: '0.1.0'
 
-build_script:
-  - ps: $env:version_file = $env:version + "." + $env:APPVEYOR_BUILD_NUMBER
-  - ps: dotnet pack -c Release /p:Version=$env:version /p:FileVersion=$env:version_file /p:PackageOutputPath=../artifacts
+dotnet_csproj:
+  patch: true
+  file: '**\*.csproj'
+  version: $(semantic_version)
+  file_version: '{version}'
 
-test_script:
-  - dotnet test -c Release
+install:
+  - dotnet restore
+
+build:
+  publish_nuget: true
+  publish_nuget_symbols: true
+  verbosity: minimal
+
+deploy:
+  - provider: NuGet
+    api_key:
+      secure: 9x+8FZFMCiej5zysebNE24Pp8KFgx8R1qBG1BYvFOF10vIXZDxfvElHTEyq6BNCq
+    skip_symbols: false
+    artifact: /.*\.nupkg/
+    on:
+      APPVEYOR_REPO_TAG: true

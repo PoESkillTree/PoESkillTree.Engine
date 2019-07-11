@@ -5,6 +5,8 @@
     <AssemblyTitle>PoESkillTree.Engine.Computation.Core</AssemblyTitle>
     <Product>PoESkillTree.Engine.Computation.Core</Product>
     <Copyright>Copyright ©  2017</Copyright>
+    <Version>1.0.0</Version>
+    <FileVersion>1.0.0.0</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="LibLog" Version="5.0.6">

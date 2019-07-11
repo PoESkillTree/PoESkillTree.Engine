@@ -5,8 +5,10 @@
     <AssemblyTitle>PoESkillTree.Engine.Computation.IntegrationTests</AssemblyTitle>
     <Product>PoESkillTree.Engine.Computation.IntegrationTests</Product>
     <Copyright>Copyright ©  2017</Copyright>
+    <IsPackable>False</IsPackable>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Appveyor.TestLogger" Version="2.0.0" />
     <PackageReference Include="LibLog" Version="5.0.6">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
