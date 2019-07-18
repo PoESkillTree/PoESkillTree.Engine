@@ -1,8 +1,8 @@
-version: 0.1.1.{build}
+version: 0.1.2.{build}
 image: Visual Studio 2019
 configuration: Release
 environment:
-  semantic_version: '0.1.1'
+  semantic_version: '0.1.2'
 
 dotnet_csproj:
   patch: true
@@ -16,13 +16,12 @@ install:
 build:
   publish_nuget: true
   publish_nuget_symbols: true
+  use_snupkg_format: true
   verbosity: minimal
 
 deploy:
   - provider: NuGet
     api_key:
       secure: 1z0h8dmXeM50sfHXJxYicoRjAE41R/3P86KUzDM4fe5WJlLURhM7HaAP+vcDUbLY
-    skip_symbols: false
-    artifact: /.*\.nupkg/
     on:
       APPVEYOR_REPO_TAG: true
