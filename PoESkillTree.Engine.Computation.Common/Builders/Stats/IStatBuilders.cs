@@ -121,6 +121,8 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
         /// </summary>
         IStatBuilder GrandSpectrumJewelsSocketed { get; }
 
+        IStatBuilder AbyssalSockets { get; }
+
         /// <summary>
         /// Gets a stat representing the number of currently active rampage stacks.
         /// </summary>

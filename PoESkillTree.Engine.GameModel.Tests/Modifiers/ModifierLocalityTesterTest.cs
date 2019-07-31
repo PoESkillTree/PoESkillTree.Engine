@@ -24,6 +24,7 @@ namespace PoESkillTree.Engine.GameModel.Modifiers
         [TestCase("-100 to Energy Shield", ExpectedResult = true)]
         [TestCase("10% increased Energy Shield", ExpectedResult = true)]
         [TestCase("10% reduced Energy Shield", ExpectedResult = true)]
+        [TestCase("Has 1 Abyssal Socket", ExpectedResult = true)]
         [TestCase("10% increased maximum Energy Shield", ExpectedResult = false)]
         [TestCase("1% increased Physical Damage", ExpectedResult = false)]
         public bool IsLocalReturnsCorrectResultForArmour(string modifier)

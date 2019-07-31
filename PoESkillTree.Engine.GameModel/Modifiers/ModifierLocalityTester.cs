@@ -27,6 +27,11 @@ namespace PoESkillTree.Engine.GameModel.Modifiers
             @"(has no|no|#% increased|#% reduced|\+#|-#) (attribute|intelligence|dexterity|strength) requirements?",
         }.ToList();
 
+        private static readonly IReadOnlyList<Regex> UnconditionalLocal = new RegexCollection
+        {
+            "has # abyssal sockets?",
+        }.ToList();
+
         private static readonly IReadOnlyList<Regex> WeaponProperty = new RegexCollection
         {
             "adds # to # (physical|fire|cold|lightning|chaos) damage( in (main|off) hand)?",
@@ -110,6 +115,8 @@ namespace PoESkillTree.Engine.GameModel.Modifiers
                 return true;
 
             var canonicalModifier = ToCanonicalModifier(modifier);
+            if (AnyMatch(UnconditionalLocal, canonicalModifier))
+                return true;
             if (itemTags.HasFlag(Tags.Weapon) && AnyMatch(WeaponLocal, canonicalModifier))
                 return true;
             if (itemTags.HasFlag(Tags.Flask) && AnyMatch(FlaskLocal, canonicalModifier))

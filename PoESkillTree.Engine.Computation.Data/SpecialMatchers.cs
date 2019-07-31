@@ -118,6 +118,10 @@ namespace PoESkillTree.Engine.Computation.Data
                     BaseAdd, 1, Stat.GrandSpectrumJewelsSocketed
                 },
                 {
+                    "has # abyssal sockets?",
+                    BaseAdd, 1, Stat.AbyssalSockets
+                },
+                {
                     // Brute Force Solution, Careful Planning, Efficient Training, Fertile Mind, Fluid Motion, Inertia
                     "({AttributeStatMatchers}) from passives in radius is transformed to ({AttributeStatMatchers})",
                     (BaseSubtract, 1,
