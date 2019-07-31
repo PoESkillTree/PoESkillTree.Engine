@@ -271,6 +271,24 @@ namespace PoESkillTree.Engine.Computation.Parsing.ItemParsers
             Assert.AreEqual(expectedValue, actual.Value.Calculate(context));
         }
 
+        [Test]
+        public void GlobalTotalOverrideFlaskModifiersAreNotAffectedByFlaskEffect()
+        {
+            var parserParam = CreateItem(ItemSlot.BodyArmour, "mod");
+            var source = CreateGlobalSource(parserParam);
+            var baseItemDefinition = CreateBaseItemDefinition(parserParam.Item, ItemClass.UtilityFlask, Tags.Flask);
+            var expected = CreateModifier("stat", Form.TotalOverride, 3, source);
+            var parameter = new CoreParserParameter("mod", source, Entity.Character);
+            var coreParser = Mock.Of<ICoreParser>(p => p.Parse(parameter) == ParseResult.Success(new[] { expected }));
+            var sut = CreateSut(baseItemDefinition, coreParser);
+
+            var result = sut.Parse(parserParam);
+
+            var actual = GetFirstModifierWithIdentity(result.Modifiers, expected.Stats[0].Identity);
+            var expectedValue = expected.Value.Calculate(null);
+            Assert.AreEqual(expectedValue, actual.Value.Calculate(null));
+        }
+
         [TestCase("armour", "Armour")]
         [TestCase("evasion", "Evasion")]
         [TestCase("energy_shield", "EnergyShield")]

@@ -38,11 +38,22 @@ namespace PoESkillTree.Engine.Computation.Parsing
         /// </summary>
         public static ParseResult ApplyMultiplier(this ParseResult @this,
             Func<BuildParameters, IValue> buildMultiplier, Entity modifierSourceEntity = Entity.Character)
+            => @this.ApplyConditionalMultiplier(buildMultiplier, _ => true, modifierSourceEntity);
+
+        /// <summary>
+        /// Applies a multiplier to the values of all modifiers
+        /// </summary>
+        public static ParseResult ApplyConditionalMultiplier(this ParseResult @this,
+            Func<BuildParameters, IValue> buildMultiplier, Predicate<Modifier> predicate,
+            Entity modifierSourceEntity = Entity.Character)
         {
             return @this.ApplyToModifiers(ApplyMultiplier);
 
             Modifier ApplyMultiplier(Modifier modifier)
             {
+                if (!predicate(modifier))
+                    return modifier;
+
                 var buildParameters = new BuildParameters(modifier.Source, modifierSourceEntity, modifier.Form);
                 var multiplier = buildMultiplier(buildParameters);
                 var value = modifier.Value;

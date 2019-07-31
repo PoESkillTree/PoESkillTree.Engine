@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using PoESkillTree.Engine.Computation.Common;
 using PoESkillTree.Engine.Computation.Common.Builders;
 using PoESkillTree.Engine.GameModel;
@@ -80,7 +79,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.ItemParsers
         private ParseResult MultiplyValuesByFlaskEffect(ParseResult result)
         {
             var multiplierBuilder = _builderFactories.StatBuilders.Flask.Effect.Value;
-            return result.ApplyMultiplier(multiplierBuilder.Build);
+            return result.ApplyConditionalMultiplier(multiplierBuilder.Build, m => m.Form != Form.TotalOverride);
         }
 
         private ParseResult Parse(string modifierLine, ModifierSource modifierSource)

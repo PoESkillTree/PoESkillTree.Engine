@@ -35,7 +35,7 @@ namespace PoESkillTree.Engine.Utils.Extensions
         /// <summary>
         /// Applies <paramref name="action"/> to <c>dict[key]</c> if <c>dict.ContainsKey(key)</c>.
         /// </summary>
-        public static void ApplyIfPresent<TKey, TValue>(this IDictionary<TKey, TValue> dict,
+        public static void ApplyIfPresent<TKey, TValue>(this IReadOnlyDictionary<TKey, TValue> dict,
             TKey key, Action<TValue> action)
         {
             if (dict.TryGetValue(key, out var value))
