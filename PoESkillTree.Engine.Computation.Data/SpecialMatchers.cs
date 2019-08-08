@@ -119,7 +119,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 {
                     "has # abyssal sockets?",
-                    BaseAdd, 1, Stat.AbyssalSockets
+                    BaseAdd, Value, Stat.AbyssalSockets
                 },
                 {
                     // Brute Force Solution, Careful Planning, Efficient Training, Fertile Mind, Fluid Motion, Inertia
