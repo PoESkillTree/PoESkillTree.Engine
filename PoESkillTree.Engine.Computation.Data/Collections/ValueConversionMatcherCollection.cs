@@ -18,9 +18,9 @@ namespace PoESkillTree.Engine.Computation.Data.Collections
         {
         }
 
-        public void Add([RegexPattern] string regex, Func<ValueBuilder, ValueBuilder> func)
+        public void Add([RegexPattern] string regex, Func<ValueBuilder, ValueBuilder> func, string substitution = "")
         {
-            Add(regex, ModifierBuilder.WithValueConverter(func.ToValueConverter()));
+            Add(regex, ModifierBuilder.WithValueConverter(func.ToValueConverter()), substitution);
         }
 
         public void Add([RegexPattern] string regex, ValueBuilder multiplier)

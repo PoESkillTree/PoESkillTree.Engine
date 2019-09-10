@@ -45,7 +45,7 @@ Enemies Cannot Leech Mana From you
 Share Endurance Charges with nearby party members
 When you Kill an Ignited Enemy, inflict an equivalent Ignite on each nearby Enemy
 Burning Hoofprints
--6 Physical Damage taken from Attacks
+-6 Physical Damage taken from Attack Hits
 // Unique/Implicit Accessories: ========================================================================================
 Has 1 Socket
 35% increased Fish Bite Sensitivity
@@ -54,11 +54,11 @@ Reflects 240 to 300 Physical Damage to Attackers on Block
 10% chance to Cause Monsters to Flee
 // Unique/Implicit Flasks: =============================================================================================
 20% of Melee Physical Damage taken reflected to Attacker
-20% chance to Avoid Cold Damage when Hit
+20% chance to Avoid Cold Damage from Hits
 Creates a Smoke Cloud on Use
 Creates Chilled Ground on Use
 // Unique/Implicit Jewels: =============================================================================================
-Your Golems are aggressive
+Summoned Golems are aggressive
 Golems Summoned in the past 8 seconds deal 40% increased Damage
 50% chance to gain an additional Vaal Soul per Enemy Shattered
 25% chance to gain an additional Vaal Soul on Kill
@@ -77,7 +77,7 @@ With at least 40 Dexterity in Radius, Barrage fires an additional 2 projectiles 
 With at least 40 Dexterity in Radius, Burning Arrow has a 10% chance to spread Burning Ground if it Ignites an Enemy
 With at least 40 Intelligence in Radius, Cold Snap grants Power Charges instead of Frenzy Charges when Enemies die in its Area With at least 40 Intelligence in Radius, Cold Snap's Cooldown can be bypassed by Power Charges instead of Frenzy Charges
 Bleeding you inflict is Reflected to you
-Poison you inflict is Reflected to you
+Poison you inflict is Reflected to you if you have fewer than 100 Poisons on you
 With 40 Intelligence in Radius, Glacial Cascade has an additional Burst
 With 4 Notables Allocated in Radius, When you Kill a Rare monster, you gain 1 of its Modifiers for 20 seconds
 // Fishing Rods: =======================================================================================================
@@ -243,7 +243,7 @@ Share Endurance, Frenzy and Power Charges with nearby party members
 Enemies Become Chilled as they Unfreeze
 Light Radius is based on Energy Shield instead of Life
 Traps cannot be Damaged for 5 seconds after being Thrown
-Mines cannot be Damaged for 5 seconds after being Placed
+Mines cannot be Damaged for 5 seconds after being thrown
 Enemies Cannot Leech Life From You
 Hits that Stun Enemies have Culling Strike
 10% increased Brand Attachment range
@@ -251,10 +251,16 @@ Hits that Stun Enemies have Culling Strike
 10% chance when Hit for double Armour effect
 40% chance to Avoid Blind
 60% chance to Avoid Blind
-5% chance to Avoid Cold Damage when Hit
-5% chance to Avoid Fire Damage when Hit
-5% chance to Avoid Lightning Damage when Hit
+5% chance to Avoid Cold Damage from Hits
+5% chance to Avoid Fire Damage from Hits
+5% chance to Avoid Lightning Damage from Hits
+20% chance to Avoid physical Damage from Hits
 +8% Chance to Block Projectile Attack Damage
+Attack Projectiles Return to you from final Target
+Returning Projectiles Pierce all Targets
+Mines have 10% increased Detonation Speed
+Mines have 20% increased Detonation Speed
+Moving while Bleeding doesn't cause Minions to take extra Damage
 // Side effect from how jewels are currently handled, the stat doesn't actually exist
 +1 Jewel Socket
 // Ascendancies: =======================================================================================================
@@ -314,7 +320,6 @@ Skills that would Summon a Totem Summon two Totems instead
 // - Assassin
 Critical Strikes have Culling Strike
 Damage from your Critical Strikes cannot be Reflected
-Recover 0.5% of your maximum Life per Poison affecting Enemies you Kill
 // - Saboteur
 100% increased Mine Arming Speed
 20% Chance for Traps to Trigger an additional time

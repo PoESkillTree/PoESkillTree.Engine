@@ -32,7 +32,7 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Entities
         /// <summary>
         /// Gets an entity representing the character's allies.
         /// </summary>
-        IEntityBuilder Ally { get; }
+        ICountableEntityBuilder Ally { get; }
 
         /// <summary>
         /// Gets an entity representing the character's totems.

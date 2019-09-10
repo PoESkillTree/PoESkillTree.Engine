@@ -121,7 +121,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         {
         }
 
-        public IStatBuilder Speed => FromIdentity("LayingSpeed", typeof(double));
+        public IStatBuilder Speed => FromIdentity("ThrowingSpeed", typeof(double));
         public IStatBuilder Duration => FromIdentity(typeof(double));
         public IStatBuilder DetonationAoE => FromIdentity(typeof(int));
     }

@@ -74,7 +74,7 @@ namespace PoESkillTree.Engine.Computation.Data
             },
             {
                 // Vaal Pact
-                @"(life leeched per second is doubled)\. (maximum .* is doubled)\. (life regeneration has no effect)\.",
+                @"(life leeched per second is doubled) (maximum .* is doubled) (life regeneration has no effect)",
                 "$1", "$2", "$3"
             },
             {
@@ -99,8 +99,8 @@ namespace PoESkillTree.Engine.Computation.Data
             },
             {
                 // Elemental Overload
-                @"(\d+% more elemental damage if you've crit in the past \d+ seconds) (no critical strike multiplier) (no damage multiplier for ailments from critical strikes)",
-                "$1", "$2, $3"
+                @"(\d+% more elemental damage if you've dealt a crit in the past \d+ seconds) (no critical strike multiplier) (ailments never count as being from critical strikes)",
+                "$1", "$2", "$3"
             },
             {
                 // Avatar of Fire
@@ -114,7 +114,7 @@ namespace PoESkillTree.Engine.Computation.Data
             },
             {
                 // Perfect Agony
-                @"(modifiers to critical strike multiplier also apply to damage multiplier for ailments from critical strikes at \d+% of their value) (\d+% less damage with hits)",
+                @"(modifiers to critical strike multiplier also apply to damage over time multiplier for ailments from critical strikes at \d+% of their value) (\d+% less damage with hits)",
                 "$1", "$2"
             },
             {

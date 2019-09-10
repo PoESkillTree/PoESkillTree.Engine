@@ -17,7 +17,7 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Skills
 
         // Single skills that need to be individually referenced
 
-        ISkillBuilder SummonSkeleton { get; }
+        ISkillBuilder SummonSkeletons { get; }
         ISkillBuilder VaalSummonSkeletons { get; }
         ISkillBuilder RaiseSpectre { get; }
         ISkillBuilder RaiseZombie { get; }

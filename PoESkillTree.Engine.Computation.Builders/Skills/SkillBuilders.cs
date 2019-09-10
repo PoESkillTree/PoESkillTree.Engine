@@ -24,7 +24,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Skills
         private ISkillBuilderCollection CreateCollection(params IKeywordBuilder[] keywords)
             => new SkillBuilderCollection(_statFactory, keywords, _skills.Skills);
 
-        public ISkillBuilder SummonSkeleton => FromId("SummonSkeletons");
+        public ISkillBuilder SummonSkeletons => FromId("SummonSkeletons");
         public ISkillBuilder VaalSummonSkeletons => FromId("VaalSummonSkeletons");
         public ISkillBuilder RaiseSpectre => FromId("RaiseSpectre");
         public ISkillBuilder RaiseZombie => FromId("RaiseZombie");

@@ -46,8 +46,13 @@ namespace PoESkillTree.Engine.Computation.Data
                     "(when you|on) ({ActionMatchers}) a ({AilmentMatchers}) enemy",
                     And(References[1].AsAilment.IsOn(Enemy), References[0].AsAction.On)
                 },
+                {
+                    "(when you|on) ({ActionMatchers}) a cursed enemy",
+                    And(Buffs(targets: Enemy).With(Keyword.Curse).Any(), References[0].AsAction.On)
+                },
                 // kill
                 { "if you or your totems kill an enemy", Or(Kill.On, Kill.By(Entity.Totem).On) },
+                { "affecting enemies you kill", Kill.On },
                 // hit
                 { "when hit", Hit.By(Enemy).On },
                 { "when you are hit", Hit.By(Enemy).On },

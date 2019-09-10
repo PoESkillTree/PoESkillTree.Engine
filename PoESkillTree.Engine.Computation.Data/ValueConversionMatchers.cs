@@ -39,7 +39,7 @@ namespace PoESkillTree.Engine.Computation.Data
                     Kill.CountRecently + Kill.By(Entity.Totem).CountRecently
                 },
                 {
-                    "for each enemy you or your minions have killed recently, up to #%",
+                    "for each enemy you or your minions have killed recently, up to #%( per second)?",
                     CappedMultiplier(Kill.CountRecently + Kill.By(Entity.Minion).CountRecently, Value)
                 },
                 { "for each hit you've blocked recently", Block.CountRecently },
@@ -49,8 +49,13 @@ namespace PoESkillTree.Engine.Computation.Data
                 // stats
                 { "per # accuracy rating", PerStat(Stat.Accuracy.With(AttackDamageHand.MainHand)) },
                 { "per #%? ({StatMatchers})(?! leech)", PerStat(stat: Reference.AsStat, divideBy: Value) },
+                {
+                    "per # ({StatMatchers}), up to #%",
+                    CappedMultiplier((Reference.AsStat.Value / Values[0]).Floor(), Values[1])
+                },
                 { "per # ({StatMatchers}) ceiled", PerStatCeiled(stat: Reference.AsStat, divideBy: Value) },
                 { "per ({StatMatchers})(?! leech)", PerStat(stat: Reference.AsStat) },
+                { "per ({StatMatchers}), up to #%", CappedMultiplier(Reference.AsStat.Value, Value) },
                 {
                     "per # ({StatMatchers}) on helmet",
                     PerStat(Reference.AsStat.ValueFor(NodeType.Base, new ModifierSource.Local.Item(ItemSlot.Helm)),
@@ -79,6 +84,14 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "per nearby enemy", Enemy.CountNearby },
                 { "per one hundred nearby enemies", Enemy.CountNearby / 100 },
                 { @"per nearby enemy, up to \+#%?", CappedMultiplier(Enemy.CountNearby, Value) },
+                {
+                    "per # unreserved maximum mana, up to #%",
+                    CappedMultiplier(((Mana.Value - Mana.Reservation.Value) / Values[0]).Floor(), Values[1])
+                },
+                {
+                    "per # mana spent recently, up to #%",
+                    CappedMultiplier(Action.SpendMana(Values[0]).CountRecently, Values[1])
+                },
                 // buffs
                 { "per buff on you", Buffs(targets: Self).Count() },
                 { "per curse on you", Buffs(targets: Self).With(Keyword.Curse).Count() },
@@ -89,6 +102,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "for each poison on the enemy", Ailment.Poison.InstancesOn(Enemy).Value },
                 { "per poison on enemy", Ailment.Poison.InstancesOn(Enemy).Value },
                 { "per poison on you", Ailment.Poison.InstancesOn(Self).Value },
+                { "per poison(?= affecting enemies)", Ailment.Poison.InstancesOn(Enemy).Value },
                 {
                     @"per poison affecting enemy, up to \+#%",
                     CappedMultiplier(Ailment.Poison.InstancesOn(Enemy).Value, Value)
@@ -102,8 +116,13 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "for each zombie you own", Skills.RaiseZombie.Instances.Value },
                 { "for each raised zombie", Skills.RaiseZombie.Instances.Value },
                 { "for each summoned golem", Golems.CombinedInstances.Value },
+                { "per summoned golem", Golems.CombinedInstances.Value },
                 { "for each golem you have summoned", Golems.CombinedInstances.Value },
                 { "for each type of golem you have summoned", Golems.CombinedInstances.Value },
+                {
+                    "per minion, up to #%",
+                    CappedMultiplier(Skills[Keyword.Minion].CombinedInstances.Value, Value)
+                },
                 {
                     "for each skill you've used Recently, up to #%",
                     CappedMultiplier(AllSkills.Cast.CountRecently, Value)
@@ -112,7 +131,11 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "for each trap", Traps.CombinedInstances.Value },
                 { "for each mine", Mines.CombinedInstances.Value },
                 { "for each trap and mine you have", Traps.CombinedInstances.Value + Mines.CombinedInstances.Value },
-                { "per totem", Totems.CombinedInstances.Value },
+                { "(per|for each) totem", Totems.CombinedInstances.Value },
+                {
+                    "each mine applies (?<inner>.*) to enemies near it, up to #%",
+                    CappedMultiplier(Mines.CombinedInstances.Value, Value), "${inner}"
+                },
                 // jewels
                 {
                     "(per|for every) # ({AttributeStatMatchers}) (allocated|(from|on) allocated passives) in radius",
@@ -135,11 +158,11 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "for each enemy pierced", Stat.UniqueAmount("Projectile.PiercedCount")
                 },
                 {
-                    "for each of your mines detonated recently, up to #%",
+                    "for each (of your mines|mine) detonated recently, up to #%( per second)?",
                     CappedMultiplier(Stat.UniqueAmount("# of Mines Detonated Recently"), Value)
                 },
                 {
-                    "for each of your traps triggered recently, up to #%",
+                    "for each (of your traps|trap) triggered recently, up to #%( per second)?",
                     CappedMultiplier(Stat.UniqueAmount("# of Traps Triggered Recently"), Value)
                 },
                 {
@@ -149,6 +172,10 @@ namespace PoESkillTree.Engine.Computation.Data
                 {
                     "for each endurance charge lost recently, up to #%",
                     CappedMultiplier(Stat.UniqueAmount("# of Endurance Charges lost recently"), Value)
+                },
+                {
+                    "for each nearby corpse, (?<inner>.*) up to #%? per second",
+                    CappedMultiplier(Stat.UniqueAmount("# of nearby Corpses"), Value), "${inner}"
                 },
             }; // add
 

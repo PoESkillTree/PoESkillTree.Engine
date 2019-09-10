@@ -82,7 +82,7 @@ namespace PoESkillTree.Engine.GameModel.StatTranslation
                 "+25 to maximum Life",
                 "Adds 1 to 3 Chaos Damage to Attacks",
                 "5% increased Global Physical Damage",
-                "2.1 Life Regenerated per second",
+                "Regenerate 2.1 Life per second",
                 "10% chance to Cause Monsters to Flee",
             };
             var actual = _translator.GetTranslations(statDict);

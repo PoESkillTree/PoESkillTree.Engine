@@ -7,6 +7,8 @@ Channelling Skills have -3 to Total Mana Cost
 35% less Damage if Triggered
 // - Lucky/Unlucky for chances
 Chance to Block Spell Damage is Unlucky
+// - Item quality as a property stat
++8% to Quality
 // Requires new buffs
 // - Hinder
 Hindered Enemies take 20% increased Chaos Damage
@@ -14,13 +16,31 @@ Nearby Hindered Enemies deal 15% reduced Damage over Time
 4% chance to Hinder Enemies on Hit with Spells, with 30% reduced Movement Speed
 Minions have 4% chance to Hinder Enemies on Hit with Spells, with 30% reduced Movement Speed
 With at least 40 Intelligence in Radius, Blight has 50% increased Hinder Duration
+Mines Hinder Enemies near them for 2 seconds when they Land, reducing Movement Speed by 40%
 // - Withered
 Every second, inflict Withered on nearby Enemies for 15 seconds
 With at least 40 Intelligence in Radius, Blight inflicts Withered for 2 seconds
 // - Maddening Presence
 Gain Maddening Presence for 10 seconds when you Kill a Rare or Unique Enemy
-// - Item quality as a property stat
-+8% to Quality
+// - Transfiguration of Body/Mind/Soul
+Transfiguration of Body
+Transfiguration of Mind
+Transfiguration of Soul
+// - Unnerve
+Nearby Allies Unnerve Enemies for 4 seconds on Hit
+// - Elusive
+10% chance to gain Elusive on Kill
+20% increased Attack and Cast Speed while Elusive
+25% increased Elusive Effect
+50% chance to gain Elusive on Critical Strike
+8% reduced Damage taken while Elusive
+You take no Extra Damage from Critical Strikes while Elusive
+// Requires distinguishing flask types
+10% reduced Flask Charges used from Mana Flasks
+Mana Flasks gain 1 Charge every 3 seconds
+You have Fortify during Effect of any Life Flask
+Remove a Curse when you use a Mana Flask
+Remove a random Elemental Ailment when you use a Mana Flask
 // Socketed gem modifiers
 +2 to Level of Socketed Gems
 +1 to Level of Socketed Active Skill Gems
@@ -55,6 +75,8 @@ Socketed Spells have +1% to Critical Strike Chance
 Socketed Spells have +30% to Critical Strike Multiplier
 +5% to Quality of Socketed Gems
 +4% to Quality of Socketed Support Gems
+// Equipped gem modifiers
++2 to Level of all Minion Skill Gems
 // Item-inherent skills
 Curse Enemies with Level 10 Flammability on Hit
 Curse Enemies with Level 8 Assassin's Mark on Hit
@@ -72,6 +94,7 @@ Grants Level 20 Aspect of the Avian Skill
 Grants Level 20 Aspect of the Cat Skill
 Grants Level 20 Aspect of the Crab Skill
 Grants Level 20 Aspect of the Spider Skill
+Grants Level 20 Bone Armour Skill
 Grants Level 22 Clarity Skill
 Grants Level 20 Decoy Totem Skill
 Grants Level 22 Determination Skill
@@ -166,7 +189,6 @@ Enemies killed explode dealing 5% of their Life as Fire Damage
 Your Hits inflict Decay, dealing 500 Chaos Damage per second for 8 seconds
 // Minions
 10% increased area of effect for each Summoned Sentinel of Purity
-Minions Regenerate 3 Life per second
 Grants 50% of Life Recovery to Minions
 // - modifies minion skill
 With at least 40 Intelligence in Radius, Raised Zombies' Slam Attack deals 30% increased Damage
@@ -175,12 +197,17 @@ Raised Zombies' Slam Attack has 100% increased Cooldown Recovery Speed
 With at least 40 Intelligence in Radius, Raised Zombies' Slam Attack has 100% increased Cooldown Recovery Speed
 Summoned Sentinels of Purity have 50% increased Area of effect
 // - adds new minion skill
-With at least 40 Intelligence in Radius, Summon Skeleton can summon up to 5 Skeleton Mages
-summon 2 additional skeleton warriors with summon skeleton
+With at least 40 Intelligence in Radius, Summon Skeletons can Summon up to 15 Skeleton Mages
+summon 4 additional skeleton warriors with summon skeleton
 With at least 40 Dexterity in Radius, Animate Weapon can Animate up to 8 Ranged Weapons
 Minions explode when reduced to Low Life, dealing 33% of their maximum Life as Fire Damage to surrounding Enemies
 Your Raised Zombies spread Caustic Ground on Death, dealing 50% of their maximum Life as Chaos Damage per second
 Summoned Sentinels use Crusade Slam
+// - corpses
+Corpses you Spawn have 50% increased Maximum Life
+Enemies near corpses you Spawned Recently are Chilled and Shocked
+With at least one nearby corpse, nearby Enemies deal 10% reduced Damage
+With at least one nearby corpse, you and nearby Allies deal 10% more Damage
 // Splash damage
 With at least 40 Dexterity in Radius, Dual Strike deals Off-Hand Splash Damage to surrounding targets
 With at least 40 Strength in Radius, Glacial Hammer deals Cold-only Splash Damage to surrounding targets

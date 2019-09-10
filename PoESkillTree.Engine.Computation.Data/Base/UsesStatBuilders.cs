@@ -92,7 +92,7 @@ namespace PoESkillTree.Engine.Computation.Data.Base
 
         protected IEntityBuilder Self => Entity.Self;
         protected IEnemyBuilder Enemy => Entity.Enemy;
-        protected IEntityBuilder Ally => Entity.Ally;
+        protected ICountableEntityBuilder Ally => Entity.Ally;
 
         // Equipment
 

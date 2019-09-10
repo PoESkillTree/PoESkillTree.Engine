@@ -96,10 +96,6 @@ namespace PoESkillTree.Engine.Computation.Data
                     PercentMore, 100, Reference.AsStat
                 },
                 {
-                    "gain #% of maximum ({PoolStatMatchers}) as extra maximum energy shield",
-                    BaseAdd, Value, Reference.AsPoolStat.ConvertTo(EnergyShield)
-                },
-                {
                     "(your )?damaging hits always stun enemies that are on full life",
                     TotalOverride, 100, Effect.Stun.Chance,
                     Action.Unique("On damaging Hit against a full life Enemy").On
@@ -133,16 +129,22 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 {
                     // Combat Focus
-                    "with # total ({AttributeStatMatchers}) and ({AttributeStatMatchers}) in radius, elemental hit cannot choose fire",
-                    TotalOverride, 0, Fire.Damage, CombatFocusCondition(0)
+                    "with # total ({AttributeStatMatchers}) and ({AttributeStatMatchers}) in radius, elemental hit and wild strike cannot choose fire",
+                    (TotalOverride, 0, Fire.Damage, CombatFocusCondition("ElementalHit", 0)),
+                    (TotalOverride, 0, Fire.Damage, CombatFocusCondition("WildStrike", 0)),
+                    (TotalOverride, 0, Fire.Damage, CombatFocusCondition("WildStrike", 1))
                 },
                 {
-                    "with # total ({AttributeStatMatchers}) and ({AttributeStatMatchers}) in radius, elemental hit cannot choose cold",
-                    TotalOverride, 0, Cold.Damage, CombatFocusCondition(1)
+                    "with # total ({AttributeStatMatchers}) and ({AttributeStatMatchers}) in radius, elemental hit and wild strike cannot choose cold",
+                    (TotalOverride, 0, Cold.Damage, CombatFocusCondition("ElementalHit", 1)),
+                    (TotalOverride, 0, Cold.Damage, CombatFocusCondition("WildStrike", 2)),
+                    (TotalOverride, 0, Cold.Damage, CombatFocusCondition("WildStrike", 3))
                 },
                 {
-                    "with # total ({AttributeStatMatchers}) and ({AttributeStatMatchers}) in radius, elemental hit cannot choose lightning",
-                    TotalOverride, 0, Lightning.Damage, CombatFocusCondition(2)
+                    "with # total ({AttributeStatMatchers}) and ({AttributeStatMatchers}) in radius, elemental hit and wild strike cannot choose lightning",
+                    (TotalOverride, 0, Lightning.Damage, CombatFocusCondition("ElementalHit", 2)),
+                    (TotalOverride, 0, Lightning.Damage, CombatFocusCondition("WildStrike", 4)),
+                    (TotalOverride, 0, Lightning.Damage, CombatFocusCondition("WildStrike", 5))
                 },
                 {
                     // Intuitive Leap
@@ -373,7 +375,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 {
                     // Mortal Conviction
-                    "you can only have one non-banner aura on you from your skills non-banner aura skills reserve no mana",
+                    "you can only have one non-banner aura with no duration on you from your skills non-banner, non-mine aura skills reserve no mana",
                     TotalOverride, 0, Skills[Keyword.Aura].Reservation
                 },
                 {
@@ -413,11 +415,7 @@ namespace PoESkillTree.Engine.Computation.Data
                     (BaseAdd, Value.PercentOf(Mana), Mana.Gain, Skills[Keyword.Warcry].Cast.On)
                 },
                 {
-                    "effects granted for having rage are doubled",
-                    PercentMore, 100, Charge.RageEffect
-                },
-                {
-                    "effects granted for having rage are tripled",
+                    "inherent effects from having rage are tripled",
                     PercentMore, 200, Charge.RageEffect
                 },
                 // - Chieftain
@@ -502,7 +500,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 {
                     "summoned skeletons' hits can't be evaded",
-                    TotalOverride, 100, Stat.ChanceToHit.For(Entity.Minion), With(Skills.SummonSkeleton)
+                    TotalOverride, 100, Stat.ChanceToHit.For(Entity.Minion), With(Skills.SummonSkeletons)
                 },
                 // - Gladiator
                 {
@@ -606,6 +604,10 @@ namespace PoESkillTree.Engine.Computation.Data
                     "minions intimidate enemies for # seconds on hit",
                     TotalOverride, 1, Buff.Intimidate.On(Enemy), Action.Hit.By(Entity.Minion).Recently
                 },
+                {
+                    "every # seconds, regenerate #% of life over one second",
+                    BaseAdd, Values[1], Buff.Temporary(Life.Regen.Percent)
+                },
                 // - Assassin
                 {
                     // Ascendant
@@ -648,8 +650,8 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
             };
 
-        private IConditionBuilder CombatFocusCondition(int skillPart)
-            => And(With(Skills.FromId("ElementalHit")), Stat.MainSkillPart.Value.Eq(skillPart),
+        private IConditionBuilder CombatFocusCondition(string skillId, int skillPart)
+            => And(With(Skills.FromId(skillId)), Stat.MainSkillPart.Value.Eq(skillPart),
                 (PassiveTree.TotalInModifierSourceJewelRadius(References[0].AsStat)
                  + PassiveTree.TotalInModifierSourceJewelRadius(References[1].AsStat))
                 >= Value);

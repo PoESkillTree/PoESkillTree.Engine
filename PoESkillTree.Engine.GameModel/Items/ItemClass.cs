@@ -21,6 +21,7 @@ namespace PoESkillTree.Engine.GameModel.Items
         // Considered a subclass of OneHandMace for gem supporting and mod application
         Sceptre,
         Dagger,
+        RuneDagger,
         Claw,
         Wand,
         Unarmed,
@@ -30,6 +31,7 @@ namespace PoESkillTree.Engine.GameModel.Items
         TwoHandMace,
         Bow,
         Staff,
+        Warstaff,
         FishingRod,
 
         Belt,
@@ -71,6 +73,7 @@ namespace PoESkillTree.Engine.GameModel.Items
             { ItemClass.OneHandMace, Tags.Mace | Tags.OneHandWeapon },
             { ItemClass.Sceptre, Tags.Sceptre | Tags.OneHandWeapon },
             { ItemClass.Dagger, Tags.Dagger | Tags.OneHandWeapon },
+            { ItemClass.RuneDagger, Tags.Dagger | Tags.OneHandWeapon },
             { ItemClass.Claw, Tags.Claw | Tags.OneHandWeapon },
             { ItemClass.Wand, Tags.Wand | Tags.OneHandWeapon | Tags.Ranged },
             { ItemClass.Unarmed, Tags.Default },
@@ -79,6 +82,7 @@ namespace PoESkillTree.Engine.GameModel.Items
             { ItemClass.TwoHandMace, Tags.Mace | Tags.TwoHandWeapon },
             { ItemClass.Bow, Tags.Bow | Tags.TwoHandWeapon | Tags.Ranged },
             { ItemClass.Staff, Tags.Staff | Tags.TwoHandWeapon },
+            { ItemClass.Warstaff, Tags.Staff | Tags.TwoHandWeapon },
             { ItemClass.FishingRod, Tags.FishingRod | Tags.TwoHandWeapon },
             { ItemClass.Belt, Tags.Belt },
             { ItemClass.Ring, Tags.Ring },
