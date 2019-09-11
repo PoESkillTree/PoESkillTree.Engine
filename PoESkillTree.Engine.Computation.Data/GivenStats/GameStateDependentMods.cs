@@ -45,7 +45,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             { BaseAdd, Stat.Dodge.AttackChance, 3, BanditIs(Bandit.Kraityn) },
             { PercentIncrease, Stat.MovementSpeed, 6, BanditIs(Bandit.Kraityn) },
             { BaseAdd, Mana.Regen, 5, BanditIs(Bandit.Alira) },
-            { BaseAdd, CriticalStrike.Multiplier.WithHits, 20, BanditIs(Bandit.Alira) },
+            { BaseAdd, CriticalStrike.Multiplier, 20, BanditIs(Bandit.Alira) },
             { BaseAdd, Elemental.Resistance, 15, BanditIs(Bandit.Alira) },
             // Resistance penalties
             { BaseSubtract, Elemental.Resistance, 30, QuestPartIs(QuestPart.PartTwo) },

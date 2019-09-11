@@ -176,9 +176,10 @@ namespace PoESkillTree.Engine.Computation.Data
                 // - crit
                 { @"\+#% critical strike chance", BaseAdd, Value, CriticalStrike.Chance },
                 { @"\+#% critical strike multiplier", BaseAdd, Value, CriticalStrike.Multiplier },
+                { "no critical strike multiplier", TotalOverride, 0, CriticalStrike.Multiplier },
                 {
-                    "no critical strike multiplier, no damage multiplier for ailments from critical strikes",
-                    TotalOverride, 0, CriticalStrike.Multiplier
+                    "ailments never count as being from critical strikes",
+                    TotalOverride, 0, CriticalStrike.Chance.WithAilments
                 },
                 { "never deal critical strikes", TotalOverride, 0, CriticalStrike.Chance },
                 { "your critical strike chance is lucky", TotalOverride, 1, Flag.CriticalStrikeChanceIsLucky },
@@ -479,7 +480,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "you are immune to ailments", TotalOverride, 100, AllAilments.Select(a => a.Avoidance) },
                 {
                     "poison you inflict with critical strikes deals #% more damage",
-                    PercentMore, Value, CriticalStrike.Multiplier.With(Ailment.Poison)
+                    PercentMore, Value, AnyDamageType.DamageMultiplierWithCrits.With(Ailment.Poison)
                 },
                 { "removes? ({AilmentMatchers})", TotalOverride, 100, Reference.AsAilment.ChanceToRemove },
                 {

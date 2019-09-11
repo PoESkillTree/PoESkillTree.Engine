@@ -250,6 +250,10 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
             => new StatBuilder(StatFactory,
                 new ModifiersApplyToOtherStatCoreStatBuilder(source, target, Form.Increase, StatFactory));
 
+        public IStatBuilder BaseAddsToSourceApplyToTarget(IStatBuilder source, IStatBuilder target)
+            => new StatBuilder(StatFactory,
+                new ModifiersApplyToOtherStatCoreStatBuilder(source, target, Form.BaseAdd, StatFactory));
+
         private class ModifiersApplyToOtherStatCoreStatBuilder : ICoreStatBuilder
         {
             private readonly IStatBuilder _target;

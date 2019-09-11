@@ -14,6 +14,7 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
         IStatBuilder FarShot { get; }
 
         IStatBuilder IncreasesToSourceApplyToTarget(IStatBuilder source, IStatBuilder target);
+        IStatBuilder BaseAddsToSourceApplyToTarget(IStatBuilder source, IStatBuilder target);
 
         IConditionBuilder AlwaysMoving { get; }
         IConditionBuilder AlwaysStationary { get; }

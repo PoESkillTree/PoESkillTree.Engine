@@ -347,10 +347,14 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 {
                     // Perfect Agony
-                    "modifiers to critical strike multiplier also apply to damage multiplier for " +
+                    "modifiers to critical strike multiplier also apply to damage over time multiplier for " +
                     "ailments from critical strikes at #% of their value",
                     TotalOverride, Value,
-                    CriticalStrike.Multiplier.WithSkills.ApplyModifiersToAilments()
+                    Flag.BaseAddsToSourceApplyToTarget(CriticalStrike.Multiplier.WithAilments, Physical.DamageMultiplierWithCrits.WithAilments),
+                    Flag.BaseAddsToSourceApplyToTarget(CriticalStrike.Multiplier.WithAilments, Lightning.DamageMultiplierWithCrits.WithAilments),
+                    Flag.BaseAddsToSourceApplyToTarget(CriticalStrike.Multiplier.WithAilments, Cold.DamageMultiplierWithCrits.WithAilments),
+                    Flag.BaseAddsToSourceApplyToTarget(CriticalStrike.Multiplier.WithAilments, Fire.DamageMultiplierWithCrits.WithAilments),
+                    Flag.BaseAddsToSourceApplyToTarget(CriticalStrike.Multiplier.WithAilments, Chaos.DamageMultiplierWithCrits.WithAilments)
                 },
                 {
                     // Vaal Pact

@@ -9,6 +9,8 @@ Channelling Skills have -3 to Total Mana Cost
 Chance to Block Spell Damage is Unlucky
 // - Item quality as a property stat
 +8% to Quality
+// - main skill is supported by x stat
+Skills supported by Unleash have +1 to maximum number of Seals
 // Requires new buffs
 // - Hinder
 Hindered Enemies take 20% increased Chaos Damage

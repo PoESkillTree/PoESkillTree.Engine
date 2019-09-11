@@ -68,6 +68,14 @@ namespace PoESkillTree.Engine.Computation.Data
                     "non-ailment ({DamageTypeMatchers}) damage over time multiplier",
                     Reference.AsDamageType.DamageMultiplier.WithSkills(DamageSource.OverTime)
                 },
+                {
+                    "damage over time multiplier for ailments from critical strikes",
+                    AnyDamageType.DamageMultiplierWithCrits.WithAilments
+                },
+                {
+                    "damage over time multiplier for ({AilmentMatchers}) from critical strikes",
+                    AnyDamageType.DamageMultiplierWithCrits.With(DamageSource.OverTime).With(Reference.AsAilment)
+                },
                 // - damage taken
                 { "damage taken", Damage.Taken },
                 { "({DamageTypeMatchers}) damage taken", Reference.AsDamageType.Damage.Taken },
@@ -123,12 +131,12 @@ namespace PoESkillTree.Engine.Computation.Data
                 // - penetration
                 // - exposure
                 // - crit
-                { "(global )?critical strike multiplier", CriticalStrike.Multiplier.WithSkills },
+                { "(global )?critical strike multiplier", CriticalStrike.Multiplier },
                 { "(global )?critical strike chance", CriticalStrike.Chance },
                 { "attack critical strike chance", CriticalStrike.Chance.With(DamageSource.Attack) },
                 {
                     "({KeywordMatchers}) critical strike multiplier",
-                    CriticalStrike.Multiplier.WithSkills.With(Reference.AsKeyword)
+                    CriticalStrike.Multiplier.With(Reference.AsKeyword)
                 },
                 { "({KeywordMatchers}) critical strike chance", CriticalStrike.Chance.With(Reference.AsKeyword) },
                 { "projectiles have critical strike chance", CriticalStrike.Chance.With(Keyword.Projectile) },

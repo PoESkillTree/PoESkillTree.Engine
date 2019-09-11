@@ -261,6 +261,8 @@ Returning Projectiles Pierce all Targets
 Mines have 10% increased Detonation Speed
 Mines have 20% increased Detonation Speed
 Moving while Bleeding doesn't cause Minions to take extra Damage
+Skills supported by Unleash have +1 to maximum number of Seals
+Strike Skills target 1 additional nearby Enemy
 // Side effect from how jewels are currently handled, the stat doesn't actually exist
 +1 Jewel Socket
 // Ascendancies: =======================================================================================================

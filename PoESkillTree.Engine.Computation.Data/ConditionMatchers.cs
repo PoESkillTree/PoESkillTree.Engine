@@ -254,6 +254,10 @@ namespace PoESkillTree.Engine.Computation.Data
                     "you and allies affected by (your aura skills|auras from your skills) (have|deal)",
                     Or(For(Self), And(For(Ally), Buffs(targets: Ally).With(Keyword.Aura).Any()))
                 },
+                {
+                    "you and allies affected by your placed banners",
+                    Or(For(Self), And(For(Ally), Flag.IsBannerPlanted, Buffs(targets: Ally).With(Keyword.Banner).Any()))
+                },
                 // ailments
                 { "while( you are)? ({AilmentMatchers})", Reference.AsAilment.IsOn(Self) },
                 { "(against|from) ({AilmentMatchers}) enemies", Reference.AsAilment.IsOn(Enemy) },
