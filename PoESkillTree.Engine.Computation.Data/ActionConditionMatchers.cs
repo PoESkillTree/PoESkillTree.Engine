@@ -105,11 +105,11 @@ namespace PoESkillTree.Engine.Computation.Data
                 // unique
                 {
                     "when your trap is triggered by an enemy",
-                    Action.Unique("When your Trap is triggered by an Enemy").On
+                    Action.Unique("When a Trap is triggered by an Enemy").On
                 },
                 {
-                    "when your mine is detonated targeting an enemy",
-                    Action.Unique("When your Mine is detonated targeting an Enemy").On
+                    "when (your|a) mine is detonated targeting an enemy",
+                    Action.Unique("When a Mine is detonated targeting an Enemy").On
                 },
                 { "on use", Action.Unique("When you use the Flask").On },
                 { "when you use a flask", Action.Unique("When you use any Flask").On },

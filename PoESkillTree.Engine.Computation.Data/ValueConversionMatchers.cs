@@ -137,14 +137,14 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "for each trap and mine you have", Traps.CombinedInstances.Value + Mines.CombinedInstances.Value },
                 { "(per|for each) totem", Totems.CombinedInstances.Value },
                 {
-                    "each mine applies (?<inner>.*) to( hits against)? enemies near it, up to( a maximum of)? #%",
-                    CappedMultiplier(Mines.CombinedInstances.Value, Value), "${inner}"
+                    "each mine( from supported skills)? applies (?<inner>.*) to( hits against)? enemies near it, up to( a maximum of)? #%",
+                    CappedMultiplier(MineAura(), Value),
+                    "${inner}"
                 },
                 {
                     "each mine (?<inner>.*) to( hits against)? enemies near it, up to( a maximum of)? # to #",
-                    CappedMultiplier(
-                        Mines.CombinedInstances.Value,
-                        ValueFactory.FromMinAndMax(Values[0], Values[1])), "${inner}"
+                    CappedMultiplier(MineAura(), ValueFactory.FromMinAndMax(Values[0], Values[1])),
+                    "${inner}"
                 },
                 // jewels
                 {
@@ -199,6 +199,9 @@ namespace PoESkillTree.Engine.Computation.Data
                         Mines.CombinedInstances.Maximum.Value)
                 },
             }; // add
+
+        private ValueBuilder MineAura()
+            => Mines.CombinedInstances.Value * Buff.GenericMine.EffectOn(Enemy).Value;
 
         private Func<ValueBuilder, ValueBuilder> CappedMultiplier(ValueBuilder multiplier, IValueBuilder maximum)
             => v => ValueFactory.Minimum(v * multiplier, maximum);

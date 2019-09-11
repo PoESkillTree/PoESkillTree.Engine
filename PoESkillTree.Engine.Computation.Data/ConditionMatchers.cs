@@ -235,6 +235,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "while there is only one nearby enemy", Enemy.CountNearby.Eq(1) },
                 { "if there are at least # nearby enemies", Enemy.CountNearby >= Value },
                 { "at close range", Enemy.IsNearby },
+                { "to enemies that are near you", Enemy.IsNearby },
                 { "while there is at most one rare or unique enemy nearby", Enemy.CountRareOrUniqueNearby <= 1 },
                 { "while a rare or unique enemy is nearby", Enemy.CountRareOrUniqueNearby >= 1 },
                 { "while there are at least two rare or unique enemies nearby", Enemy.CountRareOrUniqueNearby >= 2 },
@@ -351,6 +352,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "skills used by traps have", With(Keyword.Trap) },
                 { "with mines", With(Keyword.Mine) },
                 { "skills used by mines (deal|have)", With(Keyword.Mine) },
+                { "when used by mines", With(Keyword.Mine) },
                 { "traps and mines (deal|have a)", Or(With(Keyword.Trap), With(Keyword.Mine)) },
                 { "for throwing traps", With(Keyword.Trap) },
                 { "if you detonated (mines|a mine) recently", Skills.DetonateMines.Cast.Recently },
@@ -430,6 +432,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "while channelling", Condition.Unique("Are you currently channeling?") },
                 { "while you are not losing rage", Condition.Unique("Are you currently losing rage?") },
                 { "during soul gain prevention", Condition.Unique("SoulGainPrevention") },
+                { "to your deathmarked enemy", Condition.Unique("Is the enemy Deathmarked?") },
                 // support gem mod clarifications. Irrelevant for parsing.
                 {
                     "((a|for|with|from) )?supported (skill|spell|attack skill|attack)s?'?( (have|deal))?",

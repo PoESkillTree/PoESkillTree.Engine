@@ -56,6 +56,8 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Buffs
         IBuffBuilder Impale { get; }
         IBuffBuilder Infusion { get; }
 
+        IBuffBuilder GenericMine { get; }
+
         /// <summary>
         /// Gets a buff factory that creates Conflux buffs.
         /// </summary>

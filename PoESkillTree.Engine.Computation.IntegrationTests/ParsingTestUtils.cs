@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using NUnit.Framework;
 using PoESkillTree.Engine.Computation.Common;
 using PoESkillTree.Engine.Computation.Parsing;

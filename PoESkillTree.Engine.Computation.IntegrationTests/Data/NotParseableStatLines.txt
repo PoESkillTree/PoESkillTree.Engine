@@ -244,6 +244,12 @@ Lose 1 Stage every 0.33 seconds while not Channelling
 Only one Mine of this type can Detonate in each Detonation Sequence
 Buff expiry rate cannot be modified
 10% increased Projectile Speed Variation (Hidden)
+15% increased Projectile Speed Variation (Hidden)
+Secondary Debuff deals 50% of the total remaining Expected Poison Damage of all Poisons on the dying Enemy per second as Chaos Damage
+Can catch up to 30 Returning Projectiles
+Projectiles Return to you
+Minions from Supported Skills are Defensive
+Minions from Supported Skills always target your Deathmarked Enemy if possible
 // passive skills: =====================================================================================================
 10% Chance for Traps to Trigger an additional time
 Share Endurance, Frenzy and Power Charges with nearby party members
