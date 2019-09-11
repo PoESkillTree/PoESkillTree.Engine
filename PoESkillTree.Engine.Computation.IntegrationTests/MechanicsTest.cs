@@ -194,6 +194,9 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
                 .AddModifier(Build(_builderFactories.EffectBuilders.Ailment.Bleed.Chance), Form.BaseSet, 10)
                 .AddModifier(Build(_builderFactories.EffectBuilders.Ailment.Bleed.CriticalStrikesAlwaysInflict),
                     Form.BaseSet, 1)
+                .AddModifier(Build(_builderFactories.DamageTypeBuilders.Physical.DamageMultiplierWithCrits
+                        .With(_builderFactories.EffectBuilders.Ailment.Bleed)),
+                    Form.BaseAdd, 50)
                 .DoUpdate();
 
             var critChance = 0.1 * ChanceToHit(calculator);
@@ -201,7 +204,7 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
             var ailmentChanceCrits = 1;
             var baseDamage = 5 * 0.7;
             var nonCritDamage = baseDamage * EffectiveDamageMultiplierWithNonCrits;
-            var critDamage = nonCritDamage * 1.5;
+            var critDamage = baseDamage * 0.4 * 1.2 * 2.25;
             var expected = (nonCritDamage * (1 - critChance) * ailmentChanceNonCrits +
                             critDamage * critChance * ailmentChanceCrits) /
                            ((1 - critChance) * ailmentChanceNonCrits + critChance * ailmentChanceCrits);
