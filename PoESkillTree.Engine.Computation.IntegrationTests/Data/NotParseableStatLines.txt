@@ -100,7 +100,7 @@ Traps do not Trigger at the end of their Duration
 Bladefall has 5 additional Volleys
 Causes 4 Explosions
 Debuff can have up to 20 layers of Damage
-Creates Corpses with Level 80
+Spawns Corpses with Level 80
 Maximum of 10 Corpses allowed
 Deals 150% more Damage while Channelling if Illusion has finished moving
 Illusion moves at 130% of your Movement Speed
@@ -112,8 +112,8 @@ Totems Summoned by this Skill cannot Evade
 Deals up to 20% more Damage to closer targets
 Maximum of 3 Geysers at a time
 First Hit deals 50% less Damage
-Creates 5 Corpses
-Creates Corpses up to Level 100
+Spawns 5 Corpses
+Spawns Corpses up to Level 100
 Maximum of 15 Corpses allowed
 80% more Area Radius against Enemies affected by an Ailment of the chosen Element
 Only Deals Damage of the chosen Element Deals no Damage of other Damage Types
@@ -171,7 +171,7 @@ Fires 3 additional sequences of arrows
 Strikes an Enemy every 0.25 seconds
 10% chance to Trigger this Skill when Hit
 30% chance to Trigger this Skill when Hit
-Destroys up to 3 Corpses
+Consumes up to 3 Corpses
 100% of Physical Damage Converted to Fire, Cold or Lightning Damage
 Supported Attacks will Trigger a Supported Spell when you Crit an Enemy
 You cannot Cast Supported Triggerable Spells directly
@@ -190,10 +190,10 @@ Supported Skills Repeat 2 additional times
 Supported Skills also fire Projectiles from up to 2 points on each side of you
 Summons a Totem which uses the Supported Skill
 Supported Area of Effect skills also affect areas in front and behind the targeted area
-Supported Attack Skills also target 2 nearby Enemies
+Supported Strike Skills target 2 additional nearby Enemies
 Supported Curses are Cast as Auras
 Supported Skills throw up to 2 additional Traps
-Supported Skills place 2 additional Mines
+Supported Skills throw up to 4 additional Mines
 Supported Attack Skills cannot be used with Melee Weapons
 Buff is applied for a Base Duration of 4 seconds
 Pods fire 8 additional Arrows
@@ -234,9 +234,16 @@ Reflects 3000% of Damage taken from Buff as Fire Damage each second, or when Buf
 Maximum of 3 Bladestorms at a time
 At least 5 Rage required to start Berserking
 Lose 5 Rage per second
-Each second, 20% increased Rage loss Rate
+Each second, 20% more Rage loss Rate
 19% increased Cooldown Recovery Speed for each Normal or Magic Enemy in Area 99% increased Cooldown Recovery Speed for each Rare or Unique Enemy in Area
-Nearby Enemies are Blinded while in Sand Stance You take 14% less Damage from Enemies that aren't nearby while in Sand Stance Nearby Enemies are Maimed while in Blood Stance
+Nearby Enemies are Blinded while in Sand Stance You take 11% less Damage from Attacks from Enemies that aren't nearby while in Sand Stance Nearby Enemies are Maimed while in Blood Stance
+Creates 6 Spikes
+First Mine Detonates Instantly Mines get 10% more Detonation Speed for each prior Mine in Detonation Sequence
+Gains 1 Stage every 0.17 seconds while Channelling
+Lose 1 Stage every 0.33 seconds while not Channelling
+Only one Mine of this type can Detonate in each Detonation Sequence
+Buff expiry rate cannot be modified
+10% increased Projectile Speed Variation (Hidden)
 // passive skills: =====================================================================================================
 10% Chance for Traps to Trigger an additional time
 Share Endurance, Frenzy and Power Charges with nearby party members

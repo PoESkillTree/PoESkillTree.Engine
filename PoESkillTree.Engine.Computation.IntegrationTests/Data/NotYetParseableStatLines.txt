@@ -11,6 +11,8 @@ Chance to Block Spell Damage is Unlucky
 +8% to Quality
 // - main skill is supported by x stat
 Skills supported by Unleash have +1 to maximum number of Seals
+// - losing charges
+Lose all Inspiration Charges after Spending a total of 800 Mana with Supported Skills
 // Requires new buffs
 // - Hinder
 Hindered Enemies take 20% increased Chaos Damage

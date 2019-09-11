@@ -92,6 +92,11 @@ namespace PoESkillTree.Engine.Computation.Data
                     Flag.IncreasesToSourceApplyToTarget(Stat.CastRate.With(DamageSource.Spell), Stat.HitRate)
                 },
                 {
+                    "increases and reductions to mine duration also apply to this skill's buff duration",
+                    TotalOverride, 1,
+                    Flag.IncreasesToSourceApplyToTarget(Stat.Mine.Duration, Skills.ModifierSourceSkill.Buff.Duration)
+                },
+                {
                     "({StatMatchers}) is doubled",
                     PercentMore, 100, Reference.AsStat
                 },
@@ -272,6 +277,11 @@ namespace PoESkillTree.Engine.Computation.Data
                     TotalOverride, 100, Buff.Maim.Chance.WithHits
                 },
                 {
+                    // Viper Strike
+                    "each weapon hits separately if dual wielding, dealing #% less damage",
+                    PercentLess, Value, Damage, OffHand.Has(Tags.Weapon)
+                },
+                {
                     // Winter Orb
                     "#% increased projectile frequency per stage",
                     PercentIncrease, Value * Stat.SkillStage.Value, Stat.HitRate
@@ -285,6 +295,11 @@ namespace PoESkillTree.Engine.Computation.Data
                     // Blasphemy Support
                     "using supported skills is instant",
                     TotalOverride, 0, Stat.BaseCastTime
+                },
+                {
+                    // Elemental Army Support
+                    "minions from supported skills inflict exposure on hit, applying #% to the elemental resistance matching highest damage type taken by enemy",
+                    ElementalArmy().ToArray()
                 },
                 {
                     // Fork Support
@@ -653,6 +668,15 @@ namespace PoESkillTree.Engine.Computation.Data
                     TotalOverride, 1, PassiveTree.ConnectsToClass(CharacterClass.Templar)
                 },
             };
+
+        private IEnumerable<(IFormBuilder form, IValueBuilder value, IStatBuilder stat, IConditionBuilder condition)>
+            ElementalArmy()
+        {
+            var exposureDamageTypeValue = Stat.UniqueEnum<DamageType>("Elemental Army Exposure damage type");
+            yield return (BaseSet, Value, Lightning.Exposure, exposureDamageTypeValue.Eq((int) DamageType.Lightning));
+            yield return (BaseSet, Value, Cold.Exposure, exposureDamageTypeValue.Eq((int) DamageType.Cold));
+            yield return (BaseSet, Value, Fire.Exposure, exposureDamageTypeValue.Eq((int) DamageType.Fire));
+        }
 
         private IConditionBuilder CombatFocusCondition(string skillId, int skillPart)
             => And(With(Skills.FromId(skillId)), Stat.MainSkillPart.Value.Eq(skillPart),

@@ -28,6 +28,7 @@ Clarity
 Cleave
 ClusterBurst
 ColdImpurity
+ColdProjectileMine
 ColdResistAura
 ColdSnap
 Conductivity
@@ -63,7 +64,6 @@ ExpandingFireCone
 ExplosiveArrow
 FireBeam
 FireImpurity
-FireNovaMine
 FireResistAura
 FireTrap
 Fireball
@@ -75,7 +75,6 @@ Flameblast
 FlamethrowerTrap
 Flammability
 FlickerStrike
-FreezeMine
 FreezingPulse
 Frenzy
 FrostBlades
@@ -118,6 +117,7 @@ MagmaOrb
 MirrorArrow
 MoltenShell
 MoltenStrike
+MortarBarrageMine
 NewPhaseRun
 OrbOfStorms
 PhysCascadeTrap

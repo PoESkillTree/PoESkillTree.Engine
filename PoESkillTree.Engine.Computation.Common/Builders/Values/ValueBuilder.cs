@@ -40,7 +40,7 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Values
         public IConditionBuilder Eq(double other) =>
             _value.Eq(Create(other));
 
-        public static IConditionBuilder operator >(ValueBuilder left, ValueBuilder right) =>
+        public static IConditionBuilder operator >(ValueBuilder left, IValueBuilder right) =>
             left._value.GreaterThan(right);
 
         public static IConditionBuilder operator >=(ValueBuilder left, ValueBuilder right) =>
@@ -49,8 +49,8 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Values
         public static IConditionBuilder operator <=(ValueBuilder left, ValueBuilder right) =>
             right >= left;
 
-        public static IConditionBuilder operator <(ValueBuilder left, ValueBuilder right) =>
-            right > left;
+        public static IConditionBuilder operator <(ValueBuilder left, IValueBuilder right) =>
+            Wrap(right) > left;
 
         public static IConditionBuilder operator >(ValueBuilder left, double right) =>
             left > left.Create(right);
@@ -80,7 +80,7 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Values
             _value.GreaterThan(other);
 
 
-        public static ValueBuilder operator *(ValueBuilder left, ValueBuilder right) =>
+        public static ValueBuilder operator *(ValueBuilder left, IValueBuilder right) =>
             Wrap(left._value.Multiply(right));
 
         public static ValueBuilder operator *(ValueBuilder left, double right) =>

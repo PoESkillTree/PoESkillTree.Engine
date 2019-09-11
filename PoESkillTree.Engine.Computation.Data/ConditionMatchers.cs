@@ -183,7 +183,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "while wielding a melee weapon", And(EitherHandHas(Tags.Weapon), Not(MainHand.Has(Tags.Ranged))) },
                 { "while wielding a one handed weapon", MainHand.Has(Tags.OneHandWeapon) },
                 { "while wielding a two handed weapon", MainHand.Has(Tags.TwoHandWeapon) },
-                { "while dual wielding", OffHand.Has(Tags.Weapon) },
+                { "(if|while) dual wielding", OffHand.Has(Tags.Weapon) },
                 { "while holding a shield", OffHand.Has(Tags.Shield) },
                 { "while dual wielding or holding a shield", Or(OffHand.Has(Tags.Weapon), OffHand.Has(Tags.Shield)) },
                 { "with shields", OffHand.Has(Tags.Shield) },
@@ -367,6 +367,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "minions", For(Entity.Minion) },
                 { "minions (deal|have|gain)", For(Entity.Minion) },
                 { "supported skills have minion", For(Entity.Minion) },
+                { "minions from supported skills deal", For(Entity.Minion) },
                 { "you and your minions have", For(Entity.Minion).Or(For(Self)) },
                 { "golems", And(For(Entity.Minion), With(Keyword.Golem)) },
                 { "golems have", And(For(Entity.Minion), With(Keyword.Golem)) },
@@ -430,12 +431,10 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "while you are not losing rage", Condition.Unique("Are you currently losing rage?") },
                 { "during soul gain prevention", Condition.Unique("SoulGainPrevention") },
                 // support gem mod clarifications. Irrelevant for parsing.
-                { "supported (skills|spells|attacks) (have|deal)", Condition.True },
-                { "(from |with )?supported skills'?", Condition.True },
-                { "a supported skill", Condition.True },
-                { "supported attacks", Condition.True },
-                { "supported attack skills", Condition.True },
-                { "supported attack skills deal", Condition.True },
+                {
+                    "((a|for|with|from) )?supported (skill|spell|attack skill|attack)s?'?( (have|deal))?",
+                    Condition.True
+                },
                 { "of supported curse skills", Condition.True },
             };
     }

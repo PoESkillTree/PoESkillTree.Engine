@@ -202,7 +202,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
                     ("base_chance_to_shock_%", AuraEntities))
             },
             { "ConduitSigil", BrandExtension }, // Storm Brand
-            { "Convocation", Buff(Entity.Minion, "base_life_regeneration_rate_per_minute") },
+            { "Convocation", Buff(Entity.Minion, "life_regeneration_rate_per_minute_%") },
             { "VaalColdSnap", SkillDotIsAreaDamageExtension },
             { "CorpseEruption", CorpseExplodingSpellParts }, // Cremation
             {

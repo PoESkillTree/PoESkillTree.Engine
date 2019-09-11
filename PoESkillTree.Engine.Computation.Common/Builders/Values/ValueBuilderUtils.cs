@@ -64,7 +64,7 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Values
         public static ValueBuilder Ceiling(this ValueBuilder value)
             => value.Select(Math.Ceiling, o => "Ceiling(" + o + ")");
 
-        public static ValueBuilder Minimum(this IValueBuilders valueFactory, ValueBuilder left, ValueBuilder right)
+        public static ValueBuilder Minimum(this IValueBuilders valueFactory, ValueBuilder left, IValueBuilder right)
             => valueFactory.If(left > right).Then(right).Else(left);
 
         public static ValueBuilder Minimum(this IValueBuilders valueFactory, ValueBuilder left, double right)

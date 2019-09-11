@@ -92,6 +92,10 @@ namespace PoESkillTree.Engine.Computation.Data
                     "per # mana spent recently, up to #%",
                     CappedMultiplier(Action.SpendMana(Values[0]).CountRecently, Values[1])
                 },
+                {
+                    "per # additional melee range",
+                    PerStat(Stat.Range.With(AttackDamageHand.MainHand).ValueFor(NodeType.BaseAdd), Value)
+                },
                 // buffs
                 { "per buff on you", Buffs(targets: Self).Count() },
                 { "per curse on you", Buffs(targets: Self).With(Keyword.Curse).Count() },
@@ -133,8 +137,14 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "for each trap and mine you have", Traps.CombinedInstances.Value + Mines.CombinedInstances.Value },
                 { "(per|for each) totem", Totems.CombinedInstances.Value },
                 {
-                    "each mine applies (?<inner>.*) to enemies near it, up to #%",
+                    "each mine applies (?<inner>.*) to( hits against)? enemies near it, up to( a maximum of)? #%",
                     CappedMultiplier(Mines.CombinedInstances.Value, Value), "${inner}"
+                },
+                {
+                    "each mine (?<inner>.*) to( hits against)? enemies near it, up to( a maximum of)? # to #",
+                    CappedMultiplier(
+                        Mines.CombinedInstances.Value,
+                        ValueFactory.FromMinAndMax(Values[0], Values[1])), "${inner}"
                 },
                 // jewels
                 {
@@ -155,8 +165,7 @@ namespace PoESkillTree.Engine.Computation.Data
                     AtLeastZero(Projectile.ChainCount.Value - Stat.UniqueAmount("Projectile.ChainedCount"))
                 },
                 { "per chain", Stat.UniqueAmount("Projectile.ChainedCount") },
-                { "for each enemy pierced", Stat.UniqueAmount("Projectile.PiercedCount")
-                },
+                { "for each enemy pierced", Stat.UniqueAmount("Projectile.PiercedCount") },
                 {
                     "for each (of your mines|mine) detonated recently, up to #%( per second)?",
                     CappedMultiplier(Stat.UniqueAmount("# of Mines Detonated Recently"), Value)
@@ -177,9 +186,21 @@ namespace PoESkillTree.Engine.Computation.Data
                     "for each nearby corpse, (?<inner>.*) up to #%? per second",
                     CappedMultiplier(Stat.UniqueAmount("# of nearby Corpses"), Value), "${inner}"
                 },
+                {
+                    "for each prior mine in detonation sequence",
+                    CappedMultiplier(
+                        Stat.UniqueAmount("# of prior mines in detonation sequence"),
+                        Mines.CombinedInstances.Maximum.Value)
+                },
+                {
+                    "for every # prior mines in detonation sequence",
+                    CappedMultiplier(
+                        (Stat.UniqueAmount("# of prior mines in detonation sequence") / Value).Floor(),
+                        Mines.CombinedInstances.Maximum.Value)
+                },
             }; // add
 
-        private Func<ValueBuilder, ValueBuilder> CappedMultiplier(ValueBuilder multiplier, ValueBuilder maximum)
+        private Func<ValueBuilder, ValueBuilder> CappedMultiplier(ValueBuilder multiplier, IValueBuilder maximum)
             => v => ValueFactory.Minimum(v * multiplier, maximum);
 
         private ValueBuilder AtLeastZero(ValueBuilder value)

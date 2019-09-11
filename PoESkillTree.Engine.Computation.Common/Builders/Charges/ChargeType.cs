@@ -10,5 +10,6 @@
         Intensity,
         Challenger,
         Blitz,
+        Inspiration,
     }
 }

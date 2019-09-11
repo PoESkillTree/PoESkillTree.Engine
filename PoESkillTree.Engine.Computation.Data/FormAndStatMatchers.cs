@@ -219,6 +219,10 @@ namespace PoESkillTree.Engine.Computation.Data
                     "projectiles pierce all targets",
                     TotalOverride, double.PositiveInfinity, Projectile.PierceCount
                 },
+                {
+                    "arrows pierce all targets",
+                    TotalOverride, double.PositiveInfinity, Projectile.PierceCount, With(Keyword.Attack)
+                },
                 { @"chains \+# times", BaseAdd, Value, Projectile.ChainCount },
                 { @"(supported )?skills chain \+# times", BaseAdd, Value, Projectile.ChainCount },
                 // - other
@@ -391,11 +395,16 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "mine lasts # seconds", BaseSet, Value, Stat.Mine.Duration },
                 { "totem lasts # seconds", BaseSet, Value, Stat.Totem.Duration },
                 {
-                    "detonating mines is instant",
+                    "(detonating mines|mine detonation) is instant",
                     TotalOverride, 0, Stat.BaseCastTime, With(Skills.DetonateMines)
+                },
+                {
+                    "(a )?base mine detonation time (of|is) # seconds",
+                    TotalOverride, Value, Stat.BaseCastTime, With(Skills.DetonateMines)
                 },
                 // minions
                 { "can summon up to # golem at a time", BaseSet, Value, Golems.CombinedInstances.Maximum },
+                { "maximum # summoned golem", BaseSet, Value, Golems.CombinedInstances.Maximum },
                 {
                     @"\+# seconds? to summon skeleton cooldown",
                     BaseAdd, Value, Stat.Cooldown, With(Skills.SummonSkeletons)
@@ -428,6 +437,7 @@ namespace PoESkillTree.Engine.Computation.Data
                     TotalOverride, 0, Buffs(Self, Enemy).With(Keyword.Curse).On, Flag.IgnoreHexproof.IsSet.Not
                 },
                 { "grants? fortify", TotalOverride, 1, Buff.Fortify.On(Self) },
+                { "grants? phasing", TotalOverride, 1, Buff.Phasing.On(Self) },
                 {
                     "you and nearby allies have onslaught",
                     TotalOverride, 1, Buff.Onslaught.On(Self), Buff.Onslaught.On(Ally)

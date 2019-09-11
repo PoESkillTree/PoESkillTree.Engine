@@ -83,6 +83,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             { BaseSet, Charge.Power.Amount.Maximum, 3 },
             { BaseSet, Charge.From(ChargeType.GhostShroud).Amount.Maximum, 3 },
             { BaseSet, Charge.From(ChargeType.Intensity).Amount.Maximum, 4 },
+            { BaseSet, Charge.From(ChargeType.Inspiration).Amount.Maximum, 5 },
             { BaseSet, Charge.Endurance.Amount.Minimum, 0 },
             { BaseSet, Charge.Frenzy.Amount.Minimum, 0 },
             { BaseSet, Charge.Power.Amount.Minimum, 0 },

@@ -29,6 +29,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "intensity", Charge.From(ChargeType.Intensity) },
                 { "challenger charges?", Charge.From(ChargeType.Challenger) },
                 { "blitz charges?", Charge.From(ChargeType.Blitz) },
+                { "inspiration charges?", Charge.From(ChargeType.Inspiration) },
             };
     }
 }
