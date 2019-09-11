@@ -88,6 +88,9 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         public ValueBuilder UniqueAmount(string name)
             => FromIdentity(name, typeof(uint), UserSpecifiedValue(0)).Value;
 
+        public ValueBuilder UniqueEnum<T>(string name) where T : Enum
+            => FromIdentity(name, typeof(T), UserSpecifiedValue(0)).Value;
+
         public IStatBuilder IndependentMultiplier(string identity)
             => FromIdentity(identity, typeof(uint), IndependentResult(NodeType.Increase));
 
@@ -121,7 +124,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         {
         }
 
-        public IStatBuilder Speed => FromIdentity("LayingSpeed", typeof(double));
+        public IStatBuilder Speed => FromIdentity("ThrowingSpeed", typeof(double));
         public IStatBuilder Duration => FromIdentity(typeof(double));
         public IStatBuilder DetonationAoE => FromIdentity(typeof(int));
     }
@@ -249,6 +252,10 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         public IStatBuilder IncreasesToSourceApplyToTarget(IStatBuilder source, IStatBuilder target)
             => new StatBuilder(StatFactory,
                 new ModifiersApplyToOtherStatCoreStatBuilder(source, target, Form.Increase, StatFactory));
+
+        public IStatBuilder BaseAddsToSourceApplyToTarget(IStatBuilder source, IStatBuilder target)
+            => new StatBuilder(StatFactory,
+                new ModifiersApplyToOtherStatCoreStatBuilder(source, target, Form.BaseAdd, StatFactory));
 
         private class ModifiersApplyToOtherStatCoreStatBuilder : ICoreStatBuilder
         {

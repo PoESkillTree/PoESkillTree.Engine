@@ -27,7 +27,9 @@ ChargedDash
 Clarity
 Cleave
 ClusterBurst
+CobraLash
 ColdImpurity
+ColdProjectileMine
 ColdResistAura
 ColdSnap
 Conductivity
@@ -63,7 +65,6 @@ ExpandingFireCone
 ExplosiveArrow
 FireBeam
 FireImpurity
-FireNovaMine
 FireResistAura
 FireTrap
 Fireball
@@ -75,7 +76,6 @@ Flameblast
 FlamethrowerTrap
 Flammability
 FlickerStrike
-FreezeMine
 FreezingPulse
 Frenzy
 FrostBlades
@@ -107,6 +107,7 @@ InfernalBlow
 LancingSteel
 LeapSlam
 LightningArrow
+LightningExplosionMine
 LightningImpurity
 LightningResistAura
 LightningStrike
@@ -115,9 +116,11 @@ LightningTowerTrap
 LightningTrap
 LightningWarp
 MagmaOrb
+MambaStrike
 MirrorArrow
 MoltenShell
 MoltenStrike
+MortarBarrageMine
 NewPhaseRun
 OrbOfStorms
 PhysCascadeTrap
@@ -153,6 +156,7 @@ ShrapnelTrap
 SiegeBallista
 Smite
 SmokeMine
+SnappingAdder
 Soulrend
 Spark
 SpellDamageAura
@@ -187,6 +191,7 @@ SupportCastOnStunned
 SupportCastWhileChannelling
 SupportChain
 SupportChanceToBleed
+SupportChargedMines
 SupportClusterTrap
 SupportColdPenetration
 SupportColdToFire
@@ -237,6 +242,8 @@ SupportMeleePhysicalDamage
 SupportMeleeSplash
 SupportMinefield
 SupportMinionDamage
+SupportMinionDefensiveStance
+SupportMinionFocusFire
 SupportMinionLife
 SupportMinionSpeed
 SupportMultiTotem
@@ -259,6 +266,7 @@ SupportRapidDecay
 SupportReducedDuration
 SupportReducedMana
 SupportRemoteMine
+SupportRemoteMine2
 SupportSlowerProjectiles
 SupportSpellCascade
 SupportSpellTotem

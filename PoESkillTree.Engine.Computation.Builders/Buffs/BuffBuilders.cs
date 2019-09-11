@@ -39,6 +39,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
             Impale = Create("Impale");
             Infusion = Create("Infusion");
             Conflux = new ConfluxBuffBuilders(statFactory);
+            GenericMine = Create("Mine");
             CurseLimit = StatBuilderUtils.FromIdentity(statFactory, "CurseLimit", typeof(uint));
 
             var allBuffs = new List<BuffBuilderWithKeywords>
@@ -65,6 +66,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
                 new BuffBuilderWithKeywords(Create("Buff")),
                 // Aura effect increase (used for Aura())
                 new BuffBuilderWithKeywords(Create("Aura"), Keyword.Aura),
+                new BuffBuilderWithKeywords(GenericMine, Keyword.Aura, Keyword.Mine),
             };
             var skillBuffBuilders = skills.Skills
                 .Where(s => !s.IsSupport && s.ActiveSkill.ProvidesBuff)
@@ -90,6 +92,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
         public IBuffBuilder Innervation { get; }
         public IBuffBuilder Impale { get; }
         public IBuffBuilder Infusion { get; }
+        public IBuffBuilder GenericMine { get; }
         public IConfluxBuffBuilders Conflux { get; }
 
         public IStatBuilder Temporary(IStatBuilder gainedStat)

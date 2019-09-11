@@ -53,12 +53,28 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "chance to deal double damage", Damage.ChanceToDouble },
                 // - damage multiplier
                 {
+                    "damage over time multiplier",
+                    AnyDamageType.DamageMultiplier.With(DamageSource.OverTime)
+                },
+                {
+                    "damage over time multiplier for ({AilmentMatchers})",
+                    AnyDamageType.DamageMultiplier.With(DamageSource.OverTime).With(Reference.AsAilment)
+                },
+                {
                     "({DamageTypeMatchers}) damage over time multiplier",
                     Reference.AsDamageType.DamageMultiplier.With(DamageSource.OverTime)
                 },
                 {
                     "non-ailment ({DamageTypeMatchers}) damage over time multiplier",
                     Reference.AsDamageType.DamageMultiplier.WithSkills(DamageSource.OverTime)
+                },
+                {
+                    "damage over time multiplier for ailments from critical strikes",
+                    AnyDamageType.DamageMultiplierWithCrits.WithAilments
+                },
+                {
+                    "damage over time multiplier for ({AilmentMatchers}) from critical strikes",
+                    AnyDamageType.DamageMultiplierWithCrits.With(DamageSource.OverTime).With(Reference.AsAilment)
                 },
                 // - damage taken
                 { "damage taken", Damage.Taken },
@@ -115,12 +131,12 @@ namespace PoESkillTree.Engine.Computation.Data
                 // - penetration
                 // - exposure
                 // - crit
-                { "(global )?critical strike multiplier", CriticalStrike.Multiplier.WithSkills },
+                { "(global )?critical strike multiplier", CriticalStrike.Multiplier },
                 { "(global )?critical strike chance", CriticalStrike.Chance },
                 { "attack critical strike chance", CriticalStrike.Chance.With(DamageSource.Attack) },
                 {
                     "({KeywordMatchers}) critical strike multiplier",
-                    CriticalStrike.Multiplier.WithSkills.With(Reference.AsKeyword)
+                    CriticalStrike.Multiplier.With(Reference.AsKeyword)
                 },
                 { "({KeywordMatchers}) critical strike chance", CriticalStrike.Chance.With(Reference.AsKeyword) },
                 { "projectiles have critical strike chance", CriticalStrike.Chance.With(Keyword.Projectile) },
@@ -249,6 +265,10 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "energy shield recharge rate", EnergyShield.Recharge },
                 { "({PoolStatMatchers}) recovery rate", Reference.AsPoolStat.RecoveryRate },
                 {
+                    "recovery rate of ({PoolStatMatchers}) and ({PoolStatMatchers})",
+                    References[0].AsPoolStat.RecoveryRate, References[1].AsPoolStat.RecoveryRate
+                },
+                {
                     "recovery rate of life, mana and energy shield",
                     Life.RecoveryRate, Mana.RecoveryRate, EnergyShield.RecoveryRate
                 },
@@ -283,13 +303,19 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "cooldown recovery speed for throwing traps", Stat.CooldownRecoverySpeed, With(Keyword.Trap) },
                 { "mana cost( of skills)?", Mana.Cost },
                 {
-                    "mana cost of skills that place mines or throw traps",
+                    "mana cost of skills that throw traps",
+                    Mana.Cost, With(Keyword.Trap)
+                },
+                {
+                    "mana cost of skills that (place|throw) mines or throw traps",
                     Mana.Cost, Or(With(Keyword.Mine), With(Keyword.Trap))
                 },
+                { "mana cost of minion skills", Mana.Cost, With(Keyword.Minion) },
                 { "mana cost of ({SkillMatchers})", Mana.Cost, With(Reference.AsSkill) },
                 { "mana reserved", AllSkills.Reservation },
                 { "mana reservation of skills", AllSkills.Reservation },
                 { "mana reservation of ({KeywordMatchers}) skills", Skills[Reference.AsKeyword].Reservation },
+                { "mana reservation of skills that throw mines", Mines.Reservation },
                 { "({SkillMatchers}) has mana reservation", Reference.AsSkill.Reservation },
                 { "skill effect duration", Stat.Duration },
                 { "skill duration", Stat.Duration },
@@ -308,13 +334,13 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "trap trigger area of effect", Stat.Trap.TriggerAoE },
                 { "mine detonation area of effect", Stat.Mine.DetonationAoE },
                 { "trap throwing speed", Stat.Trap.Speed },
-                { "mine laying speed", Stat.Mine.Speed },
+                { "mine (laying|throwing) speed", Stat.Mine.Speed },
                 { "totem placement speed", Stat.Totem.Speed },
                 { "totem life", Life.For(Entity.Totem) },
                 // minions
                 {
                     "maximum number of skeletons",
-                    Skills.SummonSkeleton.Instances.Maximum, Skills.VaalSummonSkeletons.Instances.Maximum
+                    Skills.SummonSkeletons.Instances.Maximum, Skills.VaalSummonSkeletons.Instances.Maximum
                 },
                 { "maximum number of spectres", Skills.RaiseSpectre.Instances.Maximum },
                 { "maximum number of( raised)? zombies", Skills.RaiseZombie.Instances.Maximum },
@@ -322,7 +348,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "skeleton duration", Stat.Duration, WithSkeletonSkills },
                 { "skeleton movement speed", Stat.MovementSpeed.For(Entity.Minion), WithSkeletonSkills },
                 { "golem at a time", Golems.CombinedInstances.Maximum },
-                { "maximum number of summoned golems", Golems.CombinedInstances.Maximum },
+                { "maximum number of( summoned)? golems", Golems.CombinedInstances.Maximum },
                 // buffs
                 // - effect
                 { "({BuffMatchers}) effect", Reference.AsBuff.Effect },
@@ -347,6 +373,7 @@ namespace PoESkillTree.Engine.Computation.Data
                     "effect of non-curse auras from your skills",
                     Buffs(Self).With(Keyword.Aura).Without(Keyword.Curse).Effect
                 },
+                { "effect of auras from mines", Buffs(Self).With(Keyword.Aura).With(Keyword.Mine).Effect },
                 { "warcry buff effect", Buffs(targets: Self).With(Keyword.Warcry).Effect },
                 { "aura effect", Skills.ModifierSourceSkill.Buff.Effect },
                 { "(?<!area of )effect of aura", Skills.ModifierSourceSkill.Buff.Effect },
@@ -408,6 +435,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 // flasks
                 { "(?<!during (any )?flask )effect", Flask.Effect },
                 { "effect of flasks( on you)?", Flask.Effect },
+                { "flasks applied to you have effect", Flask.Effect },
                 { "flask effect duration", Flask.Duration },
                 { "life recover(ed|y from flasks)", Flask.LifeRecovery },
                 { "mana recover(ed|y from flasks)", Flask.ManaRecovery },

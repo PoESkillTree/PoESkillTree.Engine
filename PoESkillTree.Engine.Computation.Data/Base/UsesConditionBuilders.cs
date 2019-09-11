@@ -29,7 +29,7 @@ namespace PoESkillTree.Engine.Computation.Data.Base
         protected IConditionBuilder With(ISkillBuilder skill) => Condition.With(skill);
 
         protected IConditionBuilder WithSkeletonSkills
-            => Or(With(Skills.SummonSkeleton), With(Skills.VaalSummonSkeletons));
+            => Or(With(Skills.SummonSkeletons), With(Skills.VaalSummonSkeletons));
 
         protected IConditionBuilder MainHandAttackWith(Tags tags) =>
             MainHandAttack.And(MainHand.Has(tags));

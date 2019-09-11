@@ -134,7 +134,7 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
                     _f.ValueBuilders.Create(100))
             }.Flatten();
             var actual = Parse(
-                    "Life Leeched per Second is doubled.\nMaximum Life Leech Rate is doubled.\nLife Regeneration has no effect.")
+                    "Life Leeched per Second is doubled\nMaximum Life Leech Rate is doubled\nLife Regeneration has no effect")
                 .Modifiers;
 
             Assert.AreEqual(expected, actual);

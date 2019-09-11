@@ -92,12 +92,13 @@ namespace PoESkillTree.Engine.Computation.Data
                     Flag.IncreasesToSourceApplyToTarget(Stat.CastRate.With(DamageSource.Spell), Stat.HitRate)
                 },
                 {
-                    "({StatMatchers}) is doubled",
-                    PercentMore, 100, Reference.AsStat
+                    "increases and reductions to mine duration also apply to this skill's buff duration",
+                    TotalOverride, 1,
+                    Flag.IncreasesToSourceApplyToTarget(Stat.Mine.Duration, Skills.ModifierSourceSkill.Buff.Duration)
                 },
                 {
-                    "gain #% of maximum ({PoolStatMatchers}) as extra maximum energy shield",
-                    BaseAdd, Value, Reference.AsPoolStat.ConvertTo(EnergyShield)
+                    "({StatMatchers}) is doubled",
+                    PercentMore, 100, Reference.AsStat
                 },
                 {
                     "(your )?damaging hits always stun enemies that are on full life",
@@ -133,16 +134,22 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 {
                     // Combat Focus
-                    "with # total ({AttributeStatMatchers}) and ({AttributeStatMatchers}) in radius, elemental hit cannot choose fire",
-                    TotalOverride, 0, Fire.Damage, CombatFocusCondition(0)
+                    "with # total ({AttributeStatMatchers}) and ({AttributeStatMatchers}) in radius, elemental hit and wild strike cannot choose fire",
+                    (TotalOverride, 0, Fire.Damage, CombatFocusCondition("ElementalHit", 0)),
+                    (TotalOverride, 0, Fire.Damage, CombatFocusCondition("WildStrike", 0)),
+                    (TotalOverride, 0, Fire.Damage, CombatFocusCondition("WildStrike", 1))
                 },
                 {
-                    "with # total ({AttributeStatMatchers}) and ({AttributeStatMatchers}) in radius, elemental hit cannot choose cold",
-                    TotalOverride, 0, Cold.Damage, CombatFocusCondition(1)
+                    "with # total ({AttributeStatMatchers}) and ({AttributeStatMatchers}) in radius, elemental hit and wild strike cannot choose cold",
+                    (TotalOverride, 0, Cold.Damage, CombatFocusCondition("ElementalHit", 1)),
+                    (TotalOverride, 0, Cold.Damage, CombatFocusCondition("WildStrike", 2)),
+                    (TotalOverride, 0, Cold.Damage, CombatFocusCondition("WildStrike", 3))
                 },
                 {
-                    "with # total ({AttributeStatMatchers}) and ({AttributeStatMatchers}) in radius, elemental hit cannot choose lightning",
-                    TotalOverride, 0, Lightning.Damage, CombatFocusCondition(2)
+                    "with # total ({AttributeStatMatchers}) and ({AttributeStatMatchers}) in radius, elemental hit and wild strike cannot choose lightning",
+                    (TotalOverride, 0, Lightning.Damage, CombatFocusCondition("ElementalHit", 2)),
+                    (TotalOverride, 0, Lightning.Damage, CombatFocusCondition("WildStrike", 4)),
+                    (TotalOverride, 0, Lightning.Damage, CombatFocusCondition("WildStrike", 5))
                 },
                 {
                     // Intuitive Leap
@@ -270,6 +277,11 @@ namespace PoESkillTree.Engine.Computation.Data
                     TotalOverride, 100, Buff.Maim.Chance.WithHits
                 },
                 {
+                    // Viper Strike
+                    "each weapon hits separately if dual wielding, dealing #% less damage",
+                    PercentLess, Value, Damage, OffHand.Has(Tags.Weapon)
+                },
+                {
                     // Winter Orb
                     "#% increased projectile frequency per stage",
                     PercentIncrease, Value * Stat.SkillStage.Value, Stat.HitRate
@@ -283,6 +295,11 @@ namespace PoESkillTree.Engine.Computation.Data
                     // Blasphemy Support
                     "using supported skills is instant",
                     TotalOverride, 0, Stat.BaseCastTime
+                },
+                {
+                    // Elemental Army Support
+                    "minions from supported skills inflict exposure on hit, applying #% to the elemental resistance matching highest damage type taken by enemy",
+                    ElementalArmy().ToArray()
                 },
                 {
                     // Fork Support
@@ -345,10 +362,14 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 {
                     // Perfect Agony
-                    "modifiers to critical strike multiplier also apply to damage multiplier for " +
+                    "modifiers to critical strike multiplier also apply to damage over time multiplier for " +
                     "ailments from critical strikes at #% of their value",
                     TotalOverride, Value,
-                    CriticalStrike.Multiplier.WithSkills.ApplyModifiersToAilments()
+                    Flag.BaseAddsToSourceApplyToTarget(CriticalStrike.Multiplier.WithAilments, Physical.DamageMultiplierWithCrits.WithAilments),
+                    Flag.BaseAddsToSourceApplyToTarget(CriticalStrike.Multiplier.WithAilments, Lightning.DamageMultiplierWithCrits.WithAilments),
+                    Flag.BaseAddsToSourceApplyToTarget(CriticalStrike.Multiplier.WithAilments, Cold.DamageMultiplierWithCrits.WithAilments),
+                    Flag.BaseAddsToSourceApplyToTarget(CriticalStrike.Multiplier.WithAilments, Fire.DamageMultiplierWithCrits.WithAilments),
+                    Flag.BaseAddsToSourceApplyToTarget(CriticalStrike.Multiplier.WithAilments, Chaos.DamageMultiplierWithCrits.WithAilments)
                 },
                 {
                     // Vaal Pact
@@ -373,7 +394,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 {
                     // Mortal Conviction
-                    "you can only have one non-banner aura on you from your skills non-banner aura skills reserve no mana",
+                    "you can only have one non-banner aura with no duration on you from your skills non-banner, non-mine aura skills reserve no mana",
                     TotalOverride, 0, Skills[Keyword.Aura].Reservation
                 },
                 {
@@ -413,11 +434,7 @@ namespace PoESkillTree.Engine.Computation.Data
                     (BaseAdd, Value.PercentOf(Mana), Mana.Gain, Skills[Keyword.Warcry].Cast.On)
                 },
                 {
-                    "effects granted for having rage are doubled",
-                    PercentMore, 100, Charge.RageEffect
-                },
-                {
-                    "effects granted for having rage are tripled",
+                    "inherent effects from having rage are tripled",
                     PercentMore, 200, Charge.RageEffect
                 },
                 // - Chieftain
@@ -502,7 +519,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 {
                     "summoned skeletons' hits can't be evaded",
-                    TotalOverride, 100, Stat.ChanceToHit.For(Entity.Minion), With(Skills.SummonSkeleton)
+                    TotalOverride, 100, Stat.ChanceToHit.For(Entity.Minion), With(Skills.SummonSkeletons)
                 },
                 // - Gladiator
                 {
@@ -606,6 +623,10 @@ namespace PoESkillTree.Engine.Computation.Data
                     "minions intimidate enemies for # seconds on hit",
                     TotalOverride, 1, Buff.Intimidate.On(Enemy), Action.Hit.By(Entity.Minion).Recently
                 },
+                {
+                    "every # seconds, regenerate #% of life over one second",
+                    BaseAdd, Values[1], Buff.Temporary(Life.Regen.Percent)
+                },
                 // - Assassin
                 {
                     // Ascendant
@@ -648,8 +669,17 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
             };
 
-        private IConditionBuilder CombatFocusCondition(int skillPart)
-            => And(With(Skills.FromId("ElementalHit")), Stat.MainSkillPart.Value.Eq(skillPart),
+        private IEnumerable<(IFormBuilder form, IValueBuilder value, IStatBuilder stat, IConditionBuilder condition)>
+            ElementalArmy()
+        {
+            var exposureDamageTypeValue = Stat.UniqueEnum<DamageType>("Elemental Army Exposure damage type");
+            yield return (BaseSet, Value, Lightning.Exposure, exposureDamageTypeValue.Eq((int) DamageType.Lightning));
+            yield return (BaseSet, Value, Cold.Exposure, exposureDamageTypeValue.Eq((int) DamageType.Cold));
+            yield return (BaseSet, Value, Fire.Exposure, exposureDamageTypeValue.Eq((int) DamageType.Fire));
+        }
+
+        private IConditionBuilder CombatFocusCondition(string skillId, int skillPart)
+            => And(With(Skills.FromId(skillId)), Stat.MainSkillPart.Value.Eq(skillPart),
                 (PassiveTree.TotalInModifierSourceJewelRadius(References[0].AsStat)
                  + PassiveTree.TotalInModifierSourceJewelRadius(References[1].AsStat))
                 >= Value);

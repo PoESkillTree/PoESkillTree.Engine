@@ -73,6 +73,14 @@ namespace PoESkillTree.Engine.Computation.Builders.Damage
             new DamageStatBuilder(_statFactory, CoreStat(_statFactory.Damage));
 
         public IDamageRelatedStatBuilder DamageMultiplier =>
+            DamageRelatedStatBuilder.Create(_statFactory, new CompositeCoreStatBuilder(
+                CoreStat(typeof(int), nameof(DamageMultiplierWithCrits)),
+                CoreStat(typeof(int), nameof(DamageMultiplierWithNonCrits))));
+
+        public IDamageRelatedStatBuilder DamageMultiplierWithCrits =>
+            DamageRelatedStatBuilder.Create(_statFactory, CoreStat(typeof(int)));
+
+        public IDamageRelatedStatBuilder DamageMultiplierWithNonCrits =>
             DamageRelatedStatBuilder.Create(_statFactory, CoreStat(typeof(int)));
 
         public IDamageTakenConversionBuilder DamageTakenFrom(IPoolStatBuilder pool)

@@ -169,12 +169,17 @@ namespace PoESkillTree.Engine.Computation.Data
                     @"(?<damageType>({DamageTypeMatchers})) exposure applies #% to \k<damageType> resistance",
                     BaseSet, Value, Reference.AsDamageType.Exposure
                 },
+                {
+                    @"fire, cold and lightning exposure (?<inner>.*), applying #% to those resistances",
+                    BaseSet, Value, ElementalDamageTypes.Select(t => t.Exposure).Aggregate((l, r) => l.Concat(r))
+                },
                 // - crit
                 { @"\+#% critical strike chance", BaseAdd, Value, CriticalStrike.Chance },
                 { @"\+#% critical strike multiplier", BaseAdd, Value, CriticalStrike.Multiplier },
+                { "no critical strike multiplier", TotalOverride, 0, CriticalStrike.Multiplier },
                 {
-                    "no critical strike multiplier, no damage multiplier for ailments from critical strikes",
-                    TotalOverride, 0, CriticalStrike.Multiplier
+                    "ailments never count as being from critical strikes",
+                    TotalOverride, 0, CriticalStrike.Chance.WithAilments
                 },
                 { "never deal critical strikes", TotalOverride, 0, CriticalStrike.Chance },
                 { "your critical strike chance is lucky", TotalOverride, 1, Flag.CriticalStrikeChanceIsLucky },
@@ -214,6 +219,10 @@ namespace PoESkillTree.Engine.Computation.Data
                     "projectiles pierce all targets",
                     TotalOverride, double.PositiveInfinity, Projectile.PierceCount
                 },
+                {
+                    "arrows pierce all targets",
+                    TotalOverride, double.PositiveInfinity, Projectile.PierceCount, With(Keyword.Attack)
+                },
                 { @"chains \+# times", BaseAdd, Value, Projectile.ChainCount },
                 { @"(supported )?skills chain \+# times", BaseAdd, Value, Projectile.ChainCount },
                 // - other
@@ -223,6 +232,10 @@ namespace PoESkillTree.Engine.Computation.Data
                 // - life, mana, defences
                 { "maximum life becomes #", TotalOverride, Value, Life },
                 { "removes all mana", TotalOverride, 0, Mana },
+                {
+                    "gain #% of maximum ({PoolStatMatchers}) as extra maximum energy shield",
+                    BaseAdd, Value, Reference.AsPoolStat.GainAs(EnergyShield)
+                },
                 { "converts all evasion rating to armour", TotalOverride, 100, Evasion.ConvertTo(Armour) },
                 { "cannot evade enemy attacks", TotalOverride, 0, Evasion.Chance },
                 { @"\+# evasion rating", BaseAdd, Value, Evasion },
@@ -287,6 +300,10 @@ namespace PoESkillTree.Engine.Computation.Data
                     BaseAdd, Value, Reference.AsPoolStat.Regen
                 },
                 {
+                    "regenerate # ({PoolStatMatchers}) per second",
+                    BaseAdd, Value, Reference.AsPoolStat.Regen
+                },
+                {
                     "#% of ({StatMatchers}) is regenerated as ({PoolStatMatchers}) per second",
                     BaseAdd, Value.PercentOf(References[0].AsStat), References[1].AsPoolStat.Regen
                 },
@@ -298,6 +315,11 @@ namespace PoESkillTree.Engine.Computation.Data
                 {
                     "life regeneration is applied to energy shield instead",
                     TotalOverride, (int) Pool.EnergyShield, Life.Regen.TargetPool
+                },
+                {
+                    "regenerate #% of ({PoolStatMatchers}) over # seconds when you consume a corpse",
+                    BaseAdd, Values[0] / Values[1], Reference.AsPoolStat.Regen.Percent,
+                    Action.ConsumeCorpse.InPastXSeconds(Values[1])
                 },
                 // gain (need to be FormAndStatMatcher because they also exist with flat values)
                 {
@@ -314,7 +336,7 @@ namespace PoESkillTree.Engine.Computation.Data
                     (BaseAdd, Value.PercentOf(References[1].AsStat), References[1].AsPoolStat.Gain)
                 },
                 {
-                    "removes #% of ({PoolStatMatchers})",
+                    "(removes|lose) #% of ({PoolStatMatchers})",
                     BaseSubtract, Value.PercentOf(Reference.AsStat), Reference.AsPoolStat.Gain
                 },
                 { @"\+# ({PoolStatMatchers}) gained", BaseAdd, Value, Reference.AsPoolStat.Gain },
@@ -373,11 +395,20 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "mine lasts # seconds", BaseSet, Value, Stat.Mine.Duration },
                 { "totem lasts # seconds", BaseSet, Value, Stat.Totem.Duration },
                 {
-                    "detonating mines is instant",
+                    "(detonating mines|mine detonation) is instant",
                     TotalOverride, 0, Stat.BaseCastTime, With(Skills.DetonateMines)
+                },
+                {
+                    "(a )?base mine detonation time (of|is) # seconds",
+                    TotalOverride, Value, Stat.BaseCastTime, With(Skills.DetonateMines)
                 },
                 // minions
                 { "can summon up to # golem at a time", BaseSet, Value, Golems.CombinedInstances.Maximum },
+                { "maximum # summoned golem", BaseSet, Value, Golems.CombinedInstances.Maximum },
+                {
+                    @"\+# seconds? to summon skeleton cooldown",
+                    BaseAdd, Value, Stat.Cooldown, With(Skills.SummonSkeletons)
+                },
                 // buffs
                 {
                     "(?<!while |chance to )you have ({BuffMatchers})",
@@ -406,9 +437,15 @@ namespace PoESkillTree.Engine.Computation.Data
                     TotalOverride, 0, Buffs(Self, Enemy).With(Keyword.Curse).On, Flag.IgnoreHexproof.IsSet.Not
                 },
                 { "grants? fortify", TotalOverride, 1, Buff.Fortify.On(Self) },
+                { "grants? phasing", TotalOverride, 1, Buff.Phasing.On(Self) },
+                {
+                    "you and nearby allies have onslaught",
+                    TotalOverride, 1, Buff.Onslaught.On(Self), Buff.Onslaught.On(Ally)
+                },
                 { "gain elemental conflux", TotalOverride, 1, Buff.Conflux.Elemental.On(Self) },
-                { "creates consecrated ground", TotalOverride, 1, Buff.Conflux.Elemental.On(Self) },
+                { "creates consecrated ground", TotalOverride, 1, Ground.Consecrated.On(Self) },
                 { "(?<!chance to )impale enemies", TotalOverride, 100, Buff.Impale.Chance },
+                { "(?<!chance to )intimidate enemies", TotalOverride, 100, Buff.Intimidate.Chance },
                 { "({BuffMatchers}) lasts # seconds", BaseSet, Value, Reference.AsBuff.Duration },
                 {
                     "supported auras do not affect you",
@@ -453,7 +490,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "you are immune to ailments", TotalOverride, 100, AllAilments.Select(a => a.Avoidance) },
                 {
                     "poison you inflict with critical strikes deals #% more damage",
-                    PercentMore, Value, CriticalStrike.Multiplier.With(Ailment.Poison)
+                    PercentMore, Value, AnyDamageType.DamageMultiplierWithCrits.With(Ailment.Poison)
                 },
                 { "removes? ({AilmentMatchers})", TotalOverride, 100, Reference.AsAilment.ChanceToRemove },
                 {

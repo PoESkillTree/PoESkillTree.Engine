@@ -1,3 +1,4 @@
+using System;
 using PoESkillTree.Engine.Computation.Common.Builders.Damage;
 using PoESkillTree.Engine.Computation.Common.Builders.Skills;
 using PoESkillTree.Engine.Computation.Common.Builders.Values;
@@ -144,6 +145,8 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
         /// Returns the value of a stat with type uint that can only be specified by the user.
         /// </summary>
         ValueBuilder UniqueAmount(string name);
+
+        ValueBuilder UniqueEnum<T>(string name) where T : Enum;
 
         IStatBuilder IndependentMultiplier(string identity);
         IStatBuilder IndependentTotal(string identity);

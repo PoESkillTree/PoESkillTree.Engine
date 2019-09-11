@@ -6,14 +6,14 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Entities
     /// <summary>
     /// Represents enemy entities.
     /// </summary>
-    public interface IEnemyBuilder : IEntityBuilder
+    public interface IEnemyBuilder : ICountableEntityBuilder
     {
         /// <summary>
         /// Gets a condition that is satisfied if this enemy is near Self.
         /// </summary>
         IConditionBuilder IsNearby { get; }
 
-        ValueBuilder CountNearby { get; }
+        ValueBuilder CountRareOrUniqueNearby { get; }
 
         /// <summary>
         /// Gets a condition that is satisfied if this enemy is Rare. 

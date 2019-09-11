@@ -19,7 +19,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Entities
         public IEntityBuilder OpponentOfSelf => new ModifierSourceOpponentEntityBuilder();
         public IEnemyBuilder Enemy => new EnemyBuilder(_statFactory);
         public IEntityBuilder Character => new EntityBuilder(Entity.Character);
-        public IEntityBuilder Ally => new EntityBuilder(Entity.Minion, Entity.Totem);
+        public ICountableEntityBuilder Ally => new AllyBuilder(_statFactory);
         public IEntityBuilder Totem => new EntityBuilder(Entity.Totem);
         public IEntityBuilder Minion => new EntityBuilder(Entity.Minion);
         public IEntityBuilder Any => EntityBuilder.AllEntities;
@@ -39,6 +39,10 @@ namespace PoESkillTree.Engine.Computation.Builders.Entities
                 => StatBuilderUtils.FromIdentity(_statFactory, "Enemy.CountNearby", typeof(uint),
                     ExplicitRegistrationTypes.UserSpecifiedValue(0)).Value;
 
+            public ValueBuilder CountRareOrUniqueNearby
+                => StatBuilderUtils.FromIdentity(_statFactory, "Enemy.CountRareOrUniqueNearby", typeof(uint),
+                    ExplicitRegistrationTypes.UserSpecifiedValue(0)).Value;
+
             public IConditionBuilder IsRare => StatBuilderUtils.ConditionFromIdentity(_statFactory, "Enemy.IsRare",
                 ExplicitRegistrationTypes.UserSpecifiedValue(false));
 
@@ -49,6 +53,18 @@ namespace PoESkillTree.Engine.Computation.Builders.Entities
 
             public IConditionBuilder IsMoving => StatBuilderUtils.ConditionFromIdentity(_statFactory, "Enemy.IsMoving",
                 ExplicitRegistrationTypes.UserSpecifiedValue(false));
+        }
+
+        private class AllyBuilder : EntityBuilder, ICountableEntityBuilder
+        {
+            private readonly IStatFactory _statFactory;
+
+            public AllyBuilder(IStatFactory statFactory) : base(Entity.Minion, Entity.Totem) =>
+                _statFactory = statFactory;
+
+            public ValueBuilder CountNearby
+                => StatBuilderUtils.FromIdentity(_statFactory, "Ally.CountNearby", typeof(uint),
+                    ExplicitRegistrationTypes.UserSpecifiedValue(0)).Value;
         }
     }
 }

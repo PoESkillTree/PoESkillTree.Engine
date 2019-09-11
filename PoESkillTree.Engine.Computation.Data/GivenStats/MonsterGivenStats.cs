@@ -54,7 +54,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             { BaseSet, Physical.Resistance.Maximum, 75 },
             // traps, mines and totems
             { BaseSet, Traps.CombinedInstances.Maximum, 3 },
-            { BaseSet, Mines.CombinedInstances.Maximum, 5 },
+            { BaseSet, Mines.CombinedInstances.Maximum, 15 },
             { BaseSet, Totems.CombinedInstances.Maximum, 1 },
         };
     }

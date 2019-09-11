@@ -51,6 +51,8 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Damage
         /// Gets a stat representing the multiplier to damage of this type.
         /// </summary>
         IDamageRelatedStatBuilder DamageMultiplier { get; }
+        IDamageRelatedStatBuilder DamageMultiplierWithCrits { get; }
+        IDamageRelatedStatBuilder DamageMultiplierWithNonCrits { get; }
 
         /// <summary>
         /// Starts constructing a stat representing the percentage of damage of this stat's damage types that is taken

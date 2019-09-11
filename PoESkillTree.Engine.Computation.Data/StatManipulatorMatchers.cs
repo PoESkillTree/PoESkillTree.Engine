@@ -24,7 +24,8 @@ namespace PoESkillTree.Engine.Computation.Data
         protected override IReadOnlyList<MatcherData> CreateCollection() =>
             new StatManipulatorMatcherCollection(_modifierBuilder)
             {
-                { "you and nearby allies( deal| have)?", s => Buff.Aura(s, Self, Ally) },
+                { "you and nearby allies (deal|have)(?! onslaught)", s => Buff.Aura(s, Self, Ally) },
+                { "you and nearby allies(?! deal| have)", s => Buff.Aura(s, Self, Ally) },
                 {
                     "auras from your skills grant (?<inner>.*) to you and allies",
                     s => Buffs(Self, Self, Ally).With(Keyword.Aura).Without(Keyword.Curse).AddStat(s), "${inner}"

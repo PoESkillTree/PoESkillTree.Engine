@@ -3,17 +3,20 @@
 ArcticArmour
 AssassinsMark
 BloodRage
+CorrosiveShroud
 CorpseWarp
 DarkPact
 DarkRitual
 NewShieldCharge
 RighteousFire
+Slither
 SupportBlockReduction
 SupportChanceToIgnite
 SupportChaosAttacks
 SupportDecay
 SupportGemMirageArcher
 SupportMaim
+SupportPuncturingWeapon
 SupportRuthless
 SupportSlashingWeapon
 SupportSummonGhostOnKill
@@ -37,14 +40,19 @@ HeraldOfAgony
 HeraldOfPurity
 RaiseSpectre
 RaiseZombie
+Skitterbots
 SpiritOffering
+SummonBoneGolem
 SummonRagingSpirit
 SummonRelic
 SummonSkeletons
+SupportBurningMinions
+SupportMinionOffensiveStance
 VaalSummonSkeletons
 // - Spectre/Monster Skills (not listed)
 // - Pointless to support
 DevouringTotem
 IceSiphonTrap
 SigilRecall
+SupportAdditionalTrapMine
 SupportChanceToFlee

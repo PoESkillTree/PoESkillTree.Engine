@@ -107,7 +107,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                     BaseSet, dt => MetaStats.EffectiveDamageMultiplierWithNonCrits(dt).WithHits,
                     dt => MetaStats.EnemyResistanceAgainstNonCrits(dt),
                     dt => DamageTaken(dt).WithHits.For(Enemy),
-                    dt => DamageMultiplier(dt).WithHits,
+                    dt => DamageMultiplierWithNonCrits(dt).WithHits,
                     (_, resistance, damageTaken, damageMulti)
                         => DamageTakenMultiplier(resistance, damageTaken) * damageMulti.Value.AsPercentage
                 },
@@ -115,7 +115,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                     BaseSet, dt => MetaStats.EffectiveDamageMultiplierWithCrits(dt).WithHits,
                     dt => MetaStats.EnemyResistanceAgainstCrits(dt),
                     dt => DamageTaken(dt).WithHits.For(Enemy),
-                    dt => DamageMultiplier(dt).WithHits,
+                    dt => DamageMultiplierWithCrits(dt).WithHits,
                     _ => CriticalStrike.Multiplier.WithHits,
                     (_, resistance, damageTaken, damageMulti, critMulti)
                         => DamageTakenMultiplier(resistance, damageTaken) * damageMulti.Value.AsPercentage
@@ -160,7 +160,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                     BaseSet,
                     dt => MetaStats.EffectiveDamageMultiplierWithNonCrits(dt).WithSkills(DamageSource.OverTime),
                     dt => EnemyDamageTakenMultiplier(dt, DamageTaken(dt).WithSkills(DamageSource.OverTime))
-                          * DamageMultiplier(dt).WithSkills(DamageSource.OverTime).Value.AsPercentage
+                          * DamageMultiplierWithNonCrits(dt).WithSkills(DamageSource.OverTime).Value.AsPercentage
                 },
 
                 // ailment damage (modifiers for EffectiveDamageMultiplierWith[Non]Crits() and Damage() are added below
@@ -473,8 +473,11 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
         private IDamageRelatedStatBuilder DamageTaken(DamageType damageType)
             => DamageTypeBuilders.From(damageType).Damage.Taken;
 
-        private IDamageRelatedStatBuilder DamageMultiplier(DamageType damageType)
-            => DamageTypeBuilders.From(damageType).DamageMultiplier;
+        private IDamageRelatedStatBuilder DamageMultiplierWithCrits(DamageType damageType)
+            => DamageTypeBuilders.From(damageType).DamageMultiplierWithCrits;
+
+        private IDamageRelatedStatBuilder DamageMultiplierWithNonCrits(DamageType damageType)
+            => DamageTypeBuilders.From(damageType).DamageMultiplierWithNonCrits;
 
         private ValueBuilder ActionSpeedValueForPercentMore => (Stat.ActionSpeed.Value - 1) * 100;
 
@@ -531,7 +534,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             var ailmentBuilder = Ailment.From(ailment);
             collection.Add(BaseSet, dt => MetaStats.EffectiveDamageMultiplierWithNonCrits(dt).With(ailmentBuilder),
                 _ => DamageTaken(damageType).With(ailmentBuilder),
-                _ => DamageMultiplier(damageType).With(ailmentBuilder),
+                _ => DamageMultiplierWithNonCrits(damageType).With(ailmentBuilder),
                 (_, damageTaken, damageMulti)
                     => EnemyDamageTakenMultiplier(damageType, damageTaken) * damageMulti.Value.AsPercentage);
         }
@@ -542,11 +545,9 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             var ailmentBuilder = Ailment.From(ailment);
             collection.Add(BaseSet, dt => MetaStats.EffectiveDamageMultiplierWithCrits(dt).With(ailmentBuilder),
                 _ => DamageTaken(damageType).With(ailmentBuilder),
-                _ => CriticalStrike.Multiplier.With(ailmentBuilder),
-                _ => DamageMultiplier(damageType).With(ailmentBuilder),
-                (_, damageTaken, damageMulti, critMulti)
-                    => EnemyDamageTakenMultiplier(damageType, damageTaken) * damageMulti.Value.AsPercentage
-                                                                           * critMulti.Value.AsPercentage);
+                _ => DamageMultiplierWithCrits(damageType).With(ailmentBuilder),
+                (_, damageTaken, damageMulti)
+                    => EnemyDamageTakenMultiplier(damageType, damageTaken) * damageMulti.Value.AsPercentage);
         }
 
         private void AddAilmentSourceDamageTypeModifiers(GivenStatCollection collection)
