@@ -177,6 +177,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { @"\+#% critical strike chance", BaseAdd, Value, CriticalStrike.Chance },
                 { @"\+#% critical strike multiplier", BaseAdd, Value, CriticalStrike.Multiplier },
                 { "no critical strike multiplier", TotalOverride, 0, CriticalStrike.Multiplier },
+                { "your critical strikes do not deal extra damage", TotalOverride, 0, CriticalStrike.Multiplier },
                 {
                     "ailments never count as being from critical strikes",
                     TotalOverride, 0, CriticalStrike.Chance.WithAilments

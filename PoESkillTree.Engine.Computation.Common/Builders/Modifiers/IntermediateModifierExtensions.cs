@@ -63,6 +63,7 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Modifiers
             {
                 entries = left.Entries.SelectMany(l => right.Entries.Select(r => Merge(l, r)));
             }
+
             return new SimpleIntermediateModifier(entries.ToList(), ConvertStat, ConvertValue);
         }
 
@@ -139,6 +140,7 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Modifiers
                 {
                     Build(entry);
                 }
+
                 return _modifiers;
             }
 
@@ -155,6 +157,7 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Modifiers
                 {
                     statBuilder = statBuilder.WithCondition(entry.Condition);
                 }
+
                 statBuilder = _modifier.StatConverter(statBuilder);
                 var statBuilderResults = statBuilder.Build(buildParameters);
 
@@ -162,8 +165,19 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Modifiers
                 {
                     var valueBuilder = formValueConverter(statValueConverter(_modifier.ValueConverter(entry.Value)));
                     var value = valueBuilder.Build(buildParameters);
-                    _modifiers.Add(new Modifier(stats, form, value, source));
+                    _modifiers.Add(CreateModifier(stats, form, value, source));
                 }
+            }
+
+            private static Modifier CreateModifier(IReadOnlyList<IStat> stats, Form form, IValue value,
+                ModifierSource source)
+            {
+                if (form == Form.TotalOverride && source is ModifierSource.Local localSource)
+                {
+                    source = new ModifierSource.Global(localSource);
+                }
+
+                return new Modifier(stats, form, value, source);
             }
         }
     }

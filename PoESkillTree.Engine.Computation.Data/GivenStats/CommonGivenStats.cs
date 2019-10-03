@@ -70,6 +70,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             { BaseSet, Projectile.Count, 1 },
             // evasion
             { BaseSet, Evasion.Chance.Maximum, 95 },
+            { BaseSet, Stat.ChanceToHit.Maximum, 100 },
             { BaseSet, Stat.ChanceToHit.Minimum, 5 },
             // block
             { BaseSet, Block.AttackChance.Maximum, 75 },
