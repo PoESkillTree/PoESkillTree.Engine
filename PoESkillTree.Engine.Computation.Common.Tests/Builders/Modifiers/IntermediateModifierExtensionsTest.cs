@@ -323,7 +323,7 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Modifiers
         }
 
         [Test]
-        public void BuildThrowsForLocalTotalOverride()
+        public void BuildUsesGlobalForLocalTotalOverride()
         {
             var statBuilderResult =
                 new StatBuilderResult(new IStat[0], new ModifierSource.Local.Skill(""), Funcs.Identity);
@@ -338,7 +338,9 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Modifiers
                 .WithValue(Mock.Of<IValueBuilder>());
             var input = CreateResult(entry);
 
-            Assert.Throws<ArgumentException>(() => input.Build(Source, Entity));
+            var actual = input.Build(Source, Entity);
+            
+            Assert.IsInstanceOf<ModifierSource.Global>(actual.Single().Source);
         }
 
         private static readonly IntermediateModifierEntry EmptyEntry = new IntermediateModifierEntry();
