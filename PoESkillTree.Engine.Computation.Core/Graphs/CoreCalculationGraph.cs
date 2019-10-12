@@ -67,12 +67,8 @@ namespace PoESkillTree.Engine.Computation.Core.Graphs
             node.Dispose();
         }
 
-        private bool TryGetNodeProvider(Modifier modifier,
-#if NETSTANDARD2_0
-            out IDisposableNodeViewProvider nodeProvider)
-#else
-            [NotNullWhen(true)] out IDisposableNodeViewProvider? nodeProvider)
-#endif
+        private bool TryGetNodeProvider(
+            Modifier modifier, [NotNullWhen(true)] out IDisposableNodeViewProvider? nodeProvider)
         {
             if (!_modifierNodes.TryGetValue(modifier, out var stack))
             {

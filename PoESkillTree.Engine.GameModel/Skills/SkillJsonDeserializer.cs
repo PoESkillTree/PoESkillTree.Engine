@@ -274,12 +274,9 @@ namespace PoESkillTree.Engine.GameModel.Skills
             return stats;
         }
 
-        private static bool TryGetValues<T>(string propertyName, JToken firstToken, JToken secondToken,
-#if NETSTANDARD2_0
-            out T[] values)
-#else
+        private static bool TryGetValues<T>(
+            string propertyName, JToken firstToken, JToken secondToken,
             [NotNullWhen(true)] out T[]? values)
-#endif
         {
             var firstArray = GetValue<JArray>(propertyName, firstToken, secondToken);
             if (firstArray is null)
@@ -301,9 +298,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
             return true;
         }
 
-#if !NETSTANDARD2_0
         [return: MaybeNull]
-#endif
         private static T GetValue<T>(string propertyName, JToken firstToken, JToken secondToken)
         {
             if (firstToken is JObject firstObject && firstObject.TryGetValue(propertyName, out var outToken))
