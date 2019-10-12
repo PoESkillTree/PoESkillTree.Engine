@@ -10,8 +10,10 @@ namespace PoESkillTree.Engine.Computation.Data.Collections
     [TestFixture]
     public class EffectStatCollectionTest
     {
+#pragma warning disable 8618 // Initialized in SetUp
         private Mock<IValueBuilders> _valueFactory;
         private EffectStatCollection _sut;
+#pragma warning restore
 
         [SetUp]
         public void SetUp()

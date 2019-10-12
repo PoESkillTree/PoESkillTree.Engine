@@ -37,7 +37,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
         [Test]
         public void TryParseReturnsCorrectResultIfInnerReturnsFailure()
         {
-            var parseResult = new MatcherDataParseResult(DefaultModifier, null);
+            var parseResult = new MatcherDataParseResult(DefaultModifier, new Dictionary<string, string>());
             var sut = CreateFailingSut(result: parseResult);
 
             var (_, _, actual) = sut.Parse(FailingStat);
@@ -186,11 +186,15 @@ namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
         private static readonly IIntermediateModifier ResolvedModifier = Mock.Of<IIntermediateModifier>();
 
         private static IStringParser<IIntermediateModifier> CreateFailingSut(
-            string remaining = "", MatcherDataParseResult result = null)
+            string remaining = "", MatcherDataParseResult? result = null)
         {
+            result ??= new MatcherDataParseResult(DefaultModifier, new Dictionary<string, string>());
             var innerParser = StringParserTestUtils.MockParser(FailingStat, false, remaining, result).Object;
 
-            return new ResolvingParser(innerParser, null, null, null);
+            return new ResolvingParser(innerParser,
+                Mock.Of<IReferenceToMatcherDataResolver>(),
+                Mock.Of<IIntermediateModifierResolver>(),
+                Mock.Of<IRegexGroupParser>());
         }
 
         private static IStringParser<IIntermediateModifier> CreateSuccessfulSut(
@@ -208,7 +212,8 @@ namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
                 == new IValueBuilder[0] &&
                 p.ParseReferences(It.IsAny<IEnumerable<string>>(), It.IsAny<string>()) == new (string, int, string)[0]);
 
-            return new ResolvingParser(innerParser, null, modifierResultResolver, regexGroupParser);
+            return new ResolvingParser(innerParser,
+                Mock.Of<IReferenceToMatcherDataResolver>(), modifierResultResolver, regexGroupParser);
         }
 
         private static T[] MockMany<T>() where T : class =>

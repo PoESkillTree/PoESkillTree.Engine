@@ -17,12 +17,14 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
     [TestFixture]
     public class ItemParserTest : CompositionRootTestBase
     {
+#pragma warning disable 8618 // Initialized in OneTimeSetUp and SetUpAsync
         private static Task<XmlUniqueList> _uniqueDefinitionsTask;
 
         private ModifierDefinitions _modifierDefinitions;
         private BaseItemDefinitions _baseItemDefinitions;
         private IStatTranslator _statTranslator;
         private IParser _parser;
+#pragma warning restore 8618
 
         [OneTimeSetUp]
         public static void OneTimeSetUp()
@@ -126,7 +128,7 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
                     ("CriticalStrike.BaseChance.Attack.MainHand.Skill", Form.BaseSet,
                         definition.Properties[1].Value / 100D, local),
                     ("MainHand.Range.Attack.MainHand.Skill", Form.BaseSet, definition.Properties[4].Value, local),
-                    ("base phys", default, null, null),
+                    ("base phys", default, null, local),
                     ("MainHand.Physical.Damage.Attack.MainHand.Skill", Form.Increase, 20, local),
                     ("MainHand.Level.Required", Form.BaseSet, 58, local),
                     ("MainHand.Dexterity.Required", Form.BaseSet, definition.Requirements.Dexterity, local),

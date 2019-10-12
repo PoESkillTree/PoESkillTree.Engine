@@ -71,8 +71,8 @@ namespace PoESkillTree.Engine.Computation.Core
         }
 
         private static Calculator CreateSut(
-            IModifierCollection modifierCollection = null, ICalculationGraphPruner graphPruner = null,
-            INodeRepository nodeRepository = null, INodeCollection<IStat> explicitlyRegisteredStats = null)
+            IModifierCollection? modifierCollection = null, ICalculationGraphPruner? graphPruner = null,
+            INodeRepository? nodeRepository = null, INodeCollection<IStat>? explicitlyRegisteredStats = null)
             => new Calculator(new EventBuffer(), modifierCollection, graphPruner, nodeRepository,
                 explicitlyRegisteredStats);
     }

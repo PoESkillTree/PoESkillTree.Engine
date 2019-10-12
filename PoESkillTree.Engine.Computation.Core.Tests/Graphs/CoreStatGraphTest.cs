@@ -321,7 +321,7 @@ namespace PoESkillTree.Engine.Computation.Core.Graphs
         }
 
         private static CoreStatGraph CreateSut(
-            IStatNodeFactory nodeFactory = null, PathDefinitionCollection paths = null) =>
+            IStatNodeFactory? nodeFactory = null, PathDefinitionCollection? paths = null) =>
             new CoreStatGraph(nodeFactory ?? Mock.Of<IStatNodeFactory>(), paths ?? CreatePathDefinitionCollection());
 
         private static ModifierNodeCollection MockModifierNodeCollection()

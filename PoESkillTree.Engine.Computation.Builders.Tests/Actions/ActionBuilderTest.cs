@@ -172,7 +172,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Actions
             Assert.AreEqual("stat.On(test).By(Character)", stat.Identity);
         }
 
-        private static ActionBuilder CreateSut(ICoreBuilder<string> identity = null, IEntityBuilder entity = null) =>
+        private static ActionBuilder CreateSut(ICoreBuilder<string>? identity = null, IEntityBuilder? entity = null) =>
             new ActionBuilder(new StatFactory(), identity ?? CoreBuilder.Create("test"),
                 entity ?? new ModifierSourceEntityBuilder());
 

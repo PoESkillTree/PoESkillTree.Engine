@@ -38,10 +38,10 @@ namespace PoESkillTree.Engine.Computation.Core
                 p.DefaultView == MockNode(0) && p.BufferingView == MockNode(0));
 
         public static IBufferingEventViewProvider<ICalculationNode> MockNodeProvider(
-            ICalculationNode defaultNode = null, ICalculationNode bufferingView = null)
+            ICalculationNode? defaultNode = null, ICalculationNode? bufferingView = null)
         {
-            defaultNode = defaultNode ?? MockNode();
-            bufferingView = bufferingView ?? MockNode();
+            defaultNode ??= MockNode();
+            bufferingView ??= MockNode();
             return Mock.Of<IBufferingEventViewProvider<ICalculationNode>>(
                 p => p.DefaultView == defaultNode && p.BufferingView == bufferingView);
         }

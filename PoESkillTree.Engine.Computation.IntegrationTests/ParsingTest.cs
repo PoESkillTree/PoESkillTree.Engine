@@ -20,8 +20,10 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
     [TestFixture]
     public class ParsingTest : CompositionRootTestBase
     {
+#pragma warning disable 8618 // Initialized in SetUpAsync
         private IParser _parser;
         private IBuilderFactories _f;
+#pragma warning restore 8618
 
         [SetUp]
         public async Task SetUpAsync()

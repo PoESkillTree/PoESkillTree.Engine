@@ -401,7 +401,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         [Test]
         public void ConvertToIsNotSubClass()
         {
-            var sut = new SubStatBuilder(new StatFactory(), null);
+            var sut = new SubStatBuilder(new StatFactory(), Mock.Of<ICoreStatBuilder>());
 
             var actual = sut.ConvertTo(Mock.Of<IStatBuilder>());
 
@@ -412,7 +412,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         [Test]
         public void GainAsIsNotSubClass()
         {
-            var sut = new SubStatBuilder(new StatFactory(), null);
+            var sut = new SubStatBuilder(new StatFactory(), Mock.Of<ICoreStatBuilder>());
 
             var actual = sut.GainAs(Mock.Of<IStatBuilder>());
 
@@ -437,8 +437,8 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
             new StatBuilder(new StatFactory(), coreStatBuilder);
 
         private static IReadOnlyList<StatBuilderResult> CreateResult(
-            IStat stat = null, ModifierSource modifierSource = null,
-            ValueConverter valueConverter = null)
+            IStat? stat = null, ModifierSource? modifierSource = null,
+            ValueConverter? valueConverter = null)
         {
             var stats = stat == null ? new IStat[0] : new[] { stat };
             return new[]

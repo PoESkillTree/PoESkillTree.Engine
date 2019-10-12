@@ -53,7 +53,7 @@ namespace PoESkillTree.Engine.Computation.Core.Nodes
             Assert.AreEqual(expected, actual);
         }
 
-        private static SubtotalValue CreateSut(IStat stat = null) =>
+        private static SubtotalValue CreateSut(IStat? stat = null) =>
             new SubtotalValue(stat);
 
         private static readonly PathDefinition Path = PathDefinition.MainPath;

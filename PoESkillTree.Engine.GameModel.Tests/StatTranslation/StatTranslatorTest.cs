@@ -8,7 +8,9 @@ namespace PoESkillTree.Engine.GameModel.StatTranslation
     [TestFixture]
     public class StatTranslatorTest
     {
+#pragma warning disable 8618 // Initialized in CreateTranslatorAsync
         private static StatTranslator _translator;
+#pragma warning restore
 
         [OneTimeSetUp]
         public static async Task CreateTranslatorAsync()
@@ -28,7 +30,7 @@ namespace PoESkillTree.Engine.GameModel.StatTranslation
                 { "base_cold_damage_resistance_%", 0 },
                 { "base_lightning_damage_resistance_%", -1 },
             };
-            string[] expected =
+            string?[] expected =
             {
                 "+30 to maximum Life",
                 null,
@@ -53,7 +55,7 @@ namespace PoESkillTree.Engine.GameModel.StatTranslation
                 { "weapon_physical_damage_%_to_add_as_each_element", 110 },
                 { "weapon_physical_damage_%_to_add_as_random_element", 0 }, // -110 + 110
             };
-            string[] expected =
+            string?[] expected =
             {
                 "Adds 10 to 20 Physical Damage",
                 "13% increased Attack Speed",
@@ -96,7 +98,7 @@ namespace PoESkillTree.Engine.GameModel.StatTranslation
             {
                 { "dummy_stat_display_nothing", 1 },
             };
-            string[] expected =
+            string?[] expected =
             {
                 null,
             };

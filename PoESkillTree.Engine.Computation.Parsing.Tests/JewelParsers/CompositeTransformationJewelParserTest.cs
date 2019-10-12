@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Moq;
 using NUnit.Framework;
+using PoESkillTree.Engine.Computation.Common.Builders.Values;
 using PoESkillTree.Engine.GameModel.PassiveTree;
 
 namespace PoESkillTree.Engine.Computation.Parsing.JewelParsers
@@ -44,7 +45,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.JewelParsers
         [Test]
         public void TransformationResultIsThatOfMatchingComponentGivenAComponentMatches()
         {
-            var expected = new[] { new TransformedNodeModifier("", null), };
+            var expected = new[] { new TransformedNodeModifier("", Mock.Of<IValueBuilder>()), };
             var nodesInRadius = new PassiveNodeDefinition[0];
             var component = Mock.Of<ITransformationJewelParser>(p => 
                 p.IsTransformationJewelModifier(JewelModifier) &&

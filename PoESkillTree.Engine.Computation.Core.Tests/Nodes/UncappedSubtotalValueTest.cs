@@ -37,6 +37,6 @@ namespace PoESkillTree.Engine.Computation.Core.Nodes
             Assert.AreEqual((NodeValue?) expected, actual);
         }
 
-        private static UncappedSubtotalValue CreateSut(IStat stat = null) => new UncappedSubtotalValue(stat);
+        private static UncappedSubtotalValue CreateSut(IStat? stat = null) => new UncappedSubtotalValue(stat);
     }
 }

@@ -18,6 +18,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
     /// </para>
     /// </summary>
     public class CompositeParser<TInnerResult, TStep> : IStringParser<IReadOnlyList<TInnerResult>>
+        where TInnerResult : class
     {
         private readonly IStepper<TStep> _stepper;
         private readonly Func<TStep, IStringParser<TInnerResult>> _stepToParserFunc;

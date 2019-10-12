@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Linq;
 using NUnit.Framework;
 using PoESkillTree.Engine.Computation.Builders.Behaviors;
@@ -159,7 +158,7 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests.Core
             var registeredStat =
                 new Stat("r", explicitRegistrationType: ExplicitRegistrationTypes.UserSpecifiedValue(0));
             var value = new StatValue(registeredStat);
-            IStat actual = null;
+            IStat? actual = null;
             sut.ExplicitlyRegisteredStats.CollectionChanged += (sender, args) =>
             {
                 Assert.IsNull(actual);

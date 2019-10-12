@@ -126,6 +126,6 @@ namespace PoESkillTree.Engine.Computation.Core.Nodes
             Assert.IsTrue(raised);
         }
 
-        private static TransformableValue CreateSut(IValue value = null) => new TransformableValue(value);
+        private static TransformableValue CreateSut(IValue? value = null) => new TransformableValue(value);
     }
 }

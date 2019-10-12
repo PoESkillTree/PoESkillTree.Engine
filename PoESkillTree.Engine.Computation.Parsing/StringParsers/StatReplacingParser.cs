@@ -16,6 +16,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
     /// </summary>
     /// <typeparam name="TResult">Type of the decorated parser's results</typeparam>
     public class StatReplacingParser<TResult> : IStringParser<IReadOnlyList<TResult>>
+        where TResult : class
     {
         private readonly IStringParser<TResult> _inner;
 

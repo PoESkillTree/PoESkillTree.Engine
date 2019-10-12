@@ -187,7 +187,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.JewelParsers
         private const string LioneyesFallModifier =
             "Melee and Melee Weapon Type modifiers in Radius are Transformed to Bow Modifiers";
 
-        private static TransformationJewelParser CreateSut(TransformationJewelParserData data = null)
+        private static TransformationJewelParser CreateSut(TransformationJewelParserData? data = null)
             => new TransformationJewelParser(
                 id => new ValueBuilderStub(id), 
                 data ?? new TransformationJewelParserData.SingleDamageTypeTransformation());

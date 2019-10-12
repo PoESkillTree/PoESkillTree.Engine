@@ -133,14 +133,14 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         }
 
         private static ICoreStatBuilder MockStatBuilder(
-            ModifierSource modifierSource = null, ValueConverter valueConverter = null) =>
+            ModifierSource? modifierSource = null, ValueConverter? valueConverter = null) =>
             MockStatBuilder(CreateStatBuilderResult(modifierSource, valueConverter));
 
         private static ICoreStatBuilder MockStatBuilder(params StatBuilderResult[] results) =>
             Mock.Of<ICoreStatBuilder>(b => b.Build(default) == results);
 
         private static StatBuilderResult CreateStatBuilderResult(
-            ModifierSource modifierSource = null, ValueConverter valueConverter = null, params IStat[] stats) =>
+            ModifierSource? modifierSource = null, ValueConverter? valueConverter = null, params IStat[] stats) =>
             new StatBuilderResult(stats, modifierSource, valueConverter ?? Funcs.Identity);
     }
 }

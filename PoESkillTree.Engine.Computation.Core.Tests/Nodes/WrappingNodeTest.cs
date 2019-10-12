@@ -49,7 +49,7 @@ namespace PoESkillTree.Engine.Computation.Core.Nodes
             nodeMock.Raise(n => n.ValueChanged += null, EventArgs.Empty);
         }
 
-        private static WrappingNode CreateSut(ICalculationNode decoratedNode = null) =>
+        private static WrappingNode CreateSut(ICalculationNode? decoratedNode = null) =>
             new WrappingNode(decoratedNode ?? NodeHelper.MockNode());
     }
 }

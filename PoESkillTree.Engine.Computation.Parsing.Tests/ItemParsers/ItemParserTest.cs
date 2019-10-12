@@ -439,9 +439,10 @@ namespace PoESkillTree.Engine.Computation.Parsing.ItemParsers
         }
 
         private static ItemParser CreateSut(
-            BaseItemDefinition baseItemDefinition, ICoreParser coreParser = null, IStatTranslator statTranslator = null)
+            BaseItemDefinition baseItemDefinition, ICoreParser? coreParser = null, IStatTranslator? statTranslator = null)
         {
-            coreParser = coreParser ?? Mock.Of<ICoreParser>();
+            coreParser ??= Mock.Of<ICoreParser>();
+            statTranslator ??= Mock.Of<IStatTranslator>();
 
             var baseItemDefinitions = new BaseItemDefinitions(new[] { baseItemDefinition });
             return new ItemParser(baseItemDefinitions, CreateBuilderFactories(), coreParser, statTranslator);
@@ -470,8 +471,8 @@ namespace PoESkillTree.Engine.Computation.Parsing.ItemParsers
         }
 
         private static BaseItemDefinition CreateBaseItemDefinition(Item item, ItemClass itemClass, Tags tags = default,
-            IReadOnlyList<Property> properties = null,
-            IReadOnlyList<UntranslatedStat> buffStats = null, Requirements requirements = null)
+            IReadOnlyList<Property>? properties = null,
+            IReadOnlyList<UntranslatedStat>? buffStats = null, Requirements? requirements = null)
             => new BaseItemDefinition(item.BaseMetadataId, "", itemClass, new string[0], tags,
                 properties ?? new Property[0],
                 buffStats ?? new UntranslatedStat[0],

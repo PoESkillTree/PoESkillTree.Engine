@@ -11,7 +11,9 @@ namespace PoESkillTree.Engine.Computation.Data.Collections
     {
         private const string Regex = "regex";
 
+#pragma warning disable 8618 // Initialized in SetUp
         private StatMatcherCollection<IStatBuilder> _sut;
+#pragma warning restore
 
         [SetUp]
         public void SetUp()

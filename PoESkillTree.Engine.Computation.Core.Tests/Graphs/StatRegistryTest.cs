@@ -138,8 +138,8 @@ namespace PoESkillTree.Engine.Computation.Core.Graphs
         }
 
         private static StatRegistry CreateSut(
-            NodeCollection<IStat> nodeCollection = null,
-            INodeRepository nodeRepository = null)
+            NodeCollection<IStat>? nodeCollection = null,
+            INodeRepository? nodeRepository = null)
         {
             return new StatRegistry(nodeCollection ?? CreateNodeCollection())
             {

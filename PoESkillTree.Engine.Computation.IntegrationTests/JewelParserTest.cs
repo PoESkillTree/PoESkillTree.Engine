@@ -16,11 +16,13 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
     [TestFixture]
     public class JewelParserTest : CompositionRootTestBase
     {
+#pragma warning disable 8618 // Initialized in OneTimeSetUp and SetUpAsync
         private static Task<XmlUniqueList> _uniqueDefinitionsTask;
 
         private ModifierDefinitions _modifierDefinitions;
         private IStatTranslator _statTranslator;
         private IParser _parser;
+#pragma warning restore 8618
 
         [OneTimeSetUp]
         public static void OneTimeSetUp()

@@ -14,7 +14,7 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
     public static class ParsingTestUtils
     {
         public static void AssertIsParsedSuccessfully(
-            ParseResult parseResult, IEnumerable<string> ignoredStatLines = null)
+            ParseResult parseResult, IEnumerable<string>? ignoredStatLines = null)
         {
             var (failedLines, remaining, result) = parseResult;
 

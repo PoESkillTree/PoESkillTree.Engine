@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -248,7 +249,7 @@ namespace PoESkillTree.Engine.Computation.Console
             var (isMetaStat, metaStats) = await TryParseMetaStatAsync(stat);
             if (isMetaStat)
             {
-                return metaStats;
+                return metaStats!;
             }
             var parser = await _compositionRoot.Parser;
             if (TryParse(parser, "1% increased" + stat, out var mods))
@@ -258,7 +259,7 @@ namespace PoESkillTree.Engine.Computation.Console
             return new[] { new Stat(stat.Trim()), };
         }
 
-        private async Task<(bool, IEnumerable<IStat>)> TryParseMetaStatAsync(string stat)
+        private async Task<(bool, IEnumerable<IStat>?)> TryParseMetaStatAsync(string stat)
         {
             var builderFactories = await _compositionRoot.BuilderFactories;
             var metaStats = builderFactories.MetaStatBuilders;
@@ -298,7 +299,7 @@ namespace PoESkillTree.Engine.Computation.Console
         /// Parses the given stat using the given parser and writes results to the console.
         /// </summary>
         private static bool TryParse(
-            IParser parser, string statLine, out IReadOnlyList<Modifier> mods, bool verbose = false)
+            IParser parser, string statLine, [NotNullWhen(true)] out IReadOnlyList<Modifier>? mods, bool verbose = false)
         {
             var result = parser.Parse(statLine);
             if (!result.SuccessfullyParsed)

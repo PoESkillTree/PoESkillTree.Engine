@@ -13,8 +13,10 @@ namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
         private const string FalseRemaining = "falseRemaining";
         private const string FalseParsed = "falseParsed";
 
+#pragma warning disable 8618 // Initialized in SetUp
         private Mock<IStringParser<string>> _innerMock;
         private IStringParser<string> _inner;
+#pragma warning restore
 
         [SetUp]
         public void SetUp()
@@ -36,9 +38,9 @@ namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
         [Test]
         public void IsIParserInt()
         {
-            var sut = new CachingStringParser<int>(Mock.Of<IStringParser<int>>());
+            var sut = new CachingStringParser<string>(Mock.Of<IStringParser<string>>());
 
-            Assert.IsInstanceOf<IStringParser<int>>(sut);
+            Assert.IsInstanceOf<IStringParser<string>>(sut);
         }
 
         [TestCase(TrueStat, ExpectedResult = true)]
@@ -63,7 +65,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
         }
 
         [TestCase(TrueStat, ExpectedResult = TrueParsed)]
-        public string TryParsePassesResult(string stat)
+        public string? TryParsePassesResult(string stat)
         {
             var sut = new CachingStringParser<string>(_inner);
 

@@ -76,7 +76,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Forms
 
         private static FormBuilders CreateSut() => new FormBuilders();
 
-        private static IFormBuilder GetProperty(IFormBuilders sut, string property) =>
-            (IFormBuilder) sut.GetType().GetProperty(property).GetValue(sut);
+        private static IFormBuilder GetProperty(IFormBuilders sut, string property)
+            => (IFormBuilder) sut.GetType().GetProperty(property)!.GetValue(sut)!;
     }
 }

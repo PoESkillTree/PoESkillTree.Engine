@@ -35,7 +35,7 @@ namespace PoESkillTree.Engine.Computation.Core.Nodes
         }
 
         private static FormAggregatingValue CreateSut(
-            IStat stat = null, Form form = Form.More, PathDefinition path = null) =>
+            IStat? stat = null, Form form = Form.More, PathDefinition? path = null) =>
             new FormAggregatingValue(stat ?? new StatStub(), form, path, Aggregate);
 
         private static NodeValue? Aggregate(IEnumerable<NodeValue?> vs) =>

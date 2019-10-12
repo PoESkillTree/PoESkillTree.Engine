@@ -158,7 +158,7 @@ namespace PoESkillTree.Engine.Computation.Core.Nodes
             return CreateSut(nodeRepository, valueMock.Object);
         }
 
-        private static ValueNode CreateSut(INodeRepository nodeRepository = null, IValue value = null)
+        private static ValueNode CreateSut(INodeRepository? nodeRepository = null, IValue? value = null)
             => new ValueNode(new ValueCalculationContext(nodeRepository, null),
                 new ValueCalculationContext(nodeRepository, null), value);
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Moq;
 using NUnit.Framework;
 using PoESkillTree.Engine.Computation.Common.Data;
 
@@ -8,7 +9,9 @@ namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
     [TestFixture]
     public class StatReplacingParserTest
     {
+#pragma warning disable 8618 // Initialized in SetUp
         private IReadOnlyList<StatReplacerData> _statReplacers;
+#pragma warning restore 8618
 
         [SetUp]
         public void SetUp()
@@ -26,7 +29,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
         [Test]
         public void IsIParserIReadOnlyList()
         {
-            var sut = new StatReplacingParser<string>(null, _statReplacers);
+            var sut = new StatReplacingParser<string>(null!, _statReplacers);
 
             Assert.IsInstanceOf<IStringParser<IReadOnlyList<string>>>(sut);
         }
@@ -35,7 +38,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
         [TestCase(false, ExpectedResult = false)]
         public bool TryParseWithoutReplacementPassesSuccessfullyParsed(bool innerSuccess)
         {
-            var inner = StringParserTestUtils.MockParser("stat", innerSuccess, default, "").Object;
+            var inner = StringParserTestUtils.MockParser("stat", innerSuccess, "", "").Object;
             var sut = new StatReplacingParser<string>(inner, _statReplacers);
 
             var (actual, _, _) = sut.Parse("stat");
@@ -59,7 +62,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
         public void TryParseWithoutReplacementPassesResult()
         {
             const string expected = "result";
-            var inner = StringParserTestUtils.MockParser("stat", default, default, expected).Object;
+            var inner = StringParserTestUtils.MockParser("stat", default, "", expected).Object;
             var sut = new StatReplacingParser<string>(inner, _statReplacers);
 
             var (_, _, actual) = sut.Parse("stat");
@@ -75,9 +78,9 @@ namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
         public bool TryParseWithManyReplacementsReturnsCorrectSuccessfullyParsed(params bool[] successes)
         {
             var inner = StringParserTestUtils.MockParser(
-                ("stat1", new StringParseResult<string>(successes[0], default, default)),
-                ("stat2", new StringParseResult<string>(successes[1], default, default)),
-                ("stat3", new StringParseResult<string>(successes[2], default, default))).Object;
+                ("stat1", new StringParseResult<string>(successes[0], "", default)),
+                ("stat2", new StringParseResult<string>(successes[1], "", default)),
+                ("stat3", new StringParseResult<string>(successes[2], "", default))).Object;
             var sut = new StatReplacingParser<string>(inner, _statReplacers);
 
             var (actual, _, _) = sut.Parse("plain stat");
@@ -105,9 +108,9 @@ namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
         {
             string[] results = { "r1", "r2", "r3" };
             var inner = StringParserTestUtils.MockParser(
-                ("stat1", new StringParseResult<string>(default, default, results[0])),
-                ("stat2", new StringParseResult<string>(default, default, results[1])),
-                ("stat3", new StringParseResult<string>(default, default, results[2]))).Object;
+                ("stat1", new StringParseResult<string>(default, "", results[0])),
+                ("stat2", new StringParseResult<string>(default, "", results[1])),
+                ("stat3", new StringParseResult<string>(default, "", results[2]))).Object;
             var sut = new StatReplacingParser<string>(inner, _statReplacers);
 
             var (_, _, actual) = sut.Parse("plain stat");
@@ -118,7 +121,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
         [Test]
         public void TryParseWithEmptyReplacementReturnsSuccess()
         {
-            var sut = new StatReplacingParser<string>(null, _statReplacers);
+            var sut = new StatReplacingParser<string>(Mock.Of<IStringParser<string>>(), _statReplacers);
 
             var (actual, _, _) = sut.Parse("removed");
 
@@ -128,7 +131,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
         [Test]
         public void TryParseWithEmptyReplacementReturnsEmptyStringAsRemaining()
         {
-            var sut = new StatReplacingParser<string>(null, _statReplacers);
+            var sut = new StatReplacingParser<string>(Mock.Of<IStringParser<string>>(), _statReplacers);
 
             var (_, actual, _) = sut.Parse("removed");
 
@@ -138,7 +141,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
         [Test]
         public void TryParseWithEmptyReplacementReturnsEmptyListAsResult()
         {
-            var sut = new StatReplacingParser<string>(null, _statReplacers);
+            var sut = new StatReplacingParser<string>(Mock.Of<IStringParser<string>>(), _statReplacers);
 
             var (_, _, actual) = sut.Parse("removed");
 
@@ -153,7 +156,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
         [TestCase("unknown stat", new[] { "unknown stat" })]
         public void TryParseCallsInnerCorrectly(string stat, string[] expectedParts)
         {
-            var setup = expectedParts.Select(s => (s, new StringParseResult<string>(default, default, default)));
+            var setup = expectedParts.Select(s => (s, new StringParseResult<string>(default, "", default)));
             var innerMock = StringParserTestUtils.MockParser(setup.ToArray());
 
             var sut = new StatReplacingParser<string>(innerMock.Object, _statReplacers);
@@ -184,7 +187,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
         [Test]
         public void TryParseMustFindFullMatchToReplaceStat()
         {
-            var innerMock = StringParserTestUtils.MockParser("plain stat something", default, default, "");
+            var innerMock = StringParserTestUtils.MockParser("plain stat something", default, "", "");
             var sut = new StatReplacingParser<string>(innerMock.Object, _statReplacers);
 
             sut.Parse("plain stat something");

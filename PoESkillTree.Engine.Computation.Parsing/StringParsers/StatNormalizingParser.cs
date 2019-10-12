@@ -7,6 +7,7 @@
     /// </para>
     /// </summary>
     public class StatNormalizingParser<TResult> : IStringParser<TResult>
+        where TResult : class
     {
         private readonly IStringParser<TResult> _inner;
 

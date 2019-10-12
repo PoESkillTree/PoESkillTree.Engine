@@ -9,8 +9,10 @@ namespace PoESkillTree.Engine.Computation.Data.Collections
     [TestFixture]
     public class FormMatcherCollectionTest
     {
+#pragma warning disable 8618 // Initialized in SetUp
         private Mock<IValueBuilders> _valueFactory;
         private FormMatcherCollection _sut;
+#pragma warning restore
 
         [SetUp]
         public void SetUp()

@@ -6,6 +6,7 @@ using PoESkillTree.Engine.Computation.Common;
 using PoESkillTree.Engine.Computation.Core.Events;
 using PoESkillTree.Engine.Computation.Core.NodeCollections;
 using static PoESkillTree.Engine.Computation.Common.ExplicitRegistrationTypes;
+using static PoESkillTree.Engine.Computation.Common.Helper;
 using static PoESkillTree.Engine.Computation.Core.Graphs.NodeSelectorHelper;
 
 namespace PoESkillTree.Engine.Computation.Core.Graphs
@@ -56,13 +57,14 @@ namespace PoESkillTree.Engine.Computation.Core.Graphs
             var defaultResult = new[] { Selector(Form.BaseSet), Selector(Form.More) };
             var expected = new[] { defaultResult[1] };
             var eventBuffer = new EventBuffer();
+            var modifier = MockModifier();
             var formNodeCollections =
                 new Dictionary<FormNodeSelector, IBufferingEventViewProvider<INodeCollection<Modifier>>>
                 {
                     {
                         defaultResult[0],
                         Mock.Of<IBufferingEventViewProvider<INodeCollection<Modifier>>>(p =>
-                            p.DefaultView == new NodeCollection<Modifier>(eventBuffer) { { null, null } })
+                            p.DefaultView == new NodeCollection<Modifier>(eventBuffer) { { null, modifier } })
                     },
                     {
                         defaultResult[1],
@@ -115,7 +117,7 @@ namespace PoESkillTree.Engine.Computation.Core.Graphs
         }
 
         private static UserSpecifiedValuePruningRuleSet CreateSut(
-            IGraphPruningRuleSet defaultRuleSet = null, IDeterminesNodeRemoval nodeRemovalDeterminer = null)
+            IGraphPruningRuleSet? defaultRuleSet = null, IDeterminesNodeRemoval? nodeRemovalDeterminer = null)
             => new UserSpecifiedValuePruningRuleSet(defaultRuleSet ?? Mock.Of<IGraphPruningRuleSet>(),
                 nodeRemovalDeterminer ?? Mock.Of<IDeterminesNodeRemoval>());
 

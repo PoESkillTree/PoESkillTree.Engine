@@ -12,6 +12,7 @@ namespace PoESkillTree.Engine.Computation.Core.Graphs
     [TestFixture]
     public class ValueTransformerTest
     {
+#pragma warning disable 8618 // Initialized in SetUp
         private IReadOnlyList<Mock<IValueTransformable>> _transformableMocks;
         private IStat _stat;
         private NodeType _nodeType;
@@ -19,6 +20,7 @@ namespace PoESkillTree.Engine.Computation.Core.Graphs
         private IReadOnlyList<IValueTransformation> _transformations;
         private IReadOnlyList<Behavior> _behaviors;
         private ValueTransformer _sut;
+#pragma warning restore
 
         [SetUp]
         public void SetUp()

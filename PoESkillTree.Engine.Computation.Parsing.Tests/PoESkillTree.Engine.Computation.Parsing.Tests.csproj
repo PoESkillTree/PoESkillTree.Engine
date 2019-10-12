@@ -1,12 +1,14 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <RootNamespace>PoESkillTree.Engine.Computation.Parsing</RootNamespace>
     <TargetFramework>netcoreapp3.0</TargetFramework>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>8</LangVersion>
     <AssemblyTitle>PoESkillTree.Engine.Computation.Parsing.Tests</AssemblyTitle>
     <Product>PoESkillTree.Engine.Computation.Parsing.Tests</Product>
     <Copyright>Copyright ©  2017</Copyright>
     <IsPackable>False</IsPackable>
+    <Nullable>enable</Nullable>
+    <WarningsAsErrors>8600;8601;8602;8603;8604;8619;8620</WarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Appveyor.TestLogger" Version="2.0.0" />

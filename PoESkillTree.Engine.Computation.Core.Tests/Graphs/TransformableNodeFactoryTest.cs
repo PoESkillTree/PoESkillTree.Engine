@@ -90,9 +90,9 @@ namespace PoESkillTree.Engine.Computation.Core.Graphs
         }
 
         private static TransformableNodeFactory CreateSut(
-            TransformableValue transformableValue = null, IDisposableNodeViewProvider provider = null)
+            TransformableValue? transformableValue = null, IDisposableNodeViewProvider? provider = null)
         {
-            transformableValue = transformableValue ?? new TransformableValue(null);
+            transformableValue ??= new TransformableValue(null);
             var injectedFactory = Mock.Of<INodeFactory>(f => f.Create(transformableValue, null) == provider);
             return new TransformableNodeFactory(injectedFactory, _ => transformableValue);
         }

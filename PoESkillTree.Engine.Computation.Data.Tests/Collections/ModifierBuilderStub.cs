@@ -11,15 +11,15 @@ namespace PoESkillTree.Engine.Computation.Data.Collections
 {
     internal class ModifierBuilderStub : IModifierBuilder, IIntermediateModifier
     {
-        internal IEnumerable<IConditionBuilder> Conditions { get; private set; }
-        internal IEnumerable<IFormBuilder> Forms { get; private set; }
-        internal IEnumerable<IStatBuilder> Stats { get; private set; }
-        internal IEnumerable<IValueBuilder> Values { get; private set; }
+        internal IEnumerable<IConditionBuilder>? Conditions { get; private set; }
+        internal IEnumerable<IFormBuilder>? Forms { get; private set; }
+        internal IEnumerable<IStatBuilder>? Stats { get; private set; }
+        internal IEnumerable<IValueBuilder>? Values { get; private set; }
 
         public IReadOnlyList<IntermediateModifierEntry> Entries => throw new InvalidOperationException();
 
-        public StatConverter StatConverter { get; private set; }
-        public ValueConverter ValueConverter { get; private set; }
+        public StatConverter? StatConverter { get; private set; }
+        public ValueConverter? ValueConverter { get; private set; }
 
         public IModifierBuilder WithCondition(IConditionBuilder condition)
         {

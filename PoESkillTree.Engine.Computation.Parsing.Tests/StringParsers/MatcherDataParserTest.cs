@@ -54,7 +54,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
 
             var (_, _, result) = sut.Parse(stat);
 
-            var actual = result.Modifier;
+            var actual = result!.Modifier;
             Assert.AreEqual(expected, actual);
         }
 
@@ -72,7 +72,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
 
             var (_, _, result) = sut.Parse(stat);
 
-            var actual = result.RegexGroups;
+            var actual = result!.RegexGroups;
             CollectionAssert.AreEqual(expected, actual);
         }
 
@@ -86,7 +86,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
 
             var (_, _, result) = sut.Parse(stat);
 
-            var actual = result.RegexGroups;
+            var actual = result!.RegexGroups;
             Assert.That(actual, Has.Exactly(1).Items.EqualTo(new KeyValuePair<string, string>("0", fullGroup)));
         }
 

@@ -14,7 +14,7 @@ namespace PoESkillTree.Engine.Computation.Core.NodeCollections
         public void DefaultViewReturnsConstructorParameter()
         {
             var defaultView = CreateNodeCollection();
-            var sut = CreateSut(defaultView, null);
+            var sut = CreateSut(defaultView, CreateNodeCollection());
 
             Assert.AreSame(defaultView, sut.DefaultView);
         }
@@ -23,7 +23,7 @@ namespace PoESkillTree.Engine.Computation.Core.NodeCollections
         public void BufferingViewReturnsConstructorParameter()
         {
             var bufferingView = CreateNodeCollection();
-            var sut = CreateSut(null, bufferingView);
+            var sut = CreateSut(CreateNodeCollection(), bufferingView);
 
             Assert.AreSame(bufferingView, sut.BufferingView);
         }

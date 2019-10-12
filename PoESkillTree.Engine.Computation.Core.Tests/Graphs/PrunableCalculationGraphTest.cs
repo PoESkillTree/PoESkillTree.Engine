@@ -293,13 +293,12 @@ namespace PoESkillTree.Engine.Computation.Core.Graphs
         }
 
         private static IStatGraph MockStatGraph(
-            IReadOnlyDictionary<NodeSelector, IBufferingEventViewProvider<ICalculationNode>> nodes = null,
-            IReadOnlyDictionary<FormNodeSelector, IBufferingEventViewProvider<INodeCollection<Modifier>>> formNodes
+            IReadOnlyDictionary<NodeSelector, IBufferingEventViewProvider<ICalculationNode>>? nodes = null,
+            IReadOnlyDictionary<FormNodeSelector, IBufferingEventViewProvider<INodeCollection<Modifier>>>? formNodes
                 = null)
         {
-            nodes = nodes ?? new Dictionary<NodeSelector, IBufferingEventViewProvider<ICalculationNode>>();
-            formNodes = formNodes ??
-                        new Dictionary<FormNodeSelector, IBufferingEventViewProvider<INodeCollection<Modifier>>>();
+            nodes ??= new Dictionary<NodeSelector, IBufferingEventViewProvider<ICalculationNode>>();
+            formNodes ??= new Dictionary<FormNodeSelector, IBufferingEventViewProvider<INodeCollection<Modifier>>>();
             return Mock.Of<IStatGraph>(g =>
                 g.Nodes == nodes &&
                 g.FormNodeCollections == formNodes &&

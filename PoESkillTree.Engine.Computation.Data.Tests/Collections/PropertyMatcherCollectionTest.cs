@@ -12,7 +12,9 @@ namespace PoESkillTree.Engine.Computation.Data.Collections
     {
         private const string Regex = "regex";
 
+#pragma warning disable 8618 // Initialized in SetUp
         private PropertyMatcherCollection _sut;
+#pragma warning restore
 
         [SetUp]
         public void SetUp()
@@ -56,7 +58,7 @@ namespace PoESkillTree.Engine.Computation.Data.Collections
 
             var builder = _sut.AssertSingle(Regex);
             Assert.That(builder.Stats, Has.Exactly(1).SameAs(stat));
-            var actualValue = builder.ValueConverter(inputValue);
+            var actualValue = builder.ValueConverter!(inputValue);
             Assert.AreEqual(expectedValue, actualValue);
         }
 

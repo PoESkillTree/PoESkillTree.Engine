@@ -21,7 +21,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
         public static ActiveSkillDefinition CreateActiveSkillDefinition(
             string displayName, IEnumerable<string> activeSkillTypes, IReadOnlyList<Keyword> keywords,
-            bool providesBuff = false, IReadOnlyList<ItemClass> weaponRestrictions = null)
+            bool providesBuff = false, IReadOnlyList<ItemClass>? weaponRestrictions = null)
             => CreateActiveSkillDefinition(displayName, null, activeSkillTypes, keywords,
                 providesBuff: providesBuff, weaponRestrictions: weaponRestrictions);
 
@@ -30,12 +30,12 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             int? attackSpeedMultiplier = null,
             int? manaCost = null, double? manaMultiplier = null, int? manaCostOverride = null, int? cooldown = null,
             int requiredLevel = 0, int requiredDexterity = 0, int requiredIntelligence = 0, int requiredStrength = 0,
-            IReadOnlyList<UntranslatedStat> qualityStats = null, IReadOnlyList<UntranslatedStat> stats = null,
-            IReadOnlyList<IReadOnlyList<UntranslatedStat>> additionalStatsPerPart = null,
-            IReadOnlyList<BuffStat> qualityBuffStats = null, IReadOnlyList<BuffStat> buffStats = null,
-            IReadOnlyList<UntranslatedStat> qualityPassiveStats = null,
-            IReadOnlyList<UntranslatedStat> passiveStats = null,
-            SkillTooltipDefinition tooltip = null)
+            IReadOnlyList<UntranslatedStat>? qualityStats = null, IReadOnlyList<UntranslatedStat>? stats = null,
+            IReadOnlyList<IReadOnlyList<UntranslatedStat>>? additionalStatsPerPart = null,
+            IReadOnlyList<BuffStat>? qualityBuffStats = null, IReadOnlyList<BuffStat>? buffStats = null,
+            IReadOnlyList<UntranslatedStat>? qualityPassiveStats = null,
+            IReadOnlyList<UntranslatedStat>? passiveStats = null,
+            SkillTooltipDefinition? tooltip = null)
             => new SkillLevelDefinition(damageEffectiveness, damageMultiplier, criticalStrikeChance,
                 attackSpeedMultiplier, manaCost,
                 manaMultiplier, manaCostOverride, cooldown, requiredLevel, requiredDexterity, requiredIntelligence,
@@ -45,20 +45,20 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 passiveStats ?? new UntranslatedStat[0], tooltip ?? null);
 
         public static ActiveSkillDefinition CreateActiveSkillDefinition(
-            string displayName, int? castTime = null, IEnumerable<string> activeSkillTypes = null,
-            IReadOnlyList<Keyword> keywords = null, IReadOnlyList<IReadOnlyList<Keyword>> keywordsPerPart = null,
+            string displayName, int? castTime = null, IEnumerable<string>? activeSkillTypes = null,
+            IReadOnlyList<Keyword>? keywords = null, IReadOnlyList<IReadOnlyList<Keyword>>? keywordsPerPart = null,
             bool providesBuff = false, double? totemLifeMultiplier = null,
-            IReadOnlyList<ItemClass> weaponRestrictions = null)
+            IReadOnlyList<ItemClass>? weaponRestrictions = null)
         {
-            keywords = keywords ?? new Keyword[0];
+            keywords ??= new Keyword[0];
             return new ActiveSkillDefinition(displayName, castTime ?? 0, activeSkillTypes ?? new string[0],
                 new string[0], keywords, keywordsPerPart ?? new[] { keywords }, providesBuff, totemLifeMultiplier,
                 weaponRestrictions ?? new ItemClass[0]);
         }
 
         public static SupportSkillDefinition CreateSupportSkillDefinition(
-            IEnumerable<string> allowedActiveSkillTypes = null, IEnumerable<string> addedActiveSkillTypes = null,
-            IReadOnlyList<Keyword> addedKeywords = null)
+            IEnumerable<string>? allowedActiveSkillTypes = null, IEnumerable<string>? addedActiveSkillTypes = null,
+            IReadOnlyList<Keyword>? addedKeywords = null)
             => new SupportSkillDefinition(false,
                 allowedActiveSkillTypes ?? new string[0], new string[0], 
                 addedActiveSkillTypes ?? new string[0], addedKeywords ?? new Keyword[0]);

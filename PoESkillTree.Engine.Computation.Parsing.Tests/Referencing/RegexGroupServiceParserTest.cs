@@ -147,7 +147,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.Referencing
             return new RegexGroupService(valueBuildersMock.Object);
         }
 
-        private static string[] ParseValues(
+        private static string?[] ParseValues(
             IReadOnlyDictionary<string, string> groups, string groupPrefix = "")
             => CreateParser()
                 .ParseValues(groups, groupPrefix)

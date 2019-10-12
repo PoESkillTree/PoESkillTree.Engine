@@ -141,9 +141,9 @@ namespace PoESkillTree.Engine.Computation.Parsing.PassiveTreeParsers
             Assert.That(result.Modifiers, Has.Member(expected));
         }
 
-        private static PassiveNodeParser CreateSut(PassiveNodeDefinition nodeDefinition, ICoreParser coreParser = null)
+        private static PassiveNodeParser CreateSut(PassiveNodeDefinition nodeDefinition, ICoreParser? coreParser = null)
         {
-            coreParser = coreParser ?? Mock.Of<ICoreParser>();
+            coreParser ??= Mock.Of<ICoreParser>();
             var treeDefinition = new PassiveTreeDefinition(new[] { nodeDefinition });
             return new PassiveNodeParser(treeDefinition, CreateBuilderFactories(), coreParser);
         }
