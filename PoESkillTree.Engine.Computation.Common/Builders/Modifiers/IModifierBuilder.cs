@@ -24,23 +24,23 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Modifiers
     {
         IModifierBuilder WithForm(IFormBuilder form);
 
-        IModifierBuilder WithForms(IReadOnlyList<IFormBuilder> forms);
+        IModifierBuilder WithForms(IReadOnlyList<IFormBuilder?> forms);
 
         IModifierBuilder WithStat(IStatBuilder stat);
 
-        IModifierBuilder WithStats(IReadOnlyList<IStatBuilder> stats);
+        IModifierBuilder WithStats(IReadOnlyList<IStatBuilder?> stats);
 
         IModifierBuilder WithStatConverter(StatConverter converter);
 
         IModifierBuilder WithValue(IValueBuilder value);
 
-        IModifierBuilder WithValues(IReadOnlyList<IValueBuilder> values);
+        IModifierBuilder WithValues(IReadOnlyList<IValueBuilder?> values);
 
         IModifierBuilder WithValueConverter(ValueConverter converter);
 
         IModifierBuilder WithCondition(IConditionBuilder condition);
 
-        IModifierBuilder WithConditions(IReadOnlyList<IConditionBuilder> conditions);
+        IModifierBuilder WithConditions(IReadOnlyList<IConditionBuilder?> conditions);
 
         /// <summary>
         /// Builds this instance to an <see cref="IIntermediateModifier"/>.

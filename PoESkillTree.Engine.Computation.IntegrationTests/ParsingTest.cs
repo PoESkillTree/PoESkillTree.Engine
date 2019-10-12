@@ -50,7 +50,7 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
 
         private static IEnumerable<string> ReadParseableStatLines()
         {
-            var unparsedGivenStats = new GivenStatsCollection(null, null, null).SelectMany(s => s.GivenStatLines);
+            var unparsedGivenStats = new GivenStatsCollection(null!, null!, null!).SelectMany(s => s.GivenStatLines);
             return ReadDataLines("SkillTreeStatLines")
                 .Concat(ReadDataLines("ItemAffixes"))
                 .Concat(ReadDataLines("ParseableStatLines"))

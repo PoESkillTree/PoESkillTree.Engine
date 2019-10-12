@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using PoESkillTree.Engine.Computation.Common;
 using PoESkillTree.Engine.Computation.Core.Nodes;
 using PoESkillTree.Engine.Utils.Extensions;
@@ -66,8 +67,12 @@ namespace PoESkillTree.Engine.Computation.Core.Graphs
             node.Dispose();
         }
 
-        private bool TryGetNodeProvider(
-            Modifier modifier, out IDisposableNodeViewProvider nodeProvider)
+        private bool TryGetNodeProvider(Modifier modifier,
+#if NETSTANDARD2_0
+            out IDisposableNodeViewProvider nodeProvider)
+#else
+            [NotNullWhen(true)] out IDisposableNodeViewProvider? nodeProvider)
+#endif
         {
             if (!_modifierNodes.TryGetValue(modifier, out var stack))
             {

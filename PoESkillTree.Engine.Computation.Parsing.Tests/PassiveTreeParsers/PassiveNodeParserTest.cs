@@ -158,7 +158,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.PassiveTreeParsers
 
         private static Modifier CreateSkilledConditionalModifier(
             PassiveNodeDefinition nodeDefinition, string stat, Form form, double value)
-            => CreateModifier(stat, form, new FunctionalValue(null,
+            => CreateModifier(stat, form, new FunctionalValue(null!,
                     $"Character.{nodeDefinition.Id}.Skilled.Value(Total, Global).IsSet ? {value} : null"),
                 CreateGlobalSource(nodeDefinition));
 
@@ -168,7 +168,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.PassiveTreeParsers
 
         private static Modifier CreateEffectivenessMultipliedModifier(
             PassiveNodeDefinition nodeDefinition, string stat, Form form, string value)
-            => CreateModifier(stat, form, new FunctionalValue(null,
+            => CreateModifier(stat, form, new FunctionalValue(null!,
                     $"Character.{nodeDefinition.Id}.Effectiveness.Value(Total, Global) * {value}"),
                 CreateGlobalSource(nodeDefinition));
 

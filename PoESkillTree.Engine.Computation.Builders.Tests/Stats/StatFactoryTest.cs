@@ -222,7 +222,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
 
         private static T AssertTransformedValueIs<T>(Behavior actual) where T : IValue
         {
-            var value = actual.Transformation.Transform(null);
+            var value = actual.Transformation.Transform(null!);
             Assert.IsInstanceOf<T>(value);
             return (T) value;
         }

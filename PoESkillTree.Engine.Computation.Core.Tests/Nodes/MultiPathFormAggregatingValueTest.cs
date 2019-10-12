@@ -42,7 +42,8 @@ namespace PoESkillTree.Engine.Computation.Core.Nodes
             Assert.AreEqual(expected, actual);
         }
 
-        private static MultiPathFormAggregatingValue CreateSut(IStat? stat = null, PathDefinition? path = null) => 
-            new MultiPathFormAggregatingValue(stat, Form.More, path, vs => vs.Sum());
+        private static MultiPathFormAggregatingValue CreateSut(IStat? stat = null, PathDefinition? path = null) =>
+            new MultiPathFormAggregatingValue(stat ?? new StatStub(), Form.More, path ?? PathDefinition.MainPath,
+                vs => vs.Sum());
     }
 }

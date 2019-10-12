@@ -52,12 +52,12 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         {
             var keyword = Keyword.Projectile;
             var keywordBuilder = Mock.Of<IKeywordBuilder>(b => b.Build(default) == keyword);
-            var unresolvedKeywordBuilder = Mock.Of<IKeywordBuilder>(b => b.Resolve(null) == keywordBuilder);
+            var unresolvedKeywordBuilder = Mock.Of<IKeywordBuilder>(b => b.Resolve(null!) == keywordBuilder);
             var valueBuilder = new ValueBuilderImpl(2);
             var context = SetupKeywordContext(keyword);
             var sut = CreateSut();
 
-            var resolved = sut.WithHits.With(unresolvedKeywordBuilder).Resolve(null);
+            var resolved = sut.WithHits.With(unresolvedKeywordBuilder).Resolve(null!);
             var results = resolved.Build(default).ToList();
 
             Assert.That(results, Has.Exactly(4).Items);

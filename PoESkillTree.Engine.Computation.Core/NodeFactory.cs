@@ -20,10 +20,13 @@ namespace PoESkillTree.Engine.Computation.Core
         public NodeFactory(IEventBuffer eventBuffer)
             => _eventBuffer = eventBuffer;
 
-        public INodeRepository NodeRepository { private get; set; }
+        public INodeRepository? NodeRepository { private get; set; }
 
         public IDisposableNodeViewProvider Create(IValue value, PathDefinition path)
         {
+            if (NodeRepository is null)
+                throw new InvalidOperationException($"{nameof(NodeRepository)} has to be set before calling {nameof(Create)}");
+
             var coreNode = new ValueNode(new ValueCalculationContext(NodeRepository, path),
                 new ValueCalculationContext(NodeRepository, path), value);
             var cachingNode = new CachingNode(coreNode, new CycleGuard(), _eventBuffer);
@@ -58,7 +61,7 @@ namespace PoESkillTree.Engine.Computation.Core
                 Disposed?.Invoke(this, EventArgs.Empty);
             }
 
-            public event EventHandler Disposed;
+            public event EventHandler? Disposed;
 
             public void RaiseValueChanged() => _valueNode.OnValueChanged();
         }

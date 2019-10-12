@@ -41,11 +41,11 @@ namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
         public StringParseResult<IIntermediateModifier> Parse(string modifierLine)
         {
             var (successfullyParsed, remaining, innerResult) = _innerParser.Parse(modifierLine);
-            IIntermediateModifier result;
+            IIntermediateModifier? result;
 
             if (successfullyParsed)
             {
-                var groups = innerResult.RegexGroups;
+                var groups = innerResult!.RegexGroups;
                 var context = CreateContext(groups, "");
                 result = _modifierResolver.Resolve(innerResult.Modifier, context);
             }

@@ -77,7 +77,7 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Modifiers
             if (left.Value != null && right.Value != null)
                 throw new ArgumentException("Value may only be set once");
 
-            IConditionBuilder condition;
+            IConditionBuilder? condition;
             if (left.Condition == null)
             {
                 condition = right.Condition;

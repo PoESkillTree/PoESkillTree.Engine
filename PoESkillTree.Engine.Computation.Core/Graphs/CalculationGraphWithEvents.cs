@@ -63,9 +63,9 @@ namespace PoESkillTree.Engine.Computation.Core.Graphs
             StatRemoved?.Invoke(stat);
         }
 
-        public event Action<IStat> StatAdded;
-        public event Action<IStat> StatRemoved;
-        public event Action<Modifier> ModifierAdded;
-        public event Action<Modifier> ModifierRemoved;
+        public event Action<IStat>? StatAdded;
+        public event Action<IStat>? StatRemoved;
+        public event Action<Modifier>? ModifierAdded;
+        public event Action<Modifier>? ModifierRemoved;
     }
 }

@@ -40,7 +40,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
                 remaining = innerRemaining;
                 if (innerSuccess)
                 {
-                    results.Add(innerResult);
+                    results.Add(innerResult!);
                     step = _stepper.NextOnSuccess(step);
                 }
                 else

@@ -43,9 +43,9 @@ namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
 
         public StringParseResult<MatcherDataParseResult> Parse(string modifierLine)
         {
-            Match longestMatch = null;
-            MatcherData matchingData = null;
-            Regex matchingRegex = null;
+            Match? longestMatch = null;
+            MatcherData? matchingData = null;
+            Regex? matchingRegex = null;
             foreach (var (data, regex) in _dataWithRegexes)
             {
                 var match = regex.Match(modifierLine);
@@ -62,7 +62,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
 
             return (true,
                 GetRemaining(matchingData, modifierLine, longestMatch),
-                new MatcherDataParseResult(matchingData.Modifier, SelectGroups(matchingRegex, longestMatch.Groups)));
+                new MatcherDataParseResult(matchingData.Modifier, SelectGroups(matchingRegex!, longestMatch.Groups)));
         }
 
         private static string GetRemaining(MatcherData matcherData, string stat, Match match)

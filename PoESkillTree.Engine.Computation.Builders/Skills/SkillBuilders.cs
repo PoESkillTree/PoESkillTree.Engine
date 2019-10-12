@@ -38,7 +38,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Skills
 
         private SkillDefinition BuildModifierSourceSkill(BuildParameters parameters)
         {
-            var modifierSource = parameters.ModifierSource;
+            ModifierSource? modifierSource = parameters.ModifierSource;
             if (modifierSource is ModifierSource.Global global)
                 modifierSource = global.LocalSource;
 

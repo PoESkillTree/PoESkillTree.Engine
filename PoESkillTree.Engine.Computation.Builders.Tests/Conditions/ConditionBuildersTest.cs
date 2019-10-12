@@ -41,7 +41,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Conditions
 
             var value = sut.For(Mock.Of<IEntityBuilder>()).Build().Value;
 
-            Assert.IsTrue(value.Calculate(null).IsTrue());
+            Assert.IsTrue(value.Calculate(null!).IsTrue());
         }
 
         [Test]
@@ -50,7 +50,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Conditions
             var slot = ItemSlot.Amulet;
             var expected = new ModifierSource.Local.Item(slot);
             var expectedParameters = new BuildParameters(expected, default, default);
-            var result = new StatBuilderResult(new IStat[0], expected, null);
+            var result = new StatBuilderResult(new IStat[0], expected, null!);
             var inStat = Mock.Of<IStatBuilder>(b => b.Build(expectedParameters) == new[] { result });
             var sut = CreateSut();
 

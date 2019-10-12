@@ -70,14 +70,14 @@ namespace PoESkillTree.Engine.Computation.Builders.Conditions
 
         public static IConditionBuilder Create<TParameter>(
             Func<BuildParameters, TParameter, IStat> buildStat, TParameter parameter)
-            where TParameter : IResolvable<TParameter>
+            where TParameter : class, IResolvable<TParameter>
         {
             return new ValueConditionBuilder<TParameter>((p, t) => new StatValue(buildStat(p, t)), parameter);
         }
     }
 
     public class ValueConditionBuilder<TParameter> : ConditionBuilderBase
-        where TParameter : IResolvable<TParameter>
+        where TParameter : class, IResolvable<TParameter>
     {
         private readonly Func<BuildParameters, TParameter, IValue> _buildValue;
         private readonly TParameter _parameter;
@@ -99,8 +99,8 @@ namespace PoESkillTree.Engine.Computation.Builders.Conditions
     }
 
     public class ValueConditionBuilder<TParameter1, TParameter2> : ConditionBuilderBase
-        where TParameter1 : IResolvable<TParameter1>
-        where TParameter2 : IResolvable<TParameter2>
+        where TParameter1 : class, IResolvable<TParameter1>
+        where TParameter2 : class, IResolvable<TParameter2>
     {
         private readonly Func<BuildParameters, TParameter1, TParameter2, IValue> _buildValue;
         private readonly TParameter1 _parameter1;

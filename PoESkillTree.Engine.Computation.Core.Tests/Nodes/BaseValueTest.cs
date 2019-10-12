@@ -33,7 +33,7 @@ namespace PoESkillTree.Engine.Computation.Core.Nodes
         }
 
         private static BaseValue CreateSut(IStat? stat = null) =>
-            new BaseValue(stat, Path);
+            new BaseValue(stat ?? new StatStub(), Path);
 
         private static readonly PathDefinition Path = NodeHelper.NotMainPath;
     }

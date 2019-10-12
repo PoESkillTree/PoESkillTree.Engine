@@ -222,10 +222,10 @@ namespace PoESkillTree.Engine.Computation.Common
             return left + right;
         }
 
-        public static NodeValue? Sum(this List<NodeValue?> values, Func<NodeValue, NodeValue> selector = null)
+        public static NodeValue? Sum(this List<NodeValue?> values, Func<NodeValue, NodeValue>? selector = null)
             => values.AggregateOnValues((l, r) => l + r, selector);
 
-        public static NodeValue? Product(this List<NodeValue?> values, Func<NodeValue, NodeValue> selector = null)
+        public static NodeValue? Product(this List<NodeValue?> values, Func<NodeValue, NodeValue>? selector = null)
             => values.AggregateOnValues((l, r) => l * r, selector);
     }
 }

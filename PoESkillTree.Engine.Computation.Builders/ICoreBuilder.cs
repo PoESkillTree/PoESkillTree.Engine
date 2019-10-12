@@ -20,7 +20,7 @@ namespace PoESkillTree.Engine.Computation.Builders
 
         public static ICoreBuilder<TResult>
             Create<TParameter, TResult>(TParameter parameter, Func<BuildParameters, TParameter, TResult> build)
-            where TParameter : IResolvable<TParameter>
+            where TParameter : class, IResolvable<TParameter>
         {
             return new ParametrisedCoreBuilder<TParameter, TResult>(parameter, build);
         }
@@ -38,14 +38,15 @@ namespace PoESkillTree.Engine.Computation.Builders
 
         public static ICoreBuilder<TResult> Proxy<TProxied, TResult>(
             TProxied proxiedBuilder, Func<BuildParameters, TProxied, TResult> build)
-            where TProxied : IResolvable<TProxied>
+            where TProxied : class, IResolvable<TProxied>
         {
             return new ProxyCoreBuilder<TProxied, TResult>(proxiedBuilder, build);
         }
 
         public static ICoreBuilder<TResult> Proxy<TProxied, TResolve, TResult>(
             TProxied proxiedBuilder, Func<BuildParameters, TProxied, TResult> build)
-            where TProxied : IResolvable<TResolve>, TResolve
+            where TProxied : class, IResolvable<TResolve>, TResolve
+            where TResolve : class
         {
             return new ProxyCoreBuilder<TProxied, TResolve, TResult>(proxiedBuilder, build);
         }
@@ -74,7 +75,7 @@ namespace PoESkillTree.Engine.Computation.Builders
     }
 
     internal class ParametrisedCoreBuilder<TParameter, TResult> : ICoreBuilder<TResult>
-        where TParameter : IResolvable<TParameter>
+        where TParameter : class, IResolvable<TParameter>
     {
         private readonly TParameter _parameter;
         private readonly Func<BuildParameters, TParameter, TResult> _build;
@@ -131,7 +132,7 @@ namespace PoESkillTree.Engine.Computation.Builders
     }
 
     internal class ProxyCoreBuilder<TProxied, TResult> : ICoreBuilder<TResult>
-        where TProxied : IResolvable<TProxied>
+        where TProxied : class, IResolvable<TProxied>
     {
         private readonly TProxied _proxiedBuilder;
         private readonly Func<BuildParameters, TProxied, TResult> _build;
@@ -149,7 +150,8 @@ namespace PoESkillTree.Engine.Computation.Builders
     }
 
     internal class ProxyCoreBuilder<TProxied, TResolve, TResult> : ICoreBuilder<TResult>
-        where TProxied : IResolvable<TResolve>, TResolve
+        where TProxied : class, IResolvable<TResolve>, TResolve
+        where TResolve : class
     {
         private readonly TProxied _proxiedBuilder;
         private readonly Func<BuildParameters, TProxied, TResult> _build;

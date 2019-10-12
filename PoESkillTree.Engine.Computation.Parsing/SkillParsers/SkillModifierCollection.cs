@@ -18,19 +18,19 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             => _isMainSkill = isMainSkill;
 
         public void AddLocalForMainSkill(
-            IStatBuilder stat, Form form, double value, IConditionBuilder condition = null)
+            IStatBuilder stat, Form form, double value, IConditionBuilder? condition = null)
             => AddLocal(stat, form, value, CombineWithNullableCondition(_isMainSkill, condition));
 
         public void AddGlobalForMainSkill(
-            IStatBuilder stat, Form form, double value, IConditionBuilder condition = null)
+            IStatBuilder stat, Form form, double value, IConditionBuilder? condition = null)
             => AddGlobal(stat, form, value, CombineWithNullableCondition(_isMainSkill, condition));
 
         public void AddGlobalForMainSkill(
-            IStatBuilder stat, Form form, IValueBuilder value, IConditionBuilder condition = null)
+            IStatBuilder stat, Form form, IValueBuilder value, IConditionBuilder? condition = null)
             => AddGlobal(stat, form, value, CombineWithNullableCondition(_isMainSkill, condition));
 
         private static IConditionBuilder CombineWithNullableCondition(
-            IConditionBuilder left, IConditionBuilder right = null)
+            IConditionBuilder left, IConditionBuilder? right = null)
             => right is null ? left : left.And(right);
     }
 }

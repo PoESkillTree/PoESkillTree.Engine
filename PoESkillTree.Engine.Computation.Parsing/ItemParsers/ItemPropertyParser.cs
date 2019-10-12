@@ -15,7 +15,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.ItemParsers
     public class ItemPropertyParser : IParser<PartialItemParserParameter>
     {
         private readonly IBuilderFactories _builderFactories;
-        private ModifierCollection _modifiers;
+        private ModifierCollection? _modifiers;
 
         public ItemPropertyParser(IBuilderFactories builderFactories)
             => _builderFactories = builderFactories;
@@ -54,14 +54,14 @@ namespace PoESkillTree.Engine.Computation.Parsing.ItemParsers
             {
                 SetupDamageRelatedProperty(slot, _builderFactories.ActionBuilders.CriticalStrike.Chance);
                 // BaseSet CriticalStrike.Chance using BaseChance to allow overriding.
-                _modifiers.AddLocal(
+                _modifiers!.AddLocal(
                     _builderFactories.ActionBuilders.CriticalStrike.Chance.WithSkills.With(SlotToHand(slot)).AsItemProperty,
                     Form.BaseSet,
                     _builderFactories.ActionBuilders.CriticalStrike.BaseChance.WithSkills.With(SlotToHand(slot)).Value);
                 SetupDamageRelatedProperty(slot, _builderFactories.StatBuilders.CastRate);
                 // BaseSet CastRate property using BaseCastTime. This additional step is necessary because of modifiers
                 // attacks like Whirling Blades or Leap Slam that modify/override the BaseCastTime.
-                _modifiers.AddLocal(
+                _modifiers!.AddLocal(
                     _builderFactories.StatBuilders.CastRate.WithSkills.With(SlotToHand(slot)).AsItemProperty,
                     Form.BaseSet,
                     _builderFactories.StatBuilders.BaseCastTime.WithSkills.With(SlotToHand(slot)).Value.Invert);
@@ -83,7 +83,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.ItemParsers
             => SetupProperty(stat.WithSkills.With(SlotToHand(slot)));
 
         private void SetupProperty(IStatBuilder stat)
-            => _modifiers.AddLocal(stat, Form.BaseSet, stat.AsItemProperty.Value);
+            => _modifiers!.AddLocal(stat, Form.BaseSet, stat.AsItemProperty.Value);
 
         private void AddPropertyModifiers(ItemSlot slot, BaseItemDefinition baseItemDefinition)
         {
@@ -107,12 +107,12 @@ namespace PoESkillTree.Engine.Computation.Parsing.ItemParsers
                         SetProperty(_builderFactories.ActionBuilders.Block.AttackChance, value);
                         break;
                     case "critical_strike_chance":
-                        _modifiers.AddLocal(
+                        _modifiers!.AddLocal(
                             _builderFactories.ActionBuilders.CriticalStrike.BaseChance.WithSkills.With(SlotToHand(slot)),
                             Form.BaseSet, value / 100D);
                         break;
                     case "attack_time":
-                        _modifiers.AddLocal(
+                        _modifiers!.AddLocal(
                             _builderFactories.StatBuilders.BaseCastTime.WithSkills.With(SlotToHand(slot)),
                             Form.BaseSet, value / 1000D);
                         break;
@@ -141,7 +141,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.ItemParsers
                     _builderFactories.ValueBuilders.Create(physDamageMin),
                     _builderFactories.ValueBuilders.Create(physDamageMax.Value));
                 var stat = _builderFactories.DamageTypeBuilders.Physical.Damage.WithSkills.With(SlotToHand(slot));
-                _modifiers.AddLocal(stat.AsItemProperty, Form.BaseSet, value);
+                _modifiers!.AddLocal(stat.AsItemProperty, Form.BaseSet, value);
             }
         }
 
@@ -163,7 +163,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.ItemParsers
             }
 
             void Add(IStatBuilder stat)
-                => _modifiers.AddLocal(stat.AsItemProperty, Form.Increase, value);
+                => _modifiers!.AddLocal(stat.AsItemProperty, Form.Increase, value);
         }
 
         private void AddRequirementModifiers(Item item, BaseItemDefinition baseItemDefinition)
@@ -189,7 +189,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.ItemParsers
             => SetProperty(stat.WithSkills.With(SlotToHand(slot)), value);
 
         private void SetProperty(IStatBuilder stat, double value)
-            => _modifiers.AddLocal(stat.AsItemProperty, Form.BaseSet, value);
+            => _modifiers!.AddLocal(stat.AsItemProperty, Form.BaseSet, value);
 
         private static AttackDamageHand SlotToHand(ItemSlot slot)
             => slot == ItemSlot.MainHand ? AttackDamageHand.MainHand : AttackDamageHand.OffHand;

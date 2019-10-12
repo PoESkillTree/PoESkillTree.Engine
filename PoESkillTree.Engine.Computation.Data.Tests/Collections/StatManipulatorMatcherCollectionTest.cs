@@ -27,7 +27,7 @@ namespace PoESkillTree.Engine.Computation.Data.Collections
         [Test]
         public void AddWithoutSubstitution()
         {
-            StatConverter manipulator = s => null;
+            StatConverter manipulator = s => null!;
 
             _sut.Add(Regex, manipulator);
 
@@ -38,7 +38,7 @@ namespace PoESkillTree.Engine.Computation.Data.Collections
         [Test]
         public void AddWithSubstitution()
         {
-            StatConverter manipulator = s => null;
+            StatConverter manipulator = s => null!;
 
             _sut.Add(Regex, manipulator, "substitution");
 

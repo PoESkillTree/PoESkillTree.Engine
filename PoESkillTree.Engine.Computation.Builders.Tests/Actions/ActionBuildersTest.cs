@@ -67,7 +67,8 @@ namespace PoESkillTree.Engine.Computation.Builders.Actions
         private static ActionBuilders CreateSut() =>
             new ActionBuilders(StatFactory);
 
-        private static readonly IStatBuilder InputStat = StatBuilderUtils.FromIdentity(new StatFactory(), "stat", null);
+        private static readonly IStatBuilder InputStat =
+            StatBuilderUtils.FromIdentity(new StatFactory(), "stat", typeof(double));
         private static readonly IStatFactory StatFactory = new StatFactory();
     }
 }

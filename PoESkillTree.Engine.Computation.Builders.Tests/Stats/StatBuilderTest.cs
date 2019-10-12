@@ -127,7 +127,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
             var context = Mock.Of<IValueCalculationContext>(c =>
                 c.GetValue(stat, NodeType.Total, PathDefinition.MainPath) == expected);
 
-            var value = sut.Value.Build(new BuildParameters(null, entity, default));
+            var value = sut.Value.Build(new BuildParameters(null!, entity, default));
             var actual = value.Calculate(context);
 
             Assert.AreEqual(expected, actual);
@@ -258,9 +258,9 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
             var otherMock = new Mock<IStatBuilder>();
 
             var combined = sut.CombineWith(otherMock.Object);
-            combined.Resolve(null);
+            combined.Resolve(null!);
 
-            otherMock.Verify(b => b.Resolve(null));
+            otherMock.Verify(b => b.Resolve(null!));
         }
 
         [Test]
@@ -324,7 +324,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
             var sutWithCondition = sut.WithCondition(condition.Object);
             var actual = sutWithCondition.BuildToSingleResult();
             var actualStat = actual.Stats.Single();
-            var actualValue = actual.ValueConverter(inputValueBuilder).Build(default).Calculate(null);
+            var actualValue = actual.ValueConverter(inputValueBuilder).Build(default).Calculate(null!);
 
             Assert.AreEqual(expectedStat, actualStat);
             Assert.AreEqual(expectedValue, actualValue);
@@ -386,7 +386,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         public void IsSetCalculatesCorrectValue(double? input, bool expected)
         {
             var stat = new Stat("s");
-            var results = new[] { new StatBuilderResult(new[] { stat }, null, Funcs.Identity), };
+            var results = new[] { new StatBuilderResult(new[] { stat }, null!, Funcs.Identity), };
             var coreStatBuilder = Mock.Of<ICoreStatBuilder>(b => b.Build(default) == results);
             var context = Mock.Of<IValueCalculationContext>(c =>
                 c.GetValue(stat, NodeType.Total, PathDefinition.MainPath) == (NodeValue?) input);
@@ -443,7 +443,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
             var stats = stat == null ? new IStat[0] : new[] { stat };
             return new[]
             {
-                new StatBuilderResult(stats, modifierSource, valueConverter ?? Funcs.Identity)
+                new StatBuilderResult(stats, modifierSource!, valueConverter ?? Funcs.Identity)
             };
         }
 

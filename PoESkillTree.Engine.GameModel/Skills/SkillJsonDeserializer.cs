@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using EnumsNET;
 using Newtonsoft.Json.Linq;
 using PoESkillTree.Engine.GameModel.Items;
+using PoESkillTree.Engine.Utils.Extensions;
+
 #if NETSTANDARD2_0
 using static MoreLinq.Extensions.ToHashSetExtension;
 #endif
@@ -19,7 +22,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
     {
         private readonly SkillDefinitionExtensions _definitionExtensions;
         private int _nextNumericId;
-        private SkillDefinitionExtension _definitionExtension;
+        private SkillDefinitionExtension? _definitionExtension;
 
         private SkillJsonDeserializer(SkillDefinitionExtensions definitionExtensions)
             => _definitionExtensions = definitionExtensions;
@@ -38,22 +41,22 @@ namespace PoESkillTree.Engine.GameModel.Skills
             var deserializer = new SkillJsonDeserializer(new SkillDefinitionExtensions());
             var definitions = gemJson.Properties()
                 .Select(property => deserializer.Deserialize(property, gemTooltipJson))
-                .Where(d => d != null);
+                .WhereNotNull();
             return new SkillDefinitions(definitions.ToList());
         }
 
-        private SkillDefinition Deserialize(JProperty gemProperty, JToken gemTooltipJson)
+        private SkillDefinition? Deserialize(JProperty gemProperty, JToken gemTooltipJson)
             => Deserialize(gemProperty.Name, (JObject) gemProperty.Value,
                 gemTooltipJson.Value<JObject>(gemProperty.Name));
 
-        private SkillDefinition Deserialize(string skillId, JObject gemJson, JToken gemTooltipJson)
+        private SkillDefinition? Deserialize(string skillId, JObject gemJson, JToken gemTooltipJson)
         {
             var castTime = gemJson.Value<int>("cast_time");
             var statTranslationFile = gemJson.Value<string>("stat_translation_file");
 
             var baseItemJson = gemJson["base_item"];
             ISet<string> gemTags;
-            SkillBaseItemDefinition baseItemDefinition;
+            SkillBaseItemDefinition? baseItemDefinition;
             if (baseItemJson.Type == JTokenType.Null)
             {
                 gemTags = new HashSet<string>();
@@ -80,7 +83,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
             var displayName = baseItemDefinition?.DisplayName;
             if (gemJson.TryGetValue("active_skill", out var activeSkillJson))
             {
-                displayName = displayName ?? activeSkillJson.Value<string>("display_name");
+                displayName ??= activeSkillJson.Value<string>("display_name");
                 var activeSkillTypes = activeSkillJson["types"].Values<string>().ToHashSet();
                 var minionActiveSkillTypes = activeSkillJson["minion_types"]?.Values<string>().ToHashSet()
                                              ?? new HashSet<string>();
@@ -97,7 +100,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
             }
             else
             {
-                displayName = displayName ?? skillId;
+                displayName ??= skillId;
                 var supportSkillJson = gemJson["support_gem"];
                 var addedActiveSkillTypes = supportSkillJson["added_types"].Values<string>().ToHashSet();
                 var addedKeywords = GetKeywords(displayName, addedActiveSkillTypes, gemTags);
@@ -116,11 +119,11 @@ namespace PoESkillTree.Engine.GameModel.Skills
         {
             var keywords = Enums.GetValues<Keyword>()
                 .Where(k => k.IsOnSkill(displayName, activeSkillTypes, gemTags));
-            return _definitionExtension.CommonExtension.ModifyKeywords(keywords).ToList();
+            return _definitionExtension!.CommonExtension.ModifyKeywords(keywords).ToList();
         }
 
         private IReadOnlyList<IReadOnlyList<Keyword>> GetKeywordsPerPart(IReadOnlyList<Keyword> keywords)
-            => _definitionExtension.PartExtensions.Select(e => e.ModifyKeywords(keywords).ToList()).ToList();
+            => _definitionExtension!.PartExtensions.Select(e => e.ModifyKeywords(keywords).ToList()).ToList();
 
         private IReadOnlyDictionary<int, SkillLevelDefinition> DeserializeLevels(JToken gemJson, JToken gemTooltipJson)
         {
@@ -180,24 +183,24 @@ namespace PoESkillTree.Engine.GameModel.Skills
             {
                 var stats = DeserializeStats(
                     Value<JArray>(propertyName), staticJson.Value<JArray>(propertyName), DeserializeUntranslatedStat);
-                return _definitionExtension.CommonExtension.ModifyStats(stats).ToList();
+                return _definitionExtension!.CommonExtension.ModifyStats(stats).ToList();
             }
         }
 
         private static UntranslatedStat DeserializeUntranslatedStat(JToken statToken, JToken staticStatToken)
             => new UntranslatedStat(
-                GetValue<string>("id", statToken, staticStatToken),
+                GetValue<string>("id", statToken, staticStatToken) ?? "",
                 GetValue<int>("value", statToken, staticStatToken));
 
         private (IReadOnlyList<UntranslatedStat>, IReadOnlyList<BuffStat>) SplitBuffStats(
             IReadOnlyList<UntranslatedStat> stats)
         {
             var untranslatedBuffStats = stats
-                .Where(s => _definitionExtension.BuffStats.ContainsKey(s.StatId))
+                .Where(s => _definitionExtension!.BuffStats.ContainsKey(s.StatId))
                 .ToList();
             var remainingStats = stats.Except(untranslatedBuffStats).ToList();
             var buffStats = untranslatedBuffStats
-                .Select(s => new BuffStat(s, _definitionExtension.BuffStats[s.StatId]))
+                .Select(s => new BuffStat(s, _definitionExtension!.BuffStats[s.StatId]))
                 .ToList();
             return (remainingStats, buffStats);
         }
@@ -206,7 +209,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
             IReadOnlyList<UntranslatedStat> stats)
         {
             var passiveStats = stats
-                .Where(s => _definitionExtension.PassiveStats.Contains(s.StatId))
+                .Where(s => _definitionExtension!.PassiveStats.Contains(s.StatId))
                 .ToList();
             var remainingStats = stats.Except(passiveStats).ToList();
             return (remainingStats, passiveStats);
@@ -215,7 +218,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
         private (IReadOnlyList<UntranslatedStat>, IReadOnlyList<IReadOnlyList<UntranslatedStat>>) SplitStatsIntoParts(
             IReadOnlyList<UntranslatedStat> stats)
         {
-            var statsPerPart = _definitionExtension.PartExtensions.Select(e => e.ModifyStats(stats)).ToList();
+            var statsPerPart = _definitionExtension!.PartExtensions.Select(e => e.ModifyStats(stats)).ToList();
             var commonStats = statsPerPart.Aggregate((l, r) => l.Intersect(r)).ToList();
             var additionalStatsPerPart = statsPerPart.Select(s => s.Except(commonStats).ToList()).ToList();
             return (commonStats, additionalStatsPerPart);
@@ -246,7 +249,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 return new TranslatedStat(statToken.Value<string>());
 
             var text = statToken["text"]?.Value<string>() ?? staticStatToken.Value<string>("text");
-            return TryGetValues("values", statToken, staticStatToken, out double[] values)
+            return TryGetValues("values", statToken, staticStatToken, out double[]? values)
                 ? new TranslatedStat(text, values)
                 : new TranslatedStat(text, GetValue<double>("value", statToken, staticStatToken));
         }
@@ -271,7 +274,12 @@ namespace PoESkillTree.Engine.GameModel.Skills
             return stats;
         }
 
-        private static bool TryGetValues<T>(string propertyName, JToken firstToken, JToken secondToken, out T[] values)
+        private static bool TryGetValues<T>(string propertyName, JToken firstToken, JToken secondToken,
+#if NETSTANDARD2_0
+            out T[] values)
+#else
+            [NotNullWhen(true)] out T[]? values)
+#endif
         {
             var firstArray = GetValue<JArray>(propertyName, firstToken, secondToken);
             if (firstArray is null)
@@ -281,7 +289,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
             }
 
             var secondArray = GetValue<JArray>(propertyName, secondToken, firstToken);
-            if (firstArray.Count != secondArray.Count)
+            if (firstArray.Count != secondArray?.Count)
                 throw new InvalidOperationException("Both arrays must be of the same size");
 
             values = new T[firstArray.Count];
@@ -293,13 +301,18 @@ namespace PoESkillTree.Engine.GameModel.Skills
             return true;
         }
 
+#if !NETSTANDARD2_0
+        [return: MaybeNull]
+#endif
         private static T GetValue<T>(string propertyName, JToken firstToken, JToken secondToken)
         {
             if (firstToken is JObject firstObject && firstObject.TryGetValue(propertyName, out var outToken))
                 return outToken.Value<T>();
             if (secondToken is JObject secondObject && secondObject.TryGetValue(propertyName, out outToken))
                 return outToken.Value<T>();
+#pragma warning disable CS8653 // Return value MaybeNull
             return default;
+#pragma warning restore
         }
     }
 }

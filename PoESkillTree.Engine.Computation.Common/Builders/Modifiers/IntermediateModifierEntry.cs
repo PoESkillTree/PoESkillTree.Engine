@@ -1,5 +1,4 @@
 ﻿using System;
-using JetBrains.Annotations;
 using PoESkillTree.Engine.Computation.Common.Builders.Conditions;
 using PoESkillTree.Engine.Computation.Common.Builders.Forms;
 using PoESkillTree.Engine.Computation.Common.Builders.Stats;
@@ -15,24 +14,20 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Modifiers
     /// </summary>
     public class IntermediateModifierEntry : ValueObject
     {
-        [CanBeNull]
-        public IFormBuilder Form { get; }
+        public IFormBuilder? Form { get; }
 
-        [CanBeNull]
-        public IStatBuilder Stat { get; }
+        public IStatBuilder? Stat { get; }
 
-        [CanBeNull]
-        public IValueBuilder Value { get; }
+        public IValueBuilder? Value { get; }
 
-        [CanBeNull]
-        public IConditionBuilder Condition { get; }
+        public IConditionBuilder? Condition { get; }
 
         public IntermediateModifierEntry()
         {
         }
 
         public IntermediateModifierEntry(
-            IFormBuilder form, IStatBuilder stat, IValueBuilder value, IConditionBuilder condition)
+            IFormBuilder? form, IStatBuilder? stat, IValueBuilder? value, IConditionBuilder? condition)
         {
             Form = form;
             Stat = stat;
@@ -40,28 +35,28 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Modifiers
             Condition = condition;
         }
 
-        public IntermediateModifierEntry WithForm(IFormBuilder form)
+        public IntermediateModifierEntry WithForm(IFormBuilder? form)
         {
             if (Form != null && form != null)
                 throw new InvalidOperationException(nameof(WithForm) + " must not be called multiple times");
             return new IntermediateModifierEntry(form, Stat, Value, Condition);
         }
 
-        public IntermediateModifierEntry WithStat(IStatBuilder stat)
+        public IntermediateModifierEntry WithStat(IStatBuilder? stat)
         {
             if (Stat != null && stat != null)
                 throw new InvalidOperationException(nameof(WithStat) + " must not be called multiple times");
             return new IntermediateModifierEntry(Form, stat, Value, Condition);
         }
 
-        public IntermediateModifierEntry WithValue(IValueBuilder value)
+        public IntermediateModifierEntry WithValue(IValueBuilder? value)
         {
             if (Value != null && value != null)
                 throw new InvalidOperationException(nameof(WithValue) + " must not be called multiple times");
             return new IntermediateModifierEntry(Form, Stat, value, Condition);
         }
 
-        public IntermediateModifierEntry WithCondition(IConditionBuilder condition)
+        public IntermediateModifierEntry WithCondition(IConditionBuilder? condition)
         {
             if (Condition != null && condition != null)
                 throw new InvalidOperationException(nameof(WithCondition) + " must not be called multiple times");

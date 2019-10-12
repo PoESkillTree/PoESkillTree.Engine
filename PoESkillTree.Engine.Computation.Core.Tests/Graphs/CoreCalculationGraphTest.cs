@@ -154,6 +154,6 @@ namespace PoESkillTree.Engine.Computation.Core.Graphs
 
         private static CoreCalculationGraph CreateSut(
             Func<IStat, IStatGraph>? graphFactory = null, INodeFactory? nodeFactory = null) =>
-            new CoreCalculationGraph(graphFactory, nodeFactory);
+            new CoreCalculationGraph(graphFactory!, nodeFactory!);
     }
 }

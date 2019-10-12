@@ -27,7 +27,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         private readonly Mode _mode;
         private readonly DamageSource? _damageSource;
         private readonly AttackDamageHand? _hand;
-        private readonly IAilmentBuilder _ailment;
+        private readonly IAilmentBuilder? _ailment;
 
         public DamageSpecificationBuilder()
             : this(Mode.Skills | Mode.Ailments, null, null, null)
@@ -35,7 +35,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         }
 
         private DamageSpecificationBuilder(
-            Mode mode, DamageSource? damageSource, IAilmentBuilder ailment, AttackDamageHand? hand)
+            Mode mode, DamageSource? damageSource, IAilmentBuilder? ailment, AttackDamageHand? hand)
         {
             _mode = mode;
             _damageSource = damageSource;
@@ -46,7 +46,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         public DamageSpecificationBuilder Resolve(ResolveContext context)
         {
             return new DamageSpecificationBuilder(_mode, _damageSource,
-                (IAilmentBuilder) _ailment?.Resolve(context), _hand);
+                (IAilmentBuilder?) _ailment?.Resolve(context), _hand);
         }
 
         public DamageSpecificationBuilder With(DamageSource damageSource)

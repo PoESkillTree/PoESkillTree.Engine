@@ -21,7 +21,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Values
             var maxBuilder = new ValueBuilderImpl(max);
             var sut = CreateSut();
 
-            var actual = sut.FromMinAndMax(minBuilder, maxBuilder).Build().Calculate(null);
+            var actual = sut.FromMinAndMax(minBuilder, maxBuilder).Build().Calculate(null!);
 
             Assert.AreEqual(expected, actual);
         }
@@ -40,7 +40,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Values
                 .Then(new ValueBuilderImpl(1))
                 .Else(2);
 
-            var actual = valueBuilder.Build().Calculate(null);
+            var actual = valueBuilder.Build().Calculate(null!);
             Assert.AreEqual(new NodeValue(trueBranch), actual);
         }
 

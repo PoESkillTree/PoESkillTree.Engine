@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 using PoESkillTree.Engine.GameModel;
 
 namespace PoESkillTree.Engine.Computation.Common
@@ -29,21 +28,18 @@ namespace PoESkillTree.Engine.Computation.Common
         /// The <see cref="IStat"/> determining the minimum value of this stat or <c>null</c> if the stat can never
         /// have an lower bound.
         /// </summary>
-        [CanBeNull]
-        IStat Minimum { get; }
+        IStat? Minimum { get; }
         
         /// <summary>
         /// The <see cref="IStat"/> determining the maximum value of this stat or <c>null</c> if the stat can never
         /// have an upper bound.
         /// </summary>
-        [CanBeNull]
-        IStat Maximum { get; }
+        IStat? Maximum { get; }
 
         /// <summary>
         /// Not null if the existence/usage of this stat should be explicitly announced to clients
         /// </summary>
-        [CanBeNull]
-        ExplicitRegistrationType ExplicitRegistrationType { get; }
+        ExplicitRegistrationType? ExplicitRegistrationType { get; }
 
         /// <summary>
         /// The type of this stat's values. Can be double, int, uint, bool or an enum type.

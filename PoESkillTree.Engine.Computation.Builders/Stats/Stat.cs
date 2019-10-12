@@ -14,8 +14,8 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
             typeof(double), typeof(int), typeof(uint)
         };
 
-        public Stat(string identity, Entity entity = default, Type dataType = null,
-            ExplicitRegistrationType explicitRegistrationType = null, IReadOnlyList<Behavior> behaviors = null)
+        public Stat(string identity, Entity entity = default, Type? dataType = null,
+            ExplicitRegistrationType? explicitRegistrationType = null, IReadOnlyList<Behavior>? behaviors = null)
         {
             if (!IsDataTypeValid(dataType))
                 throw new ArgumentException($"Stats only support double, int, bool or enum data types, {dataType} given",
@@ -29,25 +29,25 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
             Behaviors = behaviors ?? new Behavior[0];
         }
 
-        private static bool IsDataTypeValid(Type dataType)
+        private static bool IsDataTypeValid(Type? dataType)
             => dataType == null || dataType == typeof(bool) || NumericTypes.Contains(dataType) || dataType.IsEnum;
 
         private readonly bool _hasRange;
         public string Identity { get; }
         public Entity Entity { get; }
-        public ExplicitRegistrationType ExplicitRegistrationType { get; }
+        public ExplicitRegistrationType? ExplicitRegistrationType { get; }
         public Type DataType { get; }
         public IReadOnlyList<Behavior> Behaviors { get; }
 
-        public IStat Minimum => MinOrMax();
-        public IStat Maximum => MinOrMax();
+        public IStat? Minimum => MinOrMax();
+        public IStat? Maximum => MinOrMax();
 
-        private IStat MinOrMax([CallerMemberName] string identitySuffix = null) =>
+        private IStat? MinOrMax([CallerMemberName] string identitySuffix = "") =>
             _hasRange ? new Stat(Identity + "." + identitySuffix, Entity, DataType) : null;
 
-        private string _stringRepresentation;
+        private string? _stringRepresentation;
         public override string ToString()
-            => _stringRepresentation ?? (_stringRepresentation = Entity.GetName() + "." + Identity);
+            => _stringRepresentation ??= Entity.GetName() + "." + Identity;
 
         public override bool Equals(object obj) =>
             (obj == this) || (obj is IStat other && Equals(other));

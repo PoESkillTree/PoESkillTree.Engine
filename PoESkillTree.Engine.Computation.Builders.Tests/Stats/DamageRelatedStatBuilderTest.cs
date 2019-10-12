@@ -191,10 +191,10 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         {
             var ailment = Ailment.Bleed;
             var resolvedAilmentBuilder = Mock.Of<IAilmentBuilder>(b => b.Build(default) == ailment);
-            var ailmentBuilder = Mock.Of<IAilmentBuilder>(b => b.Resolve(null) == resolvedAilmentBuilder);
+            var ailmentBuilder = Mock.Of<IAilmentBuilder>(b => b.Resolve(null!) == resolvedAilmentBuilder);
             var sut = CreateSut();
 
-            var resolved = sut.With(ailmentBuilder).Resolve(null);
+            var resolved = sut.With(ailmentBuilder).Resolve(null!);
             var stat = BuildToStats(resolved, SkillResultCount - 1)[0];
 
             StringAssert.Contains(ailment.ToString(), stat.Identity);

@@ -27,17 +27,17 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Modifiers
                 .WithForms(Resolve(entries, e => e.Form, context))
                 .WithStats(Resolve(entries, e => e.Stat, context))
                 .WithConditions(Resolve(entries, e => e.Condition, context))
-                .WithValueConverter(v => unresolved.ValueConverter(v)?.Resolve(context))
-                .WithStatConverter(s => unresolved.StatConverter(s)?.Resolve(context))
+                .WithValueConverter(v => unresolved.ValueConverter(v).Resolve(context))
+                .WithStatConverter(s => unresolved.StatConverter(s).Resolve(context))
                 .Build();
         }
 
-        private static IReadOnlyList<T> Resolve<T>(
-            IReadOnlyList<IntermediateModifierEntry> entries, Func<IntermediateModifierEntry, T> selector,
+        private static IReadOnlyList<T?> Resolve<T>(
+            IReadOnlyList<IntermediateModifierEntry> entries, Func<IntermediateModifierEntry, T?> selector,
             ResolveContext context)
-            where T: class, IResolvable<T>
+            where T : class, IResolvable<T>
         {
-            var newEntries = new List<T>(entries.Count);
+            var newEntries = new List<T?>(entries.Count);
             foreach (var entry in entries)
             {
                 newEntries.Add(selector(entry)?.Resolve(context));

@@ -32,7 +32,7 @@ namespace PoESkillTree.Engine.Computation.Core.Nodes
             }
         }
 
-        public event EventHandler ValueChanged;
+        public event EventHandler? ValueChanged;
 
         public void Dispose()
         {

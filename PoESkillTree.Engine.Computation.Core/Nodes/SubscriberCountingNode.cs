@@ -14,7 +14,7 @@ namespace PoESkillTree.Engine.Computation.Core.Nodes
 
         public int SubscriberCount => ValueChanged?.GetInvocationList().Length ?? 0;
 
-        public event EventHandler ValueChanged;
+        public event EventHandler? ValueChanged;
 
         protected virtual void OnValueChanged()
         {

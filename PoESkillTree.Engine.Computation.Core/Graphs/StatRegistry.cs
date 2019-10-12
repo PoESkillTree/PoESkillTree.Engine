@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using PoESkillTree.Engine.Computation.Common;
 using PoESkillTree.Engine.Computation.Core.Events;
 using PoESkillTree.Engine.Computation.Core.NodeCollections;
@@ -34,12 +35,16 @@ namespace PoESkillTree.Engine.Computation.Core.Graphs
             _nodeCollection = nodeCollection;
         }
 
-        public INodeRepository NodeRepository { private get; set; }
+        public INodeRepository? NodeRepository { private get; set; }
 
         public void Add(IStat stat)
         {
             if (stat.ExplicitRegistrationType is null)
                 return;
+
+            if (NodeRepository is null)
+                throw new InvalidOperationException($"{nameof(NodeRepository)} has to be set before calling {nameof(Add)}");
+
             var node = NodeRepository.GetNode(stat);
             _registeredNodeSet.Add(node);
             _registeredNodes[stat] = node;

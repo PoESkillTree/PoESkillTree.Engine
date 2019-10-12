@@ -34,7 +34,7 @@ namespace PoESkillTree.Engine.Computation.Core.Nodes
         }
 
         private static PathTotalValue CreateSut(IStat? stat = null) =>
-            new PathTotalValue(stat, Path);
+            new PathTotalValue(stat ?? new StatStub(), Path);
 
         private static readonly PathDefinition Path = NodeHelper.NotMainPath;
     }

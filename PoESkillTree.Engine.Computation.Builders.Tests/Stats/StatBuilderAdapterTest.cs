@@ -21,9 +21,9 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
             var conditionBuilder = new Mock<IConditionBuilder>();
             var sut = new StatBuilderAdapter(statBuilder, conditionBuilder.Object);
 
-            sut.Resolve(null);
+            sut.Resolve(null!);
 
-            conditionBuilder.Verify(b => b.Resolve(null));
+            conditionBuilder.Verify(b => b.Resolve(null!));
         }
 
         [Test]

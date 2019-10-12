@@ -16,7 +16,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Resolving
         [Test]
         public void ResolveUsesInjectedFunction()
         {
-            var expected = 5;
+            var expected = "5";
             var sut = CreateSut(expected);
 
             var actual = sut.Resolve(BuildersHelper.MockResolveContext());
@@ -24,7 +24,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Resolving
             Assert.AreEqual(expected, actual);
         }
 
-        private static UnresolvedBuilder<int, string> CreateSut(int resolved = 0) => 
-            new UnresolvedBuilder<int, string>("", _ => resolved);
+        private static UnresolvedBuilder<string, string> CreateSut(string resolved = "0") => 
+            new UnresolvedBuilder<string, string>("", _ => resolved);
     }
 }

@@ -9,7 +9,7 @@ namespace PoESkillTree.Engine.Computation.Common
     {
         private readonly string _identity;
 
-        protected StringIdentityValue(object identity) =>
+        protected StringIdentityValue(object? identity) =>
             _identity = identity?.ToString() ?? "null";
 
         public abstract NodeValue? Calculate(IValueCalculationContext context);

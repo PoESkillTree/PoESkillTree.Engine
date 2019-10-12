@@ -102,8 +102,8 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests.Core
 
             sut.NewBatchUpdate()
                 .AddModifier(Stat, Form.BaseAdd, new Constant(value))
-                .AddModifier(Stat.Minimum, Form.BaseAdd, new Constant(10))
-                .AddModifier(Stat.Maximum, Form.BaseAdd, new Constant(20))
+                .AddModifier(Stat.Minimum!, Form.BaseAdd, new Constant(10))
+                .AddModifier(Stat.Maximum!, Form.BaseAdd, new Constant(20))
                 .DoUpdate();
             var expected = new NodeValue(Math.Max(Math.Min(value, 20), 10));
 

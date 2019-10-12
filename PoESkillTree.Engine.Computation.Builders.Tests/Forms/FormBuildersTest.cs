@@ -69,7 +69,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Forms
             var sut = CreateSut();
 
             var expected = sut.BaseSet;
-            var actual = expected.Resolve(null);
+            var actual = expected.Resolve(null!);
 
             Assert.AreEqual(expected, actual);
         }

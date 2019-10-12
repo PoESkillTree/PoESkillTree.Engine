@@ -39,7 +39,10 @@ namespace PoESkillTree.Engine.Utils.Extensions
 
             for (var i = 0; i < @this.Count; i++)
             {
-                if (!@this[i].Equals(other[i]))
+                var thisI = @this[i];
+                if (thisI is null)
+                    return other[i] is null;
+                if (!thisI.Equals(other[i]))
                     return false;
             }
 

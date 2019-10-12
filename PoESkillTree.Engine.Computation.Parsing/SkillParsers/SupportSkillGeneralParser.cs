@@ -15,8 +15,8 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
     {
         private readonly IBuilderFactories _builderFactories;
 
-        private ModifierCollection _parsedModifiers;
-        private SkillPreParseResult _preParseResult;
+        private ModifierCollection? _parsedModifiers;
+        private SkillPreParseResult? _preParseResult;
 
         public SupportSkillGeneralParser(IBuilderFactories builderFactories)
             => _builderFactories = builderFactories;
@@ -42,12 +42,12 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
         private void AddInstanceModifiers()
         {
-            var addedKeywords = _preParseResult.SkillDefinition.SupportSkill.AddedKeywords
+            var addedKeywords = _preParseResult!.SkillDefinition.SupportSkill.AddedKeywords
                 .Where(k => !_preParseResult.MainSkillDefinition.ActiveSkill.Keywords.Contains(k));
             foreach (var keyword in addedKeywords)
             {
                 var keywordBuilder = _builderFactories.KeywordBuilders.From(keyword);
-                _parsedModifiers.AddGlobal(_builderFactories.SkillBuilders[keywordBuilder].CombinedInstances,
+                _parsedModifiers!.AddGlobal(_builderFactories.SkillBuilders[keywordBuilder].CombinedInstances,
                     Form.BaseAdd, 1, _preParseResult.IsActiveSkill);
             }
         }

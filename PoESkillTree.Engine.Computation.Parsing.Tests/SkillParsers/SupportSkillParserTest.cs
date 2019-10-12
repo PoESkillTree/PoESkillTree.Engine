@@ -44,7 +44,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
             var modifier = GetFirstModifierWithIdentity(result.Modifiers, "Belt.0.Cost");
             Assert.AreEqual(Form.TotalOverride, modifier.Form);
-            Assert.AreEqual(new NodeValue(42), modifier.Value.Calculate(null));
+            Assert.AreEqual(new NodeValue(42), modifier.Value.Calculate(null!));
         }
 
         [Test]
@@ -58,7 +58,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
             var modifier = GetFirstModifierWithIdentity(result.Modifiers,
                 $"Belt.0.Type.{ActiveSkillType.ManaCostIsReservation}");
-            Assert.AreEqual(new NodeValue(1), modifier.Value.Calculate(null));
+            Assert.AreEqual(new NodeValue(1), modifier.Value.Calculate(null!));
         }
 
         [TestCase(true)]

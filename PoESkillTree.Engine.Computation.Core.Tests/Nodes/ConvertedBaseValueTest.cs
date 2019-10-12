@@ -34,6 +34,6 @@ namespace PoESkillTree.Engine.Computation.Core.Nodes
         }
 
         private static ConvertedBaseValue CreateSut(PathDefinition? path = null) =>
-            new ConvertedBaseValue(path);
+            new ConvertedBaseValue(path ?? PathDefinition.MainPath);
     }
 }

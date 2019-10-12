@@ -100,13 +100,13 @@ namespace PoESkillTree.Engine.Computation.Builders.Actions
         public void ResolveRecentlyBuildsToCorrectResult()
         {
             var identityBuilder = CoreBuilder.Create("test");
-            var unresolvedIdentityBuilder = Mock.Of<ICoreBuilder<string>>(b => b.Resolve(null) == identityBuilder);
+            var unresolvedIdentityBuilder = Mock.Of<ICoreBuilder<string>>(b => b.Resolve(null!) == identityBuilder);
             var lastOccurenceStat = new Stat("test.LastOccurrence");
             var context = Mock.Of<IValueCalculationContext>(c =>
                 c.GetValue(lastOccurenceStat, NodeType.Total, PathDefinition.MainPath) == new NodeValue(1));
             var sut = CreateSut(unresolvedIdentityBuilder);
 
-            var result = sut.Resolve(null).Recently.Build();
+            var result = sut.Resolve(null!).Recently.Build();
             var actual = result.Value.Calculate(context);
 
             Assert.IsTrue(actual.IsTrue());
@@ -116,13 +116,13 @@ namespace PoESkillTree.Engine.Computation.Builders.Actions
         public void RecentlyResolveBuildsToCorrectResult()
         {
             var identityBuilder = CoreBuilder.Create("test");
-            var unresolvedIdentityBuilder = Mock.Of<ICoreBuilder<string>>(b => b.Resolve(null) == identityBuilder);
+            var unresolvedIdentityBuilder = Mock.Of<ICoreBuilder<string>>(b => b.Resolve(null!) == identityBuilder);
             var lastOccurenceStat = new Stat("test.LastOccurrence");
             var context = Mock.Of<IValueCalculationContext>(c =>
                 c.GetValue(lastOccurenceStat, NodeType.Total, PathDefinition.MainPath) == new NodeValue(1));
             var sut = CreateSut(unresolvedIdentityBuilder);
 
-            var result = sut.Recently.Resolve(null).Build();
+            var result = sut.Recently.Resolve(null!).Build();
             var actual = result.Value.Calculate(context);
 
             Assert.IsTrue(actual.IsTrue());
@@ -163,10 +163,10 @@ namespace PoESkillTree.Engine.Computation.Builders.Actions
         public void OnResolvesIdentity()
         {
             var identityBuilder = CoreBuilder.Create("test");
-            var unresolvedBuilder = Mock.Of<ICoreBuilder<string>>(b => b.Resolve(null) == identityBuilder);
+            var unresolvedBuilder = Mock.Of<ICoreBuilder<string>>(b => b.Resolve(null!) == identityBuilder);
             var sut = CreateSut(unresolvedBuilder);
 
-            var result = sut.On.Resolve(null).Build();
+            var result = sut.On.Resolve(null!).Build();
             var stat = result.StatConverter(InputStat).BuildToSingleStat();
 
             Assert.AreEqual("stat.On(test).By(Character)", stat.Identity);
@@ -176,6 +176,6 @@ namespace PoESkillTree.Engine.Computation.Builders.Actions
             new ActionBuilder(new StatFactory(), identity ?? CoreBuilder.Create("test"),
                 entity ?? new ModifierSourceEntityBuilder());
 
-        private static IStatBuilder InputStat => StatBuilderUtils.FromIdentity(new StatFactory(), "stat", null);
+        private static IStatBuilder InputStat => StatBuilderUtils.FromIdentity(new StatFactory(), "stat", typeof(double));
     }
 }

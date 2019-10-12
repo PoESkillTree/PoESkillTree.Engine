@@ -147,7 +147,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
                 => new StatValue(_statFactory.BuffEffect(ps.ModifierSourceEntity, target, buffIdentity));
         }
 
-        public IBuffBuilderCollection Buffs(IEntityBuilder source = null, params IEntityBuilder[] targets)
+        public IBuffBuilderCollection Buffs(IEntityBuilder? source = null, params IEntityBuilder[] targets)
         {
             var allEntitiesBuilder = EntityBuilder.AllEntities;
             var sourceEntity = source ?? allEntitiesBuilder;

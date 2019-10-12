@@ -172,7 +172,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Behaviors
                 new[] { NodeType.Increase, NodeType.More }, BehaviorPathRules.All,
                 v => new AilmentDamageIncreaseMoreValue(
                     _statFactory.ConcretizeDamage(stat, damageSpecification),
-                    _statFactory.AilmentDealtDamageType(stat.Entity, damageSpecification.Ailment.Value),
+                    _statFactory.AilmentDealtDamageType(stat.Entity, damageSpecification.Ailment!.Value),
                     t => _statFactory.ConcretizeDamage(_statFactory.Damage(stat.Entity, t), damageSpecification), v),
                 new CacheKey(stat, damageSpecification));
 
@@ -243,18 +243,18 @@ namespace PoESkillTree.Engine.Computation.Builders.Behaviors
             private readonly string _behaviorName;
             private readonly IReadOnlyList<object> _parameters;
 
-            public CacheKey(object parameter, [CallerMemberName] string behaviorName = null)
+            public CacheKey(object parameter, [CallerMemberName] string behaviorName = "")
                 : this(behaviorName, parameter)
             {
             }
 
-            public CacheKey(object parameter1, object parameter2, [CallerMemberName] string behaviorName = null)
+            public CacheKey(object parameter1, object parameter2, [CallerMemberName] string behaviorName = "")
                 : this(behaviorName, parameter1, parameter2)
             {
             }
 
             public CacheKey(
-                object parameter1, object parameter2, object parameter3, [CallerMemberName] string behaviorName = null)
+                object parameter1, object parameter2, object parameter3, [CallerMemberName] string behaviorName = "")
                 : this(behaviorName, parameter1, parameter2, parameter3)
             {
             }

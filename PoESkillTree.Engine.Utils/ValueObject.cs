@@ -8,7 +8,7 @@ namespace PoESkillTree.Engine.Utils
     public abstract class ValueObject
     {
         private readonly bool _cacheTupleAndHashCode;
-        private object _tuple;
+        private object? _tuple;
         private int? _hashCode;
 
         protected ValueObject(bool cacheTupleAndHashCode = false)
@@ -25,8 +25,8 @@ namespace PoESkillTree.Engine.Utils
         {
             if (!_cacheTupleAndHashCode)
                 return GetTuple().GetHashCode();
-            // ReSharper disable twice NonReadonlyMemberInGetHashCode It's the cache, of course it's not readonly
-            return _hashCode ?? (_hashCode = GetTuple().GetHashCode()).Value;
+            // ReSharper disable once NonReadonlyMemberInGetHashCode It's the cache, of course it's not readonly
+            return _hashCode ??= GetTuple().GetHashCode();
         }
 
         public override string ToString() => GetTuple().ToString();
@@ -35,7 +35,7 @@ namespace PoESkillTree.Engine.Utils
         {
             if (!_cacheTupleAndHashCode)
                 return ToTuple();
-            return _tuple ?? (_tuple = ToTuple());
+            return _tuple ??= ToTuple();
         }
 
         /// <summary>

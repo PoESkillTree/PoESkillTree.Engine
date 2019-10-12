@@ -8,7 +8,7 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Resolving
     /// </summary>
     /// <typeparam name="T">The resulting type of resolving. Generally this is the type that is implementing this
     /// interface.</typeparam>
-    public interface IResolvable<out T>
+    public interface IResolvable<out T> where T : class
     {
         /// <summary>
         /// Resolves this instance using the given match context.

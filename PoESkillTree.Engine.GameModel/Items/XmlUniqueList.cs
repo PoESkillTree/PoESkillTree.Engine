@@ -4,6 +4,8 @@ namespace PoESkillTree.Engine.GameModel.Items
 {
     // Contains the classes that allow serialization and deserialization of Uniques.xml
 
+#pragma warning disable 8618 // Initialization is done through deserialization
+
     [XmlRoot(Namespace = "", IsNullable = false, ElementName = "UniqueList")]
     public class XmlUniqueList
     {
@@ -32,4 +34,6 @@ namespace PoESkillTree.Engine.GameModel.Items
         public string[] Properties { get; set; }
 
     }
+
+#pragma warning restore
 }

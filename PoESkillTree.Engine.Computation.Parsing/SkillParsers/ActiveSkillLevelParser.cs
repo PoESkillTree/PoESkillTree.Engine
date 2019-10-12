@@ -15,8 +15,8 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
     {
         private readonly IBuilderFactories _builderFactories;
 
-        private SkillModifierCollection _modifiers;
-        private SkillPreParseResult _preParseResult;
+        private SkillModifierCollection? _modifiers;
+        private SkillPreParseResult? _preParseResult;
 
         public ActiveSkillLevelParser(IBuilderFactories builderFactories)
             => _builderFactories = builderFactories;
@@ -73,12 +73,12 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         {
             var isReservation = MetaStats
                 .SkillHasType(skill.ItemSlot, skill.SocketIndex, ActiveSkillType.ManaCostIsReservation).IsSet;
-            var isReservationAndActive = isReservation.And(_preParseResult.IsActiveSkill);
+            var isReservationAndActive = isReservation.And(_preParseResult!.IsActiveSkill);
             var isPercentage = MetaStats
                 .SkillHasType(skill.ItemSlot, skill.SocketIndex, ActiveSkillType.ManaCostIsPercentage).IsSet;
             var skillBuilder = _builderFactories.SkillBuilders.FromId(_preParseResult.SkillDefinition.Id);
 
-            _modifiers.AddGlobal(skillBuilder.Reservation, Form.BaseSet, costStat.Value, isReservationAndActive);
+            _modifiers!.AddGlobal(skillBuilder.Reservation, Form.BaseSet, costStat.Value, isReservationAndActive);
 
             foreach (var pool in Enums.GetValues<Pool>())
             {

@@ -42,7 +42,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 requiredStrength, qualityStats ?? new UntranslatedStat[0], stats ?? new UntranslatedStat[0],
                 additionalStatsPerPart ?? new[] { new UntranslatedStat[0]}, qualityBuffStats ?? new BuffStat[0],
                 buffStats ?? new BuffStat[0], qualityPassiveStats ?? new UntranslatedStat[0],
-                passiveStats ?? new UntranslatedStat[0], tooltip ?? null);
+                passiveStats ?? new UntranslatedStat[0], tooltip!);
 
         public static ActiveSkillDefinition CreateActiveSkillDefinition(
             string displayName, int? castTime = null, IEnumerable<string>? activeSkillTypes = null,

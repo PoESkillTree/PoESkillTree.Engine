@@ -67,5 +67,10 @@ namespace PoESkillTree.Engine.Utils.Extensions
             }
             return results;
         }
+
+        public static IEnumerable<T> WhereNotNull<T>(this IEnumerable<T?> @this) where T : class
+#pragma warning disable 8619 // Where clause guarantuees non-null values
+            => @this.Where(t => t != null);
+#pragma warning restore
     }
 }

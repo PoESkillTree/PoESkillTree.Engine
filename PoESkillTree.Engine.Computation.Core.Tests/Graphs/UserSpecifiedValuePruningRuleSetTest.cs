@@ -21,7 +21,7 @@ namespace PoESkillTree.Engine.Computation.Core.Graphs
             {
                 new StatStub
                 {
-                    ExplicitRegistrationType = GainOnAction(null, "", default)
+                    ExplicitRegistrationType = GainOnAction(null!, "", default)
                 },
                 new StatStub
                 {
@@ -32,7 +32,7 @@ namespace PoESkillTree.Engine.Computation.Core.Graphs
             var expected = new[] { stats[1] };
             var sut = CreateSut();
 
-            var actual = stats.Where(s => sut.CanStatBeConsideredForRemoval(s, null));
+            var actual = stats.Where(s => sut.CanStatBeConsideredForRemoval(s, null!));
 
             Assert.AreEqual(expected, actual);
         }
@@ -64,7 +64,7 @@ namespace PoESkillTree.Engine.Computation.Core.Graphs
                     {
                         defaultResult[0],
                         Mock.Of<IBufferingEventViewProvider<INodeCollection<Modifier>>>(p =>
-                            p.DefaultView == new NodeCollection<Modifier>(eventBuffer) { { null, modifier } })
+                            p.DefaultView == new NodeCollection<Modifier>(eventBuffer) { { null!, modifier } })
                     },
                     {
                         defaultResult[1],

@@ -1,13 +1,8 @@
-﻿using System;
-using System.Linq;
-using FluentAssertions;
-using Moq;
+﻿using FluentAssertions;
 using NUnit.Framework;
 using PoESkillTree.Engine.Computation.Common;
-using PoESkillTree.Engine.Computation.Common.Builders.Conditions;
 using PoESkillTree.Engine.Computation.Common.Builders.Values;
 using PoESkillTree.Engine.GameModel.PassiveTree;
-using static PoESkillTree.Engine.Computation.Common.Helper;
 
 namespace PoESkillTree.Engine.Computation.Parsing.JewelParsers
 {
@@ -193,10 +188,10 @@ namespace PoESkillTree.Engine.Computation.Parsing.JewelParsers
                 data ?? new TransformationJewelParserData.SingleDamageTypeTransformation());
 
         private static NodeValue? BuildAndCalculate(IValueBuilder valueBuilder)
-            => valueBuilder.Build(default).Calculate(default);
+            => valueBuilder.Build(default).Calculate(default!);
 
         private static PassiveNodeDefinition CreateNode(ushort id, params string[] modifiers)
-            => new PassiveNodeDefinition(id, default, default, default,
+            => new PassiveNodeDefinition(id, default, "", default,
                 default, default, default, modifiers);
     }
 }

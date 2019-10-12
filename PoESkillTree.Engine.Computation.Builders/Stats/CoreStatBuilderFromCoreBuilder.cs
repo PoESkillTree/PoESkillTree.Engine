@@ -21,14 +21,14 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         private readonly IEntityBuilder _entityBuilder;
 
         public CoreStatBuilderFromCoreBuilder(
-            ICoreBuilder<T> coreBuilder, Func<Entity, T, IStat> statFactory, IEntityBuilder entityBuilder = null)
+            ICoreBuilder<T> coreBuilder, Func<Entity, T, IStat> statFactory, IEntityBuilder? entityBuilder = null)
             : this(coreBuilder, (ps, e, t) => new[] { statFactory(e, t) }, entityBuilder)
         {
         }
 
         public CoreStatBuilderFromCoreBuilder(
             ICoreBuilder<T> coreBuilder, Func<BuildParameters, Entity, T, IStat> statFactory,
-            IEntityBuilder entityBuilder = null)
+            IEntityBuilder? entityBuilder = null)
             : this(coreBuilder, (ps, e, t) => new[] { statFactory(ps, e, t) }, entityBuilder)
         {
         }
@@ -36,7 +36,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         public CoreStatBuilderFromCoreBuilder(
             ICoreBuilder<T> coreBuilder,
             StatFactory statFactory,
-            IEntityBuilder entityBuilder = null)
+            IEntityBuilder? entityBuilder = null)
         {
             _coreBuilder = coreBuilder;
             _statFactory = statFactory;

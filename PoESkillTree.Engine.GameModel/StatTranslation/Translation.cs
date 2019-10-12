@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using JetBrains.Annotations;
 using MoreLinq;
 using PoESkillTree.Engine.GameModel.Items;
 using PoESkillTree.Engine.Utils.Extensions;
@@ -21,8 +20,7 @@ namespace PoESkillTree.Engine.GameModel.StatTranslation
         /// <returns>the translated values. Null if the values should not be translated, e.g. the stat should be 
         /// hidden. This is the case for stats without effect or stats that are not meant to be visible to players.
         /// </returns>
-        [CanBeNull]
-        string Translate(IReadOnlyList<int> values);
+        string? Translate(IReadOnlyList<int> values);
     }
 
     /// <summary>
@@ -52,7 +50,7 @@ namespace PoESkillTree.Engine.GameModel.StatTranslation
         /// </returns>
         /// <exception cref="ArgumentException">if the number of values does not match the number of 
         /// <see cref="Ids"/></exception>
-        public string Translate(IReadOnlyList<int> values)
+        public string? Translate(IReadOnlyList<int> values)
         {
             if (values.Count != Ids.Count)
                 throw new ArgumentException("Number of values does not match number of ids");
@@ -105,8 +103,7 @@ namespace PoESkillTree.Engine.GameModel.StatTranslation
         /// <returns>the translated values. Null if the values should not be translated, e.g. the stat should be 
         /// hidden. This is the case for stats without effect or stats that are not meant to be visible to players.
         /// </returns>
-        [CanBeNull]
-        public string Translate(IReadOnlyDictionary<string, int> idValueDict)
+        public string? Translate(IReadOnlyDictionary<string, int> idValueDict)
         {
             var values = new int[Ids.Count];
             for (var i = 0; i < Ids.Count; i++)

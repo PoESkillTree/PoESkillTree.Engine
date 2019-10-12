@@ -29,10 +29,10 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
 
         public static StatBuilderResult BuildToSingleResult(this IStatBuilder @this,
             ModifierSource? modifierSource = null, Entity entity = default) =>
-            @this.Build(new BuildParameters(modifierSource, entity, default)).Single();
+            @this.Build(new BuildParameters(modifierSource!, entity, default)).Single();
 
         public static IReadOnlyList<IStat> BuildToStats(this IStatBuilder @this,
             ModifierSource? modifierSource = null, Entity entity = default) =>
-            @this.Build(new BuildParameters(modifierSource, entity, default)).SelectMany(r => r.Stats).ToList();
+            @this.Build(new BuildParameters(modifierSource!, entity, default)).SelectMany(r => r.Stats).ToList();
     }
 }

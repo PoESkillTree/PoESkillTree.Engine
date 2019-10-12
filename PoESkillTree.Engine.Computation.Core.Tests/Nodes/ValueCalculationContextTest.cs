@@ -197,7 +197,7 @@ namespace PoESkillTree.Engine.Computation.Core.Nodes
 
 
         private static ValueCalculationContext CreateSut(INodeRepository? nodeRepository = null) =>
-            new ValueCalculationContext(nodeRepository, null);
+            new ValueCalculationContext(nodeRepository!, null!);
 
         private static INodeCollection<Modifier> MockNodeCollection(params ICalculationNode[] nodes)
         {

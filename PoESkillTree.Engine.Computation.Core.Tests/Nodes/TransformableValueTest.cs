@@ -109,7 +109,7 @@ namespace PoESkillTree.Engine.Computation.Core.Nodes
             var raised = false;
             sut.ValueChanged += (sender, args) => raised = true;
 
-            sut.Remove(null);
+            sut.Remove(null!);
             
             Assert.IsTrue(raised);
         }
@@ -126,6 +126,7 @@ namespace PoESkillTree.Engine.Computation.Core.Nodes
             Assert.IsTrue(raised);
         }
 
-        private static TransformableValue CreateSut(IValue? value = null) => new TransformableValue(value);
+        private static TransformableValue CreateSut(IValue? value = null)
+            => new TransformableValue(value ?? new Constant(true));
     }
 }

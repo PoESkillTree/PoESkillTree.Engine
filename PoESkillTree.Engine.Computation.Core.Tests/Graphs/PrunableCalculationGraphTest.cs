@@ -237,7 +237,7 @@ namespace PoESkillTree.Engine.Computation.Core.Graphs
                 r.CanStatBeConsideredForRemoval(stat, statGraphMock.Object) &&
                 r.CanStatGraphBeRemoved(statGraphMock.Object));
             var formNodeSelector = new FormNodeSelector(Form.TotalOverride, PathDefinition.MainPath);
-            var modifierNodeCollection = new StatNodeFactory(new EventBuffer(), null, stat)
+            var modifierNodeCollection = new StatNodeFactory(new EventBuffer(), null!, stat)
                 .Create(formNodeSelector);
             modifierNodeCollection.Add(MockProvider<ICalculationNode>(), modifier);
             var formNodeCollection =

@@ -39,19 +39,36 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
 
         public virtual IStatBuilder Resolve(ResolveContext context) => With(CoreStatBuilder.Resolve(context));
 
-        public IStatBuilder Minimum => WithStatConverter(s => s.Minimum);
-        public IStatBuilder Maximum => WithStatConverter(s => s.Maximum);
+        public IStatBuilder Minimum => WithStatConverter(GetMinimumWithNullCheck);
+
+        private static IStat GetMinimumWithNullCheck(IStat stat)
+        {
+            var minimum = stat.Minimum;
+            if (minimum is null)
+                throw new InvalidOperationException($"{stat} has no minimum");
+            return minimum;
+        }
+
+        public IStatBuilder Maximum => WithStatConverter(GetMaximumWithNullCheck);
+
+        private static IStat GetMaximumWithNullCheck(IStat stat)
+        {
+            var maximum = stat.Maximum;
+            if (maximum is null)
+                throw new InvalidOperationException($"{stat} has no maximum");
+            return maximum;
+        }
 
         public ValueBuilder Value => ValueFor(NodeType.Total);
 
-        public ValueBuilder ValueFor(NodeType nodeType, ModifierSource modifierSource = null)
+        public ValueBuilder ValueFor(NodeType nodeType, ModifierSource? modifierSource = null)
             => new ValueBuilder(new ValueBuilderImpl(
                 ps => BuildValue(nodeType, modifierSource ?? new ModifierSource.Global(), ps),
                 c => Resolve(c).ValueFor(nodeType, modifierSource)));
 
         private IValue BuildValue(NodeType nodeType, ModifierSource modifierSource, BuildParameters parameters)
         {
-            IStat firstStat = null;
+            IStat? firstStat = null;
             foreach (var (stats, _, _) in Build(parameters))
             {
                 foreach (var stat in stats)
@@ -107,9 +124,10 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
 
         private static ushort GetPassiveNodeId(ModifierSource modifierSource)
         {
-            if (modifierSource is ModifierSource.Global globalSource)
-                modifierSource = globalSource.LocalSource;
-            if (modifierSource is ModifierSource.Local.PassiveNode nodeSource)
+            ModifierSource? nullableSource = modifierSource;
+            if (nullableSource is ModifierSource.Global globalSource)
+                nullableSource = globalSource.LocalSource;
+            if (nullableSource is ModifierSource.Local.PassiveNode nodeSource)
                 return nodeSource.NodeId;
             throw new ParseException(
                 "IStatBuilder.AsPassiveNodeProperty can only be used with a source of type ModifierSource.Local.PassiveNode");

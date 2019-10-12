@@ -55,7 +55,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
 
         private DamageStatConcretizer WithCanApply(DamageSpecificationBuilder specificationBuilder,
             bool applyToSkillDamage = false, bool applyToAilmentDamage = false,
-            Func<IDamageSpecification, IConditionBuilder> condition = null)
+            Func<IDamageSpecification, IConditionBuilder>? condition = null)
         {
             return new DamageStatConcretizer(_statFactory, specificationBuilder,
                 CanApplyToSkillDamage && applyToSkillDamage ? true : _applyToSkillDamage,

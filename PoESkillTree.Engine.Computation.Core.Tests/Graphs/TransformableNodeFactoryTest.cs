@@ -24,7 +24,7 @@ namespace PoESkillTree.Engine.Computation.Core.Graphs
             var value = Mock.Of<IValue>();
             var sut = CreateSut(new TransformableValue(value), expected);
 
-            var actual = sut.Create(value, null);
+            var actual = sut.Create(value, null!);
 
             Assert.AreSame(expected, actual);
         }
@@ -41,10 +41,10 @@ namespace PoESkillTree.Engine.Computation.Core.Graphs
         public void CreateAddsToTransformableDictionary()
         {
             var key = Mock.Of<IDisposableNodeViewProvider>();
-            var transformableValue = new TransformableValue(null);
+            var transformableValue = new TransformableValue(null!);
             var sut = CreateSut(transformableValue, key);
 
-            sut.Create(null, null);
+            sut.Create(null!, null!);
 
             Assert.IsTrue(sut.TransformableDictionary.ContainsKey(key));
             Assert.AreSame(transformableValue, sut.TransformableDictionary[key]);
@@ -55,7 +55,7 @@ namespace PoESkillTree.Engine.Computation.Core.Graphs
         {
             var providerMock = new Mock<IDisposableNodeViewProvider>();
             var sut = CreateSut(provider: providerMock.Object);
-            sut.Create(null, null);
+            sut.Create(null!, null!);
 
             providerMock.Raise(p => p.Disposed += null, EventArgs.Empty);
 
@@ -65,10 +65,10 @@ namespace PoESkillTree.Engine.Computation.Core.Graphs
         [Test]
         public void RaisingTransformableValuesValueChangedCallsProvidersRaiseValueChanged()
         {
-            var transformableValue = new TransformableValue(null);
+            var transformableValue = new TransformableValue(null!);
             var providerMock = new Mock<IDisposableNodeViewProvider>();
             var sut = CreateSut(transformableValue, providerMock.Object);
-            sut.Create(null, null);
+            sut.Create(null!, null!);
 
             transformableValue.RemoveAll();
 
@@ -78,10 +78,10 @@ namespace PoESkillTree.Engine.Computation.Core.Graphs
         [Test]
         public void RaisingTransformableValuesValueChangedDoesNotCallProvidersRaiseValueChangedAfterDisposal()
         {
-            var transformableValue = new TransformableValue(null);
+            var transformableValue = new TransformableValue(null!);
             var providerMock = new Mock<IDisposableNodeViewProvider>();
             var sut = CreateSut(transformableValue, providerMock.Object);
-            sut.Create(null, null);
+            sut.Create(null!, null!);
             
             providerMock.Raise(p => p.Disposed += null, EventArgs.Empty);
             transformableValue.RemoveAll();
@@ -92,8 +92,8 @@ namespace PoESkillTree.Engine.Computation.Core.Graphs
         private static TransformableNodeFactory CreateSut(
             TransformableValue? transformableValue = null, IDisposableNodeViewProvider? provider = null)
         {
-            transformableValue ??= new TransformableValue(null);
-            var injectedFactory = Mock.Of<INodeFactory>(f => f.Create(transformableValue, null) == provider);
+            transformableValue ??= new TransformableValue(null!);
+            var injectedFactory = Mock.Of<INodeFactory>(f => f.Create(transformableValue, null!) == provider);
             return new TransformableNodeFactory(injectedFactory, _ => transformableValue);
         }
     }

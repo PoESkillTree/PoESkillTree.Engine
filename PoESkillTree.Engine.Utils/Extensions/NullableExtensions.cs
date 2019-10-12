@@ -12,7 +12,7 @@ namespace PoESkillTree.Engine.Utils.Extensions
             return nullable.HasValue ? selector(nullable.Value) : (TOut?) null;
         }
 
-        public static T? AggregateOnValues<T>(this List<T?> values, Func<T, T, T> combiner, Func<T, T> selector = null)
+        public static T? AggregateOnValues<T>(this List<T?> values, Func<T, T, T> combiner, Func<T, T>? selector = null)
             where T: struct
         {
             T? result = null;

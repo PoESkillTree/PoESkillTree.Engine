@@ -77,31 +77,31 @@ namespace PoESkillTree.Engine.GameModel.Skills
 
         public SkillPartDefinitionExtension(
             Func<IEnumerable<UntranslatedStat>, IEnumerable<UntranslatedStat>> statReplacer,
-            IEnumerable<Keyword> removedKeywords = null, IEnumerable<Keyword> addedKeywords = null)
+            IEnumerable<Keyword>? removedKeywords = null, IEnumerable<Keyword>? addedKeywords = null)
             : this(null, null, statReplacer, removedKeywords, addedKeywords)
         {
         }
 
         public SkillPartDefinitionExtension(
             IEnumerable<string> removedStats,
-            Func<IEnumerable<UntranslatedStat>, IEnumerable<UntranslatedStat>> statReplacer = null,
-            IEnumerable<Keyword> removedKeywords = null, IEnumerable<Keyword> addedKeywords = null)
+            Func<IEnumerable<UntranslatedStat>, IEnumerable<UntranslatedStat>>? statReplacer = null,
+            IEnumerable<Keyword>? removedKeywords = null, IEnumerable<Keyword>? addedKeywords = null)
             : this(removedStats, null, statReplacer, removedKeywords, addedKeywords)
         {
         }
 
         public SkillPartDefinitionExtension(
             IEnumerable<UntranslatedStat> addedStats,
-            Func<IEnumerable<UntranslatedStat>, IEnumerable<UntranslatedStat>> statReplacer = null,
-            IEnumerable<Keyword> removedKeywords = null, IEnumerable<Keyword> addedKeywords = null)
+            Func<IEnumerable<UntranslatedStat>, IEnumerable<UntranslatedStat>>? statReplacer = null,
+            IEnumerable<Keyword>? removedKeywords = null, IEnumerable<Keyword>? addedKeywords = null)
             : this(null, addedStats, statReplacer, removedKeywords, addedKeywords)
         {
         }
 
         public SkillPartDefinitionExtension(
-            IEnumerable<string> removedStats, IEnumerable<UntranslatedStat> addedStats,
-            Func<IEnumerable<UntranslatedStat>, IEnumerable<UntranslatedStat>> statReplacer = null,
-            IEnumerable<Keyword> removedKeywords = null, IEnumerable<Keyword> addedKeywords = null)
+            IEnumerable<string>? removedStats, IEnumerable<UntranslatedStat>? addedStats,
+            Func<IEnumerable<UntranslatedStat>, IEnumerable<UntranslatedStat>>? statReplacer = null,
+            IEnumerable<Keyword>? removedKeywords = null, IEnumerable<Keyword>? addedKeywords = null)
         {
             _removedStats = removedStats ?? new string[0];
             _addedStats = addedStats ?? new UntranslatedStat[0];

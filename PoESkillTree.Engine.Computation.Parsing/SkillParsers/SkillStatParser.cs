@@ -9,7 +9,9 @@ using PoESkillTree.Engine.Computation.Common.Builders.Stats;
 using PoESkillTree.Engine.Computation.Common.Builders.Values;
 using PoESkillTree.Engine.GameModel;
 using PoESkillTree.Engine.GameModel.Skills;
+#if NETSTANDARD2_0
 using PoESkillTree.Engine.Utils.Extensions;
+#endif
 
 namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 {
@@ -21,9 +23,9 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
     {
         private readonly IBuilderFactories _builderFactories;
 
-        private SkillModifierCollection _parsedModifiers;
-        private List<UntranslatedStat> _parsedStats;
-        private SkillPreParseResult _preParseResult;
+        private SkillModifierCollection? _parsedModifiers;
+        private List<UntranslatedStat>? _parsedStats;
+        private SkillPreParseResult? _preParseResult;
 
         public SkillStatParser(IBuilderFactories builderFactories)
             => _builderFactories = builderFactories;
@@ -50,7 +52,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             return result;
         }
 
-        private void Parse(IReadOnlyList<UntranslatedStat> stats, IConditionBuilder partCondition = null)
+        private void Parse(IReadOnlyList<UntranslatedStat> stats, IConditionBuilder? partCondition = null)
         {
             ParseHitDamage(stats, partCondition);
             foreach (var stat in stats)
@@ -59,14 +61,14 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                     || TryParseDamageOverTime(stat, partCondition)
                     || TryParseConversion(stat, partCondition))
                 {
-                    _parsedStats.Add(stat);
+                    _parsedStats!.Add(stat);
                 }
             }
         }
 
-        private void ParseHitDamage(IReadOnlyList<UntranslatedStat> stats, IConditionBuilder partCondition = null)
+        private void ParseHitDamage(IReadOnlyList<UntranslatedStat> stats, IConditionBuilder? partCondition = null)
         {
-            IStatBuilder statBuilder = null;
+            IStatBuilder? statBuilder = null;
             double hitDamageMinimum = 0D;
             double? hitDamageMaximum = null;
             foreach (var stat in stats)
@@ -84,18 +86,18 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                     else
                         hitDamageMaximum = stat.Value;
 
-                    _parsedStats.Add(stat);
+                    _parsedStats!.Add(stat);
                 }
             }
             if (hitDamageMaximum.HasValue)
             {
                 var valueBuilder = _builderFactories.ValueBuilders.FromMinAndMax(
                     CreateValue(hitDamageMinimum), CreateValue(hitDamageMaximum.Value));
-                _parsedModifiers.AddGlobalForMainSkill(statBuilder, Form.BaseSet, valueBuilder, partCondition);
+                _parsedModifiers!.AddGlobalForMainSkill(statBuilder!, Form.BaseSet, valueBuilder, partCondition);
             }
         }
 
-        private bool TryParseDamageOverTime(UntranslatedStat stat, IConditionBuilder partCondition = null)
+        private bool TryParseDamageOverTime(UntranslatedStat stat, IConditionBuilder? partCondition = null)
         {
             var match = SkillStatIds.DamageOverTimeRegex.Match(stat.StatId);
             if (!match.Success)
@@ -104,11 +106,11 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var type = Enums.Parse<DamageType>(match.Groups[1].Value, true);
             var statBuilder = _builderFactories.DamageTypeBuilders.From(type).Damage
                 .WithSkills(DamageSource.OverTime);
-            _parsedModifiers.AddGlobalForMainSkill(statBuilder, Form.BaseSet, stat.Value / 60D, partCondition);
+            _parsedModifiers!.AddGlobalForMainSkill(statBuilder, Form.BaseSet, stat.Value / 60D, partCondition);
             return true;
         }
 
-        private bool TryParseConversion(UntranslatedStat stat, IConditionBuilder partCondition = null)
+        private bool TryParseConversion(UntranslatedStat stat, IConditionBuilder? partCondition = null)
         {
             var match = SkillStatIds.SkillDamageConversionRegex.Match(stat.StatId);
             if (!match.Success)
@@ -119,36 +121,36 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var sourceBuilder = _builderFactories.DamageTypeBuilders.From(sourceType).Damage.WithHitsAndAilments;
             var targetBuilder = _builderFactories.DamageTypeBuilders.From(targetType).Damage.WithHitsAndAilments;
             var conversionBuilder = sourceBuilder.ConvertTo(targetBuilder);
-            _parsedModifiers.AddLocalForMainSkill(conversionBuilder, Form.BaseAdd, stat.Value, partCondition);
+            _parsedModifiers!.AddLocalForMainSkill(conversionBuilder, Form.BaseAdd, stat.Value, partCondition);
             return true;
         }
 
-        private bool TryParseOther(UntranslatedStat stat, IConditionBuilder partCondition = null)
+        private bool TryParseOther(UntranslatedStat stat, IConditionBuilder? partCondition = null)
         {
             switch (stat.StatId)
             {
                 case "base_skill_number_of_additional_hits":
-                    _parsedModifiers.AddGlobalForMainSkill(MetaStats.SkillNumberOfHitsPerCast,
+                    _parsedModifiers!.AddGlobalForMainSkill(MetaStats.SkillNumberOfHitsPerCast,
                         Form.BaseAdd, stat.Value, partCondition);
                     return true;
                 case "skill_double_hits_when_dual_wielding":
-                    _parsedModifiers.AddGlobalForMainSkill(MetaStats.SkillDoubleHitsWhenDualWielding,
+                    _parsedModifiers!.AddGlobalForMainSkill(MetaStats.SkillDoubleHitsWhenDualWielding,
                         Form.TotalOverride, stat.Value, partCondition);
                     return true;
                 case "base_use_life_in_place_of_mana":
                     ParseBloodMagic(partCondition);
                     return true;
                 case "maximum_stages":
-                    _parsedModifiers.AddGlobalForMainSkill(_builderFactories.StatBuilders.SkillStage.Maximum,
+                    _parsedModifiers!.AddGlobalForMainSkill(_builderFactories.StatBuilders.SkillStage.Maximum,
                         Form.BaseSet, stat.Value, partCondition);
                     return true;
                 case "cast_rate_is_melee":
-                    _parsedModifiers.AddGlobalForMainSkill(
+                    _parsedModifiers!.AddGlobalForMainSkill(
                         MetaStats.MainSkillPartCastRateHasKeyword(Keyword.Melee),
                         Form.TotalOverride, stat.Value, partCondition);
                     return true;
                 case "hit_rate_ms":
-                    _parsedModifiers.AddGlobalForMainSkill(_builderFactories.StatBuilders.HitRate,
+                    _parsedModifiers!.AddGlobalForMainSkill(_builderFactories.StatBuilders.HitRate,
                         Form.BaseSet, 1000D / stat.Value, partCondition);
                     return true;
                 default:
@@ -156,10 +158,10 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             }
         }
 
-        private void ParseBloodMagic(IConditionBuilder partCondition = null)
+        private void ParseBloodMagic(IConditionBuilder? partCondition = null)
         {
-            var skillBuilder = _builderFactories.SkillBuilders.FromId(_preParseResult.MainSkillDefinition.Id);
-            _parsedModifiers.AddGlobal(skillBuilder.ReservationPool,
+            var skillBuilder = _builderFactories.SkillBuilders.FromId(_preParseResult!.MainSkillDefinition.Id);
+            _parsedModifiers!.AddGlobal(skillBuilder.ReservationPool,
                 Form.TotalOverride, (double) Pool.Life,
                 _preParseResult.IsActiveSkill.And(partCondition ?? _builderFactories.ConditionBuilders.True));
             var poolBuilders = _builderFactories.StatBuilders.Pool;

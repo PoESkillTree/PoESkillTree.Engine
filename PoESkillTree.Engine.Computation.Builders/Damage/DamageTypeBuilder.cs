@@ -125,7 +125,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Damage
         public IStatBuilder ReflectedDamageTaken =>
             new StatBuilder(_statFactory, CoreStat(typeof(int)));
 
-        private ICoreStatBuilder CoreStat(Type dataType, [CallerMemberName] string identitySuffix = null) =>
+        private ICoreStatBuilder CoreStat(Type dataType, [CallerMemberName] string identitySuffix = "") =>
             CoreStat((e, t) => _statFactory.FromIdentity(t.GetName() + "." + identitySuffix, e, dataType));
 
         private ICoreStatBuilder CoreStat(Func<Entity, DamageType, IStat> statFactory) =>
