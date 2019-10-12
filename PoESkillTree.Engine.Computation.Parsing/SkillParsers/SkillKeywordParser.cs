@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using EnumsNET;
-using MoreLinq;
 using PoESkillTree.Engine.Computation.Common;
 using PoESkillTree.Engine.Computation.Common.Builders;
 using PoESkillTree.Engine.Computation.Common.Builders.Conditions;
@@ -11,7 +10,11 @@ using PoESkillTree.Engine.Computation.Common.Builders.Stats;
 using PoESkillTree.Engine.GameModel;
 using PoESkillTree.Engine.GameModel.Items;
 using PoESkillTree.Engine.GameModel.Skills;
+using static MoreLinq.Extensions.IndexExtension;
+#if NETSTANDARD2_0
 using PoESkillTree.Engine.Utils.Extensions;
+using static MoreLinq.Extensions.ToHashSetExtension;
+#endif
 
 namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 {

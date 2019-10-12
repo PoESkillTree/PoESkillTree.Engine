@@ -18,12 +18,14 @@ namespace PoESkillTree.Engine.Utils.Extensions
             return value;
         }
 
+#if NETSTANDARD2_0
         public static void Deconstruct<TKey, TValue>(this KeyValuePair<TKey, TValue> pair,
             out TKey key, out TValue value)
         {
             key = pair.Key;
             value = pair.Value;
         }
+#endif
 
         public static void Deconstruct<TKey, TValue>(this IGrouping<TKey, TValue> pair,
             out TKey key, out IEnumerable<TValue> value)

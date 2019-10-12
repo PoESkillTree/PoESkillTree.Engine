@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EnumsNET;
-using MoreLinq;
 using Newtonsoft.Json.Linq;
 using PoESkillTree.Engine.GameModel.Items;
+#if NETSTANDARD2_0
+using static MoreLinq.Extensions.ToHashSetExtension;
+#endif
 
 namespace PoESkillTree.Engine.GameModel.Skills
 {
