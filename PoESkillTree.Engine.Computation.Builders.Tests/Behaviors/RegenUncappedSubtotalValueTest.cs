@@ -108,10 +108,9 @@ namespace PoESkillTree.Engine.Computation.Builders.Behaviors
         private static NodeValue TargetValueFor(Pool pool) => new NodeValue((double) pool);
         private static PathDefinition Path => PathDefinition.MainPath;
 
-        private static RegenUncappedSubtotalValue CreateSut(IValue transformedValue = null)
+        private static RegenUncappedSubtotalValue CreateSut(IValue? transformedValue = null)
         {
-            transformedValue = transformedValue ??
-                new FunctionalValue(c => c.GetValues(Regen(Pool.Life), NodeType.PathTotal).Sum(), "");
+            transformedValue ??= new FunctionalValue(c => c.GetValues(Regen(Pool.Life), NodeType.PathTotal).Sum(), "");
             return new RegenUncappedSubtotalValue(Pool.Life, Regen, TargetPool, transformedValue);
         }
     }

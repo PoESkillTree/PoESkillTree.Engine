@@ -76,16 +76,16 @@ namespace PoESkillTree.Engine.Computation.Core.Graphs
         }
 
         private static StatGraphWithEvents CreateSut(
-            Action<NodeSelector> nodeAddedAction = null, Action<NodeSelector> nodeRemovedAction = null)
+            Action<NodeSelector>? nodeAddedAction = null, Action<NodeSelector>? nodeRemovedAction = null)
         {
             var nodes = new Dictionary<NodeSelector, IBufferingEventViewProvider<ICalculationNode>>();
             return CreateSut(Mock.Of<IStatGraph>(g => g.Nodes == nodes), nodeAddedAction, nodeRemovedAction);
         }
 
         private static StatGraphWithEvents CreateSut(IStatGraph decoratedGraph, 
-            Action<NodeSelector> nodeAddedAction = null, Action<NodeSelector> nodeRemovedAction = null)
+            Action<NodeSelector>? nodeAddedAction = null, Action<NodeSelector>? nodeRemovedAction = null)
         {
-            return new StatGraphWithEvents(decoratedGraph, nodeAddedAction, nodeRemovedAction);
+            return new StatGraphWithEvents(decoratedGraph, nodeAddedAction!, nodeRemovedAction!);
         }
     }
 }

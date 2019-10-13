@@ -18,6 +18,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
     /// </para>
     /// </summary>
     public class CompositeParser<TInnerResult, TStep> : IStringParser<IReadOnlyList<TInnerResult>>
+        where TInnerResult : class
     {
         private readonly IStepper<TStep> _stepper;
         private readonly Func<TStep, IStringParser<TInnerResult>> _stepToParserFunc;
@@ -39,7 +40,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
                 remaining = innerRemaining;
                 if (innerSuccess)
                 {
-                    results.Add(innerResult);
+                    results.Add(innerResult!);
                     step = _stepper.NextOnSuccess(step);
                 }
                 else

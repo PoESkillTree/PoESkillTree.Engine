@@ -2,6 +2,7 @@
 using Moq;
 using NUnit.Framework;
 using PoESkillTree.Engine.Computation.Common;
+using static PoESkillTree.Engine.Computation.Common.Helper;
 using static PoESkillTree.Engine.Computation.Core.NodeHelper;
 
 namespace PoESkillTree.Engine.Computation.Core.Nodes
@@ -195,14 +196,14 @@ namespace PoESkillTree.Engine.Computation.Core.Nodes
         }
 
 
-        private static ValueCalculationContext CreateSut(INodeRepository nodeRepository = null) =>
-            new ValueCalculationContext(nodeRepository, null);
+        private static ValueCalculationContext CreateSut(INodeRepository? nodeRepository = null) =>
+            new ValueCalculationContext(nodeRepository!, null!);
 
         private static INodeCollection<Modifier> MockNodeCollection(params ICalculationNode[] nodes)
         {
             var mock = new Mock<INodeCollection<Modifier>>();
             mock.Setup(c => c.GetEnumerator())
-                .Returns(() => nodes.Select(n => (n, (Modifier) null)).GetEnumerator());
+                .Returns(() => nodes.Select(n => (n, MockModifier())).GetEnumerator());
             return mock.Object;
         }
 

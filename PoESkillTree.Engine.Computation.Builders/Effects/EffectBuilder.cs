@@ -53,7 +53,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Effects
             stat.WithCondition(IsOn(new ModifierSourceEntityBuilder()));
 
         protected IStatBuilder FromIdentity(
-            string identitySuffix, Type dataType, ExplicitRegistrationType explicitRegistrationType = null)
+            string identitySuffix, Type dataType, ExplicitRegistrationType? explicitRegistrationType = null)
             => new StatBuilder(StatFactory,
                 CoreStatBuilderFromIdentity(identitySuffix, dataType, explicitRegistrationType));
 
@@ -61,7 +61,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Effects
             DamageRelatedStatBuilder.Create(StatFactory, CoreStatBuilderFromIdentity(identitySuffix, dataType));
 
         protected ICoreStatBuilder CoreStatBuilderFromIdentity(
-            string identitySuffix, Type dataType, ExplicitRegistrationType explicitRegistrationType = null)
+            string identitySuffix, Type dataType, ExplicitRegistrationType? explicitRegistrationType = null)
             => new CoreStatBuilderFromCoreBuilder<string>(Identity,
                 (e, id) => StatFactory.FromIdentity(id + "." + identitySuffix, e, dataType, explicitRegistrationType));
 

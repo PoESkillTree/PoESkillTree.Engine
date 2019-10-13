@@ -285,8 +285,8 @@ namespace PoESkillTree.Engine.Computation.Parsing.ItemParsers
             var result = sut.Parse(parserParam);
 
             var actual = GetFirstModifierWithIdentity(result.Modifiers, expected.Stats[0].Identity);
-            var expectedValue = expected.Value.Calculate(null);
-            Assert.AreEqual(expectedValue, actual.Value.Calculate(null));
+            var expectedValue = expected.Value.Calculate(null!);
+            Assert.AreEqual(expectedValue, actual.Value.Calculate(null!));
         }
 
         [TestCase("armour", "Armour")]
@@ -351,7 +351,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.ItemParsers
             {
                 CreateModifier($"BaseCastTime.{statSuffix}", Form.BaseSet, 1, source),
                 CreateModifier($"{slot}.CastRate.{statSuffix}", Form.BaseSet, 
-                    new FunctionalValue(null, $"1 / Character.BaseCastTime.{statSuffix}.Value(Total, Global)"), source),
+                    new FunctionalValue(null!, $"1 / Character.BaseCastTime.{statSuffix}.Value(Total, Global)"), source),
                 CreateModifier($"CastRate.{statSuffix}", Form.BaseSet,
                     new StatValue(new Stat($"{slot}.CastRate.{statSuffix}")), source),
             };
@@ -378,7 +378,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.ItemParsers
             var expected = new[]
             {
                 CreateModifier($"{slot}.{stat}", Form.BaseSet,
-                    new FunctionalValue(null, "Value(min: 2, max: 8)"), source),
+                    new FunctionalValue(null!, "Value(min: 2, max: 8)"), source),
                 CreateModifier($"{stat}", Form.BaseSet, new StatValue(new Stat($"{slot}.{stat}")), source),
             };
             var sut = CreateSut(baseItemDefinition);
@@ -439,9 +439,10 @@ namespace PoESkillTree.Engine.Computation.Parsing.ItemParsers
         }
 
         private static ItemParser CreateSut(
-            BaseItemDefinition baseItemDefinition, ICoreParser coreParser = null, IStatTranslator statTranslator = null)
+            BaseItemDefinition baseItemDefinition, ICoreParser? coreParser = null, IStatTranslator? statTranslator = null)
         {
-            coreParser = coreParser ?? Mock.Of<ICoreParser>();
+            coreParser ??= Mock.Of<ICoreParser>();
+            statTranslator ??= Mock.Of<IStatTranslator>();
 
             var baseItemDefinitions = new BaseItemDefinitions(new[] { baseItemDefinition });
             return new ItemParser(baseItemDefinitions, CreateBuilderFactories(), coreParser, statTranslator);
@@ -470,13 +471,13 @@ namespace PoESkillTree.Engine.Computation.Parsing.ItemParsers
         }
 
         private static BaseItemDefinition CreateBaseItemDefinition(Item item, ItemClass itemClass, Tags tags = default,
-            IReadOnlyList<Property> properties = null,
-            IReadOnlyList<UntranslatedStat> buffStats = null, Requirements requirements = null)
+            IReadOnlyList<Property>? properties = null,
+            IReadOnlyList<UntranslatedStat>? buffStats = null, Requirements? requirements = null)
             => new BaseItemDefinition(item.BaseMetadataId, "", itemClass, new string[0], tags,
                 properties ?? new Property[0],
                 buffStats ?? new UntranslatedStat[0],
                 requirements ?? new Requirements(0, 0, 0, 0),
-                null, 0, 0, 0, default, "");
+                new CraftableStat[0], 0, 0, 0, default, "");
 
         private static ModifierSource.Global CreateGlobalSource(ItemParserParameter parserParam)
             => new ModifierSource.Global(CreateLocalSource(parserParam));

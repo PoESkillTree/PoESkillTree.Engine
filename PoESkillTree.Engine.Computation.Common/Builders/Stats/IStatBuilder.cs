@@ -38,7 +38,7 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
         /// Gets this stat's value for the given type and optionally the given ModifierSource (Global if null).
         /// Defaults to null.
         /// </summary>
-        ValueBuilder ValueFor(NodeType nodeType, ModifierSource modifierSource = null);
+        ValueBuilder ValueFor(NodeType nodeType, ModifierSource? modifierSource = null);
 
         /// <summary>
         /// Gets a condition that is satisfied if this stat's value is set, i.e. is not null.

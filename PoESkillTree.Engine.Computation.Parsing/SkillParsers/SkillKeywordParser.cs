@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using EnumsNET;
-using MoreLinq;
 using PoESkillTree.Engine.Computation.Common;
 using PoESkillTree.Engine.Computation.Common.Builders;
 using PoESkillTree.Engine.Computation.Common.Builders.Conditions;
@@ -11,7 +10,11 @@ using PoESkillTree.Engine.Computation.Common.Builders.Stats;
 using PoESkillTree.Engine.GameModel;
 using PoESkillTree.Engine.GameModel.Items;
 using PoESkillTree.Engine.GameModel.Skills;
+using static MoreLinq.Extensions.IndexExtension;
+#if NETSTANDARD2_0
 using PoESkillTree.Engine.Utils.Extensions;
+using static MoreLinq.Extensions.ToHashSetExtension;
+#endif
 
 namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 {
@@ -35,9 +38,9 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         private readonly IBuilderFactories _builderFactories;
         private readonly ISkillKeywordSelector _keywordSelector;
 
-        private ModifierCollection _parsedModifiers;
-        private ISet<UntranslatedStat> _parsedStats;
-        private SkillPreParseResult _preParseResult;
+        private ModifierCollection? _parsedModifiers;
+        private ISet<UntranslatedStat>? _parsedStats;
+        private SkillPreParseResult? _preParseResult;
 
         private SkillKeywordParser(IBuilderFactories builderFactories, ISkillKeywordSelector keywordSelector)
             => (_builderFactories, _keywordSelector) =
@@ -88,18 +91,18 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
         private void AddKeywordModifiers(Func<Keyword, IStatBuilder> statFactory, IConditionBuilder condition)
         {
-            var keywords = _keywordSelector.GetKeywords(_preParseResult.SkillDefinition);
+            var keywords = _keywordSelector.GetKeywords(_preParseResult!.SkillDefinition);
             AddKeywordModifiers(keywords, statFactory, _ => condition);
         }
 
         private void AddPartKeywordModifiers(
             Func<Keyword, IStatBuilder> statFactory,
             Func<Keyword, int, IConditionBuilder> conditionFactory,
-            Func<Keyword, int, bool> preCondition = null)
+            Func<Keyword, int, bool>? preCondition = null)
         {
             if (preCondition is null)
                 preCondition = (_, __) => true;
-            var keywordsPerPart = _keywordSelector.GetKeywordsPerPart(_preParseResult.SkillDefinition);
+            var keywordsPerPart = _keywordSelector.GetKeywordsPerPart(_preParseResult!.SkillDefinition);
             if (keywordsPerPart.Count == 1)
             {
                 AddKeywordModifiers(keywordsPerPart[0], statFactory,
@@ -116,19 +119,19 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
         private void AddKeywordModifiers(
             IEnumerable<Keyword> keywords, Func<Keyword, IStatBuilder> statFactory,
-            Func<Keyword, IConditionBuilder> conditionFactory, Func<Keyword, bool> preCondition = null)
+            Func<Keyword, IConditionBuilder> conditionFactory, Func<Keyword, bool>? preCondition = null)
         {
             if (preCondition != null)
                 keywords = keywords.Where(preCondition);
             foreach (var keyword in keywords)
             {
-                _parsedModifiers.AddGlobal(statFactory(keyword), Form.TotalOverride, 1, conditionFactory(keyword));
+                _parsedModifiers!.AddGlobal(statFactory(keyword), Form.TotalOverride, 1, conditionFactory(keyword));
             }
         }
 
         private ISet<int> GetPartsWithFlagStat(string statId)
         {
-            var level = _preParseResult.LevelDefinition;
+            var level = _preParseResult!.LevelDefinition;
             if (MatchFlagStat(level.Stats, statId))
                 return Enumerable.Range(0, level.AdditionalStatsPerPart.Count).ToHashSet();
 
@@ -144,9 +147,9 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         private bool MatchFlagStat(IEnumerable<UntranslatedStat> stats, string statId)
         {
             var firstMatch = stats.FirstOrDefault(s => s.StatId == statId);
-            if (firstMatch is UntranslatedStat stat)
+            if (firstMatch != null)
             {
-                _parsedStats.Add(stat);
+                _parsedStats!.Add(firstMatch);
                 return true;
             }
             return false;

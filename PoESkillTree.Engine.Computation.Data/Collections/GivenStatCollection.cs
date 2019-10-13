@@ -29,10 +29,10 @@ namespace PoESkillTree.Engine.Computation.Data.Collections
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        public void Add(IFormBuilder form, IStatBuilder stat, double value, IConditionBuilder condition = null)
+        public void Add(IFormBuilder form, IStatBuilder stat, double value, IConditionBuilder? condition = null)
             => Add(form, stat, _valueFactory.Create(value), condition);
 
-        public void Add(IFormBuilder form, IStatBuilder stat, IValueBuilder value, IConditionBuilder condition = null)
+        public void Add(IFormBuilder form, IStatBuilder stat, IValueBuilder value, IConditionBuilder? condition = null)
         {
             var builder = _modifierBuilder
                 .WithForm(form)

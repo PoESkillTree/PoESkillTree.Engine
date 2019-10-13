@@ -9,12 +9,12 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
     {
         public static IConditionBuilder ConditionFromIdentity(
             IStatFactory statFactory, string identity,
-            ExplicitRegistrationType explicitRegistrationType = null) =>
+            ExplicitRegistrationType? explicitRegistrationType = null) =>
             FromIdentity(statFactory, identity, typeof(bool), explicitRegistrationType).IsSet;
 
         public static IStatBuilder FromIdentity(
             IStatFactory statFactory, string identity, Type dataType,
-            ExplicitRegistrationType explicitRegistrationType = null) =>
+            ExplicitRegistrationType? explicitRegistrationType = null) =>
             new StatBuilder(statFactory,
                 LeafCoreStatBuilder.FromIdentity(statFactory, identity, dataType, explicitRegistrationType));
 

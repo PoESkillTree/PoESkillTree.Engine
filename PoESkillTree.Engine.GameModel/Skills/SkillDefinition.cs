@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
 using PoESkillTree.Engine.GameModel.Items;
 using PoESkillTree.Engine.Utils;
 
@@ -10,21 +9,21 @@ namespace PoESkillTree.Engine.GameModel.Skills
     {
         private SkillDefinition(
             string id, int numericId, bool isSupport, string statTranslationFile, IReadOnlyList<string> partNames,
-            SkillBaseItemDefinition baseItem, ActiveSkillDefinition activeSkill, SupportSkillDefinition supportSkill,
+            SkillBaseItemDefinition? baseItem, ActiveSkillDefinition? activeSkill, SupportSkillDefinition? supportSkill,
             IReadOnlyDictionary<int, SkillLevelDefinition> levels)
             => (Id, NumericId, IsSupport, PartNames, BaseItem, ActiveSkill, SupportSkill, Levels, StatTranslationFile) =
-                (id, numericId, isSupport, partNames, baseItem, activeSkill, supportSkill, levels, statTranslationFile);
+                (id, numericId, isSupport, partNames, baseItem, activeSkill!, supportSkill!, levels, statTranslationFile);
 
         public static SkillDefinition CreateActive(
             string id, int numericId, string statTranslationFile, IReadOnlyList<string> partNames,
-            SkillBaseItemDefinition baseItem, ActiveSkillDefinition activeSkill,
+            SkillBaseItemDefinition? baseItem, ActiveSkillDefinition activeSkill,
             IReadOnlyDictionary<int, SkillLevelDefinition> levels)
             => new SkillDefinition(id, numericId, false, statTranslationFile, partNames, baseItem, activeSkill, null,
                 levels);
 
         public static SkillDefinition CreateSupport(
             string id, int numericId, string statTranslationFile, IReadOnlyList<string> partNames,
-            SkillBaseItemDefinition baseItem, SupportSkillDefinition supportSkill,
+            SkillBaseItemDefinition? baseItem, SupportSkillDefinition supportSkill,
             IReadOnlyDictionary<int, SkillLevelDefinition> levels)
             => new SkillDefinition(id, numericId, true, statTranslationFile, partNames, baseItem, null, supportSkill,
                 levels);
@@ -36,8 +35,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
 
         public IReadOnlyList<string> PartNames { get; }
 
-        [CanBeNull]
-        public SkillBaseItemDefinition BaseItem { get; }
+        public SkillBaseItemDefinition? BaseItem { get; }
 
         public ActiveSkillDefinition ActiveSkill { get; }
         public SupportSkillDefinition SupportSkill { get; }

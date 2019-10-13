@@ -4,7 +4,6 @@ using Moq;
 using MoreLinq;
 using NUnit.Framework;
 using PoESkillTree.Engine.Computation.Common.Data;
-using PoESkillTree.Engine.Utils.Extensions;
 
 namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
 {
@@ -14,9 +13,9 @@ namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
         [Test]
         public void IsIParser()
         {
-            var sut = CreateSut(null, null);
+            var sut = CreateSut(Mock.Of<IStepper<string>>(), null);
 
-            Assert.IsInstanceOf<IStringParser<IReadOnlyList<int>>>(sut);
+            Assert.IsInstanceOf<IStringParser<IReadOnlyList<string>>>(sut);
         }
 
         [TestCase(true, ExpectedResult = true)]
@@ -50,7 +49,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
             var (_, actualRemaining, actualResult) = sut.Parse("stat0");
 
             Assert.AreEqual("stat1", actualRemaining);
-            Assert.That(actualResult, Has.Exactly(1).EqualTo(42));
+            Assert.That(actualResult, Has.Exactly(1).EqualTo("42"));
         }
 
         [Test]
@@ -67,11 +66,11 @@ namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
         [Test]
         public void TryParseReturnsCorrectRemainingAndStatWithManyInnerParses()
         {
-            IStringParser<int>[] parsers =
+            IStringParser<string>[] parsers =
             {
-                MockConstantParser("1 2 3", "2 3", 1),
-                MockConstantParser("2 3", "3", 2),
-                MockConstantParser("3", "", 3),
+                MockConstantParser("1 2 3", "2 3", "1"),
+                MockConstantParser("2 3", "3", "2"),
+                MockConstantParser("3", "", "3"),
                 MockConstantParser("", "nothing", @return: false),
             };
             var successTransitions = new Dictionary<string, string>();
@@ -91,32 +90,33 @@ namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
             }
 
             var stepper = MockStepper("0", "4", false, successTransitions, failureTransitions);
-            IStringParser<int> StepToParser(string step) => parsers[int.Parse(step)];
+            IStringParser<string> StepToParser(string step) => parsers[int.Parse(step)];
 
             var sut = CreateSut(stepper, StepToParser);
 
             var (_, actualRemaining, actualResult) = sut.Parse("1 2 3");
 
             Assert.AreEqual("nothing", actualRemaining);
-            CollectionAssert.AreEqual(new[] { 1, 2, 3 }, actualResult);
+            CollectionAssert.AreEqual(new[] { "1", "2", "3" }, actualResult);
         }
 
-        private static CompositeParser<int, string> CreateSut(
-            IStepper<string> stepper, Func<string, IStringParser<int>> stepToParserFunc)
+        private static CompositeParser<string, string> CreateSut(
+            IStepper<string> stepper, Func<string, IStringParser<string>>? stepToParserFunc)
         {
-            return new CompositeParser<int, string>(stepper, stepToParserFunc);
+            return new CompositeParser<string, string>(stepper,
+                stepToParserFunc ?? (_ => Mock.Of<IStringParser<string>>()));
         }
 
-        private static IStringParser<int> MockConstantParser(string stat, 
-            string remaining = "remaining", int result = 42, bool @return = true)
+        private static IStringParser<string> MockConstantParser(string stat, 
+            string remaining = "remaining", string result = "42", bool @return = true)
         {
             return StringParserTestUtils.MockParser(stat, @return, remaining, result).Object;
         }
 
         private static IStepper<string> MockStepper(
             string initial, string terminal, bool terminalIsSuccess,
-            IReadOnlyDictionary<string, string> successTransitions = null,
-            IReadOnlyDictionary<string, string> failureTransitions = null)
+            IReadOnlyDictionary<string, string>? successTransitions = null,
+            IReadOnlyDictionary<string, string>? failureTransitions = null)
         {
             var mock = new Mock<IStepper<string>>();
 
@@ -143,23 +143,23 @@ namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
             return mock.Object;
         }
 
-        private static  CompositeParser<int, string> SetupSequence(params bool[] parserReturns)
+        private static CompositeParser<string, string> SetupSequence(params bool[] parserReturns)
         {
             return SetupSequenceWithSuccessful(false, parserReturns);
         }
 
-        private static  CompositeParser<int, string> SetupSequenceWithSuccessful(
+        private static CompositeParser<string, string> SetupSequenceWithSuccessful(
             bool lastStepSuccessful, params bool[] parserReturns)
         {
             return SetupSequenceWithSuccessful(lastStepSuccessful, (IReadOnlyCollection<bool>) parserReturns);
         }
 
-        private static CompositeParser<int, string> SetupSequenceWithSuccessful(
+        private static CompositeParser<string, string> SetupSequenceWithSuccessful(
             bool lastStepSuccessful, IReadOnlyCollection<bool> parserReturns)
         {
             var successTransitions = new Dictionary<string, string>();
             var failureTransitions = new Dictionary<string, string>();
-            var parsers = new Dictionary<string, IStringParser<int>>();
+            var parsers = new Dictionary<string, IStringParser<string>>();
             foreach (var (i, parserReturn) in parserReturns.Index())
             {
                 var step = i.ToString();

@@ -158,9 +158,9 @@ namespace PoESkillTree.Engine.Computation.Core.Nodes
             return CreateSut(nodeRepository, valueMock.Object);
         }
 
-        private static ValueNode CreateSut(INodeRepository nodeRepository = null, IValue value = null)
-            => new ValueNode(new ValueCalculationContext(nodeRepository, null),
-                new ValueCalculationContext(nodeRepository, null), value);
+        private static ValueNode CreateSut(INodeRepository? nodeRepository = null, IValue? value = null)
+            => new ValueNode(new ValueCalculationContext(nodeRepository!, null!),
+                new ValueCalculationContext(nodeRepository!, null!), value!);
 
         private static readonly CollectionChangeEventArgs RefreshEventArgs =
             new CollectionChangeEventArgs(CollectionChangeAction.Refresh, null);

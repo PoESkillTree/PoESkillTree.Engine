@@ -80,7 +80,7 @@ namespace PoESkillTree.Engine.Computation.Core.NodeCollections
             Assert.IsTrue(raised);
         }
 
-        private static EventBufferingObservableCollection<int> CreateSut(IEventBuffer eventBuffer = null)
+        private static EventBufferingObservableCollection<int> CreateSut(IEventBuffer? eventBuffer = null)
             => new EventBufferingObservableCollection<int>(eventBuffer ?? new EventBuffer());
     }
 }

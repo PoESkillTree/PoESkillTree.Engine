@@ -18,12 +18,12 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         {
             var multiResults = new[]
             {
-                new StatBuilderResult(new IStat[0], null, Funcs.Identity),
-                new StatBuilderResult(new IStat[0], null, Funcs.Identity),
+                new StatBuilderResult(new IStat[0], null!, Funcs.Identity),
+                new StatBuilderResult(new IStat[0], null!, Funcs.Identity),
             };
             var singleResults = new[]
             {
-                new StatBuilderResult(new IStat[0], null, Funcs.Identity),
+                new StatBuilderResult(new IStat[0], null!, Funcs.Identity),
             };
             var multiCoreStatBuilder = Mock.Of<ICoreStatBuilder>(b => b.Build(default) == multiResults);
             var singleCoreStatBuilder =
@@ -40,8 +40,8 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         {            
             var itemResults = new[]
             {
-                new StatBuilderResult(new IStat[0], null, Funcs.Identity),
-                new StatBuilderResult(new IStat[0], null, Funcs.Identity),
+                new StatBuilderResult(new IStat[0], null!, Funcs.Identity),
+                new StatBuilderResult(new IStat[0], null!, Funcs.Identity),
             };
             var leftCore = Mock.Of<ICoreStatBuilder>(b => b.Build(default) == itemResults);
             var rightCore = Mock.Of<ICoreStatBuilder>(b => b.Build(default) == itemResults);

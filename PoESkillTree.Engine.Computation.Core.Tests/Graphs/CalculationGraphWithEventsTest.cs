@@ -203,12 +203,12 @@ namespace PoESkillTree.Engine.Computation.Core.Graphs
         }
 
         private static CalculationGraphWithEvents CreateSut(
-            Action<IStat> statAddedAction = null, Action<IStat> statRemovedAction = null, params IStat[] knownStats) =>
+            Action<IStat>? statAddedAction = null, Action<IStat>? statRemovedAction = null, params IStat[] knownStats) =>
             CreateSut(MockGraph(knownStats), statAddedAction, statRemovedAction);
 
         private static CalculationGraphWithEvents CreateSut(
             ICalculationGraph decoratedGraph,
-            Action<IStat> statAddedAction = null, Action<IStat> statRemovedAction = null)
+            Action<IStat>? statAddedAction = null, Action<IStat>? statRemovedAction = null)
         {
             var sut = new CalculationGraphWithEvents(decoratedGraph);
             if (statAddedAction != null)

@@ -106,7 +106,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
 
         private static ModifierSource.Local.Jewel GetJewelSource(BuildParameters parameters)
         {
-            var modifierSource = parameters.ModifierSource;
+            ModifierSource? modifierSource = parameters.ModifierSource;
             if (modifierSource is ModifierSource.Global globalSource)
                 modifierSource = globalSource.LocalSource;
             if (modifierSource is ModifierSource.Local.Jewel jewelSource)

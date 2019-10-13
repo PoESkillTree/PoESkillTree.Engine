@@ -17,10 +17,10 @@ namespace PoESkillTree.Engine.Computation.Builders.Conditions
         public void ResolveResolvesConditions()
         {
             var expected = Helper.MockMany<IConditionBuilder>();
-            var input = expected.Select(c => Mock.Of<IConditionBuilder>(b => b.Resolve(null) == c));
+            var input = expected.Select(c => Mock.Of<IConditionBuilder>(b => b.Resolve(null!) == c));
             var sut = CreateSut(input);
 
-            var actual = sut.Resolve(null);
+            var actual = sut.Resolve(null!);
 
             Assert.IsInstanceOf<OrCompositeConditionBuilder>(actual);
             Assert.AreEqual(expected, ((OrCompositeConditionBuilder) actual).Conditions);
@@ -73,7 +73,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Conditions
             };
             var sut = CreateSut(conditions);
 
-            var actual = sut.Build().Value.Calculate(null);
+            var actual = sut.Build().Value.Calculate(null!);
             Assert.AreEqual(expected, actual);
         }
 
@@ -85,9 +85,9 @@ namespace PoESkillTree.Engine.Computation.Builders.Conditions
             Mock.Get(stats[1]).Setup(s => s.Concat(stats[2])).Returns(expected);
             var converters = new (StatConverter, IValue)[]
             {
-                (s => s == stats[0] ? stats[1] : null, new Constant(1)),
+                (s => s == stats[0] ? stats[1] : s, new Constant(1)),
                 (s => s, new Constant(1)),
-                (s => s == stats[0] ? stats[2] : null, new Constant(1)),
+                (s => s == stats[0] ? stats[2] : s, new Constant(1)),
             };
             var conditions = converters.Select(CreateCondition);
             var sut = CreateSut(conditions);

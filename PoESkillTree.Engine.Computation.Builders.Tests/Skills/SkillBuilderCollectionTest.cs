@@ -26,10 +26,10 @@ namespace PoESkillTree.Engine.Computation.Builders.Skills
         public void ResolveCombinedInstancesBuildsToCorrectResult()
         {
             var keywords = new[] { Keyword.Projectile };
-            var unresolved = new[] { Mock.Of<IKeywordBuilder>(b => b.Resolve(null).Build(default) == keywords[0]) };
+            var unresolved = new[] { Mock.Of<IKeywordBuilder>(b => b.Resolve(null!).Build(default) == keywords[0]) };
             var sut = CreateSut(unresolved);
 
-            var stat = sut.Resolve(null).CombinedInstances.BuildToSingleStat();
+            var stat = sut.Resolve(null!).CombinedInstances.BuildToSingleStat();
 
             Assert.AreEqual("Skills[Projectile].Instances", stat.Identity);
         }
@@ -38,10 +38,10 @@ namespace PoESkillTree.Engine.Computation.Builders.Skills
         public void CombinedInstancesResolveBuildsToCorrectResult()
         {
             var keywords = new[] { Keyword.Projectile };
-            var unresolved = new[] { Mock.Of<IKeywordBuilder>(b => b.Resolve(null).Build(default) == keywords[0]) };
+            var unresolved = new[] { Mock.Of<IKeywordBuilder>(b => b.Resolve(null!).Build(default) == keywords[0]) };
             var sut = CreateSut(unresolved);
 
-            var stat = sut.CombinedInstances.Resolve(null).BuildToSingleStat();
+            var stat = sut.CombinedInstances.Resolve(null!).BuildToSingleStat();
 
             Assert.AreEqual("Skills[Projectile].Instances", stat.Identity); 
         }

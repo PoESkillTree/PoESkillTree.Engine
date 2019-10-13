@@ -19,8 +19,10 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
     [TestFixture]
     public class SkillParserTest : CompositionRootTestBase
     {
+#pragma warning disable 8618 // Initialized in ClassInit
         private SkillDefinitions _skillDefinitions;
         private IParser _parser;
+#pragma warning restore 8618
 
         [SetUp]
         public async Task SetUpAsync()

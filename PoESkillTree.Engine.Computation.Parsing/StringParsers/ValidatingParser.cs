@@ -12,6 +12,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
     /// false even if the decorated parser's was true.
     /// </summary>
     public class ValidatingParser<TResult> : IStringParser<TResult>
+        where TResult : class
     {
         private readonly IStringParser<TResult> _inner;
 

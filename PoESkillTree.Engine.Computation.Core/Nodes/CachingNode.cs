@@ -50,7 +50,7 @@ namespace PoESkillTree.Engine.Computation.Core.Nodes
             _calculatedValue = true;
         }
 
-        public event EventHandler ValueChangeReceived;
+        public event EventHandler? ValueChangeReceived;
 
         public void Dispose()
         {

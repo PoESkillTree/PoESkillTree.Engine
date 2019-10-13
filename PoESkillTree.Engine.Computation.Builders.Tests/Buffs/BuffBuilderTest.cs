@@ -34,7 +34,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
         {
             var expectedStat = "stat";
             var expectedValue = (NodeValue?) 3;
-            var statBuilder = StatBuilderUtils.FromIdentity(StatFactory, expectedStat, null);
+            var statBuilder = StatBuilderUtils.FromIdentity(StatFactory, expectedStat, typeof(double));
             var valueBuilder = new ValueBuilderImpl(2);
             var activeStat = new Stat("test.Active");
             var buffActiveStat = new Stat("test.BuffActive");
@@ -61,7 +61,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
         {
             var expectedStat = "stat";
             var expectedValue = (NodeValue?) 2;
-            var statBuilder = StatBuilderUtils.FromIdentity(StatFactory, expectedStat, null);
+            var statBuilder = StatBuilderUtils.FromIdentity(StatFactory, expectedStat, typeof(double));
             var valueBuilder = new ValueBuilderImpl(2);
             var activeStat = new Stat("test.Active");
             var buffActiveStat = new Stat("test.BuffActive");
@@ -83,8 +83,8 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
         public void AddStatResolveResolvesIdentity()
         {
             var expectedIdentity = "buff";
-            var statBuilder = StatBuilderUtils.FromIdentity(StatFactory, "stat", null);
-            var resolveContext = new ResolveContext(null, null);
+            var statBuilder = StatBuilderUtils.FromIdentity(StatFactory, "stat", typeof(double));
+            var resolveContext = new ResolveContext(null!, null!);
             var sut = new BuffBuilder(StatFactory, new UnresolvedCoreBuilder<string>("unresolved",
                 c => CoreBuilder.Create(expectedIdentity)));
 

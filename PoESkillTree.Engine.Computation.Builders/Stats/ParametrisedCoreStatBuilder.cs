@@ -10,7 +10,7 @@ using PoESkillTree.Engine.Computation.Common.Builders.Stats;
 namespace PoESkillTree.Engine.Computation.Builders.Stats
 {
     internal class ParametrisedCoreStatBuilder<TParameter> : ICoreStatBuilder
-        where TParameter : IResolvable<TParameter>
+        where TParameter : class, IResolvable<TParameter>
     {
         private readonly ICoreStatBuilder _inner;
         private readonly TParameter _parameter;

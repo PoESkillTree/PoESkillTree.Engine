@@ -13,7 +13,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Behaviors
         {
             var sut = new RoundedValue(new Constant(input), decimals);
 
-            return sut.Calculate(null).SingleOrNull();
+            return sut.Calculate(null!).SingleOrNull();
         }
     }
 }

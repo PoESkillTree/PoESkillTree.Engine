@@ -11,6 +11,7 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests.Core
         // This test tests the behaviors necessary for stat conversions
         // (located in PoESkillTree.Engine.Computation.Builders.Behaviors).
 
+#pragma warning disable 8618 // Initialized in SetUp
         private ICalculator _sut;
         private IStat _bar;
         private IStat _baz;
@@ -23,6 +24,7 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests.Core
         private IStat _bazConversion;
         private IStat _bazSkillConversion;
         private IStat _barBazConversion;
+#pragma warning restore 8618
 
         [SetUp]
         public void SetUp()
@@ -58,7 +60,7 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests.Core
         {
             _sut.NewBatchUpdate()
                 .AddModifier(_bar, Form.BaseAdd, 3)
-                .AddModifier(new[] { _barFooConversion, _barConversion, _barSkillConversion }, Form.BaseAdd, 100.0 / 3)
+                .AddModifier(new[] {_barFooConversion, _barConversion, _barSkillConversion}, Form.BaseAdd, 100.0 / 3)
                 .DoUpdate();
 
             Assert.AreEqual(new NodeValue(1), GetValue(_foo));
@@ -68,7 +70,7 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests.Core
         [Test]
         public void ComplexSingleSource()
         {
-            var barFooConversion = new[] { _barFooConversion, _barConversion, _barSkillConversion };
+            var barFooConversion = new[] {_barFooConversion, _barConversion, _barSkillConversion};
             var localSource = new ModifierSource.Local.Given();
             var skillSource = new ModifierSource.Local.Skill("");
             _sut.NewBatchUpdate()
@@ -115,8 +117,8 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests.Core
         [Test]
         public void ZeroChain()
         {
-            var barBazConversion = new[] { _barBazConversion, _barConversion, _barSkillConversion };
-            var bazFooConversion = new[] { _bazFooConversion, _bazConversion, _bazSkillConversion };
+            var barBazConversion = new[] {_barBazConversion, _barConversion, _barSkillConversion};
+            var bazFooConversion = new[] {_bazFooConversion, _bazConversion, _bazSkillConversion};
             _sut.NewBatchUpdate()
                 .AddModifier(_bar, Form.BaseAdd, 8)
                 .AddModifier(barBazConversion, Form.BaseAdd, 0)
@@ -131,8 +133,8 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests.Core
         [Test]
         public void Chain()
         {
-            var barBazConversion = new[] { _barBazConversion, _barConversion, _barSkillConversion };
-            var bazFooConversion = new[] { _bazFooConversion, _bazConversion, _bazSkillConversion };
+            var barBazConversion = new[] {_barBazConversion, _barConversion, _barSkillConversion};
+            var bazFooConversion = new[] {_bazFooConversion, _bazConversion, _bazSkillConversion};
             _sut.NewBatchUpdate()
                 .AddModifier(_bar, Form.BaseAdd, 8)
                 .AddModifier(barBazConversion, Form.BaseAdd, 50)

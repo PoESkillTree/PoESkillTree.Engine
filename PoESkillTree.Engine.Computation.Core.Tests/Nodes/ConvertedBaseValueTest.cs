@@ -33,7 +33,7 @@ namespace PoESkillTree.Engine.Computation.Core.Nodes
             Assert.AreEqual(expected, actual);
         }
 
-        private static ConvertedBaseValue CreateSut(PathDefinition path = null) =>
-            new ConvertedBaseValue(path);
+        private static ConvertedBaseValue CreateSut(PathDefinition? path = null) =>
+            new ConvertedBaseValue(path ?? PathDefinition.MainPath);
     }
 }

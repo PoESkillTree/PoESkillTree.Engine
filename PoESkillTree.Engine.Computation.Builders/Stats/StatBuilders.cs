@@ -163,7 +163,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         public IStatBuilder Dexterity => Requirement();
         public IStatBuilder Intelligence => Requirement();
 
-        private IStatBuilder Requirement([CallerMemberName] string requiredStat = null)
+        private IStatBuilder Requirement([CallerMemberName] string requiredStat = "")
             => FromStatFactory(e => StatFactory.Requirement(StatFactory.FromIdentity(requiredStat, e, typeof(uint))));
     }
 

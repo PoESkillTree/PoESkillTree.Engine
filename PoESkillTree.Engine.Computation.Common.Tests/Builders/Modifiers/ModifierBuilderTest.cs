@@ -281,7 +281,7 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Modifiers
         public void WithStatConverterSetsStatConverter()
         {
             var sut = ModifierBuilder.Empty;
-            StatConverter statConverter = s => null;
+            StatConverter statConverter = s => null!;
 
             sut = (ModifierBuilder) sut.WithStatConverter(statConverter);
 
@@ -292,7 +292,7 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Modifiers
         public void WithValueConverterSetsValueConverter()
         {
             var sut = ModifierBuilder.Empty;
-            ValueConverter valueConverter = v => null;
+            ValueConverter valueConverter = v => null!;
 
             sut = (ModifierBuilder) sut.WithValueConverter(valueConverter);
 

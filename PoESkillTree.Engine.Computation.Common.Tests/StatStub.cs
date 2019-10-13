@@ -12,7 +12,7 @@ namespace PoESkillTree.Engine.Computation.Common
 
         private readonly int _instance;
 
-        public StatStub(IStat minimum = null, IStat maximum = null)
+        public StatStub(IStat? minimum = null, IStat? maximum = null)
         {
             _instance = _instanceCounter++;
             Minimum = minimum;
@@ -21,11 +21,11 @@ namespace PoESkillTree.Engine.Computation.Common
 
         public bool Equals(IStat other) => Equals((object) other);
 
-        public IStat Minimum { get; }
-        public IStat Maximum { get; }
+        public IStat? Minimum { get; }
+        public IStat? Maximum { get; }
         public string Identity => _instance.ToString();
         public Entity Entity => Entity.Character;
-        public ExplicitRegistrationType ExplicitRegistrationType { get; set; }
+        public ExplicitRegistrationType? ExplicitRegistrationType { get; set; }
         public Type DataType => typeof(double);
         public IReadOnlyList<Behavior> Behaviors => new Behavior[0];
     }

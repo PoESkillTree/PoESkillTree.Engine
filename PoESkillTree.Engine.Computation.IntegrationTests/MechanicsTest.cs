@@ -18,9 +18,11 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
     [TestFixture]
     public class MechanicsTest : CompositionRootTestBase
     {
+#pragma warning disable 8618 // Initialized in ClassInit
         private static IReadOnlyList<Modifier> _givenMods;
         private static IBuilderFactories _builderFactories;
         private static IMetaStatBuilders _metaStats;
+#pragma warning restore 8618
 
         private const double Accuracy = (-2 + 2 * 90) + 1000;
         private const double EffectiveDamageMultiplierWithNonCrits = 0.4 * 1.2 * 1.75;

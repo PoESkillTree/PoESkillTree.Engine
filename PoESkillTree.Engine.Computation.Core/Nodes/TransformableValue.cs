@@ -46,7 +46,7 @@ namespace PoESkillTree.Engine.Computation.Core.Nodes
             OnValueChanged();
         }
 
-        public event EventHandler ValueChanged;
+        public event EventHandler? ValueChanged;
 
         private void OnValueChanged() => ValueChanged?.Invoke(this, EventArgs.Empty);
     }

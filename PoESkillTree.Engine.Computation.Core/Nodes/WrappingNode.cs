@@ -23,7 +23,7 @@ namespace PoESkillTree.Engine.Computation.Core.Nodes
 
         public NodeValue? Value => _decoratedNode.Value;
 
-        public event EventHandler ValueChanged;
+        public event EventHandler? ValueChanged;
 
         public void Dispose() => _decoratedNode.ValueChanged -= OnValueChanged;
 

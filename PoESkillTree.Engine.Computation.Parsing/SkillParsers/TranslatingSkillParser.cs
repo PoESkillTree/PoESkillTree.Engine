@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using MoreLinq;
 using PoESkillTree.Engine.Computation.Common;
 using PoESkillTree.Engine.Computation.Common.Builders;
 using PoESkillTree.Engine.Computation.Common.Builders.Conditions;
@@ -10,6 +9,12 @@ using PoESkillTree.Engine.GameModel;
 using PoESkillTree.Engine.GameModel.Skills;
 using PoESkillTree.Engine.GameModel.StatTranslation;
 using PoESkillTree.Engine.Utils.Extensions;
+using static MoreLinq.Extensions.IndexExtension;
+using static MoreLinq.Extensions.PartitionExtension;
+using static MoreLinq.Extensions.ToLookupExtension;
+#if NETSTANDARD2_0
+using static MoreLinq.Extensions.ToHashSetExtension;
+#endif
 
 namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 {
@@ -28,8 +33,8 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         private readonly IBuilderFactories _builderFactories;
         private readonly UntranslatedStatParserFactory _statParserFactory;
 
-        private SkillPreParseResult _preParseResult;
-        private IEnumerable<UntranslatedStat> _parsedStats;
+        private SkillPreParseResult? _preParseResult;
+        private IEnumerable<UntranslatedStat>? _parsedStats;
 
         public TranslatingSkillParser(
             IBuilderFactories builderFactories, UntranslatedStatParserFactory statParserFactory)
@@ -78,12 +83,12 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         }
 
         private ParseResult TranslateAndParse(IEnumerable<UntranslatedStat> stats, IConditionBuilder condition)
-            => TranslateAndParse(_preParseResult.SkillDefinition.StatTranslationFile, stats, condition);
+            => TranslateAndParse(_preParseResult!.SkillDefinition.StatTranslationFile, stats, condition);
 
         private ParseResult TranslateAndParse(
             string statTranslationFileName, IEnumerable<UntranslatedStat> stats, IConditionBuilder condition)
         {
-            var result = TranslateAndParse(_preParseResult.LocalSource, stats, Entity.Character,
+            var result = TranslateAndParse(_preParseResult!.LocalSource, stats, Entity.Character,
                 statTranslationFileName);
             return result.ApplyCondition(condition.Build);
         }
@@ -91,7 +96,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         private ParseResult TranslateAndParseBuff(IEnumerable<BuffStat> buffStats, IConditionBuilder condition)
         {
             var results = new List<ParseResult>();
-            var buffBuilder = _builderFactories.SkillBuilders.FromId(_preParseResult.SkillDefinition.Id).Buff;
+            var buffBuilder = _builderFactories.SkillBuilders.FromId(_preParseResult!.SkillDefinition.Id).Buff;
             var statLookup = buffStats
                 .SelectMany(t => t.AffectedEntities.Select(e => (e, t.Stat)))
                 .ToLookup();

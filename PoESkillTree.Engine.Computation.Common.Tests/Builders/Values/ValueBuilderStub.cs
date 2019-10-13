@@ -18,7 +18,7 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Values
             if (value is ValueBuilder b)
             {
                 // Easiest way to get the underlying value back.
-                value = b.Resolve(null);
+                value = b.Resolve(null!);
             }
             return ((ValueBuilderStub) value).Value;
         }

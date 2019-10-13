@@ -9,7 +9,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
         [Test]
         public void IsIParser()
         {
-            var sut = new ValidatingParser<string>(null);
+            var sut = new ValidatingParser<string>(null!);
 
             Assert.IsInstanceOf<IStringParser<string>>(sut);
         }

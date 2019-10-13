@@ -14,7 +14,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Conditions
         {
             var sut = CreateSut();
 
-            Assert.AreSame(sut, sut.Resolve(null));
+            Assert.AreSame(sut, sut.Resolve(null!));
         }
 
         [Test]
@@ -35,7 +35,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Conditions
             var expected = (NodeValue?) condition;
             var sut = CreateSut(condition);
 
-            var actual = sut.Build().Value.Calculate(null);
+            var actual = sut.Build().Value.Calculate(null!);
 
             Assert.AreEqual(expected, actual);
         }
@@ -47,7 +47,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Conditions
             var expected = (NodeValue?) !condition;
             var sut = CreateSut(condition);
 
-            var actual = sut.Not.Build().Value.Calculate(null);
+            var actual = sut.Not.Build().Value.Calculate(null!);
 
             Assert.AreEqual(expected, actual);
         }

@@ -30,7 +30,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Effects
         {
             var expectedStat = "stat";
             var expectedValue = effectActive ? (NodeValue?) 2 : null;
-            var statBuilder = StatBuilderUtils.FromIdentity(new StatFactory(), expectedStat, null);
+            var statBuilder = StatBuilderUtils.FromIdentity(new StatFactory(), expectedStat, typeof(double));
             var valueBuilder = new ValueBuilderImpl(2);
             var activeStat = new Stat("test.Active");
             var context = Mock.Of<IValueCalculationContext>(c =>

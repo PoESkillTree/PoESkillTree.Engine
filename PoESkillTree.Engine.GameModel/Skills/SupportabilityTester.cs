@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using MoreLinq;
-using PoESkillTree.Engine.Utils.Extensions;
+#if NETSTANDARD2_0
+using static MoreLinq.Extensions.ToHashSetExtension;
+#endif
 
 namespace PoESkillTree.Engine.GameModel.Skills
 {

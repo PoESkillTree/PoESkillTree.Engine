@@ -6,26 +6,21 @@ namespace PoESkillTree.Engine.Computation.Data.Collections
     [TestFixture]
     public class StatReplacerCollectionTest
     {
-        private StatReplacerCollection _sut;
-
-        [SetUp]
-        public void SetUp()
-        {
-            _sut = new StatReplacerCollection();
-        }
-
         [Test]
         public void IsEmpty()
         {
-            Assert.AreEqual(0, _sut.Count());
+            var sut = new StatReplacerCollection();
+
+            Assert.AreEqual(0, sut.Count());
         }
 
         [Test]
         public void AddAddsCorrectData()
         {
-            _sut.Add("originalStat", "r1", "r2", "r3");
+            var sut = new StatReplacerCollection {{"originalStat", "r1", "r2", "r3"}};
 
-            var data = _sut.Single();
+            var data = sut.Single();
+
             Assert.AreEqual("originalStat", data.OriginalStatRegex);
             CollectionAssert.AreEqual(new[] { "r1", "r2", "r3" }, data.Replacements);
         }
@@ -33,11 +28,9 @@ namespace PoESkillTree.Engine.Computation.Data.Collections
         [Test]
         public void AddManyAddsToCount()
         {
-            _sut.Add("1");
-            _sut.Add("2", "r1");
-            _sut.Add("3", "r1", "r2");
+            var sut = new StatReplacerCollection {"1", {"2", "r1"}, {"3", "r1", "r2"}};
 
-            Assert.AreEqual(3, _sut.Count());
+            Assert.AreEqual(3, sut.Count());
         }
     }
 }

@@ -160,18 +160,18 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         protected abstract IStatBuilder Create(ICoreStatBuilder coreStatBuilder, ICoreBuilder<Pool> pool);
 
         protected IStatBuilder FromIdentity(
-            Type dataType, ExplicitRegistrationType explicitRegistrationType = null,
-            [CallerMemberName] string identitySuffix = null)
+            Type dataType, ExplicitRegistrationType? explicitRegistrationType = null,
+            [CallerMemberName] string identitySuffix = "")
             => new StatBuilder(StatFactory, CreateCoreStatBuilder(identitySuffix, dataType, explicitRegistrationType));
 
         protected IDamageRelatedStatBuilder DamageRelatedFromIdentity(
-            Type dataType, ExplicitRegistrationType explicitRegistrationType = null,
-            [CallerMemberName] string identitySuffix = null)
+            Type dataType, ExplicitRegistrationType? explicitRegistrationType = null,
+            [CallerMemberName] string identitySuffix = "")
             => DamageRelatedStatBuilder.Create(StatFactory,
                 CreateCoreStatBuilder(identitySuffix, dataType, explicitRegistrationType));
 
         private ICoreStatBuilder CreateCoreStatBuilder(
-            string identitySuffix, Type dataType, ExplicitRegistrationType explicitRegistrationType)
+            string identitySuffix, Type dataType, ExplicitRegistrationType? explicitRegistrationType)
             => new CoreStatBuilderFromCoreBuilder<Pool>(Pool,
                 (e, p) => StatFactory.FromIdentity($"{p}{_identitySuffix}.{identitySuffix}", e, dataType,
                     explicitRegistrationType));

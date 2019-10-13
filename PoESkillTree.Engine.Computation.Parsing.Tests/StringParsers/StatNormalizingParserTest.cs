@@ -8,7 +8,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
         [Test]
         public void IsIParser()
         {
-            var sut = new StatNormalizingParser<string>(null);
+            var sut = new StatNormalizingParser<string>(null!);
 
             Assert.IsInstanceOf<IStringParser<string>>(sut);
         }
@@ -17,7 +17,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
         [TestCase(false, ExpectedResult = false)]
         public bool TryParsePassesSuccessfullyParsed(bool innerSuccess)
         {
-            var inner = StringParserTestUtils.MockParser("stat", innerSuccess, default, "").Object;
+            var inner = StringParserTestUtils.MockParser("stat", innerSuccess, "", "").Object;
             var sut = new StatNormalizingParser<string>(inner);
 
             var (actual, _, _) = sut.Parse("stat");
@@ -41,7 +41,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
         public void TryParsePassesResul()
         {
             const string expected = "result";
-            var inner = StringParserTestUtils.MockParser("stat", default, default, expected).Object;
+            var inner = StringParserTestUtils.MockParser("stat", default, "", expected).Object;
             var sut = new StatNormalizingParser<string>(inner);
 
             var (_, _, actual) = sut.Parse("stat");

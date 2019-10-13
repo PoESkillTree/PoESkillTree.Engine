@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Moq;
+using PoESkillTree.Engine.Computation.Common.Builders.Modifiers;
 using PoESkillTree.Engine.Computation.Common.Data;
 
 namespace PoESkillTree.Engine.Computation.Parsing.Referencing
@@ -17,7 +18,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.Referencing
         internal static IReferencedMatchers MockReferencedMatchers(string referenceName,
             params string[] patterns)
         {
-            var data = patterns.Select(p => new ReferencedMatcherData(p, null)).ToList();
+            var data = patterns.Select(p => new ReferencedMatcherData(p, "")).ToList();
             return Mock.Of<IReferencedMatchers>(m =>
                 m.ReferenceName == referenceName &&
                 m.Data == data);
@@ -35,7 +36,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.Referencing
         internal static IStatMatchers MockStatMatchers(IReadOnlyList<string> referenceNames,
             params string[] patterns)
         {
-            var data = patterns.Select(p => new MatcherData(p, null)).ToList();
+            var data = patterns.Select(p => new MatcherData(p, SimpleIntermediateModifier.Empty)).ToList();
             return Mock.Of<IStatMatchers>(m =>
                 m.ReferenceNames == referenceNames &&
                 m.Data == data);

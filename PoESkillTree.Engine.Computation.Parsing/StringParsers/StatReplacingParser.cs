@@ -16,6 +16,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
     /// </summary>
     /// <typeparam name="TResult">Type of the decorated parser's results</typeparam>
     public class StatReplacingParser<TResult> : IStringParser<IReadOnlyList<TResult>>
+        where TResult : class
     {
         private readonly IStringParser<TResult> _inner;
 
@@ -42,7 +43,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
             {
                 var (innerSuccess, innerRemaining, innerResult) = _inner.Parse(replacementStat);
                 successfullyParsed &= innerSuccess;
-                results.Add(innerResult);
+                results.Add(innerResult!);
                 if (!string.IsNullOrWhiteSpace(innerRemaining))
                 {
                     remainings.Add(innerRemaining);

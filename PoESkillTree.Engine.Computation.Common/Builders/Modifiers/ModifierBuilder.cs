@@ -31,13 +31,13 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Modifiers
         public IModifierBuilder WithForm(IFormBuilder form)
             => WithSingle(form, (e, f) => e.WithForm(f));
 
-        public IModifierBuilder WithForms(IReadOnlyList<IFormBuilder> forms)
+        public IModifierBuilder WithForms(IReadOnlyList<IFormBuilder?> forms)
             => WithEnumerable(forms, (e, f) => e.WithForm(f));
 
         public IModifierBuilder WithStat(IStatBuilder stat)
             => WithSingle(stat, (e, s) => e.WithStat(s));
 
-        public IModifierBuilder WithStats(IReadOnlyList<IStatBuilder> stats)
+        public IModifierBuilder WithStats(IReadOnlyList<IStatBuilder?> stats)
             => WithEnumerable(stats, (e, s) => e.WithStat(s));
 
         public IModifierBuilder WithStatConverter(StatConverter converter)
@@ -46,7 +46,7 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Modifiers
         public IModifierBuilder WithValue(IValueBuilder value)
             => WithSingle(value, (e, v) => e.WithValue(v));
 
-        public IModifierBuilder WithValues(IReadOnlyList<IValueBuilder> values)
+        public IModifierBuilder WithValues(IReadOnlyList<IValueBuilder?> values)
             => WithEnumerable(values, (e, v) => e.WithValue(v));
 
         public IModifierBuilder WithValueConverter(ValueConverter converter)
@@ -55,7 +55,7 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Modifiers
         public IModifierBuilder WithCondition(IConditionBuilder condition)
             => WithSingle(condition, (e, c) => e.WithCondition(c));
 
-        public IModifierBuilder WithConditions(IReadOnlyList<IConditionBuilder> conditions)
+        public IModifierBuilder WithConditions(IReadOnlyList<IConditionBuilder?> conditions)
             => WithEnumerable(conditions, (e, c) => e.WithCondition(c));
 
         public IIntermediateModifier Build() => this;

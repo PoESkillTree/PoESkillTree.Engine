@@ -351,8 +351,8 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Modifiers
             => new[] { CreateFilledEntry(), CreateFilledEntry(), CreateFilledEntry() };
 
         private static IntermediateModifierEntry CreateFilledEntry(
-            IFormBuilder form = null, IStatBuilder stat = null, IValueBuilder value = null,
-            IConditionBuilder condition = null)
+            IFormBuilder? form = null, IStatBuilder? stat = null, IValueBuilder? value = null,
+            IConditionBuilder? condition = null)
             => new IntermediateModifierEntry(
                 form ?? Mock.Of<IFormBuilder>(),
                 stat ?? Mock.Of<IStatBuilder>(),
@@ -378,9 +378,9 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Modifiers
             return CreateResult(entries, null);
         }
 
-        private static IIntermediateModifier CreateResult(IReadOnlyList<IntermediateModifierEntry> entries = null,
-            StatConverter statConverter = null,
-            ValueConverter valueConverter = null)
+        private static IIntermediateModifier CreateResult(IReadOnlyList<IntermediateModifierEntry>? entries = null,
+            StatConverter? statConverter = null,
+            ValueConverter? valueConverter = null)
         {
             return new SimpleIntermediateModifier(entries ?? new IntermediateModifierEntry[0],
                 statConverter ?? (s => s),

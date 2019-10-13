@@ -15,7 +15,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Values
         {
             var sut = CreateSut();
 
-            Assert.AreSame(sut, sut.Resolve(null));
+            Assert.AreSame(sut, sut.Resolve(null!));
         }
 
         [Test]
@@ -36,7 +36,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Values
             var expected = new NodeValue(0, 2);
             var sut = CreateSut(value);
 
-            var actual = sut.MaximumOnly.Build().Calculate(null);
+            var actual = sut.MaximumOnly.Build().Calculate(null!);
 
             Assert.AreEqual(expected, actual);
         }
@@ -50,7 +50,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Values
         {
             var sut = CreateSut(left);
 
-            var actual = sut.Add(new ValueBuilderImpl(right)).Build().Calculate(null);
+            var actual = sut.Add(new ValueBuilderImpl(right)).Build().Calculate(null!);
 
             Assert.AreEqual((NodeValue?) expected, actual);
         }
@@ -64,7 +64,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Values
         {
             var sut = CreateSut(left);
 
-            var actual = sut.Multiply(new ValueBuilderImpl(right)).Build().Calculate(null);
+            var actual = sut.Multiply(new ValueBuilderImpl(right)).Build().Calculate(null!);
 
             Assert.AreEqual((NodeValue?) expected, actual);
         }
@@ -78,7 +78,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Values
         {
             var sut = CreateSut(left);
 
-            var actual = sut.DivideBy(new ValueBuilderImpl(right)).Build().Calculate(null);
+            var actual = sut.DivideBy(new ValueBuilderImpl(right)).Build().Calculate(null!);
 
             Assert.AreEqual((NodeValue?) expected, actual);
         }
@@ -90,7 +90,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Values
             var expected = (NodeValue?) (value is null ? (double?) null : Math.Round(value.Value));
             var sut = CreateSut(value);
 
-            var actual = sut.Select(v => v.Select(Math.Round), _ => "").Build().Calculate(null);
+            var actual = sut.Select(v => v.Select(Math.Round), _ => "").Build().Calculate(null!);
 
             Assert.AreEqual(expected, actual);
         }
@@ -102,7 +102,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Values
         {
             var sut = CreateSut(leftValue);
 
-            var actual = sut.Eq(new ValueBuilderImpl(rightValue)).Build().Value.Calculate(null);
+            var actual = sut.Eq(new ValueBuilderImpl(rightValue)).Build().Value.Calculate(null!);
 
             Assert.AreEqual((NodeValue?) expected, actual);
         }
@@ -115,7 +115,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Values
         {
             var sut = CreateSut(leftValue);
 
-            var actual = sut.GreaterThan(new ValueBuilderImpl(rightValue)).Build().Value.Calculate(null);
+            var actual = sut.GreaterThan(new ValueBuilderImpl(rightValue)).Build().Value.Calculate(null!);
 
             Assert.AreEqual((NodeValue?) expected, actual);
         }
@@ -140,7 +140,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Values
             var sut = CreateSut(leftValue);
 
             var resolved = sut.Add(right).Resolve(context);
-            var actual = resolved.Build().Calculate(null);
+            var actual = resolved.Build().Calculate(null!);
 
             Assert.AreEqual(expected, actual);
         }
@@ -150,7 +150,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Values
         {
             var sut = CreateSut().Multiply(CreateSut(new ThrowingValue()));
 
-            var actual = sut.Build().Calculate(null);
+            var actual = sut.Build().Calculate(null!);
 
             Assert.IsNull(actual);
         }
@@ -160,7 +160,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Values
         {
             var sut = CreateSut().DivideBy(CreateSut(new ThrowingValue()));
 
-            var actual = sut.Build().Calculate(null);
+            var actual = sut.Build().Calculate(null!);
 
             Assert.IsNull(actual);
         }
@@ -170,7 +170,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Values
         {
             var sut = CreateSut(new ThrowingValue()).If(new Constant(false));
 
-            var actual = sut.Build().Calculate(null);
+            var actual = sut.Build().Calculate(null!);
 
             Assert.IsNull(actual);
         }

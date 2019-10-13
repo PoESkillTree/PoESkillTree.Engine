@@ -21,7 +21,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
     {
         private readonly IBuilderFactories _builderFactories;
 
-        private SkillModifierCollection _parsedModifiers;
+        private SkillModifierCollection? _parsedModifiers;
 
         public ActiveSkillGeneralParser(IBuilderFactories builderFactories)
             => _builderFactories = builderFactories;
@@ -117,11 +117,12 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
             for (var partIndex = 0; partIndex < partCount; partIndex++)
             {
-                if (DetermineHitDamageSource(preParseResult, partIndex) is DamageSource damageSource)
+                var damageSource = DetermineHitDamageSource(preParseResult, partIndex);
+                if (damageSource != null)
                 {
                     var condition =
                         partCount > 1 ? _builderFactories.StatBuilders.MainSkillPart.Value.Eq(partIndex) : null;
-                    _parsedModifiers.AddGlobalForMainSkill(MetaStats.SkillHitDamageSource,
+                    _parsedModifiers!.AddGlobalForMainSkill(MetaStats.SkillHitDamageSource,
                         Form.TotalOverride, (int) damageSource, condition);
                 }
             }

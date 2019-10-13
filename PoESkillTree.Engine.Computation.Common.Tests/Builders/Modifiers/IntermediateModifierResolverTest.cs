@@ -63,7 +63,7 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Modifiers
         }
 
         private static readonly
-            (Func<IReadOnlyList<object>> expectedSelector, Func<IntermediateModifierEntry, object> actualSelector)[]
+            (Func<IReadOnlyList<object>> expectedSelector, Func<IntermediateModifierEntry, object?> actualSelector)[]
             ResolveReturnsCorrectEntryElementsCases =
             {
                 (() => DefaultValues, e => e.Value),
@@ -71,6 +71,7 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Modifiers
                 (() => DefaultStats, e => e.Stat),
                 (() => DefaultConditions, e => e.Condition),
             };
+
         [TestCase(0, TestName = "ResolveReturnsCorrectValues")]
         [TestCase(1, TestName = "ResolveReturnsCorrectForms")]
         [TestCase(2, TestName = "ResolveReturnsCorrectStats")]
@@ -180,7 +181,7 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Modifiers
         {
             var entry = new IntermediateModifierEntry()
                 .WithStat(DefaultStats[0]);
-            StatConverter statConverter = s => s == DefaultStats[0] ? DefaultStats[1] : null;
+            StatConverter statConverter = s => s == DefaultStats[0] ? DefaultStats[1] : s;
             var result = Mock.Of<IIntermediateModifier>(r =>
                 r.Entries == new[] { entry } &&
                 r.ValueConverter == Funcs.Identity &&

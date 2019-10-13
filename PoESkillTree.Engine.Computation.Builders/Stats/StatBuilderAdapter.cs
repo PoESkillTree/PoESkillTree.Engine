@@ -15,16 +15,16 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
     public class StatBuilderAdapter : ICoreStatBuilder
     {
         private readonly IStatBuilder _statBuilder;
-        private readonly IConditionBuilder _conditionBuilder;
+        private readonly IConditionBuilder? _conditionBuilder;
         private readonly Func<IStat, IStat> _statConverter;
 
-        public StatBuilderAdapter(IStatBuilder statBuilder, IConditionBuilder conditionBuilder = null)
+        public StatBuilderAdapter(IStatBuilder statBuilder, IConditionBuilder? conditionBuilder = null)
             : this(statBuilder, conditionBuilder, Funcs.Identity)
         {
         }
 
         private StatBuilderAdapter(
-            IStatBuilder statBuilder, IConditionBuilder conditionBuilder, Func<IStat, IStat> statConverter)
+            IStatBuilder statBuilder, IConditionBuilder? conditionBuilder, Func<IStat, IStat> statConverter)
         {
             _statBuilder = statBuilder;
             _conditionBuilder = conditionBuilder;

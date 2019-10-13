@@ -41,6 +41,8 @@ namespace PoESkillTree.Engine.GameModel
         public int UnarmedRange(CharacterClass c) => _charactertDict[c].Unarmed.Range;
     }
 
+#pragma warning disable 8618 // Initialization is done through deserialization
+
     public class JsonCharacter
     {
         [JsonProperty("name")]
@@ -85,4 +87,6 @@ namespace PoESkillTree.Engine.GameModel
         [JsonProperty("range")]
         public int Range { get; set; }
     }
+
+#pragma warning restore
 }

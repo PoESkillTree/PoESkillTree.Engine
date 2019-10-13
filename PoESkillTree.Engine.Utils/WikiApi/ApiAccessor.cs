@@ -3,7 +3,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using JetBrains.Annotations;
 using MoreLinq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -67,8 +66,7 @@ namespace PoESkillTree.Engine.Utils.WikiApi
             return BaseUri + queryString;
         }
 
-        [ItemCanBeNull]
-        private async Task<JObject> CargoQueryAsync(string uri)
+        private async Task<JObject?> CargoQueryAsync(string uri)
         {
             try
             {

@@ -26,11 +26,11 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         }
 
         public IStat FromIdentity(string identity, Entity entity, Type dataType,
-            ExplicitRegistrationType explicitRegistrationType = null) =>
+            ExplicitRegistrationType? explicitRegistrationType = null) =>
             GetOrAdd(identity, entity, dataType, explicitRegistrationType);
 
         public IStat CopyWithSuffix(IStat stat, string identitySuffix, Type dataType,
-            ExplicitRegistrationType explicitRegistrationType = null) =>
+            ExplicitRegistrationType? explicitRegistrationType = null) =>
             CopyWithSuffix(stat, identitySuffix, dataType, null, explicitRegistrationType);
 
         public IStat ChanceToDouble(IStat stat) =>
@@ -153,14 +153,14 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
                 behaviors: () => _behaviorFactory.ItemProperty(stat, slot));
 
         private IStat CopyWithSuffix(IStat source, string identitySuffix, Type dataType,
-            Func<IReadOnlyList<Behavior>> behaviors, ExplicitRegistrationType explicitRegistrationType = null)
+            Func<IReadOnlyList<Behavior>>? behaviors, ExplicitRegistrationType? explicitRegistrationType = null)
         {
             return GetOrAdd(source.Identity + "." + identitySuffix, source.Entity,
                 dataType, explicitRegistrationType, behaviors);
         }
 
         private IStat GetOrAdd(string identity, Entity entity, Type dataType,
-            ExplicitRegistrationType explicitRegistrationType = null, Func<IReadOnlyList<Behavior>> behaviors = null)
+            ExplicitRegistrationType? explicitRegistrationType = null, Func<IReadOnlyList<Behavior>>? behaviors = null)
         {
             // Func<IReadOnlyList<Behavior>> for performance reasons: Only retrieve behaviors if necessary.
             return _cache.GetOrAdd((identity, entity), _ =>

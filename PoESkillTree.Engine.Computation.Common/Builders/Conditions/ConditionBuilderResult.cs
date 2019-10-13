@@ -14,7 +14,7 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Conditions
         {
         }
 
-        public ConditionBuilderResult(StatConverter statConverter = null, IValue value = null)
+        public ConditionBuilderResult(StatConverter? statConverter = null, IValue? value = null)
         {
             HasStatConverter = !(statConverter is null);
             StatConverter = statConverter ?? Funcs.Identity;

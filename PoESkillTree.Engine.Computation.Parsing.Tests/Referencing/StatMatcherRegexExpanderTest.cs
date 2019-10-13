@@ -1,5 +1,6 @@
 ﻿using Moq;
 using NUnit.Framework;
+using PoESkillTree.Engine.Computation.Common.Builders.Values;
 
 namespace PoESkillTree.Engine.Computation.Parsing.Referencing
 {
@@ -79,6 +80,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.Referencing
 
         private static StatMatcherRegexExpander CreateSut(
             IReferencedRegexes referencedRegexe, bool matchesWholeLineOnly)
-            => new StatMatcherRegexExpander(referencedRegexe, new RegexGroupService(null), matchesWholeLineOnly);
+            => new StatMatcherRegexExpander(referencedRegexe,
+                new RegexGroupService(Mock.Of<IValueBuilders>()), matchesWholeLineOnly);
     }
 }

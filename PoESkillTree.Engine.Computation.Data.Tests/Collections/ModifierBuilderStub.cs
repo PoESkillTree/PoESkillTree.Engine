@@ -11,15 +11,17 @@ namespace PoESkillTree.Engine.Computation.Data.Collections
 {
     internal class ModifierBuilderStub : IModifierBuilder, IIntermediateModifier
     {
-        internal IEnumerable<IConditionBuilder> Conditions { get; private set; }
-        internal IEnumerable<IFormBuilder> Forms { get; private set; }
-        internal IEnumerable<IStatBuilder> Stats { get; private set; }
-        internal IEnumerable<IValueBuilder> Values { get; private set; }
+        internal IEnumerable<IConditionBuilder?>? Conditions { get; private set; }
+        internal IEnumerable<IFormBuilder?>? Forms { get; private set; }
+        internal IEnumerable<IStatBuilder?>? Stats { get; private set; }
+        internal IEnumerable<IValueBuilder?>? Values { get; private set; }
 
         public IReadOnlyList<IntermediateModifierEntry> Entries => throw new InvalidOperationException();
 
-        public StatConverter StatConverter { get; private set; }
-        public ValueConverter ValueConverter { get; private set; }
+#pragma warning disable 8613 // This class changes the interface's contract to simplify testing
+        public StatConverter? StatConverter { get; private set; }
+        public ValueConverter? ValueConverter { get; private set; }
+#pragma warning restore
 
         public IModifierBuilder WithCondition(IConditionBuilder condition)
         {
@@ -32,7 +34,7 @@ namespace PoESkillTree.Engine.Computation.Data.Collections
             return ret;
         }
 
-        public IModifierBuilder WithConditions(IReadOnlyList<IConditionBuilder> conditions)
+        public IModifierBuilder WithConditions(IReadOnlyList<IConditionBuilder?> conditions)
         {
             if (conditions == null)
                 throw new ArgumentNullException(nameof(conditions));
@@ -54,7 +56,7 @@ namespace PoESkillTree.Engine.Computation.Data.Collections
             return ret;
         }
 
-        public IModifierBuilder WithForms(IReadOnlyList<IFormBuilder> forms)
+        public IModifierBuilder WithForms(IReadOnlyList<IFormBuilder?> forms)
         {
             if (forms == null)
                 throw new ArgumentNullException(nameof(forms));
@@ -87,7 +89,7 @@ namespace PoESkillTree.Engine.Computation.Data.Collections
             return ret;
         }
 
-        public IModifierBuilder WithStats(IReadOnlyList<IStatBuilder> stats)
+        public IModifierBuilder WithStats(IReadOnlyList<IStatBuilder?> stats)
         {
             if (stats == null)
                 throw new ArgumentNullException(nameof(stats));
@@ -120,7 +122,7 @@ namespace PoESkillTree.Engine.Computation.Data.Collections
             return ret;
         }
 
-        public IModifierBuilder WithValues(IReadOnlyList<IValueBuilder> values)
+        public IModifierBuilder WithValues(IReadOnlyList<IValueBuilder?> values)
         {
             if (values == null)
                 throw new ArgumentNullException(nameof(values));

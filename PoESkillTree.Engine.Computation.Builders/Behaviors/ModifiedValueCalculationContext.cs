@@ -6,9 +6,9 @@ namespace PoESkillTree.Engine.Computation.Builders.Behaviors
     internal class ModifiedValueCalculationContext : IValueCalculationContext
     {
         private readonly IValueCalculationContext _originalContext;
-        private readonly GetPathsDelegate _getPaths;
-        private readonly GetValueDelegate _getValue;
-        private readonly GetValuesDelegate _getValues;
+        private readonly GetPathsDelegate? _getPaths;
+        private readonly GetValueDelegate? _getValue;
+        private readonly GetValuesDelegate? _getValues;
 
         public delegate IReadOnlyCollection<PathDefinition> GetPathsDelegate(
             IValueCalculationContext context, IStat stat);
@@ -20,7 +20,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Behaviors
             IValueCalculationContext context, Form form, IEnumerable<(IStat stat, PathDefinition path)> paths);
 
         public ModifiedValueCalculationContext(IValueCalculationContext originalContext,
-            GetPathsDelegate getPaths = null, GetValueDelegate getValue = null, GetValuesDelegate getValues = null)
+            GetPathsDelegate? getPaths = null, GetValueDelegate? getValue = null, GetValuesDelegate? getValues = null)
         {
             _originalContext = originalContext;
             _getPaths = getPaths;

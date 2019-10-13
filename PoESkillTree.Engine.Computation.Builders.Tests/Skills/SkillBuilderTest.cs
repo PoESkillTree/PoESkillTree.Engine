@@ -18,7 +18,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Skills
             var coreBuilder = CreateCoreBuilder("", expected);
             var sut = CreateSut(coreBuilder);
 
-            var actual = sut.SkillId.Build().Calculate(null);
+            var actual = sut.SkillId.Build().Calculate(null!);
 
             Assert.AreEqual((NodeValue?) expected, actual);
         }
@@ -28,10 +28,10 @@ namespace PoESkillTree.Engine.Computation.Builders.Skills
         {
             var expected = 42;
             var coreBuilder = CreateCoreBuilder("", expected);
-            var unresolved = Mock.Of<ICoreBuilder<SkillDefinition>>(b => b.Resolve(null) == coreBuilder);
+            var unresolved = Mock.Of<ICoreBuilder<SkillDefinition>>(b => b.Resolve(null!) == coreBuilder);
             var sut = CreateSut(unresolved);
 
-            var actual = sut.SkillId.Resolve(null).Build().Calculate(null);
+            var actual = sut.SkillId.Resolve(null!).Build().Calculate(null!);
 
             Assert.AreEqual((NodeValue?) expected, actual);
         }

@@ -655,7 +655,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var result = sut.Parse(skill);
 
             var modifier = GetFirstModifierWithIdentity(result.Modifiers, "Belt.0.Cost");
-            var actualValue = modifier.Value.Calculate(null);
+            var actualValue = modifier.Value.Calculate(null!);
             Assert.AreEqual(new NodeValue(10), actualValue);
         }
 
@@ -722,9 +722,9 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var result = sut.Parse(skill);
 
             var modifier = GetFirstModifierWithIdentity(result.Modifiers, "Clarity.ActiveSkillItemSlot");
-            Assert.AreEqual(new NodeValue((double) skill.ItemSlot), modifier.Value.Calculate(null));
+            Assert.AreEqual(new NodeValue((double) skill.ItemSlot), modifier.Value.Calculate(null!));
             modifier = GetFirstModifierWithIdentity(result.Modifiers, "Clarity.ActiveSkillSocketIndex");
-            Assert.AreEqual(new NodeValue(skill.SocketIndex), modifier.Value.Calculate(null));
+            Assert.AreEqual(new NodeValue(skill.SocketIndex), modifier.Value.Calculate(null!));
         }
 
         [TestCase(true)]

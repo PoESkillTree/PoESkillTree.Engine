@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Linq;
 using NUnit.Framework;
 using PoESkillTree.Engine.Computation.Builders.Behaviors;
@@ -103,8 +102,8 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests.Core
 
             sut.NewBatchUpdate()
                 .AddModifier(Stat, Form.BaseAdd, new Constant(value))
-                .AddModifier(Stat.Minimum, Form.BaseAdd, new Constant(10))
-                .AddModifier(Stat.Maximum, Form.BaseAdd, new Constant(20))
+                .AddModifier(Stat.Minimum!, Form.BaseAdd, new Constant(10))
+                .AddModifier(Stat.Maximum!, Form.BaseAdd, new Constant(20))
                 .DoUpdate();
             var expected = new NodeValue(Math.Max(Math.Min(value, 20), 10));
 
@@ -159,7 +158,7 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests.Core
             var registeredStat =
                 new Stat("r", explicitRegistrationType: ExplicitRegistrationTypes.UserSpecifiedValue(0));
             var value = new StatValue(registeredStat);
-            IStat actual = null;
+            IStat? actual = null;
             sut.ExplicitlyRegisteredStats.CollectionChanged += (sender, args) =>
             {
                 Assert.IsNull(actual);

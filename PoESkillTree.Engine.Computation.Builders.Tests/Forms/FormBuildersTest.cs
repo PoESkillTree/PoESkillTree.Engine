@@ -69,14 +69,14 @@ namespace PoESkillTree.Engine.Computation.Builders.Forms
             var sut = CreateSut();
 
             var expected = sut.BaseSet;
-            var actual = expected.Resolve(null);
+            var actual = expected.Resolve(null!);
 
             Assert.AreEqual(expected, actual);
         }
 
         private static FormBuilders CreateSut() => new FormBuilders();
 
-        private static IFormBuilder GetProperty(IFormBuilders sut, string property) =>
-            (IFormBuilder) sut.GetType().GetProperty(property).GetValue(sut);
+        private static IFormBuilder GetProperty(IFormBuilders sut, string property)
+            => (IFormBuilder) sut.GetType().GetProperty(property)!.GetValue(sut)!;
     }
 }

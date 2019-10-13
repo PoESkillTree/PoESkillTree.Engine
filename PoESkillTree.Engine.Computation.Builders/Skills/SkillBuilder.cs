@@ -41,7 +41,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Skills
 
         public IStatBuilder ReservationPool => CreateStatBuilder(typeof(Pool));
 
-        private IStatBuilder CreateStatBuilder(Type dataType, [CallerMemberName] string identitySuffix = null)
+        private IStatBuilder CreateStatBuilder(Type dataType, [CallerMemberName] string identitySuffix = "")
             => new StatBuilder(_statFactory, new CoreStatBuilderFromCoreBuilder<SkillDefinition>(_coreBuilder,
                 (e, d) => _statFactory.FromIdentity($"{d.Id}.{identitySuffix}", e, dataType)));
 

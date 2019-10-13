@@ -140,9 +140,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
         {
             var skills = new[]
             {
-                SkillDefinition.CreateActive("activeBoolean", 100, "", null, null,
-                    new ActiveSkillDefinition("activeBoolean", 0, types, new string[0], null, null, false, null,
-                        null), null),
+                CreateActiveDefinition(types),
                 CreateSupportDefinition("SupportAuraDuration", 22, false,
                     new[]
                     {
@@ -176,9 +174,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
         {
             var skills = new[]
             {
-                SkillDefinition.CreateActive("activeBoolean", 100, "", null, null,
-                    new ActiveSkillDefinition("activeBoolean", 0, types, new string[0], null, null, false, null,
-                        null), null),
+                CreateActiveDefinition(types),
                 CreateSupportDefinition("SupportAuraDuration", 22, false,
                     new[] { "aura", },
                     new[]
@@ -207,9 +203,10 @@ namespace PoESkillTree.Engine.GameModel.Skills
 
         private static IReadOnlyList<SkillDefinition> Skills => new[]
         {
-            SkillDefinition.CreateActive("active", 0, "", null, null,
-                new ActiveSkillDefinition("active", 0, new[] { "0", "1", "2" }, new[] { "3" }, null, null, false, null,
-                    null), null),
+            SkillDefinition.CreateActive("active", 0, "", new string[0], null,
+                new ActiveSkillDefinition("active", 0, new[] { "0", "1", "2" }, new[] { "3" }, new Keyword[0],
+                    new IReadOnlyList<Keyword>[0], false, null, new ItemClass[0]),
+                new Dictionary<int, SkillLevelDefinition>()),
             CreateSupportDefinition("1empty", 1, false, new string[0], new string[0], new string[0]),
             CreateSupportDefinition("2allows0", 2, false, new[] { "0" }, new string[0], new string[0]),
             CreateSupportDefinition("3allows0excludes1", 3, false, new[] { "0" }, new[] { "1" }, new string[0]),
@@ -232,11 +229,17 @@ namespace PoESkillTree.Engine.GameModel.Skills
             CreateSupportDefinition("21allows0gemsOnly", 21, true, new[] { "0" }, new string[0], new string[0]),
         };
 
+        private static SkillDefinition CreateActiveDefinition(string[] types)
+            => SkillDefinition.CreateActive("activeBoolean", 100, "", new string[0], null,
+                new ActiveSkillDefinition("activeBoolean", 0, types, new string[0], new Keyword[0],
+                    new IReadOnlyList<Keyword>[0], false, null, new ItemClass[0]),
+                new Dictionary<int, SkillLevelDefinition>());
+
         private static SkillDefinition CreateSupportDefinition(
             string id, int numericId, bool supportsGemsOnly, IEnumerable<string> allowedActiveSkillTypes,
             IEnumerable<string> excludedActiveSkillTypes, IEnumerable<string> addedActiveSkillTypes)
-            => SkillDefinition.CreateSupport(id, numericId, "", null, null,
+            => SkillDefinition.CreateSupport(id, numericId, "", new string[0], null,
                 new SupportSkillDefinition(supportsGemsOnly, allowedActiveSkillTypes, excludedActiveSkillTypes,
-                    addedActiveSkillTypes, null), null);
+                    addedActiveSkillTypes, new Keyword[0]), new Dictionary<int, SkillLevelDefinition>());
     }
 }

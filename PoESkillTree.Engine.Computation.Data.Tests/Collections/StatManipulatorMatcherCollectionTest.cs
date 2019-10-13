@@ -8,7 +8,9 @@ namespace PoESkillTree.Engine.Computation.Data.Collections
     {
         private const string Regex = "regex";
 
+#pragma warning disable 8618 // Initialized in SetUp
         private StatManipulatorMatcherCollection _sut;
+#pragma warning restore
 
         [SetUp]
         public void SetUp()
@@ -25,7 +27,7 @@ namespace PoESkillTree.Engine.Computation.Data.Collections
         [Test]
         public void AddWithoutSubstitution()
         {
-            StatConverter manipulator = s => null;
+            StatConverter manipulator = s => null!;
 
             _sut.Add(Regex, manipulator);
 
@@ -36,7 +38,7 @@ namespace PoESkillTree.Engine.Computation.Data.Collections
         [Test]
         public void AddWithSubstitution()
         {
-            StatConverter manipulator = s => null;
+            StatConverter manipulator = s => null!;
 
             _sut.Add(Regex, manipulator, "substitution");
 

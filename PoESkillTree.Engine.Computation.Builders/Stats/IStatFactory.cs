@@ -13,10 +13,10 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
     public interface IStatFactory
     {
         IStat FromIdentity(string identity, Entity entity, Type dataType,
-            ExplicitRegistrationType explicitRegistrationType = null);
+            ExplicitRegistrationType? explicitRegistrationType = null);
 
         IStat CopyWithSuffix(IStat stat, string identitySuffix, Type dataType,
-            ExplicitRegistrationType explicitRegistrationType = null);
+            ExplicitRegistrationType? explicitRegistrationType = null);
 
         IStat ChanceToDouble(IStat stat);
 

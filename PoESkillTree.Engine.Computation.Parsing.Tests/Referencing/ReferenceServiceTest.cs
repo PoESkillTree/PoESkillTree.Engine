@@ -45,7 +45,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.Referencing
         [TestCase("Matchers1", 2, ExpectedResult = null)]
         [TestCase("Matchers2", 2, ExpectedResult = "3")]
         [TestCase("SMatchers1", 1, ExpectedResult = null)]
-        public string TryGetReferencedMatcherDataOutputsCorrectMatcherData(string referenceName, int matcherIndex)
+        public string? TryGetReferencedMatcherDataOutputsCorrectMatcherData(string referenceName, int matcherIndex)
         {
             var sut = new ReferenceService(DefaultReferencedMatchersList, DefaultStatMatchersList);
 
@@ -69,7 +69,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.Referencing
         [TestCase("SMatchers1", 4, ExpectedResult = null)]
         [TestCase("SMatchers2", 0, ExpectedResult = "1")]
         [TestCase("Matchers1", 1, ExpectedResult = null)]
-        public string TryGetMatcherDataOutputsCorrectMatcherData(string referenceName, int matcherIndex)
+        public string? TryGetMatcherDataOutputsCorrectMatcherData(string referenceName, int matcherIndex)
         {
             var sut = new ReferenceService(DefaultReferencedMatchersList, DefaultStatMatchersList);
 

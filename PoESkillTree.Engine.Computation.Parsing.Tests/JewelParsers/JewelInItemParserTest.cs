@@ -40,7 +40,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.JewelParsers
             result.Modifiers.Should().BeEmpty();
         }
 
-        private static JewelInItemParser CreateSut(ICoreParser coreParser = null)
+        private static JewelInItemParser CreateSut(ICoreParser? coreParser = null)
             => new JewelInItemParser(coreParser ?? Mock.Of<ICoreParser>());
 
         private static ItemParserParameter CreateItem(ItemSlot itemSlot, params string[] mods)

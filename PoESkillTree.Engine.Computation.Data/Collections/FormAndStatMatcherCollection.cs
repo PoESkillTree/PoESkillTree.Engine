@@ -29,13 +29,13 @@ namespace PoESkillTree.Engine.Computation.Data.Collections
         /// Adds a matcher with a form, value, stat and optionally a condition.
         /// </summary>
         public void Add([RegexPattern] string regex, IFormBuilder form, double value, IStatBuilder stat,
-            IConditionBuilder condition = null)
+            IConditionBuilder? condition = null)
         {
             Add(regex, form, _valueFactory.Create(value), stat, condition);
         }
 
         public void Add([RegexPattern] string regex, IFormBuilder form, IValueBuilder value, IStatBuilder stat,
-            IConditionBuilder condition = null)
+            IConditionBuilder? condition = null)
         {
             var builder = ModifierBuilder
                 .WithForm(form)

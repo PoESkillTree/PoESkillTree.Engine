@@ -6,15 +6,16 @@
     /// type name.
     /// </summary>
     public class StringParseResult<T>
+        where T : class
     {
-        public StringParseResult(bool successfullyParsed, string remainingSubstring, T result)
+        public StringParseResult(bool successfullyParsed, string remainingSubstring, T? result)
             => (SuccessfullyParsed, RemainingSubstring, Result) = (successfullyParsed, remainingSubstring, result);
 
-        public void Deconstruct(out bool successfullyParsed, out string remainingSubstring, out T result)
+        public void Deconstruct(out bool successfullyParsed, out string remainingSubstring, out T? result)
             => (successfullyParsed, remainingSubstring, result) = (SuccessfullyParsed, RemainingSubstring, Result);
 
         public static implicit operator StringParseResult<T>(
-            (bool successfullyParsed, string remainingSubstring, T result) t)
+            (bool successfullyParsed, string remainingSubstring, T? result) t)
             => new StringParseResult<T>(t.successfullyParsed, t.remainingSubstring, t.result);
 
         /// <summary>
@@ -32,6 +33,6 @@
         /// The result of parsing. Not defined if <see cref="SuccessfullyParsed"/> is false. In that case it may be
         /// null or a partial result containing null properties and should only be used for debugging purposes.
         /// </summary>
-        public T Result { get; }
+        public T? Result { get; }
     }
 }

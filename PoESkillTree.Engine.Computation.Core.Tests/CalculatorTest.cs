@@ -51,7 +51,7 @@ namespace PoESkillTree.Engine.Computation.Core
             var addedModifiers = Helper.MockManyModifiers();
             var removedModifiers = Helper.MockManyModifiers();
             var modifierCollectionMock = new Mock<IModifierCollection>();
-            var sut = CreateSut(modifierCollectionMock.Object, Mock.Of<ICalculationGraphPruner>());
+            var sut = CreateSut(modifierCollectionMock.Object);
 
             sut.Update(new CalculatorUpdate(addedModifiers, removedModifiers));
 
@@ -71,9 +71,12 @@ namespace PoESkillTree.Engine.Computation.Core
         }
 
         private static Calculator CreateSut(
-            IModifierCollection modifierCollection = null, ICalculationGraphPruner graphPruner = null,
-            INodeRepository nodeRepository = null, INodeCollection<IStat> explicitlyRegisteredStats = null)
-            => new Calculator(new EventBuffer(), modifierCollection, graphPruner, nodeRepository,
-                explicitlyRegisteredStats);
+            IModifierCollection? modifierCollection = null, ICalculationGraphPruner? graphPruner = null,
+            INodeRepository? nodeRepository = null, INodeCollection<IStat>? explicitlyRegisteredStats = null)
+            => new Calculator(new EventBuffer(),
+                modifierCollection ?? Mock.Of<IModifierCollection>(),
+                graphPruner ?? Mock.Of<ICalculationGraphPruner>(),
+                nodeRepository ?? Mock.Of<INodeRepository>(),
+                explicitlyRegisteredStats ?? Mock.Of<INodeCollection<IStat>>());
     }
 }

@@ -11,18 +11,12 @@ namespace PoESkillTree.Engine.Computation.Data.Collections
     {
         private const string Regex = "regex";
 
-        private ValueConversionMatcherCollection _sut;
-
-        [SetUp]
-        public void SetUp()
-        {
-            _sut = new ValueConversionMatcherCollection(new ModifierBuilderStub());
-        }
-
         [Test]
         public void IsEmpty()
         {
-            Assert.IsEmpty(_sut);
+            var sut = new ValueConversionMatcherCollection(new ModifierBuilderStub());
+
+            Assert.IsEmpty(sut);
         }
 
         [Test]
@@ -30,22 +24,25 @@ namespace PoESkillTree.Engine.Computation.Data.Collections
         {
             var inputValue = new ValueBuilder(Mock.Of<IValueBuilder>());
             var expectedValue = new ValueBuilder(Mock.Of<IValueBuilder>());
+            var sut = new ValueConversionMatcherCollection(new ModifierBuilderStub())
+            {
+                {Regex, _ => expectedValue}
+            };
 
-            _sut.Add(Regex, _ => expectedValue);
-
-            var builder = _sut.AssertSingle(Regex);
-            var actualValue = builder.ValueConverter(inputValue);
+            var builder = sut.AssertSingle(Regex);
+            var actualValue = builder.ValueConverter!(inputValue);
             Assert.AreEqual(expectedValue, actualValue);
         }
 
         [Test]
         public void AddManyAddsToCount()
         {
-            _sut.Add(Regex, Funcs.Identity);
-            _sut.Add(Regex, Funcs.Identity);
-            _sut.Add(Regex, Funcs.Identity);
+            var sut = new ValueConversionMatcherCollection(new ModifierBuilderStub())
+            {
+                {Regex, Funcs.Identity}, {Regex, Funcs.Identity}, {Regex, Funcs.Identity}
+            };
 
-            Assert.AreEqual(3, _sut.Count());
+            Assert.AreEqual(3, sut.Count());
         }
     }
 }

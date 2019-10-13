@@ -33,8 +33,8 @@ namespace PoESkillTree.Engine.Computation.Core.Nodes
             Assert.AreEqual((NodeValue?) expected, actual);
         }
 
-        private static PathTotalValue CreateSut(IStat stat = null) =>
-            new PathTotalValue(stat, Path);
+        private static PathTotalValue CreateSut(IStat? stat = null) =>
+            new PathTotalValue(stat ?? new StatStub(), Path);
 
         private static readonly PathDefinition Path = NodeHelper.NotMainPath;
     }

@@ -14,20 +14,20 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
             StatFactory = statFactory;
 
         protected IStatBuilder FromIdentity(
-            Type dataType, ExplicitRegistrationType explicitRegistrationType = null,
-            [CallerMemberName] string identity = null) =>
+            Type dataType, ExplicitRegistrationType? explicitRegistrationType = null,
+            [CallerMemberName] string identity = "") =>
             FromIdentity(identity, dataType, explicitRegistrationType);
 
         protected virtual IStatBuilder FromIdentity(
             string identity, Type dataType,
-            ExplicitRegistrationType explicitRegistrationType = null) =>
+            ExplicitRegistrationType? explicitRegistrationType = null) =>
             StatBuilderUtils.FromIdentity(StatFactory, identity, dataType, explicitRegistrationType);
 
         protected IStatBuilder FromStatFactory(Func<Entity, IStat> statFactory)
             => new StatBuilder(StatFactory, new LeafCoreStatBuilder(statFactory));
 
         protected IDamageRelatedStatBuilder DamageRelatedFromIdentity(
-            Type dataType, [CallerMemberName] string identity = null) =>
+            Type dataType, [CallerMemberName] string identity = "") =>
             DamageRelatedFromIdentity(identity, dataType);
 
         protected virtual IDamageRelatedStatBuilder DamageRelatedFromIdentity(string identity, Type dataType) =>
@@ -42,7 +42,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
             => _identityPrefix = identityPrefix;
 
         protected override IStatBuilder FromIdentity(
-            string identity, Type dataType, ExplicitRegistrationType explicitRegistrationType = null)
+            string identity, Type dataType, ExplicitRegistrationType? explicitRegistrationType = null)
             => base.FromIdentity(_identityPrefix + "." + identity, dataType, explicitRegistrationType);
 
         protected override IDamageRelatedStatBuilder DamageRelatedFromIdentity(string identity, Type dataType)

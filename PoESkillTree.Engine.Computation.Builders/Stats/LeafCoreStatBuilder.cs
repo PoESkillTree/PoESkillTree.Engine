@@ -17,7 +17,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         private readonly Func<Entity, IStat> _statFactory;
         private readonly IEntityBuilder _entityBuilder;
 
-        public LeafCoreStatBuilder(Func<Entity, IStat> statFactory, IEntityBuilder entityBuilder = null)
+        public LeafCoreStatBuilder(Func<Entity, IStat> statFactory, IEntityBuilder? entityBuilder = null)
         {
             _statFactory = statFactory;
             _entityBuilder = entityBuilder ?? new ModifierSourceEntityBuilder();
@@ -25,7 +25,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
 
         public static ICoreStatBuilder FromIdentity(
             IStatFactory statFactory, string identity, Type dataType,
-            ExplicitRegistrationType explicitRegistrationType = null) =>
+            ExplicitRegistrationType? explicitRegistrationType = null) =>
             new LeafCoreStatBuilder(
                 entity => statFactory.FromIdentity(identity, entity, dataType, explicitRegistrationType));
 

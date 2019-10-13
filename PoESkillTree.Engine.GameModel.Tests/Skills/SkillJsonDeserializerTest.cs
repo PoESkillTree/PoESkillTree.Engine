@@ -25,7 +25,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
 
             var baseItem = definition.BaseItem;
             Assert.IsNotNull(baseItem);
-            Assert.AreEqual("Frenzy", baseItem.DisplayName);
+            Assert.AreEqual("Frenzy", baseItem!.DisplayName);
             Assert.AreEqual("Metadata/Items/Gems/SkillGemFrenzy", baseItem.MetadataId);
             Assert.AreEqual(ReleaseState.Released, baseItem.ReleaseState);
             Assert.AreEqual(new[] { "dexterity", "active_skill", "attack", "melee", "bow" }, baseItem.GemTags);
@@ -204,7 +204,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
 
             var releaseStates = definitions.Skills
                 .Where(d => d.BaseItem != null)
-                .Select(d => d.BaseItem.ReleaseState);
+                .Select(d => d.BaseItem!.ReleaseState);
             CollectionAssert.DoesNotContain(releaseStates, ReleaseState.Unreleased);
         }
 

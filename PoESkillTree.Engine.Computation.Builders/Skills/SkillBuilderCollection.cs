@@ -62,7 +62,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Skills
 
         private IEnumerable<IStat> SelectSkillStats(
             IEnumerable<Keyword> keywords, Entity entity, Type dataType,
-            [CallerMemberName] string identitySuffix = null)
+            [CallerMemberName] string identitySuffix = "")
         {
             var keywordList = keywords.ToList();
             return from skill in _skills

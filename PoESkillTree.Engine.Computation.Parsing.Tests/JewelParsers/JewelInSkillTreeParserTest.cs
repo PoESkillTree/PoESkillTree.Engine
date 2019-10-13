@@ -40,7 +40,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.JewelParsers
             result.Modifiers.Should().BeEmpty();
         }
 
-        private static JewelInSkillTreeParser CreateSut(ICoreParser coreParser = null)
+        private static JewelInSkillTreeParser CreateSut(ICoreParser? coreParser = null)
             => new JewelInSkillTreeParser(
                 new PassiveTreeDefinition(new[] { CreateNode(0) }),
                 CreateBuilderFactories(),

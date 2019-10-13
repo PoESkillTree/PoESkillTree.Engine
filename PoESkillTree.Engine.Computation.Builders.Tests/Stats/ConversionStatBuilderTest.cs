@@ -5,6 +5,7 @@ using NUnit.Framework;
 using PoESkillTree.Engine.Computation.Common;
 using PoESkillTree.Engine.Computation.Common.Builders;
 using PoESkillTree.Engine.Computation.Common.Builders.Entities;
+using PoESkillTree.Engine.Computation.Common.Builders.Resolving;
 using PoESkillTree.Engine.Computation.Common.Builders.Stats;
 using PoESkillTree.Engine.Computation.Common.Builders.Values;
 using PoESkillTree.Engine.Computation.Common.Parsing;
@@ -82,12 +83,14 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         {
             var source = new Mock<ICoreStatBuilder>();
             var target = new Mock<ICoreStatBuilder>();
+            var context = new ResolveContext(Mock.Of<IMatchContext<IValueBuilder>>(),
+                Mock.Of<IMatchContext<IReferenceConverter>>());
             var sut = CreateSut(source.Object, target.Object);
 
-            sut.Resolve(null);
+            sut.Resolve(context);
 
-            source.Verify(b => b.Resolve(null));
-            target.Verify(b => b.Resolve(null));
+            source.Verify(b => b.Resolve(context));
+            target.Verify(b => b.Resolve(context));
         }
 
         [Test]
@@ -133,14 +136,14 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         }
 
         private static ICoreStatBuilder MockStatBuilder(
-            ModifierSource modifierSource = null, ValueConverter valueConverter = null) =>
+            ModifierSource? modifierSource = null, ValueConverter? valueConverter = null) =>
             MockStatBuilder(CreateStatBuilderResult(modifierSource, valueConverter));
 
         private static ICoreStatBuilder MockStatBuilder(params StatBuilderResult[] results) =>
             Mock.Of<ICoreStatBuilder>(b => b.Build(default) == results);
 
         private static StatBuilderResult CreateStatBuilderResult(
-            ModifierSource modifierSource = null, ValueConverter valueConverter = null, params IStat[] stats) =>
-            new StatBuilderResult(stats, modifierSource, valueConverter ?? Funcs.Identity);
+            ModifierSource? modifierSource = null, ValueConverter? valueConverter = null, params IStat[] stats) =>
+            new StatBuilderResult(stats, modifierSource!, valueConverter ?? Funcs.Identity);
     }
 }

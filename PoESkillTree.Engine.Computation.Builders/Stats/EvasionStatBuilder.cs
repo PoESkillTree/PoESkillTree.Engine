@@ -19,7 +19,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
 
         public IStatBuilder ChanceAgainstMeleeAttacks => FromIdentity(typeof(uint));
 
-        private IStatBuilder FromIdentity(Type dataType, [CallerMemberName] string identity = null)
+        private IStatBuilder FromIdentity(Type dataType, [CallerMemberName] string identity = "")
             => With(LeafCoreStatBuilder.FromIdentity(StatFactory, Prefix + "." + identity, dataType));
     }
 }

@@ -33,7 +33,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Charges
         public IDamageRelatedStatBuilder ChanceToGain =>
             DamageRelatedStatBuilder.Create(_statFactory, CoreStat(typeof(uint))).WithHits;
 
-        private ICoreStatBuilder CoreStat(Type dataType, [CallerMemberName] string identitySuffix = null) =>
+        private ICoreStatBuilder CoreStat(Type dataType, [CallerMemberName] string identitySuffix = "") =>
             CoreStat((e, t) => _statFactory.FromIdentity(t.GetName() + "." + identitySuffix, e, dataType));
 
         private ICoreStatBuilder CoreStat(Func<Entity, ChargeType, IStat> statFactory) =>

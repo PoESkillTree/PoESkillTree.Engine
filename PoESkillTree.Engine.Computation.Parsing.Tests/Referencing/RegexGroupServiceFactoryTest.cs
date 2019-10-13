@@ -1,5 +1,7 @@
 ﻿using System;
+using Moq;
 using NUnit.Framework;
+using PoESkillTree.Engine.Computation.Common.Builders.Values;
 using PoESkillTree.Engine.Computation.Common.Parsing;
 
 namespace PoESkillTree.Engine.Computation.Parsing.Referencing
@@ -80,6 +82,6 @@ namespace PoESkillTree.Engine.Computation.Parsing.Referencing
             Assert.Throws<ArgumentException>(() => sut.CreateReferenceGroup("id", "", 0, "inner"));
         }
 
-        private static IRegexGroupFactory CreateSut() => new RegexGroupService(null);
+        private static IRegexGroupFactory CreateSut() => new RegexGroupService(Mock.Of<IValueBuilders>());
     }
 }

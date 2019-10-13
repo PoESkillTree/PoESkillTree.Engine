@@ -6,7 +6,9 @@ using PoESkillTree.Engine.Computation.Builders.Entities;
 using PoESkillTree.Engine.Computation.Builders.Stats;
 using PoESkillTree.Engine.Computation.Common;
 using PoESkillTree.Engine.Computation.Common.Builders.Damage;
+using PoESkillTree.Engine.Computation.Common.Builders.Resolving;
 using PoESkillTree.Engine.Computation.Common.Builders.Stats;
+using PoESkillTree.Engine.Computation.Common.Builders.Values;
 using PoESkillTree.Engine.Computation.Common.Parsing;
 using PoESkillTree.Engine.GameModel;
 using PoESkillTree.Engine.GameModel.Skills;
@@ -104,10 +106,10 @@ namespace PoESkillTree.Engine.Computation.Builders.Damage
         {
             var expected = new[] { DamageType.Fire, DamageType.Chaos };
             var other = CreateSut(DamageType.Chaos);
-            var unresolved = Mock.Of<IDamageTypeBuilder>(b => b.Resolve(null) == other);
+            var unresolved = Mock.Of<IDamageTypeBuilder>(b => b.Resolve(null!) == other);
             var sut = CreateSut(DamageType.Fire).And(unresolved);
 
-            var resolvedSut = (IDamageTypeBuilder) sut.Resolve(null);
+            var resolvedSut = (IDamageTypeBuilder) sut.Resolve(null!);
             var actual = resolvedSut.BuildDamageTypes(default);
 
             Assert.AreEqual(expected, actual);
@@ -128,10 +130,10 @@ namespace PoESkillTree.Engine.Computation.Builders.Damage
         public void ResistanceResolveResolvesAndParameter()
         {
             var other = CreateSut(DamageType.Chaos);
-            var unresolved = Mock.Of<IDamageTypeBuilder>(b => b.Resolve(null) == other);
+            var unresolved = Mock.Of<IDamageTypeBuilder>(b => b.Resolve(null!) == other);
             var sut = CreateSut(DamageType.Fire).And(unresolved);
 
-            var resolved = sut.Resistance.Resolve(null);
+            var resolved = sut.Resistance.Resolve(null!);
             var (stats, _, _) = resolved.BuildToSingleResult();
 
             Assert.AreEqual("Fire.Resistance", stats[0].Identity);
@@ -237,14 +239,16 @@ namespace PoESkillTree.Engine.Computation.Builders.Damage
         [TestCase(Pool.EnergyShield, Pool.Mana)]
         public void DamageTakenFromIsResolvable(Pool source, Pool target)
         {
+            var context = new ResolveContext(Mock.Of<IMatchContext<IValueBuilder>>(),
+                Mock.Of<IMatchContext<IReferenceConverter>>());
             var sourcePool = Mock.Of<IPoolStatBuilder>(b => b.BuildPool(default) == source);
-            var unresolvedSource = Mock.Of<IPoolStatBuilder>(b => b.Resolve(null) == sourcePool);
+            var unresolvedSource = Mock.Of<IPoolStatBuilder>(b => b.Resolve(context) == sourcePool);
             var targetPool = Mock.Of<IPoolStatBuilder>(b => b.BuildPool(default) == target);
-            var unresolvedTarget = Mock.Of<IPoolStatBuilder>(b => b.Resolve(null) == targetPool);
+            var unresolvedTarget = Mock.Of<IPoolStatBuilder>(b => b.Resolve(context) == targetPool);
             var sut = CreateSut(DamageType.Fire);
 
             var taken = sut.DamageTakenFrom(unresolvedSource).Before(unresolvedTarget);
-            var stat = taken.Resolve(null).BuildToSingleStat();
+            var stat = taken.Resolve(context).BuildToSingleStat();
 
             Assert.AreEqual($"Fire.Damage.TakenFrom({source}).Before({target})", stat.Identity);
         }

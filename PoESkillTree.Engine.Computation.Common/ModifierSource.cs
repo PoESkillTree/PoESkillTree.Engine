@@ -21,7 +21,7 @@ namespace PoESkillTree.Engine.Computation.Common
 #pragma warning restore 660,661
     {
         private ModifierSource(
-            ModifierSource canonicalSource, string sourceName, params ModifierSource[] influencingSources)
+            ModifierSource? canonicalSource, string? sourceName, params ModifierSource[] influencingSources)
         {
             CanonicalSource = canonicalSource ?? this;
             SourceName = sourceName;
@@ -77,7 +77,7 @@ namespace PoESkillTree.Engine.Computation.Common
         /// The detailed name of this source. E.g. tree node names, description of given mods like
         /// "x per y dexterity", item names or skill ids.
         /// </summary>
-        public string SourceName { get; }
+        public string? SourceName { get; }
 
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace PoESkillTree.Engine.Computation.Common
             {
             }
 
-            public Local LocalSource { get; }
+            public Local? LocalSource { get; }
 
             protected override object ToTuple() => (base.ToTuple(), LocalSource);
 
@@ -108,7 +108,7 @@ namespace PoESkillTree.Engine.Computation.Common
         /// </summary>
         public abstract class Local : ModifierSource
         {
-            private Local(ModifierSource canonicalSource, string sourceName)
+            private Local(ModifierSource canonicalSource, string? sourceName)
                 : base(canonicalSource, sourceName, new Global())
             {
             }
@@ -191,7 +191,7 @@ namespace PoESkillTree.Engine.Computation.Common
 
             public sealed class Skill : Local
             {
-                public Skill(string skillId, string displayName) : base(new Skill(skillId), displayName)
+                public Skill(string skillId, string? displayName) : base(new Skill(skillId), displayName)
                 {
                     SkillId = skillId;
                 }
@@ -213,12 +213,12 @@ namespace PoESkillTree.Engine.Computation.Common
             /// </summary>
             public sealed class Gem : Local
             {
-                public Gem(ItemSlot slot, int socketIndex, string skillId, string displayName)
-                    : base(new Gem(slot, socketIndex), displayName)
+                public Gem(ItemSlot slot, int socketIndex, string skillId, string? displayName)
+                    : base(new Gem(slot, socketIndex, skillId), displayName)
                     => (Slot, SocketIndex, SkillId) = (slot, socketIndex, skillId);
 
-                public Gem(ItemSlot slot, int socketIndex)
-                    => (Slot, SocketIndex) = (slot, socketIndex);
+                public Gem(ItemSlot slot, int socketIndex, string skillId)
+                    => (Slot, SocketIndex, SkillId) = (slot, socketIndex, skillId);
 
                 public ItemSlot Slot { get; }
                 public int SocketIndex { get; }

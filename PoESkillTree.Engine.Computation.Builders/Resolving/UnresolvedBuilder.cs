@@ -15,6 +15,7 @@ using PoESkillTree.Engine.Utils;
 namespace PoESkillTree.Engine.Computation.Builders.Resolving
 {
     public class UnresolvedBuilder<TResolve, TBuild> : IResolvable<TResolve>
+        where TResolve : class
     {
         protected string Description { get; }
         protected Func<ResolveContext, TResolve> Resolver { get; }

@@ -159,14 +159,14 @@ namespace PoESkillTree.Engine.Computation.Core.Nodes
             return sut;
         }
 
-        private static CachingNode CreateSut(double? value = null, ICycleGuard cycleGuard = null)
+        private static CachingNode CreateSut(double? value = null, ICycleGuard? cycleGuard = null)
         {
             var decoratedNode = NodeHelper.MockNode(value);
             return CreateSut(decoratedNode, cycleGuard);
         }
 
         private static CachingNode CreateSut(
-            ICalculationNode decoratedNode, ICycleGuard cycleGuard = null, IEventBuffer eventBuffer = null)
+            ICalculationNode decoratedNode, ICycleGuard? cycleGuard = null, IEventBuffer? eventBuffer = null)
             => new CachingNode(decoratedNode, cycleGuard ?? Mock.Of<ICycleGuard>(), eventBuffer ?? new EventBuffer());
     }
 }

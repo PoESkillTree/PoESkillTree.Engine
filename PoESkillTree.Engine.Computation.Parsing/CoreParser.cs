@@ -59,7 +59,7 @@ namespace PoESkillTree.Engine.Computation.Parsing
                 var (success, remaining, result) = _parser.Value(parameter);
                 if (success)
                 {
-                    return ParseResult.Success(result);
+                    return ParseResult.Success(result!);
                 }
                 var parseResult = ParseResult.Failure(parameter.ModifierLine, remaining);
                 Log.Debug($"ParseResult.Failure{parseResult}");

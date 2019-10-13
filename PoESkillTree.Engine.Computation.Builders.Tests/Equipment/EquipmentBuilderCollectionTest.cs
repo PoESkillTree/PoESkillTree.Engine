@@ -28,7 +28,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Equipment
             var expected = new NodeValue(Enum.GetValues(typeof(ItemSlot)).Length);
             var sut = CreateSut();
 
-            var actual = sut.Count().Build().Calculate(null);
+            var actual = sut.Count().Build().Calculate(null!);
 
             Assert.AreEqual(expected, actual);
         }
@@ -70,7 +70,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Equipment
         {
             var sut = CreateSut();
 
-            var actual = sut.Any().Build().Value.Calculate(null);
+            var actual = sut.Any().Build().Value.Calculate(null!);
 
             Assert.IsTrue(actual.IsTrue());
         }

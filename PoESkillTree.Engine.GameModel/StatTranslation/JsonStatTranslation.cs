@@ -4,6 +4,8 @@ namespace PoESkillTree.Engine.GameModel.StatTranslation
 {
     // The classes used to deserialize RePoE's stat_translations
 
+#pragma warning disable 8618 // Initialization is done through deserialization
+
     public class JsonStatTranslation
     {
         [JsonProperty("English")]
@@ -39,4 +41,6 @@ namespace PoESkillTree.Engine.GameModel.StatTranslation
         [JsonProperty("max")]
         public int Max { get; set; } = int.MaxValue;
     }
+
+#pragma warning restore
 }

@@ -101,7 +101,7 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Buffs
         /// <para>If no source and/or target is given, it defaults to any entity, e.g. Buffs() without parameters
         /// returns every active buff.</para>
         /// </summary>
-        IBuffBuilderCollection Buffs(IEntityBuilder source = null, params IEntityBuilder[] targets);
+        IBuffBuilderCollection Buffs(IEntityBuilder? source = null, params IEntityBuilder[] targets);
 
         IStatBuilder CurseLimit { get; }
     }

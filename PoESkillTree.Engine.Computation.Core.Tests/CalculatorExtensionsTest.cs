@@ -105,7 +105,7 @@ namespace PoESkillTree.Engine.Computation.Core
         private static readonly CalculatorUpdate EmptyUpdate =
             new CalculatorUpdate(new Modifier[0], new Modifier[0]);
 
-        private static CalculatorUpdate ExpectUpdateFor(Modifier[] adds = null, Modifier[] removes = null) => 
+        private static CalculatorUpdate ExpectUpdateFor(Modifier[]? adds = null, Modifier[]? removes = null) => 
             new CalculatorUpdate(adds ?? new Modifier[0], removes ?? new Modifier[0]);
     }
 }

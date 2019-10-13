@@ -73,7 +73,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Actions
 
         public IActionBuilder Unique(string description) => Create(description);
 
-        private IActionBuilder Create([CallerMemberName] string identity = null) =>
+        private IActionBuilder Create([CallerMemberName] string identity = "") =>
             new ActionBuilder(_statFactory, CoreBuilder.Create(identity), _entity);
 
         private class ThrowingContext : IValueCalculationContext

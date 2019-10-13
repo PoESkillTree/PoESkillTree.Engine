@@ -18,12 +18,14 @@ namespace PoESkillTree.Engine.Utils.Extensions
             return value;
         }
 
+#if NETSTANDARD2_0
         public static void Deconstruct<TKey, TValue>(this KeyValuePair<TKey, TValue> pair,
             out TKey key, out TValue value)
         {
             key = pair.Key;
             value = pair.Value;
         }
+#endif
 
         public static void Deconstruct<TKey, TValue>(this IGrouping<TKey, TValue> pair,
             out TKey key, out IEnumerable<TValue> value)
@@ -65,5 +67,10 @@ namespace PoESkillTree.Engine.Utils.Extensions
             }
             return results;
         }
+
+        public static IEnumerable<T> WhereNotNull<T>(this IEnumerable<T?> @this) where T : class
+#pragma warning disable 8619 // Where clause guarantuees non-null values
+            => @this.Where(t => t != null);
+#pragma warning restore
     }
 }

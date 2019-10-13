@@ -15,7 +15,7 @@ namespace PoESkillTree.Engine.Computation.Builders
             _buildResult = buildResult;
         }
 
-        public TResolve Resolve(ResolveContext context) => this as TResolve;
+        public TResolve Resolve(ResolveContext context) => (this as TResolve)!;
 
         public TBuild Build() => _buildResult;
         public TBuild Build(BuildParameters parameters) => _buildResult;

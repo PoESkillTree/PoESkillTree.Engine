@@ -23,7 +23,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
         public void TemporaryBuildsToCorrectResult(bool expectedCondition)
         {
             var expectedValue = expectedCondition ? (NodeValue?) 3 : null;
-            var gainedStatBuilder = StatBuilderUtils.FromIdentity(StatFactory, "s", null);
+            var gainedStatBuilder = StatBuilderUtils.FromIdentity(StatFactory, "s", typeof(double));
             var modifierSource = new ModifierSource.Local.Skill("skill node", "");
             var conditionStat = new Stat($"Is {modifierSource.SourceName} active?");
             var buffEffectStat = new Stat($"Buff.EffectOn({default(Entity)})");
@@ -66,7 +66,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
         [Test]
         public void BuffBuildsToCorrectResult()
         {
-            var gainedStatBuilder = StatBuilderUtils.FromIdentity(StatFactory, "s", null);
+            var gainedStatBuilder = StatBuilderUtils.FromIdentity(StatFactory, "s", typeof(double));
             var entityBuilders = new IEntityBuilder[]
                 { new ModifierSourceEntityBuilder(), new EntityBuilder(Entity.Enemy), };
             var buffEffectStats = new[]
@@ -94,7 +94,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
         [Test]
         public void AuraBuildsToCorrectResults()
         {
-            var gainedStatBuilder = StatBuilderUtils.FromIdentity(StatFactory, "s", null);
+            var gainedStatBuilder = StatBuilderUtils.FromIdentity(StatFactory, "s", typeof(double));
             var auraEffectStat = new Stat($"Aura.EffectOn({Entity.Minion})", Entity.Enemy);
             var context = Mock.Of<IValueCalculationContext>(c =>
                 c.GetValue(auraEffectStat, NodeType.Total, PathDefinition.MainPath) == new NodeValue(1.5));
@@ -102,7 +102,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
 
             var auraStatBuilder = sut.Aura(gainedStatBuilder, new EntityBuilder(Entity.Minion));
             var (stats, _, valueConverter) = auraStatBuilder.BuildToSingleResult(entity: Entity.Enemy);
-            var value = valueConverter(new ValueBuilderImpl(2)).Build(new BuildParameters(null, Entity.Enemy, default));
+            var value = valueConverter(new ValueBuilderImpl(2)).Build(new BuildParameters(null!, Entity.Enemy, default));
             var actualValue = value.Calculate(context);
 
             Assert.That(stats, Has.Exactly(1).Items);

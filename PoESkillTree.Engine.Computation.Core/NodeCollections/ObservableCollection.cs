@@ -39,8 +39,8 @@ namespace PoESkillTree.Engine.Computation.Core.NodeCollections
             => (CollectionChanged?.GetInvocationList().Length ?? 0)
                + (UntypedCollectionChanged?.GetInvocationList().Length ?? 0);
 
-        public event CollectionChangedEventHandler<T> CollectionChanged;
-        public event EventHandler UntypedCollectionChanged;
+        public event CollectionChangedEventHandler<T>? CollectionChanged;
+        public event EventHandler? UntypedCollectionChanged;
 
         protected virtual void OnCollectionChanged(CollectionChangedEventArgs<T> e)
         {

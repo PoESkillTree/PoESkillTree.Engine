@@ -33,7 +33,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
         [Test]
         public void AddStatBuildsToCorrectResult()
         {
-            var addedStat = StatBuilderUtils.FromIdentity(StatFactory, "s", null);
+            var addedStat = StatBuilderUtils.FromIdentity(StatFactory, "s", typeof(double));
             var sut = CreateSut(3);
 
             var stats = sut.AddStat(addedStat).BuildToStats();
@@ -46,10 +46,10 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
         public void ResolveEffectBuildsToCorrectResult()
         {
             var buff = new BuffBuilder(StatFactory, CoreBuilder.Create("b"));
-            var unresolvedBuff = Mock.Of<IBuffBuilder>(b => b.Resolve(null) == buff);
+            var unresolvedBuff = Mock.Of<IBuffBuilder>(b => b.Resolve(null!) == buff);
             var sut = CreateSut(unresolvedBuff);
 
-            var resolved = (IBuffBuilderCollection) sut.Resolve(null);
+            var resolved = (IBuffBuilderCollection) sut.Resolve(null!);
             var stats = resolved.Effect.BuildToSingleResult().Stats;
 
             Assert.AreEqual($"b.EffectOn({default(Entity)})", stats[0].Identity);
@@ -95,10 +95,10 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
         public void WithResolveEffectBuildsToCorrectResult()
         {
             var keyword = KeywordBuilder(1);
-            var unresolved = Mock.Of<IKeywordBuilder>(b => b.Resolve(null) == keyword);
+            var unresolved = Mock.Of<IKeywordBuilder>(b => b.Resolve(null!) == keyword);
             var sut = CreateSut(3);
 
-            var resolved = (IBuffBuilderCollection) sut.With(unresolved).Resolve(null);
+            var resolved = (IBuffBuilderCollection) sut.With(unresolved).Resolve(null!);
             var stats = resolved.Effect.BuildToStats();
 
             Assert.That(stats, Has.Exactly(2).Items);
@@ -108,10 +108,10 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
         public void WithoutResolveEffectBuildsToCorrectResult()
         {
             var keyword = KeywordBuilder(1);
-            var unresolved = Mock.Of<IKeywordBuilder>(b => b.Resolve(null) == keyword);
+            var unresolved = Mock.Of<IKeywordBuilder>(b => b.Resolve(null!) == keyword);
             var sut = CreateSut(3);
 
-            var resolved = (IBuffBuilderCollection) sut.Without(unresolved).Resolve(null);
+            var resolved = (IBuffBuilderCollection) sut.Without(unresolved).Resolve(null!);
             var stats = resolved.Effect.BuildToSingleResult().Stats;
 
             Assert.That(stats, Has.Exactly(1).Items);
@@ -121,10 +121,10 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
         public void WithEffectResolveBuildsToCorrectResult()
         {
             var keyword = KeywordBuilder(1);
-            var unresolved = Mock.Of<IKeywordBuilder>(b => b.Resolve(null) == keyword);
+            var unresolved = Mock.Of<IKeywordBuilder>(b => b.Resolve(null!) == keyword);
             var sut = CreateSut(3);
 
-            var resolved = sut.With(unresolved).Effect.Resolve(null);
+            var resolved = sut.With(unresolved).Effect.Resolve(null!);
             var stats = resolved.BuildToStats();
 
             Assert.That(stats, Has.Exactly(2).Items);
@@ -194,7 +194,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
         public void AnyResolveBuildsToCorrectResult()
         {
             var keyword = KeywordBuilder(2);
-            var unresolved = Mock.Of<IKeywordBuilder>(b => b.Resolve(null) == keyword);
+            var unresolved = Mock.Of<IKeywordBuilder>(b => b.Resolve(null!) == keyword);
             var activeStat = StatFactory.BuffIsActive(default, "b0");
             var sourceStat = StatFactory.BuffSourceIs(default, default, "b0");
             var context = Mock.Of<IValueCalculationContext>(c =>
@@ -203,7 +203,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
             var sut = CreateSut(1);
 
             var any = sut.With(unresolved).Any();
-            var result = any.Resolve(null).Build();
+            var result = any.Resolve(null!).Build();
             var actual = result.Value.Calculate(context);
 
             Assert.IsFalse(actual.IsTrue());
