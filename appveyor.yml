@@ -1,8 +1,8 @@
-version: 0.1.5.{build}
+version: 0.1.6.{build}
 image: Visual Studio 2019
 configuration: Release
 environment:
-  semantic_version: '0.1.5'
+  semantic_version: '0.1.6'
 
 dotnet_csproj:
   patch: true
