@@ -13,7 +13,7 @@ namespace PoESkillTree.Engine.GameModel
     public static class DataUtils
     {
         private const string ResourceRoot = "PoESkillTree.Engine.GameModel.Data.";
-        public const string RePoEDataUrl = "https://raw.githubusercontent.com/brather1ng/RePoE/master/data/";
+        public const string RePoEDataUrl = "https://raw.githubusercontent.com/brather1ng/RePoE/master/RePoE/data/";
         public const string RePoEFileSuffix = ".min.json";
 
         public static Task<T> LoadRePoEAsync<T>(string fileName, bool deserializeOnThreadPool = false)
