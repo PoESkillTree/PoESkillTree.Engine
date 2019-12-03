@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <RootNamespace>PoESkillTree.Engine.Computation.Parsing</RootNamespace>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <LangVersion>8</LangVersion>
     <AssemblyTitle>PoESkillTree.Engine.Computation.Parsing.Tests</AssemblyTitle>
     <Product>PoESkillTree.Engine.Computation.Parsing.Tests</Product>
