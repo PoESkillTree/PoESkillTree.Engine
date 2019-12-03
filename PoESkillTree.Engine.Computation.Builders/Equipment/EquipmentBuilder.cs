@@ -18,7 +18,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Equipment
         public EquipmentBuilder(IStatFactory statFactory, ItemSlot slot)
         {
             _statFactory = statFactory;
-            _slotName = slot.GetName();
+            _slotName = slot.GetName()!;
         }
 
         public IEquipmentBuilder Resolve(ResolveContext context) => this;

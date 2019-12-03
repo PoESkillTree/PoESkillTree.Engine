@@ -48,17 +48,17 @@ namespace PoESkillTree.Engine.GameModel.Items
                 DeserializeTags(rawTags),
                 DeserializeProperties(Value<JObject>("properties")),
                 DeserializeGrantsBuff(json["grants_buff"]),
-                DeserializeRequirements(json["requirements"]),
+                DeserializeRequirements(json["requirements"]!),
                 DeserializeImplicitModifiers(Values<string>("implicits")),
                 Value<int>("inventory_height"),
                 Value<int>("inventory_width"),
                 Value<int>("drop_level"),
-                Enums.Parse<ReleaseState>(Value<string>("release_state"), EnumFormat.EnumMemberValue),
-                json["visual_identity"].Value<string>("dds_file"));
+                Enums.Parse<ReleaseState>(Value<string>("release_state")!, true, EnumFormat.EnumMemberValue),
+                json["visual_identity"]!.Value<string>("dds_file"));
 
             T Value<T>(string propertyName) => json.Value<T>(propertyName);
 
-            IEnumerable<T> Values<T>(string propertyName) => json[propertyName].Values<T>();
+            IEnumerable<T> Values<T>(string propertyName) => json[propertyName]!.Values<T>();
         }
 
         private static Tags DeserializeTags(IEnumerable<string> rawTags)
@@ -82,7 +82,7 @@ namespace PoESkillTree.Engine.GameModel.Items
         private static Property DeserializeProperty(JProperty jsonProperty)
             => new Property(jsonProperty.Name, jsonProperty.Value.Value<int>());
 
-        private static IReadOnlyList<UntranslatedStat> DeserializeGrantsBuff(JToken buffJson)
+        private static IReadOnlyList<UntranslatedStat> DeserializeGrantsBuff(JToken? buffJson)
         {
             if (buffJson is null)
                 return new UntranslatedStat[0];
@@ -96,7 +96,7 @@ namespace PoESkillTree.Engine.GameModel.Items
         {
             if (!requirementsJson.HasValues)
                 return new Requirements(0, 0, 0, 0);
-            return requirementsJson.ToObject<Requirements>();
+            return requirementsJson.ToObject<Requirements>()!;
         }
 
         private IReadOnlyList<CraftableStat> DeserializeImplicitModifiers(IEnumerable<string> implicits)

@@ -54,7 +54,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
             var castTime = gemJson.Value<int>("cast_time");
             var statTranslationFile = gemJson.Value<string>("stat_translation_file");
 
-            var baseItemJson = gemJson["base_item"];
+            var baseItemJson = gemJson["base_item"]!;
             ISet<string> gemTags;
             SkillBaseItemDefinition? baseItemDefinition;
             if (baseItemJson.Type == JTokenType.Null)
@@ -64,7 +64,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
             }
             else
             {
-                gemTags = gemJson["tags"].Values<string>().ToHashSet();
+                gemTags = gemJson["tags"]!.Values<string>().ToHashSet();
                 var releaseState = Enums.Parse<ReleaseState>(baseItemJson.Value<string>("release_state"), true);
                 if (releaseState == ReleaseState.Unreleased)
                     return null;
@@ -84,13 +84,13 @@ namespace PoESkillTree.Engine.GameModel.Skills
             if (gemJson.TryGetValue("active_skill", out var activeSkillJson))
             {
                 displayName ??= activeSkillJson.Value<string>("display_name");
-                var activeSkillTypes = activeSkillJson["types"].Values<string>().ToHashSet();
+                var activeSkillTypes = activeSkillJson["types"]!.Values<string>().ToHashSet();
                 var minionActiveSkillTypes = activeSkillJson["minion_types"]?.Values<string>().ToHashSet()
                                              ?? new HashSet<string>();
                 var keywords = GetKeywords(displayName, activeSkillTypes, gemTags);
                 var providesBuff = _definitionExtension.BuffStats.Any();
                 var totemLifeMultiplier = activeSkillJson.Value<double?>("skill_totem_life_multiplier");
-                var weaponRestrictions = activeSkillJson["weapon_restrictions"].Values<string>()
+                var weaponRestrictions = activeSkillJson["weapon_restrictions"]!.Values<string>()
                     .Select(ItemClassEx.Parse).ToList();
                 var activeSkillDefinition = new ActiveSkillDefinition(
                     displayName, castTime, activeSkillTypes, minionActiveSkillTypes, keywords,
@@ -101,13 +101,13 @@ namespace PoESkillTree.Engine.GameModel.Skills
             else
             {
                 displayName ??= skillId;
-                var supportSkillJson = gemJson["support_gem"];
-                var addedActiveSkillTypes = supportSkillJson["added_types"].Values<string>().ToHashSet();
+                var supportSkillJson = gemJson["support_gem"]!;
+                var addedActiveSkillTypes = supportSkillJson["added_types"]!.Values<string>().ToHashSet();
                 var addedKeywords = GetKeywords(displayName, addedActiveSkillTypes, gemTags);
                 var supportSkillDefinition = new SupportSkillDefinition(
                     supportSkillJson.Value<bool>("supports_gems_only"),
-                    supportSkillJson["allowed_types"].Values<string>().ToList(),
-                    supportSkillJson["excluded_types"].Values<string>().ToList(),
+                    supportSkillJson["allowed_types"]!.Values<string>().ToList(),
+                    supportSkillJson["excluded_types"]!.Values<string>().ToList(),
                     addedActiveSkillTypes, addedKeywords);
                 return SkillDefinition.CreateSupport(skillId, numericId, statTranslationFile,
                     _definitionExtension.PartNames, baseItemDefinition, supportSkillDefinition, levels);
@@ -127,13 +127,13 @@ namespace PoESkillTree.Engine.GameModel.Skills
 
         private IReadOnlyDictionary<int, SkillLevelDefinition> DeserializeLevels(JToken gemJson, JToken gemTooltipJson)
         {
-            var staticJson = gemJson["static"];
-            var staticTooltipJson = gemTooltipJson["static"];
+            var staticJson = gemJson["static"]!;
+            var staticTooltipJson = gemTooltipJson["static"]!;
             var perLevel = gemJson["per_level"];
             var levels = new Dictionary<int, SkillLevelDefinition>();
             foreach (var perLevelProp in perLevel.Cast<JProperty>())
             {
-                var tooltip = DeserializeTooltip(gemTooltipJson["per_level"][perLevelProp.Name], staticTooltipJson);
+                var tooltip = DeserializeTooltip(gemTooltipJson["per_level"]![perLevelProp.Name]!, staticTooltipJson);
                 levels[int.Parse(perLevelProp.Name)] =
                     DeserializeLevel(perLevelProp.Value, staticJson, tooltip);
             }
@@ -175,7 +175,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 tooltip);
 
             T NestedValue<T>(string propertyName, string nestedPropertyName)
-                => GetValue<T>(nestedPropertyName, levelJson[propertyName], staticJson[propertyName]);
+                => GetValue<T>(nestedPropertyName, levelJson[propertyName]!, staticJson[propertyName]!);
 
             T Value<T>(string propertyName) => GetValue<T>(propertyName, levelJson, staticJson);
 
@@ -226,7 +226,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
 
         private static SkillTooltipDefinition DeserializeTooltip(JToken levelJson, JToken staticJson)
         {
-            var description = levelJson["description"]?.Values<string>() ?? staticJson["description"].Values<string>();
+            var description = levelJson["description"]?.Values<string>() ?? staticJson["description"]!.Values<string>();
             return new SkillTooltipDefinition(
                 Value<string>("name"),
                 Stats("properties"),

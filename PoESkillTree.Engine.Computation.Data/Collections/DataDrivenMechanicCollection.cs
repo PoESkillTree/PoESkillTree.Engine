@@ -163,7 +163,7 @@ namespace PoESkillTree.Engine.Computation.Data.Collections
         private void Add<TEnum>(IFormBuilder form, Func<TEnum, IStatBuilder> stat, Func<TEnum, IValueBuilder> value)
             where TEnum : struct, Enum
         {
-            var ts = Enums.GetValues<TEnum>();
+            IEnumerable<TEnum> ts = Enums.GetValues<TEnum>();
             if (typeof(TEnum) == typeof(DamageType))
             {
                 ts = ts.Except((TEnum) (object) DamageType.RandomElement);

@@ -18,7 +18,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Effects
         private readonly ICoreBuilder<Ailment> _ailment;
 
         public AilmentBuilder(IStatFactory statFactory, ICoreBuilder<Ailment> ailment)
-            : base(statFactory, CoreBuilder.UnaryOperation(ailment, a => a.GetName()))
+            : base(statFactory, CoreBuilder.UnaryOperation(ailment, a => a.GetName()!))
         {
             _ailment = ailment;
         }
