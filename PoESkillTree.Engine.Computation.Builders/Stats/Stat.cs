@@ -49,7 +49,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         public override string ToString()
             => _stringRepresentation ??= Entity.GetName() + "." + Identity;
 
-        public override bool Equals(object obj) =>
+        public override bool Equals(object? obj) =>
             (obj == this) || (obj is IStat other && Equals(other));
 
         public bool Equals(IStat other) =>

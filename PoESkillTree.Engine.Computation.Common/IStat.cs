@@ -51,5 +51,10 @@ namespace PoESkillTree.Engine.Computation.Common
         /// The behaviors that should be applied to the calculation graph when this stat's subgraph is created.
         /// </summary>
         IReadOnlyList<Behavior> Behaviors { get; }
+
+        /// <summary>
+        /// String representation of this stat. Equal instances have the same string representation.
+        /// </summary>
+        string ToString();
     }
 }
