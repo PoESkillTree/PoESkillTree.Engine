@@ -6,4 +6,4 @@ This repository contains the game model and computation engine used for [PoESkil
 
 The goal is to develop this into a general .NET Standard library for Path of Exile build calculations (e.g. DPS) every interested developer can use and contribute to. Currently, the library is optimized for a GUI application with small incremental build changes. I will later add benchmarks for the one-off scenario where you want to input a build, get statistics as outputs and then input the next build. Those will serve as further example usages.
 
-The libraries target .NET Standard 2.0 and .NET Standard 2.1, Console and the test projects .NET Core 3.0.
+The libraries target .NET Standard 2.0 and .NET Standard 2.1, Console and the test projects .NET Core 3.1.
