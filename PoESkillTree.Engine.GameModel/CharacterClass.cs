@@ -2,12 +2,12 @@
 {
     public enum CharacterClass
     {
-        Scion,
-        Marauder,
-        Ranger,
-        Witch,
-        Duelist,
-        Templar,
-        Shadow
+        Scion = 0,
+        Marauder = 1,
+        Ranger = 2,
+        Witch = 3,
+        Duelist = 4,
+        Templar = 5,
+        Shadow = 6,
     }
 }

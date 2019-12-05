@@ -1,12 +1,17 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 namespace PoESkillTree.Engine.GameModel.Items
 {
     public enum JewelRadius
     {
+        [EnumMember(Value = "None")]
         None,
+        [EnumMember(Value="Small")]
         Small,
+        [EnumMember(Value = "Medium")]
         Medium,
+        [EnumMember(Value = "Large")]
         Large,
     }
 
