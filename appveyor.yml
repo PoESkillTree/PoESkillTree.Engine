@@ -11,6 +11,7 @@ dotnet_csproj:
   file_version: '{version}'
 
 install:
+  - ps: build/ci/installDotnetCore3.1.ps1
   - dotnet restore
 
 build:
