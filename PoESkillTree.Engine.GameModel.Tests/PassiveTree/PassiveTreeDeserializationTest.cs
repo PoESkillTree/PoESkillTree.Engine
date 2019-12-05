@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using NUnit.Framework;
+using PoESkillTree.Engine.GameModel.PassiveTree.Base;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -9,25 +10,25 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree
     [TestFixture]
     public class PassiveTreeDeserializationTest
     {
-        [Test]
-        public void PassiveTreeDeserializerWorks()
-        {
-            var NUM_TESTS = 100;
-            var sw = new Stopwatch();
-            var times = new long[NUM_TESTS];
-            var json = TestUtils.ReadDataFile("skilltree_3.8.0.min.json");
-            Assert.IsNotEmpty(json);
+        //[Test]
+        //public void PassiveTreeDeserializerWorks()
+        //{
+        //    var NUM_TESTS = 100;
+        //    var sw = new Stopwatch();
+        //    var times = new long[NUM_TESTS];
+        //    var json = TestUtils.ReadDataFile("skilltree_3.8.0.min.json");
+        //    Assert.IsNotEmpty(json);
             
-            for (var i = 0; i < NUM_TESTS; i++)
-            {
-                sw.Restart();
-                var passiveTree = JsonConvert.DeserializeObject<JsonPassiveTree>(json);
-                sw.Stop();
-                times[i] = sw.ElapsedMilliseconds;
-            }
+        //    for (var i = 0; i < NUM_TESTS; i++)
+        //    {
+        //        sw.Restart();
+        //        var passiveTree = JsonConvert.DeserializeObject<JsonPassiveTree>(json);
+        //        sw.Stop();
+        //        times[i] = sw.ElapsedMilliseconds;
+        //    }
 
-            Console.WriteLine($"First: {times[0]}, Last: {times[NUM_TESTS - 1]}, Average: {times.Average()}");
-        }
+        //    Console.WriteLine($"First: {times[0]}, Last: {times[NUM_TESTS - 1]}, Average: {times.Average()}");
+        //}
 
         [TestCase(10f, 10f, 10f, 10f)]
         [TestCase(10f, 10f, 10f, -10f)]
