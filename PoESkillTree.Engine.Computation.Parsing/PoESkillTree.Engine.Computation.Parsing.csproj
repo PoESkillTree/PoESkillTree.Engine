@@ -24,13 +24,12 @@
     <WarningsAsErrors>8600;8601;8602;8603;8604;8613;8619;8620;8625</WarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Enums.NET" Version="3.0.1" />
+    <PackageReference Include="JetBrains.Annotations" Version="2019.1.3" PrivateAssets="All" />
     <PackageReference Include="LibLog" Version="5.0.6">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Enums.NET" Version="3.0.1" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
     <PackageReference Include="morelinq" Version="3.2.0" />
     <PackageReference Include="Nullable" Version="1.1.1">
