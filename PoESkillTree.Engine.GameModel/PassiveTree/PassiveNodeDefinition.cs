@@ -24,7 +24,7 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree
 
         }
 
-        public static PassiveNodeDefinition Convert(this JsonPassiveNode passiveNode) => new PassiveNodeDefinition(passiveNode);
+        public static PassiveNodeDefinition Convert(JsonPassiveNode passiveNode) => new PassiveNodeDefinition(passiveNode);
 
         public ushort Id { get; }
 
