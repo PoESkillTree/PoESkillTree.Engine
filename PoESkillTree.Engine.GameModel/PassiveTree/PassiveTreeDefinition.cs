@@ -1,13 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using PoESkillTree.Engine.GameModel.PassiveTree.Base;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace PoESkillTree.Engine.GameModel.PassiveTree
 {
     public class PassiveTreeDefinition : DefinitionsBase<ushort, PassiveNodeDefinition>
     {
-        public PassiveTreeDefinition(IReadOnlyList<PassiveNodeDefinition> nodes) : base(nodes)
-        {
-        }
+        public PassiveTreeDefinition(IReadOnlyList<PassiveNodeDefinition> nodes)
+            : base(nodes) { }
+
+        private PassiveTreeDefinition(JsonPassiveTree passiveTree)
+            : this(passiveTree.PassiveNodes.Select(x => PassiveNodeDefinition.Convert(x.Value)).ToArray()) { }
+
+        public static PassiveTreeDefinition Convert(JsonPassiveTree passiveTree)
+            => new PassiveTreeDefinition(passiveTree);
 
         public IReadOnlyList<PassiveNodeDefinition> Nodes => Definitions;
 
@@ -21,7 +27,7 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree
                 new PassiveNodeDefinition(0, PassiveNodeType.JewelSocket, "jewel", false,
                     true, 0, default, new string[0]),
                 new PassiveNodeDefinition(1, PassiveNodeType.Small, "attributes", false,
-                    true, 0, new NodePosition(10, 10), 
+                    true, 0, new NodePosition(10, 10),
                     new[] { "+100 to Strength", "+100 to Dexterity", "+100 to Intelligence" }),
             };
 

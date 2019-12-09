@@ -98,6 +98,8 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
         public bool IsAscendancyNode => !string.IsNullOrWhiteSpace(AscendancyName);
 
         [JsonIgnore]
+        public bool IsRootNode => StartingCharacterClass is { };
+        [JsonIgnore]
         public CharacterClass? StartingCharacterClass => StartingCharacterClasses.Length > 0 ? StartingCharacterClasses[0] as CharacterClass? : null;
 
         [JsonIgnore]

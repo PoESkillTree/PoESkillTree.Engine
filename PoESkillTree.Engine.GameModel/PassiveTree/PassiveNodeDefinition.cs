@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using PoESkillTree.Engine.GameModel.PassiveTree.Base;
+using System.Collections.Generic;
 
 namespace PoESkillTree.Engine.GameModel.PassiveTree
 {
@@ -9,6 +10,21 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree
             int passivePointsGranted, NodePosition position, IReadOnlyList<string> modifiers)
             => (Id, Type, Name, IsAscendancyNode, CostsPassivePoint, PassivePointsGranted, Position, Modifiers) =
                 (id, type, name, isAscendancyNode, costsPassivePoint, passivePointsGranted, position, modifiers);
+        
+        private PassiveNodeDefinition(JsonPassiveNode passiveNode)
+            : this(passiveNode.Id,
+                   passiveNode.PassiveNodeType,
+                   passiveNode.Name,
+                   passiveNode.IsAscendancyNode,
+                   !passiveNode.IsRootNode && !passiveNode.IsAscendancyNode && !passiveNode.IsMultipleChoiceOption,
+                   passiveNode.PassivePointsGranted,
+                   new NodePosition(passiveNode.Position.X, passiveNode.Position.Y),
+                   passiveNode.StatDescriptions)
+        {
+
+        }
+
+        public static PassiveNodeDefinition Convert(this JsonPassiveNode passiveNode) => new PassiveNodeDefinition(passiveNode);
 
         public ushort Id { get; }
 
