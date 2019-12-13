@@ -102,6 +102,7 @@ Metadata/Items/Weapons/OneHandWeapons/OneHandMaces/OneHandMaceM1
 Metadata/Items/Weapons/OneHandWeapons/OneHandMaces/SceptreM1
 Metadata/Items/Weapons/OneHandWeapons/OneHandSwords/OneHandSword13
 Metadata/Items/Weapons/OneHandWeapons/OneHandThrustingSwords/RapierM1
+Metadata/Items/Weapons/OneHandWeapons/Wands/WandAtlas1
 Metadata/Items/Weapons/OneHandWeapons/Wands/WandM1
 Metadata/Items/Weapons/TwoHandWeapons/Bows/Bow14
 Metadata/Items/Weapons/TwoHandWeapons/Bows/Bow15
