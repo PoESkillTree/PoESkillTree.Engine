@@ -16,7 +16,7 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
         [TestCase(-10f, -10f, 10f, -10f)]
         [TestCase(-10f, -10f, -10f, 10f)]
         [TestCase(-10f, -10f, -10f, -10f)]
-        public void JsonPassiveTree_CalculateBounds(float minX, float minY, float maxX, float maxY)
+        public void JsonPassiveTree_Bounds(float minX, float minY, float maxX, float maxY)
         {
             var tree = new JsonPassiveTree
             {
@@ -36,9 +36,9 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
         [TestCase("test/")]
         [TestCase("/test/")]
         [TestCase("http://web.poecdn.com/image/")]
-        public void JsonPassiveTree_CalculateImageRoot(string imageRoot)
+        public void JsonPassiveTree_ImageRoot(string imageRoot)
         {
-            var tree = new JsonPassiveTree()
+            var tree = new JsonPassiveTree
             {
                 ImageRoot = imageRoot
             };
@@ -46,6 +46,21 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
             Assert.IsTrue(tree.ImageRoot.StartsWith('/'));
             Assert.IsTrue(tree.ImageRoot.EndsWith('/'));
             Assert.IsFalse(tree.ImageRoot.Contains(tree.WebCDN.AbsoluteUri));
+        }
+
+        [TestCase(new[] { 1f, 2f, 3f, 4f }, ExpectedResult = 4f)]
+        [TestCase(new[] { 1f, 2f, 3f }, ExpectedResult = 3f)]
+        [TestCase(new[] { 1f, 2f }, ExpectedResult = 2f)]
+        [TestCase(new[] { 1f }, ExpectedResult = 1f)]
+        [TestCase(new float[0], ExpectedResult = 1f)]
+        public float JsonPassiveTree_MaxImageZoomLevel(float[] imageZoomLevels)
+        {
+            var tree = new JsonPassiveTree
+            {
+                ImageZoomLevels = imageZoomLevels
+            };
+
+            return tree.MaxImageZoomLevel;
         }
     }
 }

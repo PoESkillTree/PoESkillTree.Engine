@@ -50,6 +50,12 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
 
         #region Calculated Properties
         [JsonIgnore]
+        public int MaxImageZoomLevelIndex => ImageZoomLevels.Length - 1;
+
+        [JsonIgnore]
+        public float MaxImageZoomLevel => MaxImageZoomLevelIndex >= 0 ? ImageZoomLevels[MaxImageZoomLevelIndex] : 1f;
+
+        [JsonIgnore]
         private RectangleF? _bounds = null;
 
         [JsonIgnore]

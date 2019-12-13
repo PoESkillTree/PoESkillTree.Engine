@@ -92,6 +92,7 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
                 OriginalY = y,
                 ZoomLevel = zoomLevel,
             };
+            
             var node = new JsonPassiveNode
             {
                 PassiveNodeGroup = group,

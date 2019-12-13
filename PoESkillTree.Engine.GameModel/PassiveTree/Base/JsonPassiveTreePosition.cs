@@ -12,7 +12,18 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
         public virtual float OriginalY { get; set; } = 0f;
 
         [JsonIgnore]
-        public virtual float ZoomLevel { get; set; } = 1f;
+        protected float _zoomLevel = 1f;
+
+        [JsonIgnore]
+        public virtual float ZoomLevel
+        {
+            get => _zoomLevel;
+            set
+            {
+                _position = null;
+                _zoomLevel = value;
+            }
+        }
 
         [JsonIgnore]
         protected Vector2? _position = null;

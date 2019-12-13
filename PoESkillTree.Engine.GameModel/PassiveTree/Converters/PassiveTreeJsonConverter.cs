@@ -58,27 +58,25 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Converters
             }
 
             serializer.Populate(jObject.CreateReader(), passiveTree);
-            
+
             // The PassiveNodeInIds are always the Id of the "Current Node" instead of the Id of the "In Node"
             foreach (var passiveNode in passiveTree.PassiveNodes.Values)
             {
                 passiveNode.PassiveNodeInIds = new HashSet<ushort>();
             }
 
-            var maxZoomLevel = passiveTree.ImageZoomLevels[passiveTree.ImageZoomLevels.Length - 1];
-
             // Hydrate Extra Images
             foreach (var characterClass in passiveTree.ExtraImages.Keys)
             {
                 // Set the Maxium Zoom Level to be the Zoom Level of the Extra Images
-                passiveTree.ExtraImages[characterClass].ZoomLevel = maxZoomLevel;
+                passiveTree.ExtraImages[characterClass].ZoomLevel = passiveTree.MaxImageZoomLevel;
             }
 
             // Hydrate Passive Node Groups
             foreach (var passiveNodeGroup in passiveTree.PassiveNodeGroups.Keys)
             {
                 // Set the Maxium Zoom Level to be the Zoom Level of the Passive Node Group
-                passiveTree.PassiveNodeGroups[passiveNodeGroup].ZoomLevel = maxZoomLevel;
+                passiveTree.PassiveNodeGroups[passiveNodeGroup].ZoomLevel = passiveTree.MaxImageZoomLevel;
             }
 
             // Hydrate Passive Nodes
@@ -86,13 +84,13 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Converters
             {
                 passiveNode.SkillsPerOrbit = passiveTree.Constants.SkillsPerOrbit;
                 passiveNode.OrbitRadii = passiveTree.Constants.OrbitRadii;
-                passiveNode.ZoomLevel = maxZoomLevel;
+                passiveNode.ZoomLevel = passiveTree.MaxImageZoomLevel;
 
                 if (passiveTree.PassiveNodeGroups.ContainsKey(passiveNode.PassiveNodeGroupId))
                 {
                     passiveNode.PassiveNodeGroup = passiveTree.PassiveNodeGroups[passiveNode.PassiveNodeGroupId];
                 }
-                
+
                 // Populate proper "In Nodes"
                 foreach (var passiveNodeOutId in passiveNode.PassiveNodeOutIds)
                 {
