@@ -73,6 +73,9 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
         }
 
         [JsonIgnore]
+        public Uri BasePassiveTreeURI => new Uri("https://www.pathofexile.com/passive-skill-tree/");
+        
+        [JsonIgnore]
         public Uri WebCDN => new Uri(@"http://web.poecdn.com/");
 
         [JsonIgnore]
