@@ -67,7 +67,7 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
         }
 
         [JsonIgnore]
-        public Uri WebCDN => new Uri(@"http://web.poecdn.com");
+        public Uri WebCDN => new Uri(@"http://web.poecdn.com/");
 
         [JsonIgnore]
         public Uri ImageUri => new Uri(WebCDN, ImageRoot);
@@ -90,7 +90,7 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
 
                 return _imageRoot;
             }
-            set => _imageRoot = $"{value.TrimEnd('/')}/".Replace(WebCDN.AbsoluteUri, string.Empty);
+            set => _imageRoot = $"/{value.TrimStart('/').TrimEnd('/')}/".Replace(WebCDN.AbsoluteUri, string.Empty);
         }
         #endregion
     }

@@ -5,7 +5,7 @@ using System.Numerics;
 
 namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
 {
-    public class JsonPassiveNode
+    public class JsonPassiveNode : JsonPassiveTreePosition
     {
         [JsonProperty("id")]
         public ushort Id { get; set; } = 0;
@@ -81,6 +81,9 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
 
         #region Assigned Properties
         [JsonIgnore]
+        public bool IsSkilled { get; set; } = false;
+
+        [JsonIgnore]
         public float[] SkillsPerOrbit { get; set; } = new float[] { 1f, 6f, 12f, 12f, 40f };
 
         [JsonIgnore]
@@ -139,15 +142,15 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
             }
             set => _passiveNodeType = value;
         }
+        
+        [JsonIgnore]
+        private double? _arc = null;
 
         [JsonIgnore]
-        public double Arc => 2 * Math.PI * SkillsPerOrbitIndex / SkillsPerOrbit[OrbitRadiiIndex];
+        public double Arc => _arc ??= 2 * Math.PI * SkillsPerOrbitIndex / SkillsPerOrbit[SkillsPerOrbitIndex];
 
         [JsonIgnore]
-        private Vector2? _position = null;
-
-        [JsonIgnore]
-        public Vector2 Position
+        public override Vector2 Position
         {
             get
             {
@@ -159,7 +162,8 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
                     }
                     else
                     {
-                        _position = PassiveNodeGroup.Position - new Vector2(OrbitRadii[OrbitRadiiIndex] * (float)Math.Sin(-Arc), OrbitRadii[OrbitRadiiIndex] * (float)Math.Cos(-Arc));
+                        var orbitRadius = OrbitRadii[OrbitRadiiIndex] * ZoomLevel;
+                        _position = PassiveNodeGroup.Position - new Vector2(orbitRadius * (float)Math.Sin(-Arc), orbitRadius * (float)Math.Cos(-Arc));
                     }
                 }
 

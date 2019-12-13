@@ -64,12 +64,29 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Converters
             {
                 passiveNode.PassiveNodeInIds = new HashSet<ushort>();
             }
-            
+
+            var maxZoomLevel = passiveTree.ImageZoomLevels[passiveTree.ImageZoomLevels.Length - 1];
+
+            // Hydrate Extra Images
+            foreach (var characterClass in passiveTree.ExtraImages.Keys)
+            {
+                // Set the Maxium Zoom Level to be the Zoom Level of the Extra Images
+                passiveTree.ExtraImages[characterClass].ZoomLevel = maxZoomLevel;
+            }
+
+            // Hydrate Passive Node Groups
+            foreach (var passiveNodeGroup in passiveTree.PassiveNodeGroups.Keys)
+            {
+                // Set the Maxium Zoom Level to be the Zoom Level of the Passive Node Group
+                passiveTree.PassiveNodeGroups[passiveNodeGroup].ZoomLevel = maxZoomLevel;
+            }
+
             // Hydrate Passive Nodes
             foreach (var passiveNode in passiveTree.PassiveNodes.Values)
             {
                 passiveNode.SkillsPerOrbit = passiveTree.Constants.SkillsPerOrbit;
                 passiveNode.OrbitRadii = passiveTree.Constants.OrbitRadii;
+                passiveNode.ZoomLevel = maxZoomLevel;
 
                 if (passiveTree.PassiveNodeGroups.ContainsKey(passiveNode.PassiveNodeGroupId))
                 {
