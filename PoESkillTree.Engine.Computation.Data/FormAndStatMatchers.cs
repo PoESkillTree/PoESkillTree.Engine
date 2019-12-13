@@ -186,6 +186,10 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "your critical strike chance is lucky", TotalOverride, 1, Flag.CriticalStrikeChanceIsLucky },
                 // - speed
                 { "actions are #% slower", PercentLess, Value, Stat.ActionSpeed },
+                {
+                    "action speed cannot be modified to below base value",
+                    TotalOverride, 1, Stat.ActionSpeed.Minimum
+                },
                 { @"\+# seconds to attack time", BaseAdd, Value, Stat.BaseCastTime.With(DamageSource.Attack) },
                 // - projectiles
                 { "fires? # additional projectiles", BaseAdd, Value, Projectile.Count },
@@ -403,6 +407,10 @@ namespace PoESkillTree.Engine.Computation.Data
                     "(a )?base mine detonation time (of|is) # seconds",
                     TotalOverride, Value, Stat.BaseCastTime, With(Skills.DetonateMines)
                 },
+                {
+                    @"attack skills have \+# to maximum number of summoned ballista totems",
+                    BaseAdd, Value, Totems.CombinedInstances.Maximum, With(Keyword.From(GameModel.Skills.Keyword.Ballista))
+                },
                 // minions
                 { "can summon up to # golem at a time", BaseSet, Value, Golems.CombinedInstances.Maximum },
                 { "maximum # summoned golem", BaseSet, Value, Golems.CombinedInstances.Maximum },
@@ -522,6 +530,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "(?<!chance to |when you )gain a flask charge", BaseAdd, 100, Flask.ChanceToGainCharge },
                 { "recharges # charges?", BaseAdd, Value * 100, Flask.ChanceToGainCharge },
                 { "flasks gain # charges?", BaseAdd, Value * 100, Flask.ChanceToGainCharge },
+                { "gain # charges?", BaseAdd, Value * 100, Flask.ChanceToGainCharge },
                 { "instant recovery", BaseSet, 100, Flask.InstantRecovery },
                 // item quantity/quality
                 // range and area of effect

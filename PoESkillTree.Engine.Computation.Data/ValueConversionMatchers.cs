@@ -135,7 +135,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "for each trap", Traps.CombinedInstances.Value },
                 { "for each mine", Mines.CombinedInstances.Value },
                 { "for each trap and mine you have", Traps.CombinedInstances.Value + Mines.CombinedInstances.Value },
-                { "(per|for each) totem", Totems.CombinedInstances.Value },
+                { "(per|for each)( summoned)? totem", Totems.CombinedInstances.Value },
                 {
                     "each mine( from supported skills)? applies (?<inner>.*) to( hits against)? enemies near it, up to( a maximum of)? #%",
                     CappedMultiplier(MineAura(), Value),
@@ -154,6 +154,10 @@ namespace PoESkillTree.Engine.Computation.Data
                 {
                     "(per|for every) # ({AttributeStatMatchers}) (from|on) unallocated passives in radius",
                     PerStat(PassiveTree.UnallocatedInModifierSourceJewelRadius(Reference.AsStat), Value)
+                },
+                {
+                    "passive skills in radius also grant:",
+                    PassiveTree.AllocatedNodeInModifierSourceJewelRadiusCount
                 },
                 // unique
                 {

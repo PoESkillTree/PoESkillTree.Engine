@@ -145,6 +145,11 @@ namespace PoESkillTree.Engine.Computation.Data
                     (Or(MainHandAttackWith(Tags.Mace), MainHandAttackWith(Tags.Sceptre)),
                         Or(OffHandAttackWith(Tags.Mace), OffHandAttackWith(Tags.Sceptre)))
                 },
+                {
+                    "to mace and sceptre attacks",
+                    (Or(MainHandAttackWith(Tags.Mace), MainHandAttackWith(Tags.Sceptre)),
+                        Or(OffHandAttackWith(Tags.Mace), OffHandAttackWith(Tags.Sceptre)))
+                },
                 { "with one handed weapons", AttackWith(Tags.OneHandWeapon) },
                 {
                     "with one handed melee weapons",
@@ -358,7 +363,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "if you detonated (mines|a mine) recently", Skills.DetonateMines.Cast.Recently },
                 { "if you've placed a mine or thrown a trap recently", Or(Traps.Cast.Recently, Mines.Cast.Recently) },
                 // totems
-                { "^totems", For(Entity.Totem) },
+                { "^totems'?", For(Entity.Totem) },
                 { "totems (gain|have)", For(Entity.Totem) },
                 { "you and your totems", Or(For(Self), For(Entity.Totem)) },
                 { "(spells cast|attacks used|skills used) by totems (have a|have)", With(Keyword.Totem) },

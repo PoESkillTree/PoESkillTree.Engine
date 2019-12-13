@@ -2,6 +2,8 @@
 // Requires not yet implemented stats
 // - Stat that modifies Mana.Cost(Total). Could be done via behavior.
 Channelling Skills have -3 to Total Mana Cost
+Channelling Skills have -1 to Total Mana Cost
+Non-Channelling Skills have -7 to Total Mana Cost
 -7 to Total Mana Cost of Skills
 // - Triggered
 35% less Damage if Triggered
@@ -62,6 +64,7 @@ Remove a random Elemental Ailment when you use a Mana Flask
 +1 to Level of Socketed Projectile Gems
 +1 to Level of Socketed Spell Gems
 +2 to Level of Socketed Trap Gems
++2 to Level of Socketed Trap or Mine Gems
 Socketed Attacks have +1% to Critical Strike Chance
 Socketed Attacks have +30% to Critical Strike Multiplier
 Socketed Gems Chain 1 additional times
@@ -80,7 +83,14 @@ Socketed Spells have +30% to Critical Strike Multiplier
 +5% to Quality of Socketed Gems
 +4% to Quality of Socketed Support Gems
 // Equipped gem modifiers
++1 to Level of all Chaos Spell Skill Gems
++1 to Level of all Cold Spell Skill Gems
++1 to Level of all Fire Spell Skill Gems
++1 to Level of all Lightning Spell Skill Gems
++1 to Level of all Minion Skill Gems
 +2 to Level of all Minion Skill Gems
++1 to Level of all Physical Spell Skill Gems
++1 to Level of all Spell Skill Gems
 // Item-inherent skills
 Curse Enemies with Level 10 Flammability on Hit
 Curse Enemies with Level 8 Assassin's Mark on Hit
@@ -180,6 +190,8 @@ Socketed Gems are Supported by Level 16 Trap And Mine Damage
 Socketed Gems are Supported by Level 18 Unbound Ailments
 Socketed Gems are Supported by Level 16 Vicious Projectiles
 Socketed Gems are Supported by Level 16 Volley
+Socketed Gems are Supported by Level 16 Inspiration
+Socketed Gems are Supported by Level 18 Blastchain Mine
 Trigger a Socketed Spell when you Use a Skill
 Trigger Socketed Spells when you Focus
 Triggers Level 20 Spectral Spirits when Equipped

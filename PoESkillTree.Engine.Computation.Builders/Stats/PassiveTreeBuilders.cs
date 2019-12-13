@@ -32,6 +32,11 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         public IStatBuilder ConnectsToClass(CharacterClass characterClass)
             => FromIdentity($"{characterClass}.TreeConnectedTo", typeof(bool));
 
+        public ValueBuilder AllocatedNodeInModifierSourceJewelRadiusCount =>
+            new ValueBuilder(new ValueBuilderImpl(
+                ps => BuildInModifierSourceJewelRadiusValue(ps, _ => new ValueBuilder(new ValueBuilderImpl(1)), v => v),
+                c => AllocatedNodeInModifierSourceJewelRadiusCount));
+
         public ValueBuilder TotalInModifierSourceJewelRadius(IStatBuilder stat)
             => new ValueBuilder(new ValueBuilderImpl(
                 ps => BuildInModifierSourceJewelRadiusValue(ps, stat, _ => new Constant(true)),
@@ -49,7 +54,11 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
                 c => UnallocatedInModifierSourceJewelRadius(stat.Resolve(c))));
 
         private IValue BuildInModifierSourceJewelRadiusValue(
-            BuildParameters parameters, IStatBuilder stat, Func<IValue, IValue> condition)
+            BuildParameters parameters, IStatBuilder stat, Func<IValue, IValue> condition) =>
+            BuildInModifierSourceJewelRadiusValue(parameters, d => stat.AsPassiveNodePropertyFor(d.Id).Value, condition);
+
+        private IValue BuildInModifierSourceJewelRadiusValue(
+            BuildParameters parameters, Func<PassiveNodeDefinition, ValueBuilder> value, Func<IValue, IValue> condition)
         {
             return GetNodesInRadius(parameters)
                 .Select(GetValue)
@@ -57,8 +66,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
                 .Build(parameters);
 
             ValueBuilder GetValue(PassiveNodeDefinition d)
-                => stat.AsPassiveNodePropertyFor(d.Id).Value
-                    .If(condition(NodeSkilled(d.Id).Value.Build(parameters)));
+                => value(d).If(condition(NodeSkilled(d.Id).Value.Build(parameters)));
         }
 
         public IStatBuilder MultipliedAttributeForNodesInModifierSourceJewelRadius(

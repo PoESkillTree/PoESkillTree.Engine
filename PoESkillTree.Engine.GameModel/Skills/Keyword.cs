@@ -150,6 +150,11 @@ namespace PoESkillTree.Engine.GameModel.Skills
         /// Has no equivalent gem tag or ActiveSkillType.
         /// </summary>
         Banner,
+
+        /// <summary>
+        /// Equivalent to the ActiveSkillType.
+        /// </summary>
+        Ballista,
     }
 
     public static class KeywordExtensions
@@ -191,6 +196,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 { Keyword.Channelling, (_, types, __) => types.Contains(ActiveSkillType.Channelling) },
                 { Keyword.Guard, (_, types, __) => types.Contains(ActiveSkillType.Guard) },
                 { Keyword.Banner, (name, _, __) => name.EndsWith("Banner") },
+                { Keyword.Ballista, (_, types, __) => types.Contains(ActiveSkillType.Ballista) },
             };
 
         public static bool IsOnSkill(this Keyword @this,

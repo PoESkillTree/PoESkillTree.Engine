@@ -168,6 +168,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "maximum ({DamageTypeMatchers}) resistance", Reference.AsDamageType.Resistance.Maximum },
                 { "all maximum resistances", Elemental.And(Chaos).Resistance.Maximum },
                 { "all maximum elemental resistances", Elemental.Resistance.Maximum },
+                { "total physical damage reduction against your hits", Physical.Penetration },
                 { "physical damage reduction", Physical.Resistance },
                 // - leech
                 {
@@ -335,6 +336,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "mine detonation area of effect", Stat.Mine.DetonationAoE },
                 { "trap throwing speed", Stat.Trap.Speed },
                 { "mine (laying|throwing) speed", Stat.Mine.Speed },
+                { "trap and mine throwing speed", Stat.Trap.Speed, Stat.Mine.Speed },
                 { "totem placement speed", Stat.Totem.Speed },
                 { "totem life", Life.For(Entity.Totem) },
                 // minions
@@ -452,7 +454,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "chance for flasks to gain a charge", Flask.ChanceToGainCharge },
                 { "recovery applied instantly", Flask.InstantRecovery },
                 {
-                    "chance for your flasks to not consume charges",
+                    "chance for (your flasks|flasks you use) to not consume charges",
                     Stat.IndependentTotal("Flask.ChanceToNotConsumeCharges")
                 },
                 // item quantity/quality

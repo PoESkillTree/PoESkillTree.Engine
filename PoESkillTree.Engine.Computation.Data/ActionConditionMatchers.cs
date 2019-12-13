@@ -55,7 +55,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "affecting enemies you kill", Kill.On },
                 // hit
                 { "when hit", Hit.By(Enemy).On },
-                { "when you are hit", Hit.By(Enemy).On },
+                { "when you are hit( by an enemy)?", Hit.By(Enemy).On },
                 { "with hits", Hit.On },
                 { "for each enemy hit by (your )?attacks", And(With(Keyword.Attack), Hit.On) },
                 { "for each enemy hit by (your )?spells", And(With(Keyword.Spell), Hit.On) },

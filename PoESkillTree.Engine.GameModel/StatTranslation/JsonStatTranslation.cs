@@ -40,6 +40,9 @@ namespace PoESkillTree.Engine.GameModel.StatTranslation
 
         [JsonProperty("max")]
         public int Max { get; set; } = int.MaxValue;
+
+        [JsonProperty("negated")]
+        public bool IsNegated { get; set; }
     }
 
 #pragma warning restore

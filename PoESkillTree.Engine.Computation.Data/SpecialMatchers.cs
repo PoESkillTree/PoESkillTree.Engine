@@ -414,10 +414,6 @@ namespace PoESkillTree.Engine.Computation.Data
                 // Ascendancies
                 // - Juggernaut
                 {
-                    "action speed cannot be modified to below base value",
-                    TotalOverride, 1, Stat.ActionSpeed.Minimum
-                },
-                {
                     "movement speed cannot be modified to below base value",
                     TotalOverride, 1, Stat.MovementSpeed.Minimum
                 },

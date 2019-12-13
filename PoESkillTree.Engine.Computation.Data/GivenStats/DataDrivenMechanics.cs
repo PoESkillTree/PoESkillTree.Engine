@@ -128,7 +128,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                     dt => DamageTypeBuilders.From(dt).PenetrationWithNonCrits,
                     (dt, ignoreResistance, penetration)
                         => ValueFactory.If(ignoreResistance.IsSet).Then(0)
-                            .Else(DamageTypeBuilders.From(dt).Resistance.For(Enemy).Value - penetration.Value)
+                            .Else(MetaStats.ResistanceAgainstHits(dt).For(Enemy).Value - penetration.Value)
                 },
                 {
                     TotalOverride, dt => MetaStats.EnemyResistanceAgainstCrits(dt),
@@ -136,7 +136,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                     dt => DamageTypeBuilders.From(dt).PenetrationWithCrits,
                     (dt, ignoreResistance, penetration)
                         => ValueFactory.If(ignoreResistance.Value.Eq(1)).Then(0)
-                            .Else(DamageTypeBuilders.From(dt).Resistance.For(Enemy).Value - penetration.Value)
+                            .Else(MetaStats.ResistanceAgainstHits(dt).For(Enemy).Value - penetration.Value)
                 },
 
                 // skill damage over time
@@ -241,7 +241,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                 {
                     BaseAdd, MetaStats.ResistanceAgainstHits(DamageType.Physical),
                     100 * Armour.Value /
-                    (Armour.Value + 10 * Physical.Damage.WithSkills.With(AttackDamageHand.MainHand).For(Enemy).Value)
+                    (Armour.Value + 10 * Physical.Damage.WithSkills.With(AttackDamageHand.MainHand).For(Entity.OpponentOfSelf).Value)
                 },
                 { BaseSet, MetaStats.ResistanceAgainstHits(DamageType.Physical).Maximum, 90 },
                 { TotalOverride, MetaStats.ResistanceAgainstHits(DamageType.Lightning), Lightning.Resistance.Value },
@@ -252,6 +252,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                     BaseAdd, dt => DamageTypeBuilders.From(dt).Resistance,
                     dt => DamageTypeBuilders.From(dt).Exposure.Value
                 },
+                { TotalOverride, MetaStats.EnemyResistanceAgainstNonCrits(DamageType.Physical).Minimum, 0 },
                 // damage mitigation (1 - (1 - resistance / 100) * damage taken)
                 {
                     TotalOverride, MetaStats.MitigationAgainstHits,

@@ -1,4 +1,6 @@
-﻿namespace PoESkillTree.Engine.GameModel.Modifiers
+﻿using System.Runtime.Serialization;
+
+namespace PoESkillTree.Engine.GameModel.Modifiers
 {
     /// <summary>
     /// The generation type of a mod as it appears in the GGPK.
@@ -14,5 +16,7 @@
         Corrupted,
         Tempest,
         Enchantment,
+        [EnumMember(Value = "blight_tower")]
+        BlightTower,
     }
 }

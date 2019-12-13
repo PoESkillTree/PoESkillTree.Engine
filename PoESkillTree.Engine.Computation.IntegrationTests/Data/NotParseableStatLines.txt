@@ -1,6 +1,6 @@
 ﻿// not handled (no useful usage)
 // Magic/Rare items: ===================================================================================================
--30 Physical Damage taken from Attacks
+-30 Physical Damage taken from Attack Hits
 Minions deal 35% increased Damage against Abyssal Monsters
 35% increased Damage against Abyssal Monsters
 5% additional Physical Damage Reduction against Abyssal Monsters
@@ -11,19 +11,21 @@ When you Kill a Rare Monster, 17% chance to gain one of its Modifiers for 10 sec
 12% increased Movement speed while on Burning, Chilled or Shocked ground
 Removes 10% of Life Recovered from Mana when used
 Removes 15% of Mana Recovered from Life when used
-4% chance to Avoid Lightning Damage when Hit
-5% chance to Avoid Cold Damage when Hit
+4% chance to Avoid Lightning Damage from Hits
+5% chance to Avoid Cold Damage from Hits
 6% chance to Avoid Elemental Damage from Hits during Soul Gain Prevention
-6% chance to Avoid Fire Damage when Hit
+6% chance to Avoid Fire Damage from Hits
 7% chance to avoid Projectiles
 Corrupted Blood cannot be inflicted on you
 Place an additional Mine
+Throw an additional Mine
 Skills which Throw Traps throw up to 1 additional Trap
 Unaffected by Burning Ground
 Unaffected by Chilled Ground
 Unaffected by Shocked Ground
 Unaffected by Desecrated Ground
 Reflects 2 Physical Damage to Melee Attackers
+Flask Effect is not removed at Full Mana
 // Master crafted: =====================================================================================================
 15% of Damage Taken from Hits is Leeched as Life during Flask Effect
 7% increased Brand Attachment range
@@ -39,6 +41,7 @@ Suffixes Cannot Be Changed
 Attack Projectiles Return to you after hitting targets
 Hits with this Weapon have Culling Strike against Bleeding Enemies
 // Unique/Implicit Weapons: ============================================================================================
+Can roll Minion Modifiers
 // Unique/Implicit Armour: =============================================================================================
 Gore Footprints
 Enemies Cannot Leech Mana From you
@@ -63,23 +66,24 @@ Golems Summoned in the past 8 seconds deal 40% increased Damage
 50% chance to gain an additional Vaal Soul per Enemy Shattered
 25% chance to gain an additional Vaal Soul on Kill
 With at least 40 Intelligence in Radius, Frostbolt Projectiles gain 40% increased Projectile Speed per second
-With at least 40 Dexterity in Radius, Ethereal Knives fires Projectiles in a Nova
-With at least 40 Intelligence in Radius, Spark fires Projectiles in a Nova
+With at least 40 Dexterity in Radius, Ethereal Knives fires Projectiles in a circle
+With at least 40 Intelligence in Radius, Spark fires Projectiles in a circle
 10% increased Experience Gain for Corrupted Gems
 With at least 40 Intelligence in Radius, Fireball Projectiles gain Radius as they travel farther, up to +4 Radius
-With at least 40 Intelligence in Radius, Raised Spectres have a 50% chance to gain Soul Eater for 30 seconds on Kill
+With at least 40 Intelligence in Radius, Raised Spectres have a 50% chance to gain Soul Eater for 20 seconds on Kill
 With at least 40 Strength in Radius, Ground Slam has a 50% increased angle
 With at least 40 Dexterity in Radius, Burning Arrow has a 10% chance to spread Tar if it does not Ignite an Enemy
 Hits have 160% increased Critical Strike Chance against you
 With at least 40 Strength in Radius, 20% increased Rarity of Items dropped by Enemies Shattered by Glacial Hammer
 With at least 40 Dexterity in Radius, each Spectral Throw Projectile gains 5% increased Damage each time it Hits
-With at least 40 Dexterity in Radius, Barrage fires an additional 2 projectiles simultaneously on the first and final attacks
+With at least 40 Dexterity in Radius, Barrage fires an additional 6 projectiles simultaneously on the first and final attacks
 With at least 40 Dexterity in Radius, Burning Arrow has a 10% chance to spread Burning Ground if it Ignites an Enemy
 With at least 40 Intelligence in Radius, Cold Snap grants Power Charges instead of Frenzy Charges when Enemies die in its Area With at least 40 Intelligence in Radius, Cold Snap's Cooldown can be bypassed by Power Charges instead of Frenzy Charges
 Bleeding you inflict is Reflected to you
 Poison you inflict is Reflected to you if you have fewer than 100 Poisons on you
 With 40 Intelligence in Radius, Glacial Cascade has an additional Burst
 With 4 Notables Allocated in Radius, When you Kill a Rare monster, you gain 1 of its Modifiers for 20 seconds
+With at least 40 Dexterity in Radius, Burning Arrow can inflict an additional Ignite on an Enemy and cannot apply its Burning Debuff
 // Fishing Rods: =======================================================================================================
 17% increased Quantity of Fish Caught
 22% reduced Fishing Pool Consumption
@@ -272,10 +276,12 @@ Hits that Stun Enemies have Culling Strike
 Attack Projectiles Return to you from final Target
 Returning Projectiles Pierce all Targets
 Mines have 10% increased Detonation Speed
+Mines have 14% increased Detonation Speed
 Mines have 20% increased Detonation Speed
 Moving while Bleeding doesn't cause Minions to take extra Damage
 Skills supported by Unleash have +1 to maximum number of Seals
 Strike Skills target 1 additional nearby Enemy
+You are Unaffected by Bleeding while Leeching
 // Side effect from how jewels are currently handled, the stat doesn't actually exist
 +1 Jewel Socket
 // Ascendancies: =======================================================================================================

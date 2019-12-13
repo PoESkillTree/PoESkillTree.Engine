@@ -39,5 +39,6 @@
         public const string Or = "boolean_or";
         public const string Not = "boolean_not";
         public const string Guard = "guard";
+        public const string Ballista = "ballista";
     }
 }
