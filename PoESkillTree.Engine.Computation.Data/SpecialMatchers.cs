@@ -114,6 +114,14 @@ namespace PoESkillTree.Engine.Computation.Data
                     "maximum # stages",
                     BaseSet, Value, Stat.SkillStage.Maximum
                 },
+                {
+                    "supported skills can only be used with bows",
+                    TotalOverride, 0, Damage, Not(MainHand.Has(ItemClass.Bow))
+                },
+                {
+                    "supported skills can only be used with bows and wands",
+                    TotalOverride, 0, Damage, Not(Or(MainHand.Has(ItemClass.Bow), MainHand.Has(ItemClass.Wand)))
+                },
                 // Jewels
                 {
                     "primordial",
@@ -346,9 +354,14 @@ namespace PoESkillTree.Engine.Computation.Data
                     Reference.AsDamageType.Resistance.For(Entity.Totem)
                 },
                 {
-                    // Multistrike Support
-                    "(first|second) repeat of supported skills deals #% more damage",
-                    PercentMore, Value / 3, Damage
+                    // (Awakened) Multistrike Support
+                    "(first|second|third) repeat of supported skills deals #% more damage",
+                    BaseAdd, Value, Stat.DamageMultiplierOverRepeatCycle
+                },
+                {
+                    // Awakened Spell Echo Support
+                    "final repeat of supported skills has #% chance to deal double damage",
+                    BaseAdd, Value / Stat.SkillRepeats.Value, Damage.ChanceToDouble
                 },
                 {
                     // Unleash Support

@@ -130,7 +130,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             switch (stat.StatId)
             {
                 case "base_skill_number_of_additional_hits":
-                    _parsedModifiers!.AddGlobalForMainSkill(MetaStats.SkillNumberOfHitsPerCast,
+                    _parsedModifiers!.AddGlobalForMainSkill(_builderFactories.StatBuilders.SkillNumberOfHitsPerCast,
                         Form.BaseAdd, stat.Value, partCondition);
                     return true;
                 case "skill_double_hits_when_dual_wielding":

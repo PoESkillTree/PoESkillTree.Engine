@@ -97,6 +97,9 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             { BaseSet, Traps.CombinedInstances.Maximum, 15 },
             { BaseSet, Mines.CombinedInstances.Maximum, 15 },
             { BaseSet, Totems.CombinedInstances.Maximum, 1 },
+            { BaseSet, Stat.Totem.BaseTime, 0.6 },
+            { BaseSet, Stat.Trap.BaseTime, 0.5 },
+            { BaseSet, Stat.Mine.BaseTime, 0.5 },
             // rage
             { BaseSet, Charge.Rage.Amount.Maximum, 50 },
             { BaseSet, Charge.RageEffect, 1 },

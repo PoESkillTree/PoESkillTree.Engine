@@ -235,6 +235,10 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 { @"chains \+# times", BaseAdd, Value, Projectile.ChainCount },
                 { @"(supported )?skills chain \+# times", BaseAdd, Value, Projectile.ChainCount },
+                {
+                    "fires? projectiles sequentially",
+                    TotalOverride, Projectile.Count.Value, Stat.SkillNumberOfHitsPerCast
+                },
                 // - other
                 { "(your )?hits can't be evaded", TotalOverride, 100, Stat.ChanceToHit },
                 { "can't be evaded", TotalOverride, 100, Stat.ChanceToHit },
@@ -400,6 +404,8 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 { "skills cost no mana", TotalOverride, 0, Mana.Cost },
                 { "you can cast an additional brand", BaseAdd, 1, Skills[Keyword.Brand].CombinedInstances },
+                { "repeat an additional time", BaseAdd, 1, Stat.SkillRepeats },
+                { "repeat # additional times", BaseAdd, Value, Stat.SkillRepeats },
                 // traps, mines, totems
                 { "trap lasts # seconds", BaseSet, Value, Stat.Trap.Duration },
                 { "mine lasts # seconds", BaseSet, Value, Stat.Mine.Duration },
@@ -414,6 +420,10 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 {
                     @"(attack|supported) skills have \+# to maximum number of summoned ballista totems",
+                    BaseAdd, Value, Totems.CombinedInstances.Maximum, With(Keyword.From(GameModel.Skills.Keyword.Ballista))
+                },
+                {
+                    @"\+# to maximum number of summoned ballista totems",
                     BaseAdd, Value, Totems.CombinedInstances.Maximum, With(Keyword.From(GameModel.Skills.Keyword.Ballista))
                 },
                 // minions
@@ -435,7 +445,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "you can have one additional curse", BaseAdd, 1, Buff.CurseLimit },
                 { "an additional curse can be applied to you", BaseAdd, 1, Buff.CurseLimit },
                 { "enemies can have # additional curse", BaseAdd, Value, Buff.CurseLimit.For(Enemy) },
-                { "you can apply an additional curse", BaseAdd, 1, Buff.CurseLimit.For(Enemy) },
+                { "(you|supported skills) can apply an additional curse", BaseAdd, 1, Buff.CurseLimit.For(Enemy) },
                 { "unaffected by curses", PercentLess, 100, Buffs(targets: Self).With(Keyword.Curse).Effect },
                 {
                     "unaffected by ({SkillMatchers})",
@@ -466,6 +476,7 @@ namespace PoESkillTree.Engine.Computation.Data
                     TotalOverride, 0, Skills.ModifierSourceSkill.Buff.EffectOn(Self)
                 },
                 { "totems cannot gain ({BuffMatchers})", TotalOverride, 0, Reference.AsBuff.On(Entity.Totem) },
+                { "maximum # ({BuffMatchers}) per enemy", TotalOverride, Value, Reference.AsBuff.StackCount.For(Enemy).Maximum },
                 // flags
                 // ailments
                 { "causes bleeding", TotalOverride, 100, Ailment.Bleed.Chance },
@@ -519,6 +530,10 @@ namespace PoESkillTree.Engine.Computation.Data
                 {
                     "({AilmentMatchers}) inflicted by this skill deals damage #% faster",
                     PercentIncrease, Value, Reference.AsAilment.TickRateModifier
+                },
+                {
+                    "damaging ailments inflicted with supported skills deal damage #% faster",
+                    PercentIncrease, Value, Ailment.Ignite.TickRateModifier, Ailment.Bleed.TickRateModifier, Ailment.Poison.TickRateModifier
                 },
                 // stun
                 { "(you )?cannot be stunned", TotalOverride, 100, Effect.Stun.Avoidance },

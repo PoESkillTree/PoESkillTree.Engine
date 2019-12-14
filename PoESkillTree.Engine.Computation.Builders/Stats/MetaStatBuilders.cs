@@ -161,7 +161,6 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
 
         public IStatBuilder SkillHitDamageSource => FromIdentity(typeof(DamageSource));
         public IStatBuilder SkillUsesHand(AttackDamageHand hand) => FromIdentity($"SkillUses.{hand}", typeof(bool));
-        public IStatBuilder SkillNumberOfHitsPerCast => FromIdentity(typeof(uint));
         public IStatBuilder SkillDoubleHitsWhenDualWielding => FromIdentity(typeof(bool));
 
         public IStatBuilder MainSkillId => FromFactory(StatFactory.MainSkillId);

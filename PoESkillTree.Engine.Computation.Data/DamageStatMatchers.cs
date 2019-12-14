@@ -106,6 +106,7 @@ namespace PoESkillTree.Engine.Computation.Data
                     Physical.Damage.WithSkills(DamageSource.Attack).With(Keyword.Melee), Not(MainHand.HasItem)
                 },
                 { "projectile attack damage", Damage.WithSkills(DamageSource.Attack).With(Keyword.Projectile) },
+                { "projectile damage from attack hits", Damage.WithSkills(DamageSource.Attack).With(Keyword.Projectile) },
                 {
                     "physical projectile attack damage",
                     Physical.Damage.WithSkills(DamageSource.Attack).With(Keyword.Projectile)

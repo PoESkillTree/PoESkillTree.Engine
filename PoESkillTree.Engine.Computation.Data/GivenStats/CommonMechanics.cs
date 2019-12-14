@@ -39,6 +39,9 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                 { PercentMore, Stat.Totem.Speed, ActionSpeedValueForPercentMore },
                 { PercentMore, Stat.Trap.Speed, ActionSpeedValueForPercentMore },
                 { PercentMore, Stat.Mine.Speed, ActionSpeedValueForPercentMore },
+                { BaseSet, Stat.Totem.Speed, Stat.Totem.BaseTime.Value.Invert },
+                { BaseSet, Stat.Trap.Speed, Stat.Trap.BaseTime.Value.Invert },
+                { BaseSet, Stat.Mine.Speed, Stat.Mine.BaseTime.Value.Invert },
                 // resistances/damage reduction
                 {
                     BaseAdd, dt => DamageTypeBuilders.From(dt).Resistance,

@@ -125,8 +125,6 @@ Only Deals Damage of the chosen Element Deals no Damage of other Damage Types
 36 Endurance Charges granted per one hundred nearby enemies
 Regenerate 0.5% of Debuff Damage as Life
 100% increased angle per stage, up to 300%
-Spell Repeats 3 times
-29% more Damage with Hits and Ailments per Repeat
 One impact every 0.1 seconds
 Has 4 Flames
 Modifiers to Cast Speed apply to the rotation speed of the Flames
@@ -190,13 +188,17 @@ Supported Skills apply supported Curses on Hit
 You cannot Cast Supported Curses
 Elemental Ailments caused by Supported Skills spread to other enemies in a Radius of 15
 Ignites caused by Supported Skills spread to other Enemies within a Radius of 20
-Supported Skills Repeat an additional time
-Supported Skills Repeat 2 additional times
 Supported Skills also fire Projectiles from up to 2 points on each side of you
+Supported Skills also fire Projectiles from up to 4 points on each side of you
+Supported Skills Fire Projectiles in a circle
+Supported Skills fire a Payload Arrow into the air Projectiles from the Supported Skill Fire from where the Payload Arrow lands
 Supported Skills will summon a Totem which uses that Skill
 Supported Skills will summon a Ballista Totem which uses that Skill
 Supported Area of Effect Skills also affect areas in front of and behind the targeted area
+Supported Area of Effect Skills also affect areas in front of, behind, and on each side of the targeted area
 Supported Strike Skills target 2 additional nearby Enemies
+Supported Strike Skills target 3 additional nearby Enemies
+Extra Targets for Supported Skills can be found 20% further away
 Supported Curses are Cast as Auras
 Supported Skills throw up to 2 additional Traps
 Supported Skills throw up to 4 additional Mines
@@ -256,7 +258,6 @@ Can catch up to 30 Returning Projectiles
 Projectiles Return to you
 Minions from Supported Skills are Defensive
 Minions from Supported Skills always target your Deathmarked Enemy if possible
-Fires Projectiles sequentially
 Fires Projectiles in a circle
 Fires Projectiles in a spiral
 Fires Projectiles at each nearby Enemy
@@ -264,6 +265,9 @@ Fires Projectiles in random directions
 Can queue up to 50 uses
 Mines cannot be Re-armed
 Returning Projectiles deal 75% less Damage
+Projectiles from Supported Skills Fork an additional Time
+Supported Curse Skills have 10% chance to apply to Hexproof Enemies
+Supported Curse Skills have 24% chance to apply to Hexproof Enemies
 // passive skills: =====================================================================================================
 10% Chance for Traps to Trigger an additional time
 Share Endurance, Frenzy and Power Charges with nearby party members

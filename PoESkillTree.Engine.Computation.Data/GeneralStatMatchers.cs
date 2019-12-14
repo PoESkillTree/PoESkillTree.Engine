@@ -261,6 +261,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "hit rate", Stat.HitRate },
                 { "projectile frequency", Stat.HitRate },
                 { "brand activation frequency", Stat.HitRate, With(Keyword.Brand) },
+                { "attack time", Stat.BaseCastTime.With(DamageSource.Attack) },
                 // regen and recharge
                 { "({PoolStatMatchers}) regeneration( rate)?", Reference.AsPoolStat.Regen },
                 { "energy shield recharge rate", EnergyShield.Recharge },
@@ -337,6 +338,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "trap throwing speed", Stat.Trap.Speed },
                 { "mine (laying|throwing) speed", Stat.Mine.Speed },
                 { "trap and mine throwing speed", Stat.Trap.Speed, Stat.Mine.Speed },
+                { "trap and mine throwing time", Stat.Trap.BaseTime, Stat.Mine.BaseTime },
                 { "totem placement speed", Stat.Totem.Speed },
                 { "totem life", Life.For(Entity.Totem) },
                 // minions
@@ -384,13 +386,9 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "effect of curse against players", Skills.ModifierSourceSkill.Buff.EffectOn(Entity.Character) },
                 // - chance
                 { "chance to (gain|grant) ({BuffMatchers})", Reference.AsBuff.Chance },
-                { "chance to fortify", Buff.Fortify.Chance },
-                { "chance to maim( enemies)?", Buff.Maim.Chance },
+                { "chance to ({BuffMatchers})( enemies)?", Reference.AsBuff.Chance },
                 { "chance for attacks to maim", Buff.Maim.Chance.With(DamageSource.Attack) },
-                { "chance to taunt( enemies)?", Buff.Taunt.Chance },
-                { "chance to blind( enemies)?", Buff.Blind.Chance },
                 { "chance to cover rare or unique enemies in ash", Buff.CoveredInAsh.Chance, Enemy.IsRareOrUnique },
-                { "chance to impale enemies", Buff.Impale.Chance },
                 { "chance to create consecrated ground", Ground.Consecrated.Chance },
                 // - duration
                 { "({BuffMatchers}) duration", Reference.AsBuff.Duration },

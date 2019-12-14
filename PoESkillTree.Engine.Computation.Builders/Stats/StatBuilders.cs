@@ -65,6 +65,9 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         public IStatBuilder CooldownRecoverySpeed => FromIdentity(typeof(double));
         public IStatBuilder Duration => FromIdentity(typeof(double));
         public IStatBuilder SecondaryDuration => FromIdentity(typeof(double));
+        public IStatBuilder SkillNumberOfHitsPerCast => FromIdentity(typeof(uint));
+        public IStatBuilder SkillRepeats => FromIdentity(typeof(uint));
+        public IStatBuilder DamageMultiplierOverRepeatCycle => FromIdentity(typeof(int));
         public IStatBuilder SkillStage => FromIdentity(typeof(uint), UserSpecifiedValue(double.MaxValue));
         public IStatBuilder MainSkillPart => FromIdentity(typeof(uint));
 
@@ -114,6 +117,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         }
 
         public IStatBuilder Speed => FromIdentity("ThrowingSpeed", typeof(double));
+        public IStatBuilder BaseTime => FromIdentity("BaseThrowingTime", typeof(double));
         public IStatBuilder Duration => FromIdentity(typeof(double));
         public IStatBuilder TriggerAoE => FromIdentity(typeof(int));
     }
@@ -125,6 +129,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         }
 
         public IStatBuilder Speed => FromIdentity("ThrowingSpeed", typeof(double));
+        public IStatBuilder BaseTime => FromIdentity("BaseThrowingTime", typeof(double));
         public IStatBuilder Duration => FromIdentity(typeof(double));
         public IStatBuilder DetonationAoE => FromIdentity(typeof(int));
     }
@@ -136,6 +141,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         }
 
         public IStatBuilder Speed => FromIdentity("PlacementSpeed", typeof(double));
+        public IStatBuilder BaseTime => FromIdentity("BasePlacementTime", typeof(double));
         public IStatBuilder Duration => FromIdentity(typeof(double));
     }
 

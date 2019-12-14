@@ -96,6 +96,10 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
         /// </summary>
         IStatBuilder SecondaryDuration { get; }
 
+        IStatBuilder SkillRepeats { get; }
+        IStatBuilder DamageMultiplierOverRepeatCycle { get; }
+
+        IStatBuilder SkillNumberOfHitsPerCast { get; }
         IStatBuilder SkillStage { get; }
         IStatBuilder MainSkillPart { get; }
 

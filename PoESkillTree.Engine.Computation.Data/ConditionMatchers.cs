@@ -258,6 +258,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "enemies you taunt( deal)?", And(For(Enemy), Buff.Taunt.IsOn(Self, Enemy)) },
                 { "enemies ({BuffMatchers}) by you", And(For(Enemy), Reference.AsBuff.IsOn(Self, Enemy)) },
                 { "enemies you curse( have)?", And(For(Enemy), Buffs(Self, Enemy).With(Keyword.Curse).Any()) },
+                { "({BuffMatchers}) enemies", And(For(Enemy), Reference.AsBuff.IsOn(Self, Enemy)) },
                 { "(against|from) blinded enemies", Buff.Blind.IsOn(Enemy) },
                 { "from taunted enemies", Buff.Taunt.IsOn(Enemy) },
                 {
@@ -417,9 +418,14 @@ namespace PoESkillTree.Engine.Computation.Data
                 // stance
                 { "(while )?in blood stance", Flag.InBloodStance },
                 { "(while )?in sand stance", Flag.InSandStance },
+                // enemy
+                { "enemies have", For(Enemy) },
+                { "to normal or magic enemies", And(For(Enemy), Not(Enemy.IsRareOrUnique)) },
+                { "to rare enemies", And(For(Enemy), Not(Enemy.IsRare)) },
+                { "to unique enemies", And(For(Enemy), Not(Enemy.IsUnique)) },
+                { "to unique enemies", And(For(Enemy), Not(Enemy.IsUnique)) },
                 // other
                 { "nearby allies( have| deal)?", For(Ally) },
-                { "enemies have", For(Enemy) },
                 { "against targets they pierce", Projectile.PierceCount.Value >= 1 },
                 { "while stationary", Flag.AlwaysStationary },
                 { "while moving", Flag.AlwaysMoving },

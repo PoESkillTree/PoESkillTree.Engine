@@ -40,12 +40,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
         private GivenStatCollection CreateCollection() => new GivenStatCollection(_modifierBuilder, ValueFactory)
         {
             {
-                TotalOverride, MetaStats.SkillNumberOfHitsPerCast, Projectile.Count.Value,
-                IsMainSkill("Barrage", 1)
-            },
-
-            {
-                TotalOverride, MetaStats.SkillNumberOfHitsPerCast, Projectile.Count.Value,
+                TotalOverride, Stat.SkillNumberOfHitsPerCast, Projectile.Count.Value,
                 IsMainSkill("BlastRain", 1)
             },
 
@@ -90,11 +85,11 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             },
 
             {
-                TotalOverride, MetaStats.SkillNumberOfHitsPerCast, Projectile.Count.Value,
+                TotalOverride, Stat.SkillNumberOfHitsPerCast, Projectile.Count.Value,
                 IsMainSkill("IceSpear", 1)
             },
             {
-                TotalOverride, MetaStats.SkillNumberOfHitsPerCast, Projectile.Count.Value,
+                TotalOverride, Stat.SkillNumberOfHitsPerCast, Projectile.Count.Value,
                 IsMainSkill("IceSpear", 3)
             },
 
@@ -106,7 +101,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             },
 
             {
-                TotalOverride, MetaStats.SkillNumberOfHitsPerCast, Projectile.Count.Value,
+                TotalOverride, Stat.SkillNumberOfHitsPerCast, Projectile.Count.Value,
                 IsMainSkill("ShatteringSteel", 2)
             },
 

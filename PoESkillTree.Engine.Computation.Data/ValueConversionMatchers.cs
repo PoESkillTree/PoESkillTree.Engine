@@ -96,12 +96,14 @@ namespace PoESkillTree.Engine.Computation.Data
                     "per # additional melee range",
                     PerStat(Stat.Range.With(AttackDamageHand.MainHand).ValueFor(NodeType.BaseAdd), Value)
                 },
+                { "per projectile", PerStat(Projectile.Count) },
                 // buffs
                 { "per buff on you", Buffs(targets: Self).Count() },
                 { "per curse on you", Buffs(targets: Self).With(Keyword.Curse).Count() },
                 { "per curse on enemy", Buffs(targets: Enemy).With(Keyword.Curse).Count() },
                 { "for each curse on that enemy,", Buffs(targets: Enemy).With(Keyword.Curse).Count() },
                 { "for each impale on enemy", Buff.Impale.StackCount.For(Enemy).Value },
+                { "each ({BuffMatchers}) applies", Reference.AsBuff.StackCount.For(Enemy).Value },
                 // ailments
                 { "for each poison on the enemy", Ailment.Poison.InstancesOn(Enemy).Value },
                 { "per poison on enemy", Ailment.Poison.InstancesOn(Enemy).Value },

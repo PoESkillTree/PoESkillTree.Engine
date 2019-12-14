@@ -71,6 +71,12 @@ Remove a random Elemental Ailment when you use a Mana Flask
 +1 to Level of Socketed Spell Gems
 +2 to Level of Socketed Trap Gems
 +2 to Level of Socketed Trap or Mine Gems
++4 to Level of Supported Active Skill Gems
++4 to Level of Supported Cold Skill Gems
++4 to Level of Supported Fire Skill Gems
++4 to Level of Supported Lightning Skill Gems
++1 to Level of Supported Curse Skill Gems
++1 to Level of Supported Aura Skill Gems
 Socketed Attacks have +1% to Critical Strike Chance
 Socketed Attacks have +30% to Critical Strike Multiplier
 Socketed Gems Chain 1 additional times
@@ -237,5 +243,7 @@ Single-target Melee attacks deal Splash Damage to surrounding targets
 50% less Damage to surrounding targets
 Supported Skills deal Splash Damage to surrounding targets
 Supported Skills deal 26% less Damage to surrounding targets
+Supported Skills deal 33% less Damage to surrounding targets
 Supported Skills deal 41% less Damage to surrounding targets
 Supported Skills have 57% more Melee Splash Area of Effect
+Supported Skills have 97% more Melee Splash Area of Effect

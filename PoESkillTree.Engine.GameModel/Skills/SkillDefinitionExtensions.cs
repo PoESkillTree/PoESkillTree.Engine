@@ -77,11 +77,6 @@ namespace PoESkillTree.Engine.GameModel.Skills
                     ("base_mana_gained_on_enemy_death", AuraEntities))
             },
             {
-                "Barrage",
-                ("Single Projectile", new SkillPartDefinitionExtension()),
-                ("All Projectiles", new SkillPartDefinitionExtension())
-            },
-            {
                 "BearTrap",
                 new SkillPartDefinitionExtension(
                     ReplaceStat("bear_trap_damage_taken_+%_from_traps_and_mines",
@@ -272,6 +267,12 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 EnemyBuff("critical_strike_chance_+%", "accuracy_rating_+%",
                     "damage_+%_vs_normal_or_magic_final", "damage_+%_vs_rare_or_unique_final",
                     "base_critical_strike_multiplier_+")
+            },
+            {
+                "EnsnaringArrow",
+                Passive("tethered_movement_speed_+%_final_per_rope", "tethered_movement_speed_+%_final_per_rope_vs_rare",
+                    "tethered_movement_speed_+%_final_per_rope_vs_unique", "tethered_enemies_take_attack_projectile_damage_taken_+%",
+                    "tethering_arrow_display_rope_limit")
             },
             {
                 "ExpandingFireCone", // Incinerate
@@ -754,6 +755,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
                     "support_arcane_surge_mana_regeneration_rate_per_minute_%")
             },
             { "SupportBlasphemy", Passive("curse_effect_+%") },
+            { "SupportBlasphemyPlus", Passive("curse_effect_+%") },
             {
                 "SupportBonechill",
                 Passive("support_chills_also_grant_cold_damage_taken_per_minute_+%",
@@ -767,10 +769,11 @@ namespace PoESkillTree.Engine.GameModel.Skills
             },
             {
                 "SupportCastWhileChannelling",
-                new SkillPartDefinitionExtension(
-                    ReplaceStat("cast_while_channelling_time_ms", "hit_rate_ms")
-                        .AndThen(ReplaceStat("support_cast_while_channelling_triggered_skill_damage_+%_final",
-                            "damage_+%_final")))
+                new SkillPartDefinitionExtension(ReplaceStat("cast_while_channelling_time_ms", "hit_rate_ms"))
+            },
+            {
+                "SupportCastWhileChannellingPlus",
+                new SkillPartDefinitionExtension(ReplaceStat("cast_while_channelling_time_ms", "hit_rate_ms"))
             },
             {
                 "SupportGemFrenzyPowerOnTrapTrigger", // Charged Traps
@@ -779,6 +782,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
                         "critical_strike_multiplier_+_per_power_charge"))
             },
             { "SupportGenerosity", Passive("aura_cannot_affect_self", "non_curse_aura_effect_+%") },
+            { "SupportGenerosityPlus", Passive("aura_cannot_affect_self", "non_curse_aura_effect_+%") },
             {
                 "SupportOnslaughtOnSlayingShockedEnemy", // Innervate
                 Passive("support_innervate_minimum_added_lightning_damage",

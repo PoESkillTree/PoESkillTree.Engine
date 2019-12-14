@@ -40,7 +40,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                     TotalOverride, MetaStats.SkillDpsWithHits,
                     MetaStats.AverageHitDamage.Value *
                     ValueFactory.If(Stat.HitRate.IsSet).Then(Stat.HitRate.Value)
-                        .Else(MetaStats.CastRate.Value * MetaStats.SkillNumberOfHitsPerCast.Value)
+                        .Else(MetaStats.CastRate.Value * Stat.SkillNumberOfHitsPerCast.Value)
                 },
                 // - average damage
                 {
@@ -284,7 +284,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                 {
                     TotalOverride, MetaStats.TimeToReachLeechRateLimit,
                     p => p.Leech.RateLimit.Value / p.Leech.Rate.Value /
-                         (MetaStats.CastRate.Value * MetaStats.SkillNumberOfHitsPerCast.Value)
+                         (MetaStats.CastRate.Value * Stat.SkillNumberOfHitsPerCast.Value)
                 },
                 // ailments
                 {
@@ -320,7 +320,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                 {
                     TotalOverride, MetaStats.AilmentEffectiveInstances(Common.Builders.Effects.Ailment.Poison),
                     Ailment.Poison.Duration.Value * MetaStats.CastRate.Value *
-                    MetaStats.SkillNumberOfHitsPerCast.Value *
+                    Stat.SkillNumberOfHitsPerCast.Value *
                     CombineSource(MetaStats.AilmentEffectiveChance(Common.Builders.Effects.Ailment.Poison),
                         CombineHandsForAilmentEffectiveInstances(Common.Builders.Effects.Ailment.Poison))
                 },
@@ -384,8 +384,15 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                     30 * ValueFactory.LinearScale(Projectile.TravelDistance, (35, 0), (70, 1)),
                     Flag.FarShot.IsSet
                 },
+                // repeats
+                { BaseSet, Stat.SkillRepeats, 0 },
+                {
+                    PercentMore, Damage,
+                    ValueFactory.If(Stat.SkillRepeats.Value.Eq(0)).Then(0)
+                        .Else(Stat.DamageMultiplierOverRepeatCycle.Value.AsPercentage / Stat.SkillRepeats.Value)
+                },
                 // other
-                { BaseSet, MetaStats.SkillNumberOfHitsPerCast, 1 },
+                { BaseSet, Stat.SkillNumberOfHitsPerCast, 1 },
                 { BaseSet, Stat.MainSkillPart, 0 },
             };
 

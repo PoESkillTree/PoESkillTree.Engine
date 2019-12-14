@@ -55,6 +55,7 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Buffs
         IBuffBuilder Innervation { get; }
         IImpaleBuffBuilder Impale { get; }
         IBuffBuilder Infusion { get; }
+        IBuffBuilder Snare { get; }
 
         IBuffBuilder GenericMine { get; }
 
