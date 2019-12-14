@@ -31,6 +31,7 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
 
         // Damage calculation
         IDamageRelatedStatBuilder Damage(DamageType damageType); // like DamageStatBuilder, but !canApplyToSkillDamage
+        IDamageRelatedStatBuilder EnemyPhysicalDamageReductionFromArmour { get; } // with hits
         IDamageRelatedStatBuilder EnemyResistanceAgainstNonCrits(DamageType damageType); // with hits
         IDamageRelatedStatBuilder EnemyResistanceAgainstCrits(DamageType damageType); // with hits
         IDamageRelatedStatBuilder EffectiveDamageMultiplierWithNonCrits(DamageType damageType);

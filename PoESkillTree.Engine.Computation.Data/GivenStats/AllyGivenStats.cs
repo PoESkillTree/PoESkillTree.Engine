@@ -23,6 +23,8 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                 { BaseAdd, Ground.Consecrated.AddStat(Life.Regen), 6 },
                 // Level based
                 { BaseSet, Life, LevelBased(l => MonsterBaseStats.AllyLife(l), "AllyLife") },
+                // ailments
+                { PercentMore, Damage.With(Ailment.Bleed), 100, Enemy.IsMoving },
             };
     }
 }
