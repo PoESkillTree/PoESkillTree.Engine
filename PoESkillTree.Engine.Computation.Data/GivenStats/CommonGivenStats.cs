@@ -135,7 +135,6 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             { TotalOverride, Ailment.Bleed.Chance.With(DamageSource.Spell), 0 },
             { TotalOverride, Ailment.Bleed.Chance.With(DamageSource.Secondary), 0 },
             { PercentLess, Damage.With(Ailment.Bleed), 30 },
-            { PercentMore, Damage.With(Ailment.Bleed), 100, Enemy.IsMoving },
             { BaseSet, Ailment.Poison.Source(Physical.And(Chaos)), 1 },
             { BaseSet, Ailment.Poison.Duration, 2 },
             { PercentLess, Damage.With(Ailment.Poison), 80 },

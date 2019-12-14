@@ -259,7 +259,9 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "attack, cast( speed)? and movement speed", Stat.CastRate, Stat.MovementSpeed },
                 { "action speed", Stat.ActionSpeed },
                 { "hit rate", Stat.HitRate },
+                { "projectile frequency", Stat.HitRate },
                 { "brand activation frequency", Stat.HitRate, With(Keyword.Brand) },
+                { "attack time", Stat.BaseCastTime.With(DamageSource.Attack) },
                 // regen and recharge
                 { "({PoolStatMatchers}) regeneration( rate)?", Reference.AsPoolStat.Regen },
                 { "energy shield recharge rate", EnergyShield.Recharge },
@@ -335,6 +337,8 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "mine detonation area of effect", Stat.Mine.DetonationAoE },
                 { "trap throwing speed", Stat.Trap.Speed },
                 { "mine (laying|throwing) speed", Stat.Mine.Speed },
+                { "trap and mine throwing speed", Stat.Trap.Speed, Stat.Mine.Speed },
+                { "trap and mine throwing time", Stat.Trap.BaseTime, Stat.Mine.BaseTime },
                 { "totem placement speed", Stat.Totem.Speed },
                 { "totem life", Life.For(Entity.Totem) },
                 // minions
@@ -382,13 +386,10 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "effect of curse against players", Skills.ModifierSourceSkill.Buff.EffectOn(Entity.Character) },
                 // - chance
                 { "chance to (gain|grant) ({BuffMatchers})", Reference.AsBuff.Chance },
-                { "chance to fortify", Buff.Fortify.Chance },
-                { "chance to maim( enemies)?", Buff.Maim.Chance },
+                { "chance to ({BuffMatchers})( enemies)?", Reference.AsBuff.Chance },
                 { "chance for attacks to maim", Buff.Maim.Chance.With(DamageSource.Attack) },
-                { "chance to taunt( enemies)?", Buff.Taunt.Chance },
-                { "chance to blind( enemies)?", Buff.Blind.Chance },
                 { "chance to cover rare or unique enemies in ash", Buff.CoveredInAsh.Chance, Enemy.IsRareOrUnique },
-                { "chance to impale enemies", Buff.Impale.Chance },
+                { "chance to create consecrated ground", Ground.Consecrated.Chance },
                 // - duration
                 { "({BuffMatchers}) duration", Reference.AsBuff.Duration },
                 { "blinding duration", Buff.Blind.Duration },
@@ -452,7 +453,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "chance for flasks to gain a charge", Flask.ChanceToGainCharge },
                 { "recovery applied instantly", Flask.InstantRecovery },
                 {
-                    "chance for your flasks to not consume charges",
+                    "chance for (your flasks|flasks you use) to not consume charges",
                     Stat.IndependentTotal("Flask.ChanceToNotConsumeCharges")
                 },
                 // item quantity/quality
@@ -463,6 +464,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 // range and area of effect
                 { "area of effect", Stat.AreaOfEffect },
                 { "aura area of effect", Stat.AreaOfEffect, With(Keyword.Aura) },
+                { "area of effect of supported curses", Stat.AreaOfEffect, With(Keyword.Curse) },
                 { "(?<!in )radius", Stat.Radius },
                 { "explosion radius", Stat.Radius },
                 { "area of effect length", Stat.Radius },

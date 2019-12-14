@@ -25,6 +25,9 @@ Minions deal 6% increased Damage
 10% increased Poison Duration
 10% chance to Poison on Hit with Attacks
 20% increased Damage with Ailments from Attack Skills while wielding a Claw
+30% increased Totem Damage
+Attacks used by Totems have 8% increased Attack Speed
+Each Totem applies 1% increased Damage taken to Enemies near it
 15% increased Global Accuracy Rating
 40% increased Critical Strike Chance against Blinded Enemies
 10% chance to Blind Enemies on Hit with Attacks
@@ -277,6 +280,8 @@ Minions deal 6% increased Damage
 4% increased Attack Speed with Swords
 8% increased Accuracy Rating with Swords
 12% increased Fire Damage
+10% increased Totem Placement speed
+Attacks used by Totems have 5% increased Attack Speed
 +1 to Maximum Endurance Charges
 20% increased Attack Damage
 +5% chance to Evade Attacks
@@ -318,6 +323,7 @@ Cannot be Blinded
 25% chance to Blind Enemies on Hit
 Nearby Enemies are Blinded
 28% increased Physical Damage with Maces and Sceptres
+Enemies have -12% to Total Physical Damage Reduction against your Hits
 50% increased Stun Duration against Enemies that are on Full Life
 10% chance to double Stun Duration
 28% increased Damage with Ailments from Attack Skills while wielding a Mace or Sceptre
@@ -431,7 +437,7 @@ Damage with Weapons Penetrates 8% Lightning Resistance
 15% increased Damage with Bows
 6% increased Global Accuracy Rating
 15% increased Damage Over Time with Bow Skills
-Minions have 10% increased Movement Speed
+Minions have 5% increased Movement Speed
 Minions deal 10% increased Damage
 6% increased maximum Life
 +5% to all Elemental Resistances
@@ -486,6 +492,8 @@ Can have up to 2 additional Traps placed at a time
 Lightning Spells have 10% of Physical Damage Converted to Lightning Damage
 10% increased Armour
 +5% to all Elemental Resistances
++4% to Fire Damage over Time Multiplier
+10% increased Fire Damage with Attack Skills
 +8% to Damage over Time Multiplier for Poison
 8% increased Attack Speed
 10% chance to Poison on Hit with Attacks
@@ -518,6 +526,8 @@ Can Allocate Passives from the Ranger's starting point
 Minions deal 20% increased Damage
 Minions deal 20% increased Damage if you've used a Minion Skill Recently
 15% increased Minion Duration
+12% increased Totem Damage
+Attacks used by Totems have 4% increased Attack Speed
 5% increased Melee Attack Speed
 Minions deal 8% increased Damage
 Minions have 8% increased Area of Effect
@@ -607,6 +617,7 @@ Each Mine applies 2% increased Damage taken to Enemies near it, up to 10%
 Regenerate 0.5% of Life per second
 15% increased Attack Physical Damage
 5% increased Attack Speed
+Enemies you Impale have -10% to Total Physical Damage Reduction against Impale Hits
 15% chance to Impale Enemies on Hit with Attacks
 5% increased maximum Life
 +1 to Minimum Power Charges
@@ -625,9 +636,9 @@ Minions deal 6% increased Damage
 10% increased Attack Speed during any Flask Effect
 Flasks gain 3 Charges every 3 seconds
 Damage Penetrates 6% of Enemy Elemental Resistances
-15% chance for your Flasks to not consume Charges
+15% chance for Flasks you use to not consume Charges
 +10 to Strength
-Minions have 8% increased Movement Speed
+Minions have 4% increased Movement Speed
 Minions deal 8% increased Damage
 8% increased maximum Mana
 Flasks applied to you have 5% increased Effect
@@ -707,6 +718,8 @@ Channelling Skills deal 15% increased Damage
 24% increased Armour
 +12% to all Elemental Resistances
 3% increased Movement Speed
+10% chance to Shock
+10% increased Lightning Damage with Attack Skills
 +10 to Intelligence
 Regenerate 0.5% of Life per second
 10% increased Elemental Damage
@@ -752,7 +765,7 @@ You and nearby Allies have 12% increased Movement Speed
 +20 to Intelligence
 6% increased maximum Energy Shield
 10% increased Totem Life
-10% increased Totem Placement speed
+Totems have 10% additional Physical Damage Reduction
 Maximum Life becomes 1, Immune to Chaos Damage
 18% increased Critical Strike Chance with Daggers
 +14% to Critical Strike Multiplier with Daggers
@@ -819,12 +832,16 @@ Attacks have 10% chance to cause Bleeding
 3% increased Attack Speed with Axes
 12% increased Damage with Ailments from Attack Skills while wielding an Axe
 +10 to Dexterity
+10% increased Ignite Duration on Enemies
+15% chance to Ignite
+10% increased Fire Damage with Attack Skills
 10% increased Elemental Damage
 You can apply an additional Curse
 10% increased Effect of your Curses
 Regenerate 1.5% of Energy Shield per second
 Cannot Be Stunned while you have Energy Shield
 +10 to Armour
+Enemies have -5% to Total Physical Damage Reduction against your Hits
 +20 to Strength
 12% increased Physical Damage
 10% increased Damage with Swords
@@ -862,7 +879,8 @@ The increase to Physical Damage from Strength applies to Projectile Attacks as w
 Damage Penetrates 5% Elemental Resistances
 10% increased Effect of non-Damaging Ailments on Enemies
 10% increased Skill Effect Duration
-16% increased Cold Damage
+12% increased Cold Damage
+10% increased Effect of Chill
 14% increased Evasion Rating
 5% increased maximum Energy Shield
 4% increased Attack and Cast Speed
@@ -971,6 +989,10 @@ Golems have 12% increased Maximum Life
 +12% to Critical Strike Multiplier
 10% increased Attack Damage
 5% increased Attack Speed
+24% increased Totem Damage
+Attack Skills have +1 to maximum number of Summoned Ballista Totems
+1% increased Movement Speed per Summoned Totem
+Totems' Action Speed cannot be modified to below base value
 30% increased Evasion Rating
 5% chance to Dodge Attack Hits while Phasing
 10% increased Movement Speed while Phasing
@@ -1067,6 +1089,7 @@ Regenerate 1% of Life per Second for each Trap Triggered Recently, up to 10% per
 25% increased Stun Duration on Enemies
 24% increased Cold Damage
 20% increased Projectile Speed
+10% chance to Freeze
 10% increased Effect of Chill
 +10 to Dexterity
 +15 to maximum Energy Shield
@@ -1173,9 +1196,8 @@ Minions have 20% increased maximum Life
 Regenerate 1% of Life per second
 Minions deal 20% increased Damage
 Minions Regenerate 1% of Life per second
-10% increased Totem Damage
-Spells Cast by Totems have 3% increased Cast Speed
-Attacks used by Totems have 5% increased Attack Speed
+10% increased Totem Life
+10% increased Totem Placement speed
 24% increased Evasion Rating and Armour
 +10% to all Elemental Resistances
 10% increased Physical Damage
@@ -1271,6 +1293,8 @@ Melee Skills have 10% increased Area of Effect
 14% increased Damage with Ailments from Attack Skills while wielding a Mace or Sceptre
 6% increased Elemental Damage
 4% increased maximum Mana
+10% increased Lightning Damage with Attack Skills
+10% increased Effect of Shock
 10% increased Area Damage
 8% increased Cold Damage
 5% chance to Freeze
@@ -1566,6 +1590,7 @@ Attacks used by Totems have 5% increased Attack Speed
 5% increased maximum Life
 26% increased Physical Damage with Axes
 6% increased Attack Speed with Axes
+Enemies have -12% to Total Physical Damage Reduction against your Hits
 26% increased Damage with Ailments from Attack Skills while wielding an Axe
 +1 to Melee range with Axes
 +200 to Accuracy Rating
@@ -1586,6 +1611,8 @@ Skills fire an additional Projectile
 Bleeding you inflict deals Damage 10% faster
 4% increased Cast Speed
 Minions deal 15% increased Damage
+10% chance to Ignite
+10% increased Fire Damage with Attack Skills
 10% increased Trap Damage
 10% increased Mine Damage
 5% increased Trap Throwing Speed
@@ -1643,6 +1670,7 @@ Gain 4% of Maximum Mana as Extra Maximum Energy Shield
 30% increased Physical Damage with Two Handed Melee Weapons
 0.8% of Physical Attack Damage Leeched as Life
 50% increased total Recovery per second from Life Leech
+Enemies have -12% to Total Physical Damage Reduction against your Hits
 30% increased Damage with Ailments from Attack Skills while wielding a Two Handed Weapon
 Minions deal 15% increased Damage
 Minions have 8% increased Attack Speed
@@ -1651,6 +1679,8 @@ Minions have 5% chance to deal Double Damage
 +2% Chance to Block Spell Damage while holding a Shield
 10% increased Spell Damage while holding a Shield
 +10 to Intelligence
+20% increased Critical Strike Chance with Totem Skills
++10% to Critical Strike Multiplier with Totem Skills
 10% increased Elemental Damage
 5% chance to Freeze, Shock and Ignite
 15% increased Evasion Rating
@@ -1762,7 +1792,7 @@ Minions have 12% increased maximum Life
 12% increased Damage with Ailments from Attack Skills while wielding a One Handed Weapon
 10% increased Global Accuracy Rating
 +4% to all Elemental Resistances
-Minions have 20% increased Movement Speed
+Minions have 10% increased Movement Speed
 Minions deal 20% increased Damage
 Minions have 5% increased Attack Speed
 Minions have 5% increased Cast Speed
@@ -1818,6 +1848,7 @@ You can Cast an additional Brand
 10% increased Damage over Time
 4% increased maximum Life
 +3% to all Elemental Resistances
++8% to Fire Damage over Time Multiplier
 Damage with Weapons Penetrates 8% Fire Resistance
 30% increased Fire Damage with Attack Skills
 16% increased Critical Strike Chance with Bows
@@ -2035,6 +2066,7 @@ Attack Skills deal 10% increased Damage with Ailments while Dual Wielding
 5% increased Movement Speed
 14% increased Evasion Rating
 3% increased Movement Speed
+Enemies you Impale have -10% to Total Physical Damage Reduction against Impale Hits
 15% chance to Impale Enemies on Hit with Attacks
 5% increased Impale Effect
 +20 to Strength
@@ -2090,6 +2122,7 @@ Minions Leech 0.2% of Damage as Life
 +10 to Strength
 +1 to Maximum Power Charges
 3% increased Attack Speed
+Enemies you Impale have -5% to Total Physical Damage Reduction against Impale Hits
 5% increased Impale Effect
 10% increased Attack Damage
 0.2% of Attack Damage Leeched as Life
@@ -2097,13 +2130,13 @@ Minions have 10% increased maximum Life
 Minions have +5% Chance to Block Spell Damage
 +10 to Strength
 50% increased Totem Placement speed
-3% more Damage per Totem
-Regenerate 0.5% of Mana per second for each Totem
+3% more Damage per Summoned Totem
+Regenerate 0.5% of Mana per second for each Summoned Totem
 Skills that would Summon a Totem Summon two Totems instead
-You and your Totems Regenerate 1% of Life per second per Totem
+You and your Totems Regenerate 1% of Life per second for each Summoned Totem
 20% of Overkill Damage is Leeched as Life
 Cannot be Stunned while Leeching
-You are Immune to Bleeding while Leeching
+You are Unaffected by Bleeding while Leeching
 20% increased Damage while you have a Summoned Golem
 30% increased Effect of Buffs granted by your Golems
 Golems have 15% increased Maximum Life
@@ -2165,6 +2198,7 @@ Minions deal 10% increased Damage
 4% increased Attack Speed with Claws
 8% increased Damage with Ailments from Attack Skills while wielding a Claw
 24% increased Physical Damage with Two Handed Melee Weapons
+Enemies have -15% to Total Physical Damage Reduction against your Hits
 10% chance to double Stun Duration
 24% increased Damage with Ailments from Attack Skills while wielding a Two Handed Weapon
 4% chance to deal Double Damage
@@ -2209,8 +2243,8 @@ Brand Skills have 10% increased Duration
 5% reduced Enemy Stun Threshold with Maces and Sceptres
 14% increased Damage with Ailments from Attack Skills while wielding a Mace or Sceptre
 Auras from your Skills grant 3% increased Attack and Cast Speed to you and Allies
-You and Allies affected by Auras from your Skills deal 30% increased Damage
-You and Allies affected by Auras from your Skills have +20% to Elemental Resistances
+You and nearby Allies deal 30% increased Damage
+You and nearby Allies have +20% to Elemental Resistances
 12% increased Armour
 4% increased maximum Life
 15% increased Lightning Damage
@@ -2247,6 +2281,9 @@ Damage with Weapons Penetrates 5% Elemental Resistance
 20% increased Cooldown Recovery Speed of Movement Skills
 0.4% of Attack Damage Leeched as Life
 0.4% of Attack Damage Leeched as Mana
++8% to Fire Damage over Time Multiplier
+Ignites you inflict deal Damage 8% faster
+24% increased Fire Damage with Attack Skills
 10% increased Attack Damage while holding a Shield
 3% increased Attack Speed while holding a Shield
 Attack Skills deal 10% increased Damage with Ailments while holding a Shield
@@ -2298,6 +2335,7 @@ Regenerate 1% of Energy Shield per second for each Enemy you or your Minions hav
 Cannot Be Stunned while you have Energy Shield
 25% increased Melee Critical Strike Chance
 25% increased Damage with Claws
+Enemies have -10% to Total Physical Damage Reduction against your Hits
 15% increased Attack and Cast Speed if you've used a Movement Skill Recently
 25% increased Damage with Ailments from Attack Skills while wielding a Claw
 +1 to Melee range with Claws
@@ -2374,9 +2412,9 @@ Attack Skills deal 16% increased Damage with Ailments while Dual Wielding
 20% increased Melee Critical Strike Chance
 5% increased maximum Energy Shield
 8% increased maximum Mana
+16% increased Melee Damage
 16% increased Armour
 +16 to maximum Life
-16% increased Melee Damage
 +30 to Strength
 12% increased Melee Physical Damage
 12% increased Damage with Ailments from Attack Skills while wielding a Melee Weapon
@@ -2390,6 +2428,7 @@ Attack Skills deal 16% increased Damage with Ailments while Dual Wielding
 +20% to Critical Strike Multiplier against Burning Enemies
 8% increased Damage with Daggers
 4% increased Attack Speed with Daggers
+Enemies have -5% to Total Physical Damage Reduction against your Hits
 8% increased Damage with Ailments from Attack Skills while wielding a Dagger
 10% increased Area of Effect
 30% increased Trap Damage
@@ -2606,7 +2645,7 @@ Flasks applied to you have 8% increased Effect
 8% of Damage is taken from Mana before Life
 Gain Arcane Surge when you or your Totems Hit an Enemy with a Spell
 20% increased Spell Damage while you have Arcane Surge
-Projectile Attack Hits deal up to 50% more Damage to targets at the start of their movement, dealing less Damage to targets as the projectile travels farther
+Projectile Attack Hits deal up to 30% more Damage to targets at the start of their movement, dealing less Damage to targets as the projectile travels farther
 Grants Armour equal to 160% of your Reserved Life to you and nearby Allies
 Grants maximum Energy Shield equal to 15% of your Reserved Mana to you and nearby Allies
 10% increased Attack Damage
@@ -2623,6 +2662,8 @@ Grants maximum Energy Shield equal to 15% of your Reserved Mana to you and nearb
 12% increased Damage with Ailments from Attack Skills while wielding a Dagger
 14% increased Damage with One Handed Weapons
 20% increased Damage with Ailments from Attack Skills while wielding a One Handed Weapon
+20% increased Critical Strike Chance with Totem Skills
++10% to Critical Strike Multiplier with Totem Skills
 10% increased Damage with Axes
 3% increased Attack Speed with Axes
 10% increased Damage with Ailments from Attack Skills while wielding an Axe
@@ -2853,6 +2894,8 @@ Far Shot
 10% increased Elemental Damage
 +10 to Dexterity
 10% increased Damage over Time
+10% increased Totem Damage
+10% increased Totem Placement speed
 +10 to Intelligence
 10% increased Damage with Bows
 3% increased Movement Speed
@@ -2864,6 +2907,10 @@ Far Shot
 10% increased Lightning Damage
 30% increased Shock Duration on Enemies
 10% increased Effect of Shock
+15% chance to Shock
+30% increased Critical Strike Chance against Shocked Enemies
+24% increased Lightning Damage with Attack Skills
+15% increased Effect of Shock
 +10 to Strength
 Channelling Skills have 4% increased Attack Speed
 10% chance to Avoid being Stunned while Channelling
@@ -2900,6 +2947,7 @@ Can have up to 2 additional Remote Mines placed at a time
 8% increased Spell Damage
 +5 to Intelligence
 20% reduced Reflected Physical Damage taken
+Enemies have -5% to Total Physical Damage Reduction against your Hits
 4% chance to deal Double Damage
 +20 to Strength
 20% increased Physical Damage
@@ -2941,6 +2989,7 @@ Nearby Chilled Enemies deal 10% reduced Damage with Hits
 24% increased Damage with Bows
 6% increased Attack Speed with Bows
 16% increased Accuracy Rating with Bows
+Enemies have -10% to Total Physical Damage Reduction against your Hits
 24% increased Damage Over Time with Bow Skills
 +6% to all Elemental Resistances
 10% increased Elemental Damage
@@ -3042,6 +3091,7 @@ Attack Skills deal 8% increased Damage with Ailments while holding a Shield
 4% increased Attack Speed with Swords
 10% increased Damage with Ailments from Attack Skills while wielding a Sword
 20% increased Armour
+Enemies have -5% to Total Physical Damage Reduction against your Hits
 +250 to Armour while affected by a Guard Skill Buff
 10% chance when Hit for double Armour effect
 Regenerate 0.5% of Life per second while affected by a Guard Skill Buff
@@ -3298,7 +3348,7 @@ Can Allocate Passives from the Shadow's starting point
 +1% Chance to Block Attack Damage while Dual Wielding
 3% increased Attack Speed while Dual Wielding
 3% increased Cast Speed while Dual Wielding
-Minions have 30% increased Movement Speed
+Minions have 10% increased Movement Speed
 Minions deal 30% increased Damage
 Minions have 10% increased Attack Speed
 Minions have 10% increased Cast Speed
@@ -3322,6 +3372,7 @@ Attack Skills deal 24% increased Damage with Ailments while Dual Wielding
 20% increased Armour
 Regenerate 0.2% of Life per second per Endurance Charge
 10% chance to gain an Endurance Charge when you are Hit
+Enemies have -5% to Total Physical Damage Reduction against your Hits
 30% increased Armour while stationary
 4% increased Cast Speed
 +2% Chance to Block Spell Damage while wielding a Staff
@@ -3392,6 +3443,8 @@ Minions Regenerate 1.5% of Life per second
 Minions have 10% increased maximum Life
 Minions deal 15% increased Damage
 15% increased Lightning Damage
+12% increased Totem Damage
+Attacks used by Totems have 4% increased Attack Speed
 +10 to Strength
 8% increased Armour
 4% increased maximum Life
@@ -3437,6 +3490,7 @@ Damage with Weapons Penetrates 5% Elemental Resistance
 4% increased Spell Damage per Power Charge
 8% increased Damage with Daggers
 4% increased Attack Speed with Daggers
+Enemies have -5% to Total Physical Damage Reduction against your Hits
 8% increased Damage with Ailments from Attack Skills while wielding a Dagger
 +6% to Cold Damage over Time Multiplier
 15% increased Life Recovery from Flasks
@@ -3572,6 +3626,8 @@ Enemies Become Chilled as they Unfreeze
 +10 to Strength
 +10 to Intelligence
 4% increased maximum Life
+10% increased Totem Placement speed
+Attacks used by Totems have 5% increased Attack Speed
 +10 to Intelligence
 4% increased Melee Attack Speed
 +20 to Accuracy Rating
@@ -3714,6 +3770,9 @@ Damage with Weapons Penetrates 5% Elemental Resistance
 +10 to Dexterity
 14% increased Trap Damage
 14% increased Mine Damage
+30% increased Totem Damage
+Attack Skills have +1 to maximum number of Summoned Ballista Totems
+50% increased Effect of Buffs granted by your Active Ancestor Totems
 10% increased Physical Damage with Swords
 +16% to Critical Strike Multiplier with Swords
 10% increased Damage with Ailments from Attack Skills while wielding a Sword
@@ -3853,9 +3912,10 @@ Cannot take Reflected Physical Damage
 3% increased Attack Speed while holding a Shield
 10% increased Elemental Damage with Attack Skills
 +10 to Strength
-25% increased Totem Damage
-Totems gain +16% to all Elemental Resistances
-Totems have 10% additional Physical Damage Reduction
+30% increased Totem Life
+Totems gain +20% to all Elemental Resistances
+Totems have 15% additional Physical Damage Reduction
++100 Armour per Summoned Totem
 4% reduced Mana Reserved
 Gain 20% of Wand Physical Damage as Extra Lightning Damage
 8% increased maximum Mana
@@ -3884,6 +3944,8 @@ Life Regeneration is applied to Energy Shield instead
 +1% Chance to Block Attack Damage for each time you've Blocked in the past 10 seconds
 12% increased Attack Physical Damage
 6% increased Attack Speed
+10% increased Totem Damage
+15% increased Totem Placement speed
 24% increased Totem Damage
 20% increased Totem Life
 20% increased Totem Duration
@@ -3929,6 +3991,7 @@ Regenerate 1% of Life per second
 12% increased Accuracy Rating with Staves
 30% increased Critical Strike Chance with Staves
 +150 to Accuracy Rating with Staves
+Enemies have -12% to Total Physical Damage Reduction against your Hits
 +10 to Intelligence
 20% chance to Avoid Physical Damage from Hits
 12% increased Armour
@@ -3980,6 +4043,7 @@ Auras from your Skills grant 0.2% of Life Regenerated per second to you and Alli
 20% increased total Recovery per second from Mana Leech
 24% increased Damage with Swords
 6% increased Attack Speed with Swords
+Enemies have -10% to Total Physical Damage Reduction against your Hits
 24% increased Damage with Ailments from Attack Skills while wielding a Sword
 +1 to Melee range with Swords
 30% increased Area of Effect of Aura Skills
@@ -4014,7 +4078,7 @@ Regenerate 1% of Life per second
 10% increased Area of Effect while wielding a Staff
 6% reduced Elemental Damage taken
 Flasks gain 3 Charges every 3 seconds
-20% chance for your Flasks to not consume Charges
+20% chance for Flasks you use to not consume Charges
 +4% Chance to Block Spell Damage while holding a Shield
 40% increased Defences from Equipped Shield
 +8% Chance to Block Projectile Attack Damage

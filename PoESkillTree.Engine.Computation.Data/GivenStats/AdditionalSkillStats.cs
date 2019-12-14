@@ -40,8 +40,8 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
         private GivenStatCollection CreateCollection() => new GivenStatCollection(_modifierBuilder, ValueFactory)
         {
             {
-                TotalOverride, MetaStats.SkillNumberOfHitsPerCast, Projectile.Count.Value,
-                IsMainSkill("Barrage", 1)
+                TotalOverride, Stat.SkillNumberOfHitsPerCast, Projectile.Count.Value,
+                IsMainSkill("BlastRain", 1)
             },
 
             {
@@ -52,6 +52,8 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                 TotalOverride, Buff.Maim.On(Enemy), 1,
                 And(Skills.FromId("BloodSandArmour").Buff.IsOn(Enemy), Flag.InBloodStance)
             },
+
+            { TotalOverride, Skills.FromId("BurningArrow").Buff.StackCount.For(Enemy).Maximum, 5 },
 
             { TotalOverride, Skills[Keyword.Banner].Reservation, 0, Flag.IsBannerPlanted },
 
@@ -83,25 +85,12 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             },
 
             {
-                TotalOverride, MetaStats.SkillNumberOfHitsPerCast, Projectile.Count.Value,
+                TotalOverride, Stat.SkillNumberOfHitsPerCast, Projectile.Count.Value,
                 IsMainSkill("IceSpear", 1)
             },
             {
-                TotalOverride, MetaStats.SkillNumberOfHitsPerCast, Projectile.Count.Value,
+                TotalOverride, Stat.SkillNumberOfHitsPerCast, Projectile.Count.Value,
                 IsMainSkill("IceSpear", 3)
-            },
-
-            {
-                BaseSet, Buff.Temporary(Lightning.Exposure, WaveOfConvictionExposureType.Lightning).For(Enemy), -25,
-                SkillIsActive("Purge")
-            },
-            {
-                BaseSet, Buff.Temporary(Cold.Exposure, WaveOfConvictionExposureType.Cold).For(Enemy), -25,
-                SkillIsActive("Purge")
-            },
-            {
-                BaseSet, Buff.Temporary(Fire.Exposure, WaveOfConvictionExposureType.Fire).For(Enemy), -25,
-                SkillIsActive("Purge")
             },
 
             {
@@ -112,7 +101,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             },
 
             {
-                TotalOverride, MetaStats.SkillNumberOfHitsPerCast, Projectile.Count.Value,
+                TotalOverride, Stat.SkillNumberOfHitsPerCast, Projectile.Count.Value,
                 IsMainSkill("ShatteringSteel", 2)
             },
 
@@ -129,13 +118,5 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
 
         private IConditionBuilder SkillIsActive(string skillId)
             => MetaStats.ActiveSkillItemSlot(skillId).IsSet;
-
-        private enum WaveOfConvictionExposureType
-        {
-            None,
-            Lightning,
-            Cold,
-            Fire,
-        }
     }
 }

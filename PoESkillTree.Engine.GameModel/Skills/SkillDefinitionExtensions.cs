@@ -77,11 +77,6 @@ namespace PoESkillTree.Engine.GameModel.Skills
                     ("base_mana_gained_on_enemy_death", AuraEntities))
             },
             {
-                "Barrage",
-                ("Single Projectile", new SkillPartDefinitionExtension()),
-                ("All Projectiles", new SkillPartDefinitionExtension())
-            },
-            {
                 "BearTrap",
                 new SkillPartDefinitionExtension(
                     ReplaceStat("bear_trap_damage_taken_+%_from_traps_and_mines",
@@ -118,8 +113,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
             {
                 "BlastRain",
                 ("Single Explosion", new SkillPartDefinitionExtension()),
-                ("All 4 Explosions", new SkillPartDefinitionExtension(
-                    AddStat("base_skill_number_of_additional_hits", 3)))
+                ("All Explosions", new SkillPartDefinitionExtension())
             },
             {
                 "BloodRage",
@@ -275,6 +269,12 @@ namespace PoESkillTree.Engine.GameModel.Skills
                     "base_critical_strike_multiplier_+")
             },
             {
+                "EnsnaringArrow",
+                Passive("tethered_movement_speed_+%_final_per_rope", "tethered_movement_speed_+%_final_per_rope_vs_rare",
+                    "tethered_movement_speed_+%_final_per_rope_vs_unique", "tethered_enemies_take_attack_projectile_damage_taken_+%",
+                    "tethering_arrow_display_rope_limit")
+            },
+            {
                 "ExpandingFireCone", // Incinerate
                 ("Channeling", new SkillPartDefinitionExtension(
                     RemoveStat("expanding_fire_cone_final_wave_always_ignite"),
@@ -286,13 +286,9 @@ namespace PoESkillTree.Engine.GameModel.Skills
             },
             {
                 "ExplosiveArrow",
-                new SkillPartDefinitionExtension(
-                    AddStat("maximum_stages", 5)),
                 ("Attack", new SkillPartDefinitionExtension()),
                 ("Explosion", new SkillPartDefinitionExtension(
-                    AddStats(
-                        ("base_skill_show_average_damage_instead_of_dps", 1),
-                        ("display_skill_deals_secondary_damage", 1))))
+                    AddStat("base_skill_show_average_damage_instead_of_dps", 1)))
             },
             { "Fireball", SecondaryExplosionProjectileParts },
             { "VaalFireball", SecondaryExplosionProjectileParts },
@@ -462,6 +458,10 @@ namespace PoESkillTree.Engine.GameModel.Skills
             },
             { "LightningStrike", SecondaryProjectileMeleeAttackParts },
             { "VaalLightningStrike", SecondaryProjectileMeleeAttackParts },
+            {
+                "LightningTowerTrap", // Lightning Spire Trap
+                new SkillPartDefinitionExtension(ReplaceStat("lightning_tower_trap_base_interval_duration_ms", "hit_rate_ms"))
+            },
             { "MoltenShell", SelfBuff("base_physical_damage_reduction_rating") },
             { "VaalMoltenShell", SelfBuff("base_physical_damage_reduction_rating") },
             {
@@ -473,6 +473,10 @@ namespace PoESkillTree.Engine.GameModel.Skills
                     ReplaceStat("active_skill_damage_over_time_from_projectile_hits_+%_final",
                         "damage_over_time_+%_final"),
                     removedKeywords: new[] { Keyword.Melee }))
+            },
+            {
+                "OrbOfStorms",
+                new SkillPartDefinitionExtension(ReplaceStat("orb_of_storms_base_bolt_frequency_ms", "hit_rate_ms"))
             },
             {
                 "PhysicalDamageAura", // Pride
@@ -513,7 +517,9 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 new SkillPartDefinitionExtension(
                     ReplaceStat("newpunishment_attack_speed_+%", "attack_speed_+%")
                         .AndThen(ReplaceStat("newpunishment_melee_damage_+%_final", "melee_damage_+%_final"))),
-                SelfBuff("attack_speed_+%", "melee_damage_+%_final")
+                Buff(("attack_speed_+%", new[] {Entity.Character}),
+                    ("melee_damage_+%_final", new[] {Entity.Character}),
+                    ("base_additional_physical_damage_reduction_%", new[] {Entity.Enemy}))
             },
             {
                 "PuresteelBanner", // Dread Banner
@@ -574,9 +580,8 @@ namespace PoESkillTree.Engine.GameModel.Skills
                     RemoveStat("newshocknova_first_ring_damage_+%_final")))
             },
             {
-                "ShrapnelShot",
-                ("Projectile", new SkillPartDefinitionExtension(
-                    AddStat("always_pierce", 1))),
+                "ShrapnelShot", // Galvanic Arrow
+                ("Projectile", new SkillPartDefinitionExtension()),
                 ("Cone", new SkillPartDefinitionExtension(
                     AddStat("is_area_damage", 1)))
             },
@@ -750,6 +755,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
                     "support_arcane_surge_mana_regeneration_rate_per_minute_%")
             },
             { "SupportBlasphemy", Passive("curse_effect_+%") },
+            { "SupportBlasphemyPlus", Passive("curse_effect_+%") },
             {
                 "SupportBonechill",
                 Passive("support_chills_also_grant_cold_damage_taken_per_minute_+%",
@@ -763,10 +769,11 @@ namespace PoESkillTree.Engine.GameModel.Skills
             },
             {
                 "SupportCastWhileChannelling",
-                new SkillPartDefinitionExtension(
-                    ReplaceStat("cast_while_channelling_time_ms", "hit_rate_ms")
-                        .AndThen(ReplaceStat("support_cast_while_channelling_triggered_skill_damage_+%_final",
-                            "damage_+%_final")))
+                new SkillPartDefinitionExtension(ReplaceStat("cast_while_channelling_time_ms", "hit_rate_ms"))
+            },
+            {
+                "SupportCastWhileChannellingPlus",
+                new SkillPartDefinitionExtension(ReplaceStat("cast_while_channelling_time_ms", "hit_rate_ms"))
             },
             {
                 "SupportGemFrenzyPowerOnTrapTrigger", // Charged Traps
@@ -775,15 +782,17 @@ namespace PoESkillTree.Engine.GameModel.Skills
                         "critical_strike_multiplier_+_per_power_charge"))
             },
             { "SupportGenerosity", Passive("aura_cannot_affect_self", "non_curse_aura_effect_+%") },
+            { "SupportGenerosityPlus", Passive("aura_cannot_affect_self", "non_curse_aura_effect_+%") },
             {
                 "SupportOnslaughtOnSlayingShockedEnemy", // Innervate
                 Passive("support_innervate_minimum_added_lightning_damage",
                     "support_innervate_maximum_added_lightning_damage")
             },
             {
-                "SupportRangedAttackTotem",
+                "SupportRangedAttackTotem", // Ballista Totem Support
                 new SkillPartDefinitionExtension(
-                    ReplaceStat("support_attack_totem_attack_speed_+%_final", "active_skill_attack_speed_+%_final"))
+                    ReplaceStat("support_attack_totem_attack_speed_+%_final", "active_skill_attack_speed_+%_final"),
+                    addedKeywords: new [] {Keyword.Ballista})
             },
             {
                 "SupportSpellTotem",

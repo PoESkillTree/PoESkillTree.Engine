@@ -26,6 +26,7 @@ namespace PoESkillTree.Engine.Computation.Data
             {
                 { "you and nearby allies (deal|have)(?! onslaught)", s => Buff.Aura(s, Self, Ally) },
                 { "you and nearby allies(?! deal| have)", s => Buff.Aura(s, Self, Ally) },
+                { "you and nearby non-minion allies have a", s => Buff.Aura(s, Self, Entity.Totem) },
                 {
                     "auras from your skills grant (?<inner>.*) to you and allies",
                     s => Buffs(Self, Self, Ally).With(Keyword.Aura).Without(Keyword.Curse).AddStat(s), "${inner}"
@@ -50,6 +51,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "nearby chilled enemies deal", s => Buff.Aura(s, Enemy).WithCondition(Ailment.Chill.IsOn(Enemy)) },
                 { "enemies near your totems (have|deal)", s => Buff.Aura(s, Enemy).For(Entity.Totem) },
                 { "enemies near your totems(?= take)", s => Buff.Aura(s, Enemy).For(Entity.Totem) },
+                { "each totem applies (?<inner>.*) to enemies near it", s => Buff.Aura(s, Enemy).For(Entity.Totem), "${inner} for each totem" },
                 { "({BuffMatchers}) grants", Reference.AsBuff.AddStat },
                 { "during ({SkillMatchers}) for you and allies", Reference.AsSkill.Buff.AddStat },
                 { @"\(AsItemProperty\)", s => s.AsItemProperty },

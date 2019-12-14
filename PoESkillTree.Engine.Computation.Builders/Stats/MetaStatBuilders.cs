@@ -57,6 +57,9 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         public IDamageRelatedStatBuilder Damage(DamageType damageType)
             => DamageRelatedFromIdentity($"{damageType}.Damage", typeof(double));
 
+        public IDamageRelatedStatBuilder EnemyResistanceFromArmourAgainstNonCrits => DamageRelatedFromIdentity(typeof(double)).WithHits;
+        public IDamageRelatedStatBuilder EnemyResistanceFromArmourAgainstCrits => DamageRelatedFromIdentity(typeof(double)).WithHits;
+
         public IDamageRelatedStatBuilder EnemyResistanceAgainstNonCrits(DamageType damageType)
             => DamageRelatedFromIdentity($"{damageType}.EnemyResistance.NonCrits", typeof(int)).WithHits;
 
@@ -99,6 +102,14 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         public IStatBuilder AilmentDps(Ailment ailment)
             => FromIdentity($"DPS.{ailment}", typeof(double));
 
+        public IStatBuilder ImpaleRecordedDamage => FromIdentity(typeof(double));
+        public IDamageRelatedStatBuilder EnemyResistanceAgainstNonCritImpales => DamageRelatedFromIdentity(typeof(double)).WithHits;
+        public IDamageRelatedStatBuilder EnemyResistanceAgainstCritImpales => DamageRelatedFromIdentity(typeof(double)).WithHits;
+
+        public IDamageRelatedStatBuilder ImpaleDamageMultiplier => DamageRelatedFromIdentity(typeof(double)).WithHits;
+        public IDamageRelatedStatBuilder EffectiveImpaleDamageMultiplierAgainstNonCrits => DamageRelatedFromIdentity(typeof(double)).WithHits;
+        public IDamageRelatedStatBuilder EffectiveImpaleDamageMultiplierAgainstCrits => DamageRelatedFromIdentity(typeof(double)).WithHits;
+
 
         public IStatBuilder CastRate => FromIdentity(typeof(double));
         public IStatBuilder CastTime => FromIdentity(typeof(double));
@@ -120,7 +131,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
 
         public IStatBuilder IncreasedDamageTakenFromShocks
             => FromIdentity("Shock.IncreasedDamageTaken", typeof(uint),
-                ExplicitRegistrationTypes.UserSpecifiedValue(20));
+                ExplicitRegistrationTypes.UserSpecifiedValue(15));
 
         public IStatBuilder ReducedActionSpeedFromChill
             => FromIdentity("Chill.ReducedActionSpeed", typeof(uint),
@@ -150,7 +161,6 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
 
         public IStatBuilder SkillHitDamageSource => FromIdentity(typeof(DamageSource));
         public IStatBuilder SkillUsesHand(AttackDamageHand hand) => FromIdentity($"SkillUses.{hand}", typeof(bool));
-        public IStatBuilder SkillNumberOfHitsPerCast => FromIdentity(typeof(uint));
         public IStatBuilder SkillDoubleHitsWhenDualWielding => FromIdentity(typeof(bool));
 
         public IStatBuilder MainSkillId => FromFactory(StatFactory.MainSkillId);

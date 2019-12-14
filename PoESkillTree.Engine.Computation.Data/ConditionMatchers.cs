@@ -55,6 +55,10 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 { "when you ({ActionMatchers}) an enemy, for # seconds", Reference.AsAction.InPastXSeconds(Value) },
                 { "for # seconds when ({ActionMatchers})", Reference.AsAction.By(Enemy).InPastXSeconds(Value) },
+                {
+                    "on ({ActionMatchers}) a rare or unique enemy, lasting # seconds",
+                    And(Enemy.IsRareOrUnique, Reference.AsAction.InPastXSeconds(Value))
+                },
                 // - kill
                 {
                     "if you've killed a maimed enemy recently",
@@ -142,6 +146,11 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "to mace attacks", AttackWith(Tags.Mace) },
                 {
                     "with maces and sceptres",
+                    (Or(MainHandAttackWith(Tags.Mace), MainHandAttackWith(Tags.Sceptre)),
+                        Or(OffHandAttackWith(Tags.Mace), OffHandAttackWith(Tags.Sceptre)))
+                },
+                {
+                    "to mace and sceptre attacks",
                     (Or(MainHandAttackWith(Tags.Mace), MainHandAttackWith(Tags.Sceptre)),
                         Or(OffHandAttackWith(Tags.Mace), OffHandAttackWith(Tags.Sceptre)))
                 },
@@ -249,6 +258,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "enemies you taunt( deal)?", And(For(Enemy), Buff.Taunt.IsOn(Self, Enemy)) },
                 { "enemies ({BuffMatchers}) by you", And(For(Enemy), Reference.AsBuff.IsOn(Self, Enemy)) },
                 { "enemies you curse( have)?", And(For(Enemy), Buffs(Self, Enemy).With(Keyword.Curse).Any()) },
+                { "({BuffMatchers}) enemies", And(For(Enemy), Reference.AsBuff.IsOn(Self, Enemy)) },
                 { "(against|from) blinded enemies", Buff.Blind.IsOn(Enemy) },
                 { "from taunted enemies", Buff.Taunt.IsOn(Enemy) },
                 {
@@ -328,7 +338,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "if you summoned a golem in the past # seconds", Golems.Cast.InPastXSeconds(Value) },
                 // - by skill part
                 {
-                    "(beams?|final wave|shockwaves?|cone|aftershock) (has a|deals?)",
+                    "(beams?|final wave|shockwaves?|cone|aftershock|explosion) (has a|deals?|will have)",
                     Stat.MainSkillPart.Value.Eq(1)
                 },
                 // - other
@@ -358,7 +368,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "if you detonated (mines|a mine) recently", Skills.DetonateMines.Cast.Recently },
                 { "if you've placed a mine or thrown a trap recently", Or(Traps.Cast.Recently, Mines.Cast.Recently) },
                 // totems
-                { "^totems", For(Entity.Totem) },
+                { "^totems'?", For(Entity.Totem) },
                 { "totems (gain|have)", For(Entity.Totem) },
                 { "you and your totems", Or(For(Self), For(Entity.Totem)) },
                 { "(spells cast|attacks used|skills used) by totems (have a|have)", With(Keyword.Totem) },
@@ -408,9 +418,14 @@ namespace PoESkillTree.Engine.Computation.Data
                 // stance
                 { "(while )?in blood stance", Flag.InBloodStance },
                 { "(while )?in sand stance", Flag.InSandStance },
+                // enemy
+                { "enemies have", For(Enemy) },
+                { "to normal or magic enemies", And(For(Enemy), Not(Enemy.IsRareOrUnique)) },
+                { "to rare enemies", And(For(Enemy), Not(Enemy.IsRare)) },
+                { "to unique enemies", And(For(Enemy), Not(Enemy.IsUnique)) },
+                { "to unique enemies", And(For(Enemy), Not(Enemy.IsUnique)) },
                 // other
                 { "nearby allies( have| deal)?", For(Ally) },
-                { "enemies have", For(Enemy) },
                 { "against targets they pierce", Projectile.PierceCount.Value >= 1 },
                 { "while stationary", Flag.AlwaysStationary },
                 { "while moving", Flag.AlwaysMoving },

@@ -53,8 +53,9 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Buffs
         IBuffBuilder Tailwind { get; }
         IBuffBuilder CoveredInAsh { get; }
         IBuffBuilder Innervation { get; }
-        IBuffBuilder Impale { get; }
+        IImpaleBuffBuilder Impale { get; }
         IBuffBuilder Infusion { get; }
+        IBuffBuilder Snare { get; }
 
         IBuffBuilder GenericMine { get; }
 

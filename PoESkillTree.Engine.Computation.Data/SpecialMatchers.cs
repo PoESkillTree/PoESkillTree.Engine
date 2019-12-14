@@ -97,6 +97,11 @@ namespace PoESkillTree.Engine.Computation.Data
                     Flag.IncreasesToSourceApplyToTarget(Stat.Mine.Duration, Skills.ModifierSourceSkill.Buff.Duration)
                 },
                 {
+                    "increases and reductions to arrow speed also apply to this skill's area of effect",
+                    TotalOverride, 1,
+                    Flag.IncreasesToSourceApplyToTarget(Projectile.Speed, Stat.AreaOfEffect)
+                },
+                {
                     "({StatMatchers}) is doubled",
                     PercentMore, 100, Reference.AsStat
                 },
@@ -108,6 +113,14 @@ namespace PoESkillTree.Engine.Computation.Data
                 {
                     "maximum # stages",
                     BaseSet, Value, Stat.SkillStage.Maximum
+                },
+                {
+                    "supported skills can only be used with bows",
+                    TotalOverride, 0, Damage, Not(MainHand.Has(ItemClass.Bow))
+                },
+                {
+                    "supported skills can only be used with bows and wands",
+                    TotalOverride, 0, Damage, Not(Or(MainHand.Has(ItemClass.Bow), MainHand.Has(ItemClass.Wand)))
                 },
                 // Jewels
                 {
@@ -200,6 +213,11 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 // skills
                 {
+                    // Burning Arrow
+                    "if this skill ignites an enemy, it also inflicts a burning debuff debuff deals fire damage per second equal to #% of ignite damage per second",
+                    PercentMore, Value * Skills.ModifierSourceSkill.Buff.StackCount.For(Enemy).Value, Damage.With(Ailment.Ignite)
+                },
+                {
                     // Dread Banner, War Banner
                     @"\+# second to base placed banner duration per stage",
                     BaseAdd, Value * Stat.BannerStage.Value, Stat.Duration
@@ -282,6 +300,18 @@ namespace PoESkillTree.Engine.Computation.Data
                     PercentLess, Value, Damage, OffHand.Has(Tags.Weapon)
                 },
                 {
+                    // Wave of Conviction
+                    "exposure applies #% to elemental resistance matching highest damage taken",
+                    (BaseSet, Value, Buff.Temporary(Lightning.Exposure, WaveOfConvictionExposureType.Lightning).For(Enemy)),
+                    (BaseSet, Value, Buff.Temporary(Cold.Exposure, WaveOfConvictionExposureType.Cold).For(Enemy)),
+                    (BaseSet, Value, Buff.Temporary(Fire.Exposure, WaveOfConvictionExposureType.Fire).For(Enemy))
+                },
+                {
+                    // Wild Strike
+                    "beams chain # times",
+                    BaseAdd, Value, Projectile.ChainCount, Stat.MainSkillPart.Value.Eq(5)
+                },
+                {
                     // Winter Orb
                     "#% increased projectile frequency per stage",
                     PercentIncrease, Value * Stat.SkillStage.Value, Stat.HitRate
@@ -307,6 +337,10 @@ namespace PoESkillTree.Engine.Computation.Data
                     TotalOverride, 1, Projectile.Fork
                 },
                 {
+                    "projectiles from supported skills fork",
+                    TotalOverride, 1, Projectile.Fork
+                },
+                {
                     // Iron Will Support
                     "strength's damage bonus applies to spell damage as well for supported skills",
                     PercentIncrease,
@@ -320,9 +354,14 @@ namespace PoESkillTree.Engine.Computation.Data
                     Reference.AsDamageType.Resistance.For(Entity.Totem)
                 },
                 {
-                    // Multistrike Support
-                    "(first|second) repeat of supported skills deals #% more damage",
-                    PercentMore, Value / 3, Damage
+                    // (Awakened) Multistrike Support
+                    "(first|second|third) repeat of supported skills deals #% more damage",
+                    BaseAdd, Value, Stat.DamageMultiplierOverRepeatCycle
+                },
+                {
+                    // Awakened Spell Echo Support
+                    "final repeat of supported skills has #% chance to deal double damage",
+                    BaseAdd, Value / Stat.SkillRepeats.Value, Damage.ChanceToDouble
                 },
                 {
                     // Unleash Support
@@ -413,10 +452,6 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 // Ascendancies
                 // - Juggernaut
-                {
-                    "action speed cannot be modified to below base value",
-                    TotalOverride, 1, Stat.ActionSpeed.Minimum
-                },
                 {
                     "movement speed cannot be modified to below base value",
                     TotalOverride, 1, Stat.MovementSpeed.Minimum
@@ -758,6 +793,14 @@ namespace PoESkillTree.Engine.Computation.Data
             None,
             AreaOfEffect,
             ElementalDamage
+        }
+
+        private enum WaveOfConvictionExposureType
+        {
+            None,
+            Lightning,
+            Cold,
+            Fire,
         }
     }
 }

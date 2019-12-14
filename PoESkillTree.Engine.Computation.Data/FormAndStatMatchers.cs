@@ -164,6 +164,11 @@ namespace PoESkillTree.Engine.Computation.Data
                     "hits ignore enemy monster ({DamageTypeMatchers}) resistance",
                     TotalOverride, 1, Reference.AsDamageType.IgnoreResistance
                 },
+                { "enemies have #% to total physical damage reduction against your hits", BaseAdd, Value, Physical.Penetration },
+                {
+                    "enemies (you impale|impaled by supported skills) have #% to total physical damage reduction against impale hits",
+                    BaseAdd, Value, Buff.Impale.Penetration
+                },
                 // - exposure
                 {
                     @"(?<damageType>({DamageTypeMatchers})) exposure applies #% to \k<damageType> resistance",
@@ -186,6 +191,10 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "your critical strike chance is lucky", TotalOverride, 1, Flag.CriticalStrikeChanceIsLucky },
                 // - speed
                 { "actions are #% slower", PercentLess, Value, Stat.ActionSpeed },
+                {
+                    "action speed cannot be modified to below base value",
+                    TotalOverride, 1, Stat.ActionSpeed.Minimum
+                },
                 { @"\+# seconds to attack time", BaseAdd, Value, Stat.BaseCastTime.With(DamageSource.Attack) },
                 // - projectiles
                 { "fires? # additional projectiles", BaseAdd, Value, Projectile.Count },
@@ -226,6 +235,10 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 { @"chains \+# times", BaseAdd, Value, Projectile.ChainCount },
                 { @"(supported )?skills chain \+# times", BaseAdd, Value, Projectile.ChainCount },
+                {
+                    "fires? projectiles sequentially",
+                    TotalOverride, Projectile.Count.Value, Stat.SkillNumberOfHitsPerCast
+                },
                 // - other
                 { "(your )?hits can't be evaded", TotalOverride, 100, Stat.ChanceToHit },
                 { "can't be evaded", TotalOverride, 100, Stat.ChanceToHit },
@@ -391,6 +404,8 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 { "skills cost no mana", TotalOverride, 0, Mana.Cost },
                 { "you can cast an additional brand", BaseAdd, 1, Skills[Keyword.Brand].CombinedInstances },
+                { "repeat an additional time", BaseAdd, 1, Stat.SkillRepeats },
+                { "repeat # additional times", BaseAdd, Value, Stat.SkillRepeats },
                 // traps, mines, totems
                 { "trap lasts # seconds", BaseSet, Value, Stat.Trap.Duration },
                 { "mine lasts # seconds", BaseSet, Value, Stat.Mine.Duration },
@@ -402,6 +417,14 @@ namespace PoESkillTree.Engine.Computation.Data
                 {
                     "(a )?base mine detonation time (of|is) # seconds",
                     TotalOverride, Value, Stat.BaseCastTime, With(Skills.DetonateMines)
+                },
+                {
+                    @"(attack|supported) skills have \+# to maximum number of summoned ballista totems",
+                    BaseAdd, Value, Totems.CombinedInstances.Maximum, With(Keyword.From(GameModel.Skills.Keyword.Ballista))
+                },
+                {
+                    @"\+# to maximum number of summoned ballista totems",
+                    BaseAdd, Value, Totems.CombinedInstances.Maximum, With(Keyword.From(GameModel.Skills.Keyword.Ballista))
                 },
                 // minions
                 { "can summon up to # golem at a time", BaseSet, Value, Golems.CombinedInstances.Maximum },
@@ -422,7 +445,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "you can have one additional curse", BaseAdd, 1, Buff.CurseLimit },
                 { "an additional curse can be applied to you", BaseAdd, 1, Buff.CurseLimit },
                 { "enemies can have # additional curse", BaseAdd, Value, Buff.CurseLimit.For(Enemy) },
-                { "you can apply an additional curse", BaseAdd, 1, Buff.CurseLimit.For(Enemy) },
+                { "(you|supported skills) can apply an additional curse", BaseAdd, 1, Buff.CurseLimit.For(Enemy) },
                 { "unaffected by curses", PercentLess, 100, Buffs(targets: Self).With(Keyword.Curse).Effect },
                 {
                     "unaffected by ({SkillMatchers})",
@@ -453,6 +476,7 @@ namespace PoESkillTree.Engine.Computation.Data
                     TotalOverride, 0, Skills.ModifierSourceSkill.Buff.EffectOn(Self)
                 },
                 { "totems cannot gain ({BuffMatchers})", TotalOverride, 0, Reference.AsBuff.On(Entity.Totem) },
+                { "maximum # ({BuffMatchers}) per enemy", TotalOverride, Value, Reference.AsBuff.StackCount.For(Enemy).Maximum },
                 // flags
                 // ailments
                 { "causes bleeding", TotalOverride, 100, Ailment.Bleed.Chance },
@@ -507,6 +531,10 @@ namespace PoESkillTree.Engine.Computation.Data
                     "({AilmentMatchers}) inflicted by this skill deals damage #% faster",
                     PercentIncrease, Value, Reference.AsAilment.TickRateModifier
                 },
+                {
+                    "damaging ailments inflicted with supported skills deal damage #% faster",
+                    PercentIncrease, Value, Ailment.Ignite.TickRateModifier, Ailment.Bleed.TickRateModifier, Ailment.Poison.TickRateModifier
+                },
                 // stun
                 { "(you )?cannot be stunned", TotalOverride, 100, Effect.Stun.Avoidance },
                 { "additional #% chance to be stunned", BaseAdd, Value, Effect.Stun.Chance.For(Entity.OpponentOfSelf) },
@@ -522,6 +550,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "(?<!chance to |when you )gain a flask charge", BaseAdd, 100, Flask.ChanceToGainCharge },
                 { "recharges # charges?", BaseAdd, Value * 100, Flask.ChanceToGainCharge },
                 { "flasks gain # charges?", BaseAdd, Value * 100, Flask.ChanceToGainCharge },
+                { "gain # charges?", BaseAdd, Value * 100, Flask.ChanceToGainCharge },
                 { "instant recovery", BaseSet, 100, Flask.InstantRecovery },
                 // item quantity/quality
                 // range and area of effect
