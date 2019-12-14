@@ -36,13 +36,15 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
             return 1.15 * Accuracy / (Accuracy + Math.Pow(enemyEvasion / 4.0, 0.8));
         }
 
-        private static double DamageReductionFromArmour(ICalculator calculator)
+        private static double DamageReductionFromArmour(ICalculator calculator, double additionalDamageMultiplier = 1)
         {
             var enemyArmourStat = Build(_builderFactories.StatBuilders.Armour.For(_builderFactories.EntityBuilders.Enemy)).Single();
             var enemyArmour = calculator.NodeRepository.GetNode(enemyArmourStat).Value.Single();
-            var physicalDamageStat = BuildMainHandSkillSingle(_builderFactories.DamageTypeBuilders.Physical.Damage.WithSkills);
+            var physicalDamageStat = BuildMainHandSkillSingle(_builderFactories.DamageTypeBuilders.Physical.Damage);
             var physicalDamage = calculator.NodeRepository.GetNode(physicalDamageStat).Value.Single();
-            return enemyArmour / (enemyArmour + 10 * physicalDamage);
+            var damageMultiplierStat = BuildMainHandSkillSingle(_builderFactories.DamageTypeBuilders.Physical.DamageMultiplierWithNonCrits);
+            var damageMultiplier = calculator.NodeRepository.GetNode(damageMultiplierStat).Value.Single() / 100;
+            return enemyArmour / (enemyArmour + 10 * physicalDamage * damageMultiplier * additionalDamageMultiplier);
         }
 
         private static double EffectiveDamageMultiplierWithNonCritsIncludingArmour(ICalculator calculator)
@@ -110,26 +112,26 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
                 .DoUpdate();
 
             var chanceToHit = ChanceToHit(calculator);
-            var reductionFromArmour = 100 * DamageReductionFromArmour(calculator);
             var actual = nodes
                 .GetNode(BuildMainHandSkillSingle(_metaStats.EnemyResistanceAgainstNonCrits(DamageType.Physical)))
                 .Value.Single();
-            var expectedEnemyResistance = 60 + reductionFromArmour - 10;
-            Assert.AreEqual(expectedEnemyResistance, actual, 1e-10);
+            var expectedEnemyResistanceAgainstNonCrits = 60 + 100 * DamageReductionFromArmour(calculator) - 10;
+            Assert.AreEqual(expectedEnemyResistanceAgainstNonCrits, actual, 1e-10);
             actual = nodes
                 .GetNode(BuildMainHandSkillSingle(_metaStats.EnemyResistanceAgainstCrits(DamageType.Physical)))
                 .Value.Single();
-            Assert.AreEqual(expectedEnemyResistance, actual, 1e-10);
+            var expectedEnemyResistanceAgainstCrits = 60 + 100 * DamageReductionFromArmour(calculator, 1.5) - 10;
+            Assert.AreEqual(expectedEnemyResistanceAgainstCrits, actual, 1e-10);
             actual = nodes
                 .GetNode(
                     BuildMainHandSkillSingle(_metaStats.EffectiveDamageMultiplierWithNonCrits(DamageType.Physical)))
                 .Value.Single();
-            var expectedEffectiveDamageMultiplierWithNonCrits = (1 - expectedEnemyResistance / 100d) * 1.2 * 1.75;
+            var expectedEffectiveDamageMultiplierWithNonCrits = (1 - expectedEnemyResistanceAgainstNonCrits / 100d) * 1.2 * 1.75;
             Assert.AreEqual(expectedEffectiveDamageMultiplierWithNonCrits, actual, 1e-10);
             actual = nodes
                 .GetNode(BuildMainHandSkillSingle(_metaStats.EffectiveDamageMultiplierWithCrits(DamageType.Physical)))
                 .Value.Single();
-            var expectedEffectiveDamageMultiplierWithCrits = expectedEffectiveDamageMultiplierWithNonCrits * 1.5;
+            var expectedEffectiveDamageMultiplierWithCrits = (1 - expectedEnemyResistanceAgainstCrits / 100d) * 1.2 * 1.75 * 1.5;
             Assert.AreEqual(expectedEffectiveDamageMultiplierWithCrits, actual, 1e-10);
             actual = nodes
                 .GetNode(BuildMainHandSkillSingle(_metaStats.DamageWithNonCrits(DamageType.Physical)))

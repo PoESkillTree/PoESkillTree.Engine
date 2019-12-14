@@ -41,8 +41,8 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                 { TotalOverride, MetaStats.ResistanceAgainstHits(DamageType.Chaos), Chaos.Resistance.Value },
                 {
                     BaseAdd, MetaStats.ResistanceAgainstHits(DamageType.Physical),
-                    PhysicalDamageReductionFromArmour(Armour,
-                        Physical.Damage.WithSkills.With(AttackDamageHand.MainHand).For(Enemy))
+                    PhysicalDamageReductionFromArmour(Armour.Value,
+                        Physical.Damage.WithSkills.With(AttackDamageHand.MainHand).For(Enemy).Value)
                 },
                 // damage mitigation (1 - (1 - resistance / 100) * damage taken)
                 {

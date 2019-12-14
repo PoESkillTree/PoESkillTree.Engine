@@ -36,7 +36,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
             Tailwind = Create("Tailwind");
             CoveredInAsh = Create("CoveredInAsh");
             Innervation = Create("Innervation");
-            Impale = Create("Impale");
+            Impale = new ImpaleBuffBuilder(statFactory);
             Infusion = Create("Infusion");
             Conflux = new ConfluxBuffBuilders(statFactory);
             GenericMine = Create("Mine");
@@ -90,7 +90,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
         public IBuffBuilder Tailwind { get; }
         public IBuffBuilder CoveredInAsh { get; }
         public IBuffBuilder Innervation { get; }
-        public IBuffBuilder Impale { get; }
+        public IImpaleBuffBuilder Impale { get; }
         public IBuffBuilder Infusion { get; }
         public IBuffBuilder GenericMine { get; }
         public IConfluxBuffBuilders Conflux { get; }

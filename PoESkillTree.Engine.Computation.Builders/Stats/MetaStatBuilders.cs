@@ -57,8 +57,8 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         public IDamageRelatedStatBuilder Damage(DamageType damageType)
             => DamageRelatedFromIdentity($"{damageType}.Damage", typeof(double));
 
-        public IDamageRelatedStatBuilder EnemyPhysicalDamageReductionFromArmour
-            => DamageRelatedFromIdentity("Physical.EnemyDamageReductionFromArmour", typeof(double)).WithHits;
+        public IDamageRelatedStatBuilder EnemyResistanceFromArmourAgainstNonCrits => DamageRelatedFromIdentity(typeof(double)).WithHits;
+        public IDamageRelatedStatBuilder EnemyResistanceFromArmourAgainstCrits => DamageRelatedFromIdentity(typeof(double)).WithHits;
 
         public IDamageRelatedStatBuilder EnemyResistanceAgainstNonCrits(DamageType damageType)
             => DamageRelatedFromIdentity($"{damageType}.EnemyResistance.NonCrits", typeof(int)).WithHits;
@@ -101,6 +101,14 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
 
         public IStatBuilder AilmentDps(Ailment ailment)
             => FromIdentity($"DPS.{ailment}", typeof(double));
+
+        public IStatBuilder ImpaleRecordedDamage => FromIdentity(typeof(double));
+        public IDamageRelatedStatBuilder EnemyResistanceAgainstNonCritImpales => DamageRelatedFromIdentity(typeof(double)).WithHits;
+        public IDamageRelatedStatBuilder EnemyResistanceAgainstCritImpales => DamageRelatedFromIdentity(typeof(double)).WithHits;
+
+        public IDamageRelatedStatBuilder ImpaleDamageMultiplier => DamageRelatedFromIdentity(typeof(double)).WithHits;
+        public IDamageRelatedStatBuilder EffectiveImpaleDamageMultiplierAgainstNonCrits => DamageRelatedFromIdentity(typeof(double)).WithHits;
+        public IDamageRelatedStatBuilder EffectiveImpaleDamageMultiplierAgainstCrits => DamageRelatedFromIdentity(typeof(double)).WithHits;
 
 
         public IStatBuilder CastRate => FromIdentity(typeof(double));

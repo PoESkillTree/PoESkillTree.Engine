@@ -168,7 +168,6 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "maximum ({DamageTypeMatchers}) resistance", Reference.AsDamageType.Resistance.Maximum },
                 { "all maximum resistances", Elemental.And(Chaos).Resistance.Maximum },
                 { "all maximum elemental resistances", Elemental.Resistance.Maximum },
-                { "total physical damage reduction against your hits", Physical.Penetration },
                 { "physical damage reduction", Physical.Resistance },
                 // - leech
                 {

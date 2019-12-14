@@ -31,7 +31,8 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
 
         // Damage calculation
         IDamageRelatedStatBuilder Damage(DamageType damageType); // like DamageStatBuilder, but !canApplyToSkillDamage
-        IDamageRelatedStatBuilder EnemyPhysicalDamageReductionFromArmour { get; } // with hits
+        IDamageRelatedStatBuilder EnemyResistanceFromArmourAgainstNonCrits { get; } // with hits
+        IDamageRelatedStatBuilder EnemyResistanceFromArmourAgainstCrits { get; } // with hits
         IDamageRelatedStatBuilder EnemyResistanceAgainstNonCrits(DamageType damageType); // with hits
         IDamageRelatedStatBuilder EnemyResistanceAgainstCrits(DamageType damageType); // with hits
         IDamageRelatedStatBuilder EffectiveDamageMultiplierWithNonCrits(DamageType damageType);
@@ -48,6 +49,13 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
         IStatBuilder AverageAilmentDamage(Ailment ailment);
         IStatBuilder AilmentInstanceLifetimeDamage(Ailment ailment);
         IStatBuilder AilmentDps(Ailment ailment);
+
+        IStatBuilder ImpaleRecordedDamage { get; }
+        IDamageRelatedStatBuilder EnemyResistanceAgainstNonCritImpales { get; } // with hits
+        IDamageRelatedStatBuilder EnemyResistanceAgainstCritImpales { get; } // with hits
+        IDamageRelatedStatBuilder ImpaleDamageMultiplier { get; } // with hits
+        IDamageRelatedStatBuilder EffectiveImpaleDamageMultiplierAgainstNonCrits { get; } // with hits
+        IDamageRelatedStatBuilder EffectiveImpaleDamageMultiplierAgainstCrits { get; } // with hits
 
         IStatBuilder CastRate { get; }
         IStatBuilder CastTime { get; }

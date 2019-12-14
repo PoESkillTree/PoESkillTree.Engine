@@ -164,6 +164,8 @@ namespace PoESkillTree.Engine.Computation.Data
                     "hits ignore enemy monster ({DamageTypeMatchers}) resistance",
                     TotalOverride, 1, Reference.AsDamageType.IgnoreResistance
                 },
+                { "enemies have #% to total physical damage reduction against your hits", BaseAdd, Value, Physical.Penetration },
+                { "enemies you impale have #% to total physical damage reduction against impale hits", BaseAdd, Value, Buff.Impale.Penetration },
                 // - exposure
                 {
                     @"(?<damageType>({DamageTypeMatchers})) exposure applies #% to \k<damageType> resistance",
