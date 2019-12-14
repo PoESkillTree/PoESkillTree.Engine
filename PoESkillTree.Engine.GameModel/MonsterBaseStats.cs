@@ -30,6 +30,8 @@ namespace PoESkillTree.Engine.GameModel
         public int EnemyLife(int level) => _statDict[level].EnemyLife;
 
         public int AllyLife(int level) => _statDict[level].AllyLife;
+
+        public int Armour(int level) => _statDict[level].Armour;
     }
 
     public class JsonMonsterBaseStatsForLevel
@@ -48,5 +50,8 @@ namespace PoESkillTree.Engine.GameModel
         
         [JsonProperty("ally_life")]
         public int AllyLife { get; set; }
+
+        [JsonProperty("armour")]
+        public int Armour { get; set; }
     }
 }

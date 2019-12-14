@@ -32,6 +32,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                     BaseSet, Physical.Damage.WithSkills(DamageSource.Attack),
                     LevelBased(l => MonsterBaseStats.PhysicalDamage(l), "PhysicalDamage") * 1.5
                 },
+                { BaseSet, Stat.Armour, LevelBased(l => MonsterBaseStats.Armour(l), "Armour") },
             };
     }
 }

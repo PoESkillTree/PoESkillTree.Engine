@@ -114,21 +114,23 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                 },
                 // - enemy resistance against crit/non-crit hits per source and type
                 {
-                    TotalOverride, dt => MetaStats.EnemyResistanceAgainstNonCrits(dt),
+                    BaseSet, dt => MetaStats.EnemyResistanceAgainstNonCrits(dt),
                     dt => DamageTypeBuilders.From(dt).IgnoreResistanceWithNonCrits,
                     dt => DamageTypeBuilders.From(dt).PenetrationWithNonCrits,
                     _ => MetaStats.EnemyPhysicalDamageReductionFromArmour,
                     EnemyResistanceAgainstHits
                 },
                 { TotalOverride, MetaStats.EnemyResistanceAgainstNonCrits(DamageType.Physical).Minimum, 0 },
+                { TotalOverride, MetaStats.EnemyResistanceAgainstNonCrits(DamageType.Physical).Maximum, 100 },
                 {
-                    TotalOverride, dt => MetaStats.EnemyResistanceAgainstCrits(dt),
+                    BaseSet, dt => MetaStats.EnemyResistanceAgainstCrits(dt),
                     dt => DamageTypeBuilders.From(dt).IgnoreResistanceWithCrits,
                     dt => DamageTypeBuilders.From(dt).PenetrationWithCrits,
                     _ => MetaStats.EnemyPhysicalDamageReductionFromArmour,
                     EnemyResistanceAgainstHits
                 },
                 { TotalOverride, MetaStats.EnemyResistanceAgainstCrits(DamageType.Physical).Minimum, 0 },
+                { TotalOverride, MetaStats.EnemyResistanceAgainstCrits(DamageType.Physical).Maximum, 100 },
                 {
                     TotalOverride, MetaStats.EnemyPhysicalDamageReductionFromArmour,
                     Physical.Damage.WithHits,
