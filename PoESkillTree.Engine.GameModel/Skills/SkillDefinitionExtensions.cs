@@ -118,8 +118,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
             {
                 "BlastRain",
                 ("Single Explosion", new SkillPartDefinitionExtension()),
-                ("All 4 Explosions", new SkillPartDefinitionExtension(
-                    AddStat("base_skill_number_of_additional_hits", 3)))
+                ("All Explosions", new SkillPartDefinitionExtension())
             },
             {
                 "BloodRage",
@@ -286,13 +285,9 @@ namespace PoESkillTree.Engine.GameModel.Skills
             },
             {
                 "ExplosiveArrow",
-                new SkillPartDefinitionExtension(
-                    AddStat("maximum_stages", 5)),
                 ("Attack", new SkillPartDefinitionExtension()),
                 ("Explosion", new SkillPartDefinitionExtension(
-                    AddStats(
-                        ("base_skill_show_average_damage_instead_of_dps", 1),
-                        ("display_skill_deals_secondary_damage", 1))))
+                    AddStat("base_skill_show_average_damage_instead_of_dps", 1)))
             },
             { "Fireball", SecondaryExplosionProjectileParts },
             { "VaalFireball", SecondaryExplosionProjectileParts },
@@ -462,6 +457,10 @@ namespace PoESkillTree.Engine.GameModel.Skills
             },
             { "LightningStrike", SecondaryProjectileMeleeAttackParts },
             { "VaalLightningStrike", SecondaryProjectileMeleeAttackParts },
+            {
+                "LightningTowerTrap", // Lightning Spire Trap
+                new SkillPartDefinitionExtension(ReplaceStat("lightning_tower_trap_base_interval_duration_ms", "hit_rate_ms"))
+            },
             { "MoltenShell", SelfBuff("base_physical_damage_reduction_rating") },
             { "VaalMoltenShell", SelfBuff("base_physical_damage_reduction_rating") },
             {
@@ -473,6 +472,10 @@ namespace PoESkillTree.Engine.GameModel.Skills
                     ReplaceStat("active_skill_damage_over_time_from_projectile_hits_+%_final",
                         "damage_over_time_+%_final"),
                     removedKeywords: new[] { Keyword.Melee }))
+            },
+            {
+                "OrbOfStorms",
+                new SkillPartDefinitionExtension(ReplaceStat("orb_of_storms_base_bolt_frequency_ms", "hit_rate_ms"))
             },
             {
                 "PhysicalDamageAura", // Pride
@@ -513,7 +516,9 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 new SkillPartDefinitionExtension(
                     ReplaceStat("newpunishment_attack_speed_+%", "attack_speed_+%")
                         .AndThen(ReplaceStat("newpunishment_melee_damage_+%_final", "melee_damage_+%_final"))),
-                SelfBuff("attack_speed_+%", "melee_damage_+%_final")
+                Buff(("attack_speed_+%", new[] {Entity.Character}),
+                    ("melee_damage_+%_final", new[] {Entity.Character}),
+                    ("base_additional_physical_damage_reduction_%", new[] {Entity.Enemy}))
             },
             {
                 "PuresteelBanner", // Dread Banner
@@ -574,9 +579,8 @@ namespace PoESkillTree.Engine.GameModel.Skills
                     RemoveStat("newshocknova_first_ring_damage_+%_final")))
             },
             {
-                "ShrapnelShot",
-                ("Projectile", new SkillPartDefinitionExtension(
-                    AddStat("always_pierce", 1))),
+                "ShrapnelShot", // Galvanic Arrow
+                ("Projectile", new SkillPartDefinitionExtension()),
                 ("Cone", new SkillPartDefinitionExtension(
                     AddStat("is_area_damage", 1)))
             },
@@ -781,9 +785,10 @@ namespace PoESkillTree.Engine.GameModel.Skills
                     "support_innervate_maximum_added_lightning_damage")
             },
             {
-                "SupportRangedAttackTotem",
+                "SupportRangedAttackTotem", // Ballista Totem Support
                 new SkillPartDefinitionExtension(
-                    ReplaceStat("support_attack_totem_attack_speed_+%_final", "active_skill_attack_speed_+%_final"))
+                    ReplaceStat("support_attack_totem_attack_speed_+%_final", "active_skill_attack_speed_+%_final"),
+                    addedKeywords: new [] {Keyword.Ballista})
             },
             {
                 "SupportSpellTotem",

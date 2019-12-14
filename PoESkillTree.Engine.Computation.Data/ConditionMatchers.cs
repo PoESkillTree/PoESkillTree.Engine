@@ -55,6 +55,10 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 { "when you ({ActionMatchers}) an enemy, for # seconds", Reference.AsAction.InPastXSeconds(Value) },
                 { "for # seconds when ({ActionMatchers})", Reference.AsAction.By(Enemy).InPastXSeconds(Value) },
+                {
+                    "on ({ActionMatchers}) a rare or unique enemy, lasting # seconds",
+                    And(Enemy.IsRareOrUnique, Reference.AsAction.InPastXSeconds(Value))
+                },
                 // - kill
                 {
                     "if you've killed a maimed enemy recently",
@@ -333,7 +337,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "if you summoned a golem in the past # seconds", Golems.Cast.InPastXSeconds(Value) },
                 // - by skill part
                 {
-                    "(beams?|final wave|shockwaves?|cone|aftershock) (has a|deals?)",
+                    "(beams?|final wave|shockwaves?|cone|aftershock|explosion) (has a|deals?|will have)",
                     Stat.MainSkillPart.Value.Eq(1)
                 },
                 // - other

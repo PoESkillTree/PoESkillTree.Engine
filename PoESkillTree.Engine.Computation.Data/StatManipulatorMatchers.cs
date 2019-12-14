@@ -26,6 +26,7 @@ namespace PoESkillTree.Engine.Computation.Data
             {
                 { "you and nearby allies (deal|have)(?! onslaught)", s => Buff.Aura(s, Self, Ally) },
                 { "you and nearby allies(?! deal| have)", s => Buff.Aura(s, Self, Ally) },
+                { "you and nearby non-minion allies have a", s => Buff.Aura(s, Self, Entity.Totem) },
                 {
                     "auras from your skills grant (?<inner>.*) to you and allies",
                     s => Buffs(Self, Self, Ally).With(Keyword.Aura).Without(Keyword.Curse).AddStat(s), "${inner}"

@@ -1,4 +1,7 @@
 ﻿// TODO not handled yet
+// Unclear mechanics
+// - Explosive Arrow: does this apply to all damage that's not the additional explosion damage? All damage? BaseSet only?
+Explosion deals 50% of Base Damage
 // Requires not yet implemented stats
 // - Stat that modifies Mana.Cost(Total). Could be done via behavior.
 Channelling Skills have -3 to Total Mana Cost
@@ -41,6 +44,9 @@ Nearby Allies Unnerve Enemies for 4 seconds on Hit
 50% chance to gain Elusive on Critical Strike
 8% reduced Damage taken while Elusive
 You take no Extra Damage from Critical Strikes while Elusive
+// More calculations for non-damaging ailments (shock, chill, freeze)
+Chills Enemies as though dealing 195% more Damage
+Shocks Enemies as though dealing 195% more Damage
 // Requires distinguishing flask types
 10% reduced Flask Charges used from Mana Flasks
 Mana Flasks gain 1 Charge every 3 seconds

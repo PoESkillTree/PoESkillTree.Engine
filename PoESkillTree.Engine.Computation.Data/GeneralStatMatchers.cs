@@ -259,6 +259,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "attack, cast( speed)? and movement speed", Stat.CastRate, Stat.MovementSpeed },
                 { "action speed", Stat.ActionSpeed },
                 { "hit rate", Stat.HitRate },
+                { "projectile frequency", Stat.HitRate },
                 { "brand activation frequency", Stat.HitRate, With(Keyword.Brand) },
                 // regen and recharge
                 { "({PoolStatMatchers}) regeneration( rate)?", Reference.AsPoolStat.Regen },
@@ -390,6 +391,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "chance to blind( enemies)?", Buff.Blind.Chance },
                 { "chance to cover rare or unique enemies in ash", Buff.CoveredInAsh.Chance, Enemy.IsRareOrUnique },
                 { "chance to impale enemies", Buff.Impale.Chance },
+                { "chance to create consecrated ground", Ground.Consecrated.Chance },
                 // - duration
                 { "({BuffMatchers}) duration", Reference.AsBuff.Duration },
                 { "blinding duration", Buff.Blind.Duration },
@@ -464,6 +466,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 // range and area of effect
                 { "area of effect", Stat.AreaOfEffect },
                 { "aura area of effect", Stat.AreaOfEffect, With(Keyword.Aura) },
+                { "area of effect of supported curses", Stat.AreaOfEffect, With(Keyword.Curse) },
                 { "(?<!in )radius", Stat.Radius },
                 { "explosion radius", Stat.Radius },
                 { "area of effect length", Stat.Radius },

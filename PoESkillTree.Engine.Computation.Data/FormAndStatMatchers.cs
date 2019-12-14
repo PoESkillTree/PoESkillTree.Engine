@@ -165,7 +165,10 @@ namespace PoESkillTree.Engine.Computation.Data
                     TotalOverride, 1, Reference.AsDamageType.IgnoreResistance
                 },
                 { "enemies have #% to total physical damage reduction against your hits", BaseAdd, Value, Physical.Penetration },
-                { "enemies you impale have #% to total physical damage reduction against impale hits", BaseAdd, Value, Buff.Impale.Penetration },
+                {
+                    "enemies (you impale|impaled by supported skills) have #% to total physical damage reduction against impale hits",
+                    BaseAdd, Value, Buff.Impale.Penetration
+                },
                 // - exposure
                 {
                     @"(?<damageType>({DamageTypeMatchers})) exposure applies #% to \k<damageType> resistance",
@@ -410,7 +413,7 @@ namespace PoESkillTree.Engine.Computation.Data
                     TotalOverride, Value, Stat.BaseCastTime, With(Skills.DetonateMines)
                 },
                 {
-                    @"attack skills have \+# to maximum number of summoned ballista totems",
+                    @"(attack|supported) skills have \+# to maximum number of summoned ballista totems",
                     BaseAdd, Value, Totems.CombinedInstances.Maximum, With(Keyword.From(GameModel.Skills.Keyword.Ballista))
                 },
                 // minions

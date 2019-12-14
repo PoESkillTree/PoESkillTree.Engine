@@ -39,7 +39,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             // ailments
             { Ailment.Freeze, PercentLess, Stat.ActionSpeed, 100 },
             // buffs
-            { Buff.Fortify, PercentReduce, Damage.Taken.WithHits, 20 },
+            { Buff.Fortify, PercentLess, Damage.Taken.WithHits, 20 },
             { Buff.Maim, PercentReduce, Stat.MovementSpeed, 30 },
             { Buff.Intimidate, PercentIncrease, Damage.Taken, 10 },
             { Buff.Onslaught, PercentIncrease, Stat.CastRate, 20 },

@@ -69,9 +69,9 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 { "per grand spectrum", PerStat(stat: Stat.GrandSpectrumJewelsSocketed) },
                 { "per level", PerStat(Stat.Level) },
-                { "per (stage|fuse charge)", PerStat(Stat.SkillStage) },
+                { "per (stage|fuse charge|explosive arrow on target)", PerStat(Stat.SkillStage) },
                 { "for each (stage|blade)", PerStat(Stat.SkillStage) },
-                { @"per stage, up to \+#", CappedMultiplier(Stat.SkillStage.Value, Value) },
+                { @"per (stage|explosive arrow on target), up to \+#", CappedMultiplier(Stat.SkillStage.Value, Value) },
                 { "per stage after the first", PerStatAfterFirst(Stat.SkillStage) },
                 {
                     "per ({ChargeTypeMatchers}) removed",

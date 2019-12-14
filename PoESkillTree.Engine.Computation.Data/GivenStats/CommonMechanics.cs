@@ -27,7 +27,6 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
 
         public override IReadOnlyList<IIntermediateModifier> GivenModifiers => _lazyGivenStats.Value;
 
-        // TODO no reference to Enemy allowed here
         private DataDrivenMechanicCollection CreateCollection()
             => new DataDrivenMechanicCollection(ModifierBuilder, BuilderFactories)
             {
