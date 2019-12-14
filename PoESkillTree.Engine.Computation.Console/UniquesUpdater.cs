@@ -29,8 +29,8 @@ namespace PoESkillTree.Engine.Computation.Console
 
         private static readonly IReadOnlyList<string> RelevantWikiClasses = new[]
         {
-            "One Hand Axes", "Two Hand Axes", "Bows", "Claws", "Daggers", "Rune Daggers",
-            "One Hand Maces", "Sceptres", "Two Hand Maces", "Staves", "Warstaves",
+            "One Hand Axes", "Two Hand Axes", "Bows", "Claws", "Daggers", "Rune Dagger",
+            "One Hand Maces", "Sceptres", "Two Hand Maces", "Staves", "Warstaff",
             "One Hand Swords", "Thrusting One Hand Swords", "Two Hand Swords", "Wands",
             "Amulets", "Belts", "Quivers", "Rings",
             "Body Armours", "Boots", "Helmets", "Gloves", "Shields",

@@ -1266,6 +1266,16 @@
     </Explicit>
     <Properties />
   </Unique>
+  <Unique Name="The Black Cane" Level="50" BaseMetadataId="Metadata/Items/Weapons/OneHandWeapons/OneHandMaces/Sceptre14">
+    <Explicit>
+      <string>IntelligenceUnique__18</string>
+      <string>IncreasedCastSpeedUnique__19__</string>
+      <string>ManaRegenerationUnique__11___</string>
+      <string>MinionDamageUnique__8_</string>
+      <string>PhantasmGrantsBuffUnique__1</string>
+    </Explicit>
+    <Properties />
+  </Unique>
   <Unique Name="The Dark Seer" Level="32" BaseMetadataId="Metadata/Items/Weapons/OneHandWeapons/OneHandMaces/Sceptre8">
     <Explicit>
       <string>AllDamageUniqueSceptre8</string>
@@ -1779,7 +1789,7 @@
   </Unique>
   <Unique Name="Xirgil's Crank" Level="28" BaseMetadataId="Metadata/Items/Weapons/TwoHandWeapons/Staves/Staff5">
     <Explicit>
-      <string>LocalIncreaseSocketedGemLevelUnique__4</string>
+      <string>LocalIncreaseSocketedGemLevelUnique___3</string>
       <string>StaffBlockPercentUnique__1</string>
       <string>SpellDamageUnique__2</string>
       <string>IncreasedEnergyShieldUnique__3</string>
@@ -3478,6 +3488,16 @@
     </Explicit>
     <Properties />
   </Unique>
+  <Unique Name="Mother's Embrace" Level="40" BaseMetadataId="Metadata/Items/Belts/Belt4">
+    <Explicit>
+      <string>IncreasedLifeUnique__98</string>
+      <string>ColdResistUnique__29</string>
+      <string>MinionsUseFlaskOnSummonUnique__1__</string>
+      <string>MinionFlaskChargesUsedUnique__1</string>
+      <string>MinionFlaskDurationUnique__1</string>
+    </Explicit>
+    <Properties />
+  </Unique>
   <Unique Name="Perandus Blazon" Level="16" BaseMetadataId="Metadata/Items/Belts/Belt5">
     <Explicit>
       <string>AllAttributesUniqueBelt3</string>
@@ -3886,7 +3906,13 @@
     <Properties />
   </Unique>
   <Unique Name="Astral Projector" Level="40" BaseMetadataId="Metadata/Items/Rings/Ring5">
-    <Explicit />
+    <Explicit>
+      <string>IntelligenceUnique__19</string>
+      <string>SpellDamageUnique__12</string>
+      <string>AvoidElementalAilmentsUnique__1_</string>
+      <string>NovaSpellsAreaOfEffectUnique__1</string>
+      <string>NovaSkillsTargetLocationUnique__1__</string>
+    </Explicit>
     <Properties />
   </Unique>
   <Unique Name="Berek's Grip" Level="20" BaseMetadataId="Metadata/Items/Rings/Ring13">
@@ -4603,6 +4629,16 @@
       <string>HitsCauseMonsterFleeUniqueRing1</string>
       <string>BleedOnMeleeHitChanceUnique__1</string>
       <string>PoisonOnMeleeHitUnique__1</string>
+    </Explicit>
+    <Properties />
+  </Unique>
+  <Unique Name="Warrior's Legacy" Level="40" BaseMetadataId="Metadata/Items/Rings/Ring7">
+    <Explicit>
+      <string>StrengthUnique__18</string>
+      <string>MeleeDamageUnique__1</string>
+      <string>AvoidStunUnique__1</string>
+      <string>RingAttackSpeedUnique__1</string>
+      <string>StrikeSkillMemoryUseUnique__1_______</string>
     </Explicit>
     <Properties />
   </Unique>
@@ -6324,7 +6360,13 @@
     <Properties />
   </Unique>
   <Unique Name="Crown of the Inward Eye" Level="63" BaseMetadataId="Metadata/Items/Armours/Helmets/HelmetStrInt9">
-    <Explicit />
+    <Explicit>
+      <string>LocalIncreasedArmourAndEnergyShieldUnique__19</string>
+      <string>MaximumLifeManaEnergyShieldUnique__1</string>
+      <string>TransfigurationOfSoulUnique__1_</string>
+      <string>TransfigurationOfBodyUnique__1</string>
+      <string>TransfigurationOfMindUnique__1</string>
+    </Explicit>
     <Properties />
   </Unique>
   <Unique Name="Crown of the Pale King" Level="52" BaseMetadataId="Metadata/Items/Armours/Helmets/HelmetDexInt8">
@@ -6432,6 +6474,16 @@
       <string>IncreasedManaUnique__9</string>
       <string>StunRecoveryUnique__1_</string>
       <string>ElementalDamagePercentAddedAsChaosUnique__4</string>
+    </Explicit>
+    <Properties />
+  </Unique>
+  <Unique Name="Eye of Malice" Level="45" BaseMetadataId="Metadata/Items/Armours/Helmets/HelmetDexInt7">
+    <Explicit>
+      <string>LocalIncreasedEvasionAndEnergyShieldUnique__25</string>
+      <string>FireResistUnique__23_</string>
+      <string>ColdResistUnique__31_</string>
+      <string>ColdExposureOnHitUnique__1</string>
+      <string>FireExposureOnHitUnique__1</string>
     </Explicit>
     <Properties />
   </Unique>
@@ -7506,6 +7558,17 @@
       <string>ChanceToDodgeSpellsUnique__3_</string>
       <string>CurseOnHitCriticalWeaknessUnique__1</string>
       <string>IncreasedCriticalStrikeChancePerAccuracyRatingUnique__1</string>
+    </Explicit>
+    <Properties />
+  </Unique>
+  <Unique Name="Painseeker" Level="54" BaseMetadataId="Metadata/Items/Armours/Gloves/GlovesDex7">
+    <Explicit>
+      <string>GlobalAddedFireDamageUnique__4</string>
+      <string>GlobalAddedColdDamageUnique__4</string>
+      <string>GlobalAddedLightningDamageUnique__4</string>
+      <string>LocalIncreasedEvasionRatingPercentUnique__16</string>
+      <string>CriticalStrikesNotAlwaysApplyAilmentsUnique__1</string>
+      <string>ApplyAilmentsMoreDamageUnique__1</string>
     </Explicit>
     <Properties />
   </Unique>
@@ -9767,6 +9830,14 @@
     <Properties>
       <string>Limited to: 1</string>
     </Properties>
+  </Unique>
+  <Unique Name="Thread of Hope" Level="1" BaseMetadataId="Metadata/Items/Jewels/JewelStr">
+    <Explicit>
+      <string>JewelRingRadiusValuesUnique__1</string>
+      <string>AllocateDisconnectedPassivesDonutUnique__1</string>
+      <string>AllResistancesUnique__18</string>
+    </Explicit>
+    <Properties />
   </Unique>
   <Unique Name="To Dust" Level="1" BaseMetadataId="Metadata/Items/Jewels/JewelInt">
     <Explicit>
