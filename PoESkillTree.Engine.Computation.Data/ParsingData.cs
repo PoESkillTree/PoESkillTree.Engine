@@ -86,7 +86,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 new StatManipulatorMatchers(_builderFactories, modifierBuilder),
                 new ValueConversionMatchers(_builderFactories, modifierBuilder),
                 new FormAndStatMatchers(_builderFactories, modifierBuilder),
-                new KeystoneStatMatchers(_builderFactories, modifierBuilder, passives),
+                new PassiveNodeStatMatchers(_builderFactories, modifierBuilder, passives),
                 new FormMatchers(_builderFactories, modifierBuilder),
                 new GeneralStatMatchers(_builderFactories, modifierBuilder),
                 new DamageStatMatchers(_builderFactories, modifierBuilder),
