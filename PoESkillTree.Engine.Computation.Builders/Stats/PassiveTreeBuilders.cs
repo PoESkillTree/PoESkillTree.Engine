@@ -23,11 +23,14 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
             _tree = tree;
         }
 
-        public IStatBuilder NodeSkilled(ushort nodeId)
-            => FromIdentity($"{nodeId}.Skilled", typeof(bool));
+        public IStatBuilder NodeAllocated(ushort nodeId)
+            => FromIdentity($"{nodeId}.Allocated", typeof(bool));
 
         public IStatBuilder NodeEffectiveness(ushort nodeId)
             => FromIdentity($"{nodeId}.Effectiveness", typeof(bool));
+
+        public IStatBuilder NodeSkillPointSpent(ushort nodeId)
+            => FromIdentity($"{nodeId}.SkillPointSpent", typeof(bool));
 
         public IStatBuilder ConnectsToClass(CharacterClass characterClass)
             => FromIdentity($"{characterClass}.TreeConnectedTo", typeof(bool));
@@ -66,7 +69,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
                 .Build(parameters);
 
             ValueBuilder GetValue(PassiveNodeDefinition d)
-                => value(d).If(condition(NodeSkilled(d.Id).Value.Build(parameters)));
+                => value(d).If(condition(NodeAllocated(d.Id).Value.Build(parameters)));
         }
 
         public IStatBuilder MultipliedAttributeForNodesInModifierSourceJewelRadius(
@@ -88,7 +91,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
 
             IStatBuilder GetStatBuilder(PassiveNodeDefinition node)
                 => onlyIfSkilled
-                    ? NodeEffectiveness(node.Id).WithCondition(NodeSkilled(node.Id).IsSet)
+                    ? NodeEffectiveness(node.Id).WithCondition(NodeAllocated(node.Id).IsSet)
                     : NodeEffectiveness(node.Id);
         }
 

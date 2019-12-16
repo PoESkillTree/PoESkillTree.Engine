@@ -28,8 +28,9 @@ namespace PoESkillTree.Engine.Computation.Data
             var collection = new FormAndStatMatcherCollection(_modifierBuilder, ValueFactory);
             foreach (var node in _passives.Where(d => d.Type == PassiveNodeType.Keystone || d.Type == PassiveNodeType.Notable))
             {
-                collection.Add($"(you have )?{node.Name.ToLowerInvariant()}",
-                    TotalOverride, 1, PassiveTree.NodeSkilled(node.Id));
+                var prefix = node.Type == PassiveNodeType.Keystone ? "(allocates |you have )?" : "allocates ";
+                collection.Add($"{prefix}{node.Name.ToLowerInvariant()}",
+                    TotalOverride, 1, PassiveTree.NodeAllocated(node.Id));
             }
             return collection;
         }

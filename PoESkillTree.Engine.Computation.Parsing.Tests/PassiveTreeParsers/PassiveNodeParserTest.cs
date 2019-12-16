@@ -36,7 +36,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.PassiveTreeParsers
         public void AddsToPassivePointsIfCostsPoint(bool costsPassivePoint)
         {
             var definition = CreateNode(false, 0, costsPassivePoint);
-            var expected = CreateSkilledConditionalModifier(definition, "PassivePoints", Form.BaseAdd, 1);
+            var expected = CreateConditionalModifier(definition, "PassivePoints", Form.BaseAdd, 1, "SkillPointSpent");
             var sut = CreateSut(definition);
 
             var result = sut.Parse(definition.Id);
@@ -52,7 +52,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.PassiveTreeParsers
         {
             var definition = CreateNode(true, 0, true);
             var expected =
-                CreateSkilledConditionalModifier(definition, "AscendancyPassivePoints", Form.BaseAdd, 1);
+                CreateConditionalModifier(definition, "AscendancyPassivePoints", Form.BaseAdd, 1, "SkillPointSpent");
             var sut = CreateSut(definition);
 
             var result = sut.Parse(definition.Id);
@@ -76,7 +76,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.PassiveTreeParsers
         public void SetsNodeSkilledToFalse()
         {
             var definition = CreateNode();
-            var expected = CreateModifier($"{definition.Id}.Skilled", Form.BaseSet, (NodeValue?) false,
+            var expected = CreateModifier($"{definition.Id}.Allocated", Form.BaseSet, (NodeValue?) false,
                 CreateGlobalSource(definition));
             var sut = CreateSut(definition);
 
@@ -132,7 +132,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.PassiveTreeParsers
         {
             var definition = CreateNode();
             var expected = CreateModifier($"{definition.Id}.Effectiveness", Form.BaseSet,
-                new StatValue(new Stat($"{definition.Id}.Skilled")),
+                new StatValue(new Stat($"{definition.Id}.Allocated")),
                 CreateGlobalSource(definition));
             var sut = CreateSut(definition);
 
@@ -158,8 +158,12 @@ namespace PoESkillTree.Engine.Computation.Parsing.PassiveTreeParsers
 
         private static Modifier CreateSkilledConditionalModifier(
             PassiveNodeDefinition nodeDefinition, string stat, Form form, double value)
+            => CreateConditionalModifier(nodeDefinition, stat, form, value, "Allocated");
+
+        private static Modifier CreateConditionalModifier(
+            PassiveNodeDefinition nodeDefinition, string stat, Form form, double value, string conditionStatSuffix)
             => CreateModifier(stat, form, new FunctionalValue(null!,
-                    $"Character.{nodeDefinition.Id}.Skilled.Value(Total, Global).IsSet ? {value} : null"),
+                    $"Character.{nodeDefinition.Id}.{conditionStatSuffix}.Value(Total, Global).IsSet ? {value} : null"),
                 CreateGlobalSource(nodeDefinition));
 
         private static Modifier CreateEffectivenessMultipliedModifier(
