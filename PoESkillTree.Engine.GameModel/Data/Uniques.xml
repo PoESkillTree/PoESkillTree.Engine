@@ -2752,7 +2752,13 @@
     <Properties />
   </Unique>
   <Unique Name="Fury Valve" Level="40" BaseMetadataId="Metadata/Items/Amulets/Amulet4">
-    <Explicit />
+    <Explicit>
+      <string>IncreasedEvasionRatingPercentUnique__2</string>
+      <string>AllResistancesUnique__17</string>
+      <string>AdditionalProjectilesUnique__1__</string>
+      <string>ProjectileSpeedUnique__6</string>
+      <string>ProjectileModifiersApplyToSplitsUnique__1</string>
+    </Explicit>
     <Properties />
   </Unique>
   <Unique Name="Gloomfang" Level="77" BaseMetadataId="Metadata/Items/Amulet/AmuletAtlas1">
@@ -3190,6 +3196,17 @@
     </Explicit>
     <Properties />
   </Unique>
+  <Unique Name="Willowgift" Level="52" BaseMetadataId="Metadata/Items/Amulets/Amulet4">
+    <Explicit>
+      <string>PercentageStrengthUnique__4_</string>
+      <string>PercentageDexterityUnique__5</string>
+      <string>FireResistUnique__22_</string>
+      <string>ColdResistUnique__30</string>
+      <string>AlternateFortifyUnique__1_</string>
+      <string>AttackAndCastSpeedFortifyUnique__1</string>
+    </Explicit>
+    <Properties />
+  </Unique>
   <Unique Name="Winterheart" Level="42" BaseMetadataId="Metadata/Items/Amulets/Amulet6">
     <Explicit>
       <string>DexterityUnique__1</string>
@@ -3465,7 +3482,13 @@
     <Properties />
   </Unique>
   <Unique Name="Leash of Oblation" Level="49" BaseMetadataId="Metadata/Items/Belts/Belt3">
-    <Explicit />
+    <Explicit>
+      <string>AllAttributesUnique__20</string>
+      <string>IncreasedLifeUnique__99</string>
+      <string>OfferingEffectUnique__1</string>
+      <string>MultipleOfferingsAllowedUnique__1_</string>
+      <string>OfferingDurationUnique__1</string>
+    </Explicit>
     <Properties />
   </Unique>
   <Unique Name="Maligaro's Restraint" Level="44" BaseMetadataId="Metadata/Items/Belts/Belt2">
@@ -5421,7 +5444,13 @@
     <Properties />
   </Unique>
   <Unique Name="The Ivory Tower" Level="67" BaseMetadataId="Metadata/Items/Armours/BodyArmours/BodyStrInt16">
-    <Explicit />
+    <Explicit>
+      <string>IntelligenceUnique__17</string>
+      <string>MaximumEnergyShieldPerReservedLifeUnique__1</string>
+      <string>IncreasedManaUnique__17</string>
+      <string>EnergyShieldRegenerationUnique__3</string>
+      <string>ChaosDamageRemovedFromManaBeforeLifeUnique__1___</string>
+    </Explicit>
     <Properties />
   </Unique>
   <Unique Name="The Perfect Form" Level="65" BaseMetadataId="Metadata/Items/Armours/BodyArmours/BodyDex16">
@@ -7422,7 +7451,12 @@
     <Properties />
   </Unique>
   <Unique Name="Hands of the High Templar" Level="66" BaseMetadataId="Metadata/Items/Armours/Gloves/GlovesStrInt8">
-    <Explicit />
+    <Explicit>
+      <string>CorruptUntilFiveImplicits</string>
+      <string>LocalIncreasedArmourAndEnergyShieldUnique__20</string>
+      <string>MaximumLifeUnique__19</string>
+      <string>FireAndLightningResistUnique__2</string>
+    </Explicit>
     <Properties />
   </Unique>
   <Unique Name="Hrimburn" Level="24" BaseMetadataId="Metadata/Items/Armours/Gloves/GlovesDex2">
@@ -7668,6 +7702,7 @@
       <string>AccuracyRatingPerFrenzyChargeUniqueGlovesDexInt5</string>
       <string>FrenzyChargeDurationPerFrenzyChargeUniqueGlovesDexInt5</string>
       <string>AtMaximumFrenzyChargesChanceToPoisonUnique_1_</string>
+      <string>PoisonDotMultiplierPerFrenzyChargeUniqueGlovesDexInt5</string>
     </Explicit>
     <Properties />
   </Unique>
@@ -8194,7 +8229,12 @@
     <Properties />
   </Unique>
   <Unique Name="Manastorm" Level="59" BaseMetadataId="Metadata/Items/Armours/Shields/ShieldInt13">
-    <Explicit />
+    <Explicit>
+      <string>LocalIncreasedEnergyShieldPercentUnique__27</string>
+      <string>IncreasedManaUnique__18</string>
+      <string>ManaRegenerationUnique__10</string>
+      <string>DrainAllManaLightningDamageUnique__1</string>
+    </Explicit>
     <Properties />
   </Unique>
   <Unique Name="Matua Tupuna" Level="23" BaseMetadataId="Metadata/Items/Armours/Shields/ShieldInt4">
@@ -8209,7 +8249,14 @@
     <Properties />
   </Unique>
   <Unique Name="Mistwall" Level="60" BaseMetadataId="Metadata/Items/Armours/Shields/ShieldDex13">
-    <Explicit />
+    <Explicit>
+      <string>LocalIncreasedEvasionRatingPercentUnique__17</string>
+      <string>MovementVelocityUnique__42</string>
+      <string>FireAndColdResistUnique__4_</string>
+      <string>AvoidElementalDamagePhasingUnique__1</string>
+      <string>MaximumBlockChanceIfNotBlockedRecentlyUnique__1</string>
+      <string>PhasingIfBlockedRecentlyUnique__1</string>
+    </Explicit>
     <Properties />
   </Unique>
   <Unique Name="Mutewind Pennant" Level="42" BaseMetadataId="Metadata/Items/Armours/Shields/ShieldDex8">
