@@ -18,7 +18,11 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Converters
 
             if (jObject.GetValue("nodes") is JToken nodes && nodes.Type == JTokenType.Array)
             {
-                passiveTree.PassiveNodes = nodes.ToObject<List<JsonPassiveNode>>().ToDictionary(i => i.Id, i => i);
+                foreach (var item in nodes.ToObject<List<JsonPassiveNode>>())
+                {
+                    passiveTree.PassiveNodes.Add(item.Id, item);
+                }
+
                 jObject.Remove("nodes");
             }
 
@@ -27,7 +31,7 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Converters
                 // This piece should only run when the older style of skill sprites are used (only active and inactive in the dictionary).
                 if (spritesToken.ToObject<Dictionary<string, List<JsonPassiveTreeOldSkillSprite>>>() is var sprites && sprites is { Count: 2 })
                 {
-                    passiveTree.SkillSprites = new Dictionary<string, List<JsonPassiveTreeSkillSprite>>();
+                    passiveTree.SkillSprites.Clear();
                     foreach (var i in sprites)
                     {
                         //i.Key == "active", "inactive"
@@ -38,19 +42,19 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Converters
                             {
                                 passiveTree.SkillSprites.Add($"normal{key}", new List<JsonPassiveTreeSkillSprite>());
                             }
-                            passiveTree.SkillSprites[$"normal{key}"].Add(new JsonPassiveTreeSkillSprite() { FileName = j.FileName, Coords = j.Coords ?? new Dictionary<string, JsonPassiveTree2DArt>() });
+                            passiveTree.SkillSprites[$"normal{key}"].Add(new JsonPassiveTreeSkillSprite(j.FileName, j.Coords));
 
                             if (!passiveTree.SkillSprites.ContainsKey($"notable{key}"))
                             {
                                 passiveTree.SkillSprites.Add($"notable{key}", new List<JsonPassiveTreeSkillSprite>());
                             }
-                            passiveTree.SkillSprites[$"notable{key}"].Add(new JsonPassiveTreeSkillSprite() { FileName = j.FileName, Coords = j.NotableCoords ?? new Dictionary<string, JsonPassiveTree2DArt>() });
+                            passiveTree.SkillSprites[$"notable{key}"].Add(new JsonPassiveTreeSkillSprite(j.FileName, j.NotableCoords));
 
                             if (!passiveTree.SkillSprites.ContainsKey($"keystone{key}"))
                             {
                                 passiveTree.SkillSprites.Add($"keystone{key}", new List<JsonPassiveTreeSkillSprite>());
                             }
-                            passiveTree.SkillSprites[$"keystone{key}"].Add(new JsonPassiveTreeSkillSprite() { FileName = j.FileName, Coords = j.KeystoneCoords ?? new Dictionary<string, JsonPassiveTree2DArt>() });
+                            passiveTree.SkillSprites[$"keystone{key}"].Add(new JsonPassiveTreeSkillSprite(j.FileName, j.KeystoneCoords));
                         }
                     }
                     jObject.Remove("skillSprites");
@@ -62,7 +66,7 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Converters
             // The PassiveNodeInIds are always the Id of the "Current Node" instead of the Id of the "In Node"
             foreach (var passiveNode in passiveTree.PassiveNodes.Values)
             {
-                passiveNode.PassiveNodeInIds = new HashSet<ushort>();
+                passiveNode.PassiveNodeInIds.Clear();
             }
 
             // Hydrate Extra Images

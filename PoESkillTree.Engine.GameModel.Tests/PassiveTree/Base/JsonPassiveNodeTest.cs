@@ -92,7 +92,7 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
                 OriginalY = y,
                 ZoomLevel = zoomLevel,
             };
-            
+
             var node = new JsonPassiveNode
             {
                 PassiveNodeGroup = group,
@@ -102,9 +102,90 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
                 SkillsPerOrbit = skillsPerOrbit,
                 ZoomLevel = zoomLevel,
             };
-            
+
             Assert.AreEqual(group.Position.X - orbitRadii[orbitRadiiIndex] * zoomLevel * (float)Math.Sin(-2 * Math.PI * skillsPerOrbitIndex / skillsPerOrbit[skillsPerOrbitIndex]), node.Position.X);
             Assert.AreEqual(group.Position.Y - orbitRadii[orbitRadiiIndex] * zoomLevel * (float)Math.Cos(-2 * Math.PI * skillsPerOrbitIndex / skillsPerOrbit[skillsPerOrbitIndex]), node.Position.Y);
+        }
+
+        [TestCase(0, 0, 0.3835f, 0, new[] { 0f }, 0, new[] { 1f })]
+        [TestCase(0, 1, 0.3835f, 0, new[] { 0f }, 0, new[] { 1f })]
+        [TestCase(1, 0, 0.3835f, 0, new[] { 0f }, 0, new[] { 1f })]
+        [TestCase(1, 1, 0.3835f, 0, new[] { 0f }, 0, new[] { 1f })]
+        [TestCase(500, 250, 0.3835f, 1, new[] { 0f, 82f }, 1, new[] { 1f, 2f })]
+        [TestCase(250, 500, 0.3835f, 1, new[] { 0f, 82f }, 1, new[] { 1f, 2f })]
+        [TestCase(500, 500, 0.3835f, 1, new[] { 0f, 82f }, 1, new[] { 1f, 2f })]
+        [TestCase(250, 250, 0.3835f, 1, new[] { 0f, 82f }, 1, new[] { 1f, 2f })]
+        [TestCase(250, 250, 0.3835f, 0, new[] { 0f, 82f }, 1, new[] { 1f, 2f })]
+        public void JsonPassiveNode_Convert(float _x, float _y, float zoomLevel, int orbitRadiiIndex, float[] orbitRadii, int skillsPerOrbitIndex, float[] skillsPerOrbit)
+        {
+            var group = new JsonPassiveNodeGroup
+            {
+                OriginalX = _x,
+                OriginalY = _y,
+                ZoomLevel = zoomLevel,
+            };
+
+            var node = new JsonPassiveNode
+            {
+                PassiveNodeGroup = group,
+                OrbitRadiiIndex = orbitRadiiIndex,
+                OrbitRadii = orbitRadii,
+                SkillsPerOrbitIndex = skillsPerOrbitIndex,
+                SkillsPerOrbit = skillsPerOrbit,
+                ZoomLevel = zoomLevel,
+            };
+
+            var nodeDefinition = PassiveNodeDefinition.Convert(node);
+            nodeDefinition.Position.Deconstruct(out double x, out double y);
+            Assert.AreEqual(nodeDefinition.Position.X, x);
+            Assert.AreEqual(nodeDefinition.Position.Y, y);
+            Assert.AreEqual(node.Position.X, x);
+            Assert.AreEqual(node.Position.Y, y);
+        }
+
+        [TestCase(0, 0, 0.3835f, 0, new[] { 0f }, 0, new[] { 1f })]
+        [TestCase(0, 1, 0.3835f, 0, new[] { 0f }, 0, new[] { 1f })]
+        [TestCase(1, 0, 0.3835f, 0, new[] { 0f }, 0, new[] { 1f })]
+        [TestCase(1, 1, 0.3835f, 0, new[] { 0f }, 0, new[] { 1f })]
+        [TestCase(500, 250, 0.3835f, 1, new[] { 0f, 82f }, 1, new[] { 1f, 2f })]
+        [TestCase(250, 500, 0.3835f, 1, new[] { 0f, 82f }, 1, new[] { 1f, 2f })]
+        [TestCase(500, 500, 0.3835f, 1, new[] { 0f, 82f }, 1, new[] { 1f, 2f })]
+        [TestCase(250, 250, 0.3835f, 1, new[] { 0f, 82f }, 1, new[] { 1f, 2f })]
+        [TestCase(250, 250, 0.3835f, 0, new[] { 0f, 82f }, 1, new[] { 1f, 2f })]
+        public void JsonPassiveNode_ClearPosition(float x, float y, float zoomLevel, int orbitRadiiIndex, float[] orbitRadii, int skillsPerOrbitIndex, float[] skillsPerOrbit)
+        {
+            var group = new JsonPassiveNodeGroup
+            {
+                OriginalX = x,
+                OriginalY = y,
+                ZoomLevel = zoomLevel,
+            };
+
+            var node = new JsonPassiveNode
+            {
+                PassiveNodeGroup = group,
+                OrbitRadiiIndex = orbitRadiiIndex,
+                OrbitRadii = orbitRadii,
+                SkillsPerOrbitIndex = skillsPerOrbitIndex,
+                SkillsPerOrbit = skillsPerOrbit,
+                ZoomLevel = zoomLevel,
+            };
+
+            Assert.AreEqual(group.Position.X - orbitRadii[orbitRadiiIndex] * zoomLevel * (float)Math.Sin(-2 * Math.PI * skillsPerOrbitIndex / skillsPerOrbit[skillsPerOrbitIndex]), node.Position.X);
+            Assert.AreEqual(group.Position.Y - orbitRadii[orbitRadiiIndex] * zoomLevel * (float)Math.Cos(-2 * Math.PI * skillsPerOrbitIndex / skillsPerOrbit[skillsPerOrbitIndex]), node.Position.Y);
+
+            var newGroup = new JsonPassiveNodeGroup
+            {
+                OriginalX = x * 10,
+                OriginalY = y * 10,
+                ZoomLevel = zoomLevel,
+            };
+
+            node.PassiveNodeGroup = newGroup;
+            node.ClearPositionCache();
+
+            Assert.AreEqual(newGroup.Position.X - orbitRadii[orbitRadiiIndex] * zoomLevel * (float)Math.Sin(-2 * Math.PI * skillsPerOrbitIndex / skillsPerOrbit[skillsPerOrbitIndex]), node.Position.X);
+            Assert.AreEqual(newGroup.Position.Y - orbitRadii[orbitRadiiIndex] * zoomLevel * (float)Math.Cos(-2 * Math.PI * skillsPerOrbitIndex / skillsPerOrbit[skillsPerOrbitIndex]), node.Position.Y);
         }
     }
 }

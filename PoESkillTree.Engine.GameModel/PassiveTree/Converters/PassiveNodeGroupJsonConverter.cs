@@ -18,9 +18,12 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Converters
 
             if (jObject.GetValue("oo") is JToken oo && oo.Type == JTokenType.Array)
             {
-                passiveNodeGroup.OccupiedOrbits = oo.ToObject<List<bool>>()
-                    .Select((value, index) => (Index: (ushort)index, Value: value))
-                    .ToDictionary(i => i.Index, i => i.Value);
+                passiveNodeGroup.OccupiedOrbits.Clear();
+                foreach (var item in oo.ToObject<List<bool>>().Select((value, index) => (Index: (ushort)index, Value: value)))
+                {
+                    passiveNodeGroup.OccupiedOrbits.Add(item.Index, item.Value);
+                }
+
                 jObject.Remove("oo");
             }
 

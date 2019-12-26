@@ -9,9 +9,9 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
     public class JsonPassiveNodeGroup : JsonPassiveTreePosition
     {
         [JsonProperty("oo")]
-        public Dictionary<ushort, bool> OccupiedOrbits { get; set; } = new Dictionary<ushort, bool>();
+        public Dictionary<ushort, bool> OccupiedOrbits { get; } = new Dictionary<ushort, bool>();
 
         [JsonProperty("n")]
-        public HashSet<ushort> PassiveNodeIds { get; set; } = new HashSet<ushort>();
+        public HashSet<ushort> PassiveNodeIds { get; } = new HashSet<ushort>();
     }
 }

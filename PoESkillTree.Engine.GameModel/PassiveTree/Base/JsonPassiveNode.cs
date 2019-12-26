@@ -74,10 +74,10 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
         public int SkillsPerOrbitIndex { get; set; } = 0;
 
         [JsonProperty("out")]
-        public HashSet<ushort> PassiveNodeOutIds { get; set; } = new HashSet<ushort>();
+        public HashSet<ushort> PassiveNodeOutIds { get; } = new HashSet<ushort>();
 
         [JsonProperty("in")]
-        public HashSet<ushort> PassiveNodeInIds { get; set; } = new HashSet<ushort>();
+        public HashSet<ushort> PassiveNodeInIds { get; } = new HashSet<ushort>();
 
         #region Assigned Properties
         [JsonIgnore]
@@ -142,7 +142,7 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
             }
             set => _passiveNodeType = value;
         }
-        
+
         [JsonIgnore]
         private double? _arc = null;
 

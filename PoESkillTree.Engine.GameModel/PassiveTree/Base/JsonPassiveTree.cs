@@ -10,16 +10,16 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
     public class JsonPassiveTree
     {
         [JsonProperty("characterData")]
-        public Dictionary<CharacterClass, JsonPassiveTreeCharacterData> CharacterData { get; set; } = new Dictionary<CharacterClass, JsonPassiveTreeCharacterData>();
+        public Dictionary<CharacterClass, JsonPassiveTreeCharacterData> CharacterData { get; } = new Dictionary<CharacterClass, JsonPassiveTreeCharacterData>();
 
         [JsonProperty("groups")]
-        public Dictionary<ushort, JsonPassiveNodeGroup> PassiveNodeGroups { get; set; } = new Dictionary<ushort, JsonPassiveNodeGroup>();
+        public Dictionary<ushort, JsonPassiveNodeGroup> PassiveNodeGroups { get; } = new Dictionary<ushort, JsonPassiveNodeGroup>();
 
         [JsonProperty("root")]
         public JsonPassiveNode Root { get; set; } = new JsonPassiveNode();
 
         [JsonProperty("nodes")]
-        public Dictionary<ushort, JsonPassiveNode> PassiveNodes { get; set; } = new Dictionary<ushort, JsonPassiveNode>();
+        public Dictionary<ushort, JsonPassiveNode> PassiveNodes { get; } = new Dictionary<ushort, JsonPassiveNode>();
 
         [JsonProperty("min_x")]
         public float MinX { get; set; }
@@ -34,7 +34,7 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
         public float MaxY { get; set; }
 
         [JsonProperty("assets")]
-        public Dictionary<string, Dictionary<string, string>> Assets { get; set; } = new Dictionary<string, Dictionary<string, string>>();
+        public Dictionary<string, Dictionary<string, string>> Assets { get; } = new Dictionary<string, Dictionary<string, string>>();
 
         [JsonProperty("constants")]
         public JsonPassiveTreeConstants Constants { get; set; } = new JsonPassiveTreeConstants();
@@ -43,10 +43,10 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
         public float[] ImageZoomLevels { get; set; } = new float[] { 0.1246f, 0.2109f, 0.2972f, 0.3835f };
 
         [JsonProperty("skillSprites")]
-        public Dictionary<string, List<JsonPassiveTreeSkillSprite>> SkillSprites { get; set; } = new Dictionary<string, List<JsonPassiveTreeSkillSprite>>();
+        public Dictionary<string, List<JsonPassiveTreeSkillSprite>> SkillSprites { get; } = new Dictionary<string, List<JsonPassiveTreeSkillSprite>>();
 
         [JsonProperty("extraImages")]
-        public Dictionary<CharacterClass, JsonPassiveTreeExtraImage> ExtraImages { get; set; } = new Dictionary<CharacterClass, JsonPassiveTreeExtraImage>();
+        public Dictionary<CharacterClass, JsonPassiveTreeExtraImage> ExtraImages { get; } = new Dictionary<CharacterClass, JsonPassiveTreeExtraImage>();
 
         #region Calculated Properties
         [JsonIgnore]
@@ -71,9 +71,6 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
                 return _bounds.Value;
             }
         }
-
-        [JsonIgnore]
-        public Uri BasePassiveTreeURI => new Uri("https://www.pathofexile.com/passive-skill-tree/");
         
         [JsonIgnore]
         public Uri WebCDN => new Uri(@"http://web.poecdn.com/");
