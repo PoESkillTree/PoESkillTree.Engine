@@ -15,10 +15,10 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Options
         public int Radius => Diameter / 2;
 
         [JsonIgnore]
-        private float FullDiameter => Diameter / ZoomLevel;
+        public float ZoomLevelDiameter => Diameter / ZoomLevel;
 
         [JsonIgnore]
-        private float FullRadius => FullDiameter / 2;
+        public float ZoomLevelRadius => ZoomLevelDiameter / 2;
         #endregion
     }
 }

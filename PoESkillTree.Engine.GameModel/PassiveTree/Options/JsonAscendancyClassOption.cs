@@ -26,7 +26,7 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Options
         private RectangleF? _flavourTextBounds = null;
 
         [JsonIgnore]
-        private RectangleF FlavourTextBounds
+        public RectangleF FlavourTextBounds
         {
             get
             {
@@ -60,7 +60,7 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Options
                     var colour = FlavourTextColourString.Split(',').Select(x => byte.TryParse(x, out var result) ? result : byte.MaxValue).ToArray();
                     if (colour.Length == 3)
                     {
-                        _flavourTextColour = Color.FromArgb(colour[0], colour[1], colour[3]);
+                        _flavourTextColour = Color.FromArgb(colour[0], colour[1], colour[2]);
                     }
                     else
                     {
