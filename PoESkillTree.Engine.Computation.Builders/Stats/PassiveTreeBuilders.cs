@@ -65,7 +65,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         {
             return GetNodesInRadius(parameters)
                 .Select(GetValue)
-                .Aggregate((l, r) => l + r)
+                .Aggregate(new ValueBuilder(new ValueBuilderImpl(0)), (l, r) => l + r)
                 .Build(parameters);
 
             ValueBuilder GetValue(PassiveNodeDefinition d)
