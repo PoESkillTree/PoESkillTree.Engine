@@ -56,6 +56,7 @@ namespace PoESkillTree.Engine.GameModel.Modifiers
         {
             $"({Increase}|{BaseAdd})" +
             "(armour|evasion|energy shield|armour and evasion|armour and energy shield|evasion and energy shield|armour, evasion and energy Shield)",
+            BaseAdd + "maximum energy shield",
             "item has no level requirement and energy shield",
         }.ToList();
 
