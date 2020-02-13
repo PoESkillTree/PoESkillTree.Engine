@@ -35,8 +35,10 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
         protected IDamageRelatedStatBuilder DamageTaken(DamageType damageType)
             => DamageTypeBuilders.From(damageType).Damage.Taken;
 
-        protected static ValueBuilder PhysicalDamageReductionFromArmour(ValueBuilder armour, ValueBuilder physicalDamage)
-            => 100 * armour / (armour + 10 * physicalDamage.Average);
+        protected ValueBuilder PhysicalDamageReductionFromArmour(ValueBuilder armour, ValueBuilder physicalDamage)
+            => 100 * ValueFactory.If(armour.Eq(0))
+                .Then(0)
+                .Else(armour / (armour + 10 * physicalDamage.Average));
 
         protected ValueBuilder ChanceToHitValue(
             IStatBuilder accuracyStat, IStatBuilder evasionStat, IConditionBuilder isBlinded)
