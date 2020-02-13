@@ -59,7 +59,9 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             { BaseSet, Flask.LifeRecoverySpeed, 1 },
             { BaseSet, Flask.ManaRecoverySpeed, 1 },
             // Damage Multiplier
-            { BaseSet, AnyDamageType.DamageMultiplier, 100 },
+            { BaseSet, AnyDamageType.DamageMultiplierWithNonCrits, 100 },
+            { BaseSet, AnyDamageType.DamageMultiplierWithCrits.WithSkills, 100 },
+            { BaseSet, AnyDamageType.DamageMultiplierWithCrits.WithAilments, 150 },
             // speed
             { BaseSet, Stat.ActionSpeed, 1 },
             { BaseSet, Stat.MovementSpeed, 1 },
@@ -70,6 +72,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             { BaseSet, Projectile.Count, 1 },
             // evasion
             { BaseSet, Evasion.Chance.Maximum, 95 },
+            { BaseSet, Evasion.Chance.Minimum, 0 },
             { BaseSet, Stat.ChanceToHit.Maximum, 100 },
             { BaseSet, Stat.ChanceToHit.Minimum, 5 },
             // block

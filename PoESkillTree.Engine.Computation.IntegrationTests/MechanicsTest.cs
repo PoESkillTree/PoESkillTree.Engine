@@ -222,7 +222,7 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
             var ailmentChanceCrits = 1;
             var baseDamage = BasePhysicalDamage * 0.7;
             var nonCritDamage = baseDamage * EffectiveDamageMultiplierWithNonCrits;
-            var critDamage = baseDamage * 0.4 * 1.2 * 2.25;
+            var critDamage = baseDamage * 0.4 * 1.2 * 2.75;
             var expected = (nonCritDamage * (1 - critChance) * ailmentChanceNonCrits +
                             critDamage * critChance * ailmentChanceCrits) /
                            ((1 - critChance) * ailmentChanceNonCrits + critChance * ailmentChanceCrits);
