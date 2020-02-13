@@ -6,6 +6,7 @@ using PoESkillTree.Engine.Computation.Common.Builders;
 using PoESkillTree.Engine.Computation.Common.Builders.Damage;
 using PoESkillTree.Engine.Computation.Common.Builders.Modifiers;
 using PoESkillTree.Engine.Computation.Common.Builders.Stats;
+using PoESkillTree.Engine.Computation.Common.Builders.Values;
 using PoESkillTree.Engine.Computation.Common.Data;
 using PoESkillTree.Engine.Computation.Data.Base;
 using PoESkillTree.Engine.Computation.Data.Collections;
@@ -60,6 +61,10 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             { Buff.Conflux.Elemental, BaseSet, Ailment.Ignite.Source(AnyDamageType), 1 },
             { Buff.Conflux.Elemental, BaseSet, Ailment.Shock.Source(AnyDamageType), 1 },
             { Buff.Conflux.Elemental, BaseSet, Ailment.Chill.Source(AnyDamageType), 1 },
+            { Buff.Rampage, PercentIncrease, Stat.MovementSpeed, (Buff.Rampage.StackCount.Value / 10).Floor() },
+            { Buff.Rampage, PercentIncrease, Damage, (2 * Buff.Rampage.StackCount.Value / 10).Floor() },
+            { Buff.Rampage, PercentIncrease, Stat.MovementSpeed.For(Entity.Minion), (Buff.Rampage.StackCount.Value / 10).Floor() },
+            { Buff.Rampage, PercentIncrease, Damage.For(Entity.Minion), (2 * Buff.Rampage.StackCount.Value / 10).Floor() },
         };
     }
 }

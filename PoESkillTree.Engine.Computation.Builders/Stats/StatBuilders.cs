@@ -82,7 +82,6 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         public IStatBuilder GrandSpectrumJewelsSocketed => FromIdentity(typeof(uint));
         public IStatBuilder AbyssalSockets => FromIdentity(typeof(uint));
 
-        public IStatBuilder RampageStacks => FromIdentity(typeof(uint));
         public IStatBuilder AttachedBrands => FromIdentity(typeof(uint));
         public IStatBuilder BannerStage => FromIdentity(typeof(uint));
 

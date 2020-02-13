@@ -33,9 +33,6 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
 
         public IReadOnlyList<string> GivenStatLines { get; } = new[]
         {
-            // Rampage
-            "1% increased Movement Speed per 10 Rampage Stacks",
-            "2% increased Damage per 10 Rampage Stacks",
             // other
             "100% of non-chaos damage is taken from energy shield before life",
         };
@@ -94,8 +91,6 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             { BaseSet, Charge.Endurance.Duration, 10 },
             { BaseSet, Charge.Frenzy.Duration, 10 },
             { BaseSet, Charge.Power.Duration, 10 },
-            // Rampage
-            { BaseSet, Stat.RampageStacks.Maximum, 1000 },
             // leech
             { BaseSet, Life.Leech.RateLimit, 20 },
             { BaseSet, Mana.Leech.RateLimit, 20 },
@@ -151,6 +146,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             { TotalOverride, Buff.Maim.Chance.With(DamageSource.Spell), 0 },
             { TotalOverride, Buff.Maim.Chance.With(DamageSource.Secondary), 0 },
             { BaseSet, Buff.Impale.StackCount.Maximum, 5 },
+            { BaseSet, Buff.Rampage.StackCount.Maximum, 1000 },
             // stun
             { BaseSet, Effect.Stun.Threshold, 1 },
             { BaseSet, Effect.Stun.Recovery, 1 },

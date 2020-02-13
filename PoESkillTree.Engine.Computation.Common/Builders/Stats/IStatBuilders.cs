@@ -128,10 +128,6 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
 
         IStatBuilder AbyssalSockets { get; }
 
-        /// <summary>
-        /// Gets a stat representing the number of currently active rampage stacks.
-        /// </summary>
-        IStatBuilder RampageStacks { get; }
 
         /// <summary>
         /// The percentage of damage taken gained as mana over 4 seconds.

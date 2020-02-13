@@ -66,9 +66,6 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             "1% increased Evasion Rating per 5 Dexterity Evasion Bonus ceiled",
             "+1 to Mana per 2 Intelligence ceiled",
             "1% increased maximum Energy Shield per 5 Intelligence ceiled",
-            // Rampage
-            "Minions deal 2% increased Damage per 10 Rampage Stacks",
-            "Minions gain 1% increased Movement Speed per 10 Rampage Stacks",
         };
 
         public IReadOnlyList<IIntermediateModifier> GivenModifiers => _lazyGivenStats.Value;

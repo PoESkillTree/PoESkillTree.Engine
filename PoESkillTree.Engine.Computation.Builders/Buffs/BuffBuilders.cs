@@ -39,6 +39,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
             Impale = new ImpaleBuffBuilder(statFactory);
             Infusion = Create("Infusion");
             Snare = Create("Snare");
+            Rampage = Create("Rampage");
             Conflux = new ConfluxBuffBuilders(statFactory);
             GenericMine = Create("Mine");
             CurseLimit = StatBuilderUtils.FromIdentity(statFactory, "CurseLimit", typeof(uint));
@@ -60,6 +61,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
                 new BuffBuilderWithKeywords(Impale),
                 new BuffBuilderWithKeywords(Infusion),
                 new BuffBuilderWithKeywords(Snare),
+                new BuffBuilderWithKeywords(Rampage),
                 new BuffBuilderWithKeywords(Conflux.Chilling),
                 new BuffBuilderWithKeywords(Conflux.Elemental),
                 new BuffBuilderWithKeywords(Conflux.Igniting),
@@ -95,6 +97,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
         public IImpaleBuffBuilder Impale { get; }
         public IBuffBuilder Infusion { get; }
         public IBuffBuilder Snare { get; }
+        public IBuffBuilder Rampage { get; }
         public IBuffBuilder GenericMine { get; }
         public IConfluxBuffBuilders Conflux { get; }
 

@@ -473,7 +473,6 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "melee weapon range", Stat.Range.With(Keyword.Melee), MainHand.HasItem },
                 { "weapon range", Stat.Range },
                 // other
-                { "rampage stacks", Stat.RampageStacks },
                 { "reflected damage taken", AnyDamageType.ReflectedDamageTaken },
                 { "reflected elemental damage taken", Elemental.ReflectedDamageTaken },
                 { "reflected physical damage taken", Physical.ReflectedDamageTaken },
