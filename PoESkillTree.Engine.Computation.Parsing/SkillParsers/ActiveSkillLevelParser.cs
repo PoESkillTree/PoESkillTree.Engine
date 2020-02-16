@@ -62,6 +62,10 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             {
                 _modifiers.AddGlobalForMainSkill(_builderFactories.StatBuilders.Cooldown, Form.BaseSet, cooldown);
             }
+            if (level.CanBypassCooldown)
+            {
+                _modifiers.AddGlobalForMainSkill(MetaStats.CanBypassSkillCooldown, Form.TotalOverride, 1);
+            }
 
             var result = new PartialSkillParseResult(_modifiers.Modifiers, new UntranslatedStat[0]);
             _modifiers = null;

@@ -28,7 +28,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         public static SkillLevelDefinition CreateLevelDefinition(
             double? damageEffectiveness = null, double? damageMultiplier = null, double? criticalStrikeChance = null,
             int? attackSpeedMultiplier = null,
-            int? manaCost = null, double? manaMultiplier = null, int? manaCostOverride = null, int? cooldown = null,
+            int? manaCost = null, double? manaMultiplier = null, int? manaCostOverride = null, int? cooldown = null, bool canBypassCooldown = false,
             int requiredLevel = 0, int requiredDexterity = 0, int requiredIntelligence = 0, int requiredStrength = 0,
             IReadOnlyList<UntranslatedStat>? qualityStats = null, IReadOnlyList<UntranslatedStat>? stats = null,
             IReadOnlyList<IReadOnlyList<UntranslatedStat>>? additionalStatsPerPart = null,
@@ -38,7 +38,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             SkillTooltipDefinition? tooltip = null)
             => new SkillLevelDefinition(damageEffectiveness, damageMultiplier, criticalStrikeChance,
                 attackSpeedMultiplier, manaCost,
-                manaMultiplier, manaCostOverride, cooldown, requiredLevel, requiredDexterity, requiredIntelligence,
+                manaMultiplier, manaCostOverride, cooldown, canBypassCooldown, requiredLevel, requiredDexterity, requiredIntelligence,
                 requiredStrength, qualityStats ?? new UntranslatedStat[0], stats ?? new UntranslatedStat[0],
                 additionalStatsPerPart ?? new[] { new UntranslatedStat[0]}, qualityBuffStats ?? new BuffStat[0],
                 buffStats ?? new BuffStat[0], qualityPassiveStats ?? new UntranslatedStat[0],

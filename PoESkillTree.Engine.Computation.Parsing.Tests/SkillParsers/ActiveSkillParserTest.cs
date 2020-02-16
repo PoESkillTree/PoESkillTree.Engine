@@ -1297,6 +1297,38 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
         #endregion
 
+        #region Cold Snap
+
+        [Test]
+        public void ColdSnapCanBypassCooldown()
+        {
+            var (definition, skill) = CreateColdSnapDefinition();
+            var source = new ModifierSource.Local.Skill("ColdSnap", "Cold Snap");
+            var statParser = Mock.Of<IParser<UntranslatedStatParserParameter>>(p =>
+                p.Parse(EmptyParserParameter(source)) == EmptyParseResult);
+            var sut = CreateSut(definition, statParser);
+            var context = MockValueCalculationContextForMainSkill(skill);
+
+            var result = sut.Parse(skill);
+
+            var modifiers = result.Modifiers;
+            var actual = GetValueForIdentity(modifiers, "CanBypassSkillCooldown").Calculate(context);
+            Assert.AreEqual((NodeValue?) true, actual);
+        }
+
+        private static (SkillDefinition, Skill) CreateColdSnapDefinition()
+        {
+            var activeSkill = CreateActiveSkillDefinition("Cold Snap",
+                new[] { "spell" }, new[] { Keyword.Spell });
+            var stats = new UntranslatedStat[0];
+            var level = CreateLevelDefinition(stats: stats, canBypassCooldown: true);
+            var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
+            return (CreateActive("ColdSnap", activeSkill, levels),
+                new Skill("ColdSnap", 1, 0, ItemSlot.Belt, 0, null));
+        }
+
+        #endregion
+
         private static ActiveSkillParser CreateSut(SkillDefinition skillDefinition)
         {
             var statParser = Mock.Of<IParser<UntranslatedStatParserParameter>>(p =>

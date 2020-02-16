@@ -103,6 +103,8 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
         IStatBuilder DamageBaseAddEffectiveness { get; }
         IStatBuilder DamageBaseSetEffectiveness { get; }
 
+        IStatBuilder CanBypassSkillCooldown { get; }
+
         IStatBuilder SelectedBandit { get; }
         IStatBuilder SelectedQuestPart { get; }
         IStatBuilder SelectedBossType { get; }

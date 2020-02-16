@@ -198,6 +198,8 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         public IStatBuilder DamageBaseAddEffectiveness => FromFactory(StatFactory.DamageBaseAddEffectiveness);
         public IStatBuilder DamageBaseSetEffectiveness => FromFactory(StatFactory.DamageBaseSetEffectiveness);
 
+        public IStatBuilder CanBypassSkillCooldown => FromIdentity(typeof(bool));
+
         public IStatBuilder SelectedBandit => FromIdentity(typeof(Bandit));
 
         public IStatBuilder SelectedQuestPart

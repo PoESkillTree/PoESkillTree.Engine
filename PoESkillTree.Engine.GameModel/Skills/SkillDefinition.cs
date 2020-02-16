@@ -102,7 +102,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
         public SkillLevelDefinition(
             double? damageEffectiveness, double? damageMultiplier, double? criticalStrikeChance,
             int? attackSpeedMultiplier,
-            int? manaCost, double? manaMultiplier, int? manaCostOverride, int? cooldown,
+            int? manaCost, double? manaMultiplier, int? manaCostOverride, int? cooldown, bool canBypassCooldown,
             int requiredLevel, int requiredDexterity, int requiredIntelligence, int requiredStrength,
             IReadOnlyList<UntranslatedStat> qualityStats, IReadOnlyList<UntranslatedStat> stats,
             IReadOnlyList<IReadOnlyList<UntranslatedStat>> additionalStatsPerPart,
@@ -118,6 +118,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
             ManaMultiplier = manaMultiplier;
             ManaCostOverride = manaCostOverride;
             Cooldown = cooldown;
+            CanBypassCooldown = canBypassCooldown;
             Requirements = new Requirements(requiredLevel, requiredDexterity, requiredIntelligence, requiredStrength);
             QualityStats = qualityStats;
             Stats = stats;
@@ -138,6 +139,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
         public double? ManaMultiplier { get; }
         public int? ManaCostOverride { get; }
         public int? Cooldown { get; }
+        public bool CanBypassCooldown { get; }
         
         public Requirements Requirements { get; }
 

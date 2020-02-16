@@ -185,7 +185,12 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 "ColdResistAura", // Purity of Ice
                 Aura("base_cold_damage_resistance_%", "base_maximum_cold_damage_resistance_%")
             },
-            { "ColdSnap", SkillDotIsAreaDamageExtension },
+            {
+                "ColdSnap",
+                new SkillPartDefinitionExtension(RemoveStat("base_skill_show_average_damage_instead_of_dps"),
+                    AddStat("skill_dot_is_area_damage", 1))
+            },
+            { "VaalColdSnap", SkillDotIsAreaDamageExtension },
             {
                 "Conductivity",
                 new SkillPartDefinitionExtension(
@@ -197,7 +202,6 @@ namespace PoESkillTree.Engine.GameModel.Skills
             },
             { "ConduitSigil", BrandExtension }, // Storm Brand
             { "Convocation", Buff(Entity.Minion, "life_regeneration_rate_per_minute_%") },
-            { "VaalColdSnap", SkillDotIsAreaDamageExtension },
             { "CorpseEruption", CorpseExplodingSpellParts }, // Cremation
             {
                 "DamageOverTimeAura", // Malevolence

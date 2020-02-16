@@ -161,6 +161,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 Value<int?>("mana_multiplier") / 100D,
                 Value<int?>("mana_reservation_override"),
                 Value<int?>("cooldown"),
+                Value<string>("cooldown_bypass_type") != null,
                 Value<int>("required_level"),
                 NestedValue<int>("stat_requirements", "dex"),
                 NestedValue<int>("stat_requirements", "int"),

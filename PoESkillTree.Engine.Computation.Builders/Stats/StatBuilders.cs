@@ -254,6 +254,8 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
             SandStance,
         }
 
+        public IConditionBuilder BypassSkillCooldown => FromIdentity(typeof(bool), UserSpecifiedValue(false)).IsSet;
+
         public IStatBuilder IncreasesToSourceApplyToTarget(IStatBuilder source, IStatBuilder target)
             => new StatBuilder(StatFactory,
                 new ModifiersApplyToOtherStatCoreStatBuilder(source, target, Form.Increase, StatFactory));
