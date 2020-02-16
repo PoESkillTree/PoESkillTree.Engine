@@ -83,6 +83,7 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
         IStatBuilder SkillHitDamageSource { get; }
         IStatBuilder SkillUsesHand(AttackDamageHand hand);
         IStatBuilder SkillDoubleHitsWhenDualWielding { get; }
+        IStatBuilder SkillDpsWithHitsCalculationMode { get; }
 
         IStatBuilder MainSkillId { get; }
         IStatBuilder MainSkillHasKeyword(Keyword keyword);

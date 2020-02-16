@@ -39,8 +39,29 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                 {
                     TotalOverride, MetaStats.SkillDpsWithHits,
                     MetaStats.AverageHitDamage.Value *
-                    ValueFactory.If(Stat.HitRate.IsSet).Then(Stat.HitRate.Value)
+                    ValueFactory.If(MetaStats.SkillDpsWithHitsCalculationMode.Value.Eq((double) DpsCalculationMode.HitRateBased))
+                        .Then(Stat.HitRate.Value)
+                        .ElseIf(MetaStats.SkillDpsWithHitsCalculationMode.Value.Eq((double) DpsCalculationMode.CooldownBased))
+                        .Then(1000 / Stat.Cooldown.Value * Stat.SkillNumberOfHitsPerCast.Value)
+                        .ElseIf(MetaStats.SkillDpsWithHitsCalculationMode.Value.Eq((double) DpsCalculationMode.AverageCast))
+                        .Then(Stat.SkillNumberOfHitsPerCast.Value)
                         .Else(MetaStats.CastRate.Value * Stat.SkillNumberOfHitsPerCast.Value)
+                },
+                {
+                    BaseSet, MetaStats.SkillDpsWithHitsCalculationMode,
+                    ValueFactory.If(Stat.HitRate.IsSet)
+                        .Then((double) DpsCalculationMode.HitRateBased)
+                        .ElseIf(And(Stat.Cooldown.Value > 0, Not(MetaStats.CanBypassSkillCooldown.IsSet.And(Flag.BypassSkillCooldown))))
+                        .Then((double) DpsCalculationMode.CooldownBased)
+                        .ElseIf(And(MetaStats.SkillHitDamageSource.Value.Eq((double) DamageSource.Spell),
+                            Stat.BaseCastTime.With(DamageSource.Spell).Value <= 0))
+                        .Then((double) DpsCalculationMode.AverageCast)
+                        .ElseIf(And(MetaStats.SkillHitDamageSource.Value.Eq((double) DamageSource.Secondary),
+                            Stat.BaseCastTime.With(DamageSource.Secondary).Value <= 0))
+                        .Then((double) DpsCalculationMode.AverageCast)
+                        .ElseIf(MetaStats.MainSkillHasKeyword(GameModel.Skills.Keyword.Triggered).IsSet)
+                        .Then((double) DpsCalculationMode.AverageCast)
+                        .Else((double) DpsCalculationMode.CastRateBased)
                 },
                 // - average damage
                 {

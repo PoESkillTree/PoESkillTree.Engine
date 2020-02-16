@@ -153,6 +153,10 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                     _parsedModifiers!.AddGlobalForMainSkill(_builderFactories.StatBuilders.HitRate,
                         Form.BaseSet, 1000D / stat.Value, partCondition);
                     return true;
+                case "base_skill_show_average_damage_instead_of_dps":
+                    _parsedModifiers!.AddGlobalForMainSkill(_builderFactories.MetaStatBuilders.SkillDpsWithHitsCalculationMode,
+                        Form.TotalOverride, (double) DpsCalculationMode.AverageCast, partCondition);
+                    return true;
                 default:
                     return false;
             }

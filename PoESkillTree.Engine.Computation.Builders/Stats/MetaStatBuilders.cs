@@ -162,6 +162,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         public IStatBuilder SkillHitDamageSource => FromIdentity(typeof(DamageSource));
         public IStatBuilder SkillUsesHand(AttackDamageHand hand) => FromIdentity($"SkillUses.{hand}", typeof(bool));
         public IStatBuilder SkillDoubleHitsWhenDualWielding => FromIdentity(typeof(bool));
+        public IStatBuilder SkillDpsWithHitsCalculationMode => FromIdentity("DPS.Hit.CalculationMode", typeof(DpsCalculationMode));
 
         public IStatBuilder MainSkillId => FromFactory(StatFactory.MainSkillId);
 
