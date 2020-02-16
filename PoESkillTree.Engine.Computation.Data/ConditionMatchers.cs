@@ -307,6 +307,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 { "caused by melee hits", Condition.WithPart(Keyword.Melee) },
                 { "with melee damage", Condition.WithPart(Keyword.Melee) },
+                { "if triggered", Condition.WithPart(Keyword.Triggered) },
                 // - by damage type
                 { "with elemental skills", ElementalDamageTypes.Select(With).Aggregate((l, r) => l.Or(r)) },
                 { "with ({DamageTypeMatchers}) skills", With(Reference.AsDamageType) },

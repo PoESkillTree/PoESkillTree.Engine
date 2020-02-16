@@ -8,8 +8,6 @@ Channelling Skills have -3 to Total Mana Cost
 Channelling Skills have -1 to Total Mana Cost
 Non-Channelling Skills have -7 to Total Mana Cost
 -7 to Total Mana Cost of Skills
-// - Triggered
-35% less Damage if Triggered
 // - Lucky/Unlucky for chances
 Chance to Block Spell Damage is Unlucky
 // - Item quality as a property stat

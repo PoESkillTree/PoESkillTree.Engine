@@ -55,7 +55,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
             var statTranslationFile = gemJson.Value<string>("stat_translation_file");
 
             var baseItemJson = gemJson["base_item"]!;
-            ISet<string> gemTags;
+            HashSet<string> gemTags;
             SkillBaseItemDefinition? baseItemDefinition;
             if (baseItemJson.Type == JTokenType.Null)
             {
@@ -115,7 +115,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
         }
 
         private IReadOnlyList<Keyword> GetKeywords(
-            string displayName, ISet<string> activeSkillTypes, ISet<string> gemTags)
+            string displayName, IReadOnlyCollection<string> activeSkillTypes, IReadOnlyCollection<string> gemTags)
         {
             var keywords = Enums.GetValues<Keyword>()
                 .Where(k => k.IsOnSkill(displayName, activeSkillTypes, gemTags));
