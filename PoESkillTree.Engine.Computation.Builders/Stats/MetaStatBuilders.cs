@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using EnumsNET;
 using PoESkillTree.Engine.Computation.Builders.Values;
 using PoESkillTree.Engine.Computation.Common;
@@ -10,6 +11,7 @@ using PoESkillTree.Engine.Computation.Common.Builders.Values;
 using PoESkillTree.Engine.GameModel;
 using PoESkillTree.Engine.GameModel.Items;
 using PoESkillTree.Engine.GameModel.Skills;
+using PoESkillTree.Engine.Utils.Extensions;
 
 namespace PoESkillTree.Engine.Computation.Builders.Stats
 {
@@ -195,6 +197,32 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
 
         public IStatBuilder SkillHasType(ItemSlot itemSlot, int socketIndex, string activeSkillType)
             => FromIdentity($"{itemSlot.GetName()}.{socketIndex}.Type.{activeSkillType}", typeof(bool));
+
+        public IStatBuilder ActiveCurses => FromIdentity(typeof(int));
+
+        public ValueBuilder ActiveCurseIndex(int numericSkillId) => new ValueBuilder(new ValueBuilderImpl(
+            ps => BuildActiveCurseIndex(ps, numericSkillId),
+            _ => ps => BuildActiveCurseIndex(ps, numericSkillId)));
+
+        private IValue BuildActiveCurseIndex(BuildParameters ps, int numericSkillId)
+        {
+            var activeCursesStat = ActiveCurses.Build(ps).SelectMany(r => r.Stats).Single();
+            return new FunctionalValue(c => CalculateActiveCurseIndex(c, activeCursesStat, numericSkillId),
+                $"CalculateActiveCurseIndex({activeCursesStat}, {numericSkillId})");
+        }
+
+        private static NodeValue? CalculateActiveCurseIndex(IValueCalculationContext context, IStat activeCurses, int numericSkillId)
+        {
+            var i = 0;
+            foreach (var activeCurseId in context.GetValues(Form.BaseAdd, activeCurses).WhereNotNull())
+            {
+                if (activeCurseId == (NodeValue?) numericSkillId)
+                    return (NodeValue?) i;
+                i++;
+            }
+
+            return null;
+        }
 
         public IStatBuilder DamageBaseAddEffectiveness => FromFactory(StatFactory.DamageBaseAddEffectiveness);
         public IStatBuilder DamageBaseSetEffectiveness => FromFactory(StatFactory.DamageBaseSetEffectiveness);

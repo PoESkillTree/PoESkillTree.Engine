@@ -101,6 +101,9 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
         IStatBuilder SkillBaseCost(ItemSlot itemSlot, int socketIndex);
         IStatBuilder SkillHasType(ItemSlot itemSlot, int socketIndex, string activeSkillType);
 
+        IStatBuilder ActiveCurses { get; }
+        ValueBuilder ActiveCurseIndex(int numericSkillId);
+
         IStatBuilder DamageBaseAddEffectiveness { get; }
         IStatBuilder DamageBaseSetEffectiveness { get; }
 

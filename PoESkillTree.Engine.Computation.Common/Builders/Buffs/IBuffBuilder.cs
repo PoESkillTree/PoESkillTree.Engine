@@ -40,6 +40,11 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Buffs
         IStatBuilder StackCount { get; }
 
         /// <summary>
+        /// If this is a curse, whether this buff ignores <see cref="IBuffBuilders.CurseLimit"/>.
+        /// </summary>
+        IStatBuilder IgnoresCurseLimit { get; }
+
+        /// <summary>
         /// Builds an IValue that calculates the multiplier to the value of modifiers created from
         /// <see cref="AddStatForSource"/> and <see cref="IEffectBuilder.AddStat"/>. The ModifierSourceEntity is
         /// used as the target.

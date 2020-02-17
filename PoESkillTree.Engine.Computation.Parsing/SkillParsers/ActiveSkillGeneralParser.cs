@@ -84,15 +84,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
             if (activeSkill.ProvidesBuff)
             {
-                var allBuffStats =
-                    preParseResult.LevelDefinition.BuffStats.Concat(preParseResult.LevelDefinition.QualityBuffStats);
-                var allAffectedEntities = allBuffStats.SelectMany(s => s.AffectedEntities).Distinct().ToList();
-                if (allAffectedEntities.Any())
-                {
-                    var target = _builderFactories.EntityBuilders.From(allAffectedEntities);
-                    _parsedModifiers.AddGlobal(_builderFactories.SkillBuilders.FromId(mainSkill.Id).Buff.On(target),
-                        Form.BaseSet, 1, isActiveSkill);
-                }
+                AddBuffModifiers(preParseResult, activeSkill, isActiveSkill);
             }
 
             _parsedModifiers.AddGlobal(_builderFactories.SkillBuilders.FromId(mainSkill.Id).Instances,
@@ -156,6 +148,33 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         private static IConditionBuilder CreateWeaponRestrictionCondition(
             IEquipmentBuilder hand, IEnumerable<ItemClass> weaponRestrictions)
             => weaponRestrictions.Select(hand.Has).Aggregate((l, r) => l.Or(r));
+
+        private void AddBuffModifiers(SkillPreParseResult preParseResult, ActiveSkillDefinition activeSkill, IConditionBuilder isActiveSkill)
+        {
+            var allBuffStats =
+                preParseResult.LevelDefinition.BuffStats.Concat(preParseResult.LevelDefinition.QualityBuffStats);
+            var allAffectedEntities = allBuffStats.SelectMany(s => s.AffectedEntities).Distinct().ToList();
+            if (!allAffectedEntities.Any())
+                return;
+
+            var buff = _builderFactories.SkillBuilders.FromId(preParseResult.SkillDefinition.Id).Buff;
+            var target = _builderFactories.EntityBuilders.From(allAffectedEntities);
+            if (activeSkill.Keywords.Contains(Keyword.Curse))
+            {
+                var numericSkillId = preParseResult.SkillDefinition.NumericId;
+                _parsedModifiers!.AddGlobal(MetaStats.ActiveCurses.For(target),
+                    Form.BaseAdd, numericSkillId,
+                    isActiveSkill.And(buff.IgnoresCurseLimit.IsSet.Not));
+                _parsedModifiers.AddGlobal(buff.On(target),
+                    Form.BaseSet, 1,
+                    isActiveSkill.And(buff.IgnoresCurseLimit.IsSet
+                        .Or(MetaStats.ActiveCurseIndex(numericSkillId) < _builderFactories.BuffBuilders.CurseLimit.Value)));
+            }
+            else
+            {
+                _parsedModifiers!.AddGlobal(buff.On(target), Form.BaseSet, 1, isActiveSkill);
+            }
+        }
 
         private IEquipmentBuilder MainHand => Equipment[ItemSlot.MainHand];
         private IEquipmentBuilder OffHand => Equipment[ItemSlot.OffHand];

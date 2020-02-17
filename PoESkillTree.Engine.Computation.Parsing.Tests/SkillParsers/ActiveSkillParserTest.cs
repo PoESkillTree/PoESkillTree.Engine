@@ -1329,6 +1329,99 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
         #endregion
 
+        #region Flammability
+
+        [Test]
+        public void FlammabilityAddsToActiveCurses()
+        {
+            var (definition, skill) = CreateFlammabilityDefinition();
+            var statParser = Mock.Of<IParser<UntranslatedStatParserParameter>>(p =>
+                p.Parse(It.IsAny<UntranslatedStatParserParameter>()) == EmptyParseResult);
+            var sut = CreateSut(definition, statParser);
+            var context = MockValueCalculationContextForActiveSkill(skill);
+
+            var result = sut.Parse(skill);
+
+            var modifiers = result.Modifiers;
+            var actual = GetValueForIdentity(modifiers, "ActiveCurses").Calculate(context);
+            Assert.AreEqual((NodeValue?) definition.NumericId, actual);
+        }
+
+        [Test]
+        public void FlammabilityIsNotAppliedIfCurseLimitIsExceeded()
+        {
+            var (definition, skill) = CreateFlammabilityDefinition();
+            var statParser = Mock.Of<IParser<UntranslatedStatParserParameter>>(p =>
+                p.Parse(It.IsAny<UntranslatedStatParserParameter>()) == EmptyParseResult);
+            var sut = CreateSut(definition, statParser);
+            var context = MockValueCalculationContextForCurse(skill, 1, false, 11, 12);
+
+            var result = sut.Parse(skill);
+
+            var actual = GetValueForIdentity(result.Modifiers, "Flammability.Active").Calculate(context);
+            Assert.AreEqual((NodeValue?) false, actual);
+        }
+
+        [TestCase(2, 11, 12)]
+        [TestCase(1, 12, 11)]
+        public void FlammabilityIsNotAppliedIfCurseLimitIsNotExceeded(int curseLimit, int activeCurse1, int activeCurse2)
+        {
+            var (definition, skill) = CreateFlammabilityDefinition();
+            var statParser = Mock.Of<IParser<UntranslatedStatParserParameter>>(p =>
+                p.Parse(It.IsAny<UntranslatedStatParserParameter>()) == EmptyParseResult);
+            var sut = CreateSut(definition, statParser);
+            var context = MockValueCalculationContextForCurse(skill, curseLimit, false, activeCurse1, activeCurse2);
+
+            var result = sut.Parse(skill);
+
+            var actual = GetValueForIdentity(result.Modifiers, "Flammability.Active").Calculate(context);
+            Assert.AreEqual((NodeValue?) true, actual);
+        }
+
+        [Test]
+        public void FlammabilityIsAppliedIfCurseLimitIsExceededAndIgnored()
+        {
+            var (definition, skill) = CreateFlammabilityDefinition();
+            var statParser = Mock.Of<IParser<UntranslatedStatParserParameter>>(p =>
+                p.Parse(It.IsAny<UntranslatedStatParserParameter>()) == EmptyParseResult);
+            var sut = CreateSut(definition, statParser);
+            var context = MockValueCalculationContextForCurse(skill, 1, true, 11, 12);
+
+            var result = sut.Parse(skill);
+
+            var actual = GetValueForIdentity(result.Modifiers, "Flammability.Active").Calculate(context);
+            Assert.AreEqual((NodeValue?) true, actual);
+        }
+
+        private static (SkillDefinition, Skill) CreateFlammabilityDefinition()
+        {
+            var activeSkill = CreateActiveSkillDefinition("Flammability",
+                new[] { "spell" }, new[] { Keyword.Spell, Keyword.Curse }, true);
+            var buffStats = new[]
+            {
+                new BuffStat(new UntranslatedStat("base_fire_damage_resistance_%", -10), new[] {Entity.Enemy}),
+            };
+            var level = CreateLevelDefinition(buffStats: buffStats);
+            var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
+            return (SkillDefinition.CreateActive("Flammability", 12, "", new string[0], null, activeSkill, levels),
+                new Skill("Flammability", 1, 0, ItemSlot.Belt, 0, null));
+        }
+
+        private static IValueCalculationContext MockValueCalculationContextForCurse(
+            Skill skill, int curseLimit, bool ignoresCurseLimit, params int[] activeCurses)
+        {
+            var context = MockValueCalculationContextForActiveSkill(skill,
+                ("CurseLimit", curseLimit),
+                ($"{skill.Id}.IgnoresCurseLimit", ignoresCurseLimit ? (double?) 1 : null));
+            var contextMock = Mock.Get(context);
+            (IStat, PathDefinition) path = (new Stat("ActiveCurses"), PathDefinition.MainPath);
+            contextMock.Setup(c => c.GetValues(Form.BaseAdd, new[] {path}))
+                .Returns(activeCurses.Select(i => (NodeValue?) i).ToList());
+            return context;
+        }
+
+        #endregion
+
         private static ActiveSkillParser CreateSut(SkillDefinition skillDefinition)
         {
             var statParser = Mock.Of<IParser<UntranslatedStatParserParameter>>(p =>
