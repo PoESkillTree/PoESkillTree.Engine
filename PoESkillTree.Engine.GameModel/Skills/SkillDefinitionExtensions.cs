@@ -116,6 +116,14 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 ("All Explosions", new SkillPartDefinitionExtension())
             },
             {
+                "Blight",
+                EnemyBuff("base_movement_velocity_+%")
+            },
+            {
+                "VaalBlight",
+                EnemyBuff("base_movement_velocity_+%")
+            },
+            {
                 "BloodRage",
                 SelfBuff("life_leech_from_physical_attack_damage_permyriad",
                     "base_physical_damage_%_of_maximum_life_to_deal_per_minute",
@@ -736,7 +744,11 @@ namespace PoESkillTree.Engine.GameModel.Skills
                         ("cast_rate_is_melee", 1)),
                     removedKeywords: new[] { Keyword.Melee }))
             },
-            { "Wither", new SkillPartDefinitionExtension(RemoveStat("chaos_damage_taken_+%")) },
+            {
+                "Wither",
+                new SkillPartDefinitionExtension(RemoveStat("chaos_damage_taken_+%")),
+                EnemyBuff("base_movement_velocity_+%")
+            },
             {
                 "Wrath",
                 new SkillPartDefinitionExtension(

@@ -122,6 +122,10 @@ namespace PoESkillTree.Engine.Computation.Data
                     "supported skills can only be used with bows and wands",
                     TotalOverride, 0, Damage, Not(Or(MainHand.Has(ItemClass.Bow), MainHand.Has(ItemClass.Wand)))
                 },
+                {
+                    "mines hinder enemies near them for 2 seconds when they land",
+                    TotalOverride, 1, Buff.Hinder.On(Enemy), Condition.Unique("Did a Mine Land near the Enemy in the past 2 seconds?")
+                },
                 // Jewels
                 {
                     "primordial",

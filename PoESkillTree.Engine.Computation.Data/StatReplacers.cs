@@ -38,6 +38,15 @@ namespace PoESkillTree.Engine.Computation.Data
                 @"(?<stat1>(immune|immunity) to (?<effect>.+) during flask effect) (?<stat2>removes? (\k<effect>|burning) on use)",
                 "${stat1}", "${stat2}"
             },
+            {
+                // Hinder reduced movement speed
+                @"(.* hinder enemies.*), with (\d+% reduced movement speed)",
+                "$1", "hinder enemies with $2"
+            },
+            {
+                @"(.* hinder enemies.*), reducing movement speed by (\d+%)",
+                "$1", "hinder enemies with $2 reduced movement speed"
+            },
             // keystones
             {
                 // Acrobatics

@@ -136,6 +136,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             { TotalOverride, Buff.Tailwind.On(Self), 1, Condition.Unique("Tailwind.ExplicitlyActive") },
             { TotalOverride, Buff.Infusion.On(Self), 1, Condition.Unique("Infusion.ExplicitlyActive") },
             { TotalOverride, Buff.Maim.On(Enemy), 1, Condition.Unique("Maim.ExplicitlyActiveOnEnemy") },
+            { TotalOverride, Buff.Hinder.On(Enemy), 1, Condition.Unique("Hinder.ExplicitlyActiveOnEnemy") },
             { TotalOverride, Buff.Blind.On(Enemy), 1, Condition.Unique("Blind.ExplicitlyActiveOnEnemy") },
             { TotalOverride, Buff.Intimidate.On(Enemy), 1, Condition.Unique("Intimidate.ExplicitlyActiveOnEnemy") },
             { TotalOverride, Buff.CoveredInAsh.On(Enemy), 1, Condition.Unique("CoveredInAsh.ExplicitlyActiveOnEnemy") },

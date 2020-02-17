@@ -18,6 +18,7 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Buffs
         /// Gets a buff representing Maim.
         /// </summary>
         IBuffBuilder Maim { get; }
+        IBuffBuilder Hinder { get; }
 
         /// <summary>
         /// Gets a buff representing Intimidate.

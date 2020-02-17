@@ -388,6 +388,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "chance to (gain|grant) ({BuffMatchers})", Reference.AsBuff.Chance },
                 { "chance to ({BuffMatchers})( enemies)?", Reference.AsBuff.Chance },
                 { "chance for attacks to maim", Buff.Maim.Chance.With(DamageSource.Attack) },
+                { "chance to hinder enemies on hit with spells", Buff.Maim.Chance.With(DamageSource.Spell) },
                 { "chance to cover rare or unique enemies in ash", Buff.CoveredInAsh.Chance, Enemy.IsRareOrUnique },
                 { "chance to create consecrated ground", Ground.Consecrated.Chance },
                 // - duration
