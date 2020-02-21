@@ -78,7 +78,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         {
             var (definition, skill) = CreateFrenzyDefinition();
             var valueCalculationContext = MockValueCalculationContextForMainSkill(skill,
-                ("Belt.0.Cost", 20));
+                ("Frenzy.Cost", 20));
             var sut = CreateSut(definition);
 
             var result = sut.Parse(skill);
@@ -666,7 +666,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var sut = CreateSut(definition);
             var context = MockValueCalculationContextForActiveSkill(skill,
                 ($"Belt.0.Type.{ActiveSkillType.ManaCostIsReservation}", 1),
-                ("Belt.0.Cost", 20));
+                ("Clarity.Cost", 20));
 
             var result = sut.Parse(skill);
 

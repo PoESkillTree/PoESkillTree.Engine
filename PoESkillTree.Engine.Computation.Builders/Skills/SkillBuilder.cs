@@ -37,6 +37,8 @@ namespace PoESkillTree.Engine.Computation.Builders.Skills
 
         public IStatBuilder Instances => CreateStatBuilder(typeof(uint));
 
+        public IStatBuilder Cost => CreateStatBuilder(typeof(uint));
+
         public IStatBuilder Reservation => CreateStatBuilder(typeof(uint));
 
         public IStatBuilder ReservationPool => CreateStatBuilder(typeof(Pool));

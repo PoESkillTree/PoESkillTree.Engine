@@ -52,8 +52,10 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             }
             if (level.ManaCost is int cost)
             {
-                var costStat = MetaStats.SkillBaseCost(parsedSkill.ItemSlot, parsedSkill.SocketIndex);
-                _modifiers.AddGlobal(costStat, Form.BaseSet, cost);
+                var baseCostStat = MetaStats.SkillBaseCost(parsedSkill.ItemSlot, parsedSkill.SocketIndex);
+                var costStat = _builderFactories.SkillBuilders.FromId(_preParseResult.SkillDefinition.Id).Cost;
+                _modifiers.AddGlobal(baseCostStat, Form.BaseSet, cost);
+                _modifiers.AddGlobal(costStat, Form.BaseSet, baseCostStat.Value, _preParseResult.IsActiveSkill);
                 _modifiers.AddGlobalForMainSkill(_builderFactories.StatBuilders.Pool.From(Pool.Mana).Cost,
                     Form.BaseSet, costStat.Value);
                 ParseReservation(mainSkill, costStat);
