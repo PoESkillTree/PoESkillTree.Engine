@@ -45,7 +45,16 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         private IStat? MinOrMax([CallerMemberName] string identitySuffix = "") =>
             _hasRange ? new Stat(Identity + "." + identitySuffix, Entity, DataType) : null;
 
+        public NodeValue? Round(NodeValue? value)
+        {
+            if (!NumericTypes.Contains(DataType) || DataType == typeof(double))
+                return value;
+
+            return value.Select(d => Math.Floor(d + 1e-5));
+        }
+
         private string? _stringRepresentation;
+
         public override string ToString()
             => _stringRepresentation ??= Entity.GetName() + "." + Identity;
 

@@ -126,7 +126,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
             CopyWithSuffix(stat, "ApplyModifiersToAilments(for form " + form.GetName() + ")", typeof(bool));
 
         public IStat DamageTaken(IStat damage) =>
-            CopyWithSuffix(damage, "Taken", damage.DataType);
+            CopyWithSuffix(damage, "Taken", typeof(double));
 
         public IStat AilmentDealtDamageType(Entity entity, Ailment ailment) =>
             GetOrAdd($"{ailment}.DamageType", entity, typeof(DamageType));

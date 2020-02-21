@@ -41,8 +41,8 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
             }
         }
 
-        public IStatBuilder EffectiveRegen(Pool pool) => FromIdentity($"{pool}.EffectiveRegen", typeof(int));
-        public IStatBuilder EffectiveRecharge(Pool pool) => FromIdentity($"{pool}.EffectiveRecharge", typeof(int));
+        public IStatBuilder EffectiveRegen(Pool pool) => FromIdentity($"{pool}.EffectiveRegen", typeof(double));
+        public IStatBuilder EffectiveRecharge(Pool pool) => FromIdentity($"{pool}.EffectiveRecharge", typeof(double));
         public IStatBuilder RechargeStartDelay(Pool pool) => FromIdentity($"{pool}.RechargeStartDelay", typeof(double));
 
         public IStatBuilder EffectiveLeechRate(Pool pool) => FromIdentity($"{pool}.Leech.EffectiveRate", typeof(uint));
@@ -63,10 +63,10 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         public IDamageRelatedStatBuilder EnemyResistanceFromArmourAgainstCrits => DamageRelatedFromIdentity(typeof(double)).WithHits;
 
         public IDamageRelatedStatBuilder EnemyResistanceAgainstNonCrits(DamageType damageType)
-            => DamageRelatedFromIdentity($"{damageType}.EnemyResistance.NonCrits", typeof(int)).WithHits;
+            => DamageRelatedFromIdentity($"{damageType}.EnemyResistance.NonCrits", typeof(double)).WithHits;
 
         public IDamageRelatedStatBuilder EnemyResistanceAgainstCrits(DamageType damageType)
-            => DamageRelatedFromIdentity($"{damageType}.EnemyResistance.Crits", typeof(int)).WithHits;
+            => DamageRelatedFromIdentity($"{damageType}.EnemyResistance.Crits", typeof(double)).WithHits;
 
         public IDamageRelatedStatBuilder EffectiveDamageMultiplierWithNonCrits(DamageType damageType)
             => DamageRelatedFromIdentity($"{damageType}.EffectiveDamageMultiplier.NonCrits", typeof(double));
@@ -76,16 +76,16 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
                 .WithHitsAndAilments;
 
         public IDamageRelatedStatBuilder DamageWithNonCrits(DamageType damageType)
-            => DamageRelatedFromIdentity($"{damageType}.Damage.NonCrits", typeof(int));
+            => DamageRelatedFromIdentity($"{damageType}.Damage.NonCrits", typeof(double));
 
         public IDamageRelatedStatBuilder DamageWithCrits(DamageType damageType)
-            => DamageRelatedFromIdentity($"{damageType}.Damage.Crits", typeof(int));
+            => DamageRelatedFromIdentity($"{damageType}.Damage.Crits", typeof(double));
 
         public IDamageRelatedStatBuilder DamageWithNonCrits()
-            => DamageRelatedFromIdentity("Damage.NonCrits", typeof(int));
+            => DamageRelatedFromIdentity("Damage.NonCrits", typeof(double));
 
         public IDamageRelatedStatBuilder DamageWithCrits()
-            => DamageRelatedFromIdentity("Damage.Crits", typeof(int));
+            => DamageRelatedFromIdentity("Damage.Crits", typeof(double));
 
         public IDamageRelatedStatBuilder AverageDamagePerHit
             => DamageRelatedFromIdentity(typeof(double)).WithHits;
@@ -144,13 +144,13 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
 
 
         public IStatBuilder ResistanceAgainstHits(DamageType damageType)
-            => FromIdentity($"{damageType}.ResistanceAgainstHits", typeof(int));
+            => FromIdentity($"{damageType}.ResistanceAgainstHits", typeof(double));
 
         public IStatBuilder MitigationAgainstHits(DamageType damageType)
-            => FromIdentity($"{damageType}.MitigationAgainstHits", typeof(int));
+            => FromIdentity($"{damageType}.MitigationAgainstHits", typeof(double));
 
         public IStatBuilder MitigationAgainstDoTs(DamageType damageType)
-            => FromIdentity($"{damageType}.MitigationAgainstDoTs", typeof(int));
+            => FromIdentity($"{damageType}.MitigationAgainstDoTs", typeof(double));
 
         public IStatBuilder ChanceToAvoidMeleeAttacks => FromIdentity(typeof(uint));
         public IStatBuilder ChanceToAvoidProjectileAttacks => FromIdentity(typeof(uint));

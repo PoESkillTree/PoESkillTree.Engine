@@ -9,14 +9,6 @@ namespace PoESkillTree.Engine.Computation.Common
     /// </summary>
     public class Behavior : ValueObject
     {
-        /*
-         * Rounding:
-         * - Each stat can have different rounding behaviors
-         * - This can affect nodes of all NodeTypes
-         * - Modifies the output of affected nodes by rounding it.
-         * - Affects all paths
-         */
-
         public Behavior(IReadOnlyList<IStat> affectedStats, IReadOnlyList<NodeType> affectedNodeTypes,
             IBehaviorPathRule affectedPathsRule, IValueTransformation transformation)
             : base(true)

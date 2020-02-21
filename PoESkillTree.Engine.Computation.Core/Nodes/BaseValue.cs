@@ -18,13 +18,11 @@ namespace PoESkillTree.Engine.Computation.Core.Nodes
 
         public NodeValue? Calculate(IValueCalculationContext context)
         {
-            if (context.GetValue(_stat, NodeType.BaseSet, _path) is NodeValue baseSet)
-            {
-                var baseAdd = context.GetValue(_stat, NodeType.BaseAdd, _path) ?? new NodeValue(0);
-                return baseSet + baseAdd;
-            }
-
-            return context.GetValue(_stat, NodeType.BaseAdd, _path);
+            var baseSet = context.GetValue(_stat, NodeType.BaseSet, _path);
+            var baseAdd = context.GetValue(_stat, NodeType.BaseAdd, _path);
+            if (baseSet is null && baseAdd is null)
+                return null;
+            return _stat.Round((baseSet ?? new NodeValue(0)) + (baseAdd ?? new NodeValue(0)));
         }
     }
 }

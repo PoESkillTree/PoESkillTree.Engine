@@ -26,7 +26,7 @@ namespace PoESkillTree.Engine.Computation.Core.Nodes
 
             var increase = context.GetValue(_stat, NodeType.Increase, _path) ?? new NodeValue(0);
             var more = context.GetValue(_stat, NodeType.More, _path) ?? new NodeValue(1);
-            return @base * (1 + increase) * more;
+            return _stat.Round(_stat.Round(@base * more) * (1 + increase));
         }
     }
 }
