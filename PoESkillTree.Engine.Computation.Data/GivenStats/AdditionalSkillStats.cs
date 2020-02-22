@@ -108,6 +108,8 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             { TotalOverride, Buff.ArcaneSurge.On(Self), 1, SkillIsActive("SupportArcaneSurge") },
 
             { TotalOverride, Buff.Innervation.On(Self), 1, SkillIsActive("SupportOnslaughtOnSlayingShockedEnemy") },
+
+            { TotalOverride, Buff.Withered.On(Enemy), 1, SkillIsActive("Wither") },
         };
 
         private IConditionBuilder IsMainSkill(string skillId, int skillPart)

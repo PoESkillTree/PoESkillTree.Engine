@@ -37,6 +37,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "infusion", Buff.Infusion },
                 { "snares?", Buff.Snare },
                 { "ensnared", Buff.Snare },
+                { "withered", Buff.Withered },
             }; // Add
     }
 }

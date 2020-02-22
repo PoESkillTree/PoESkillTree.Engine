@@ -12,7 +12,6 @@ RighteousFire
 Slither
 SupportBlockReduction
 SupportChanceToIgnite
-SupportChaosAttacks
 SupportDecay
 SupportGemMirageArcher
 SupportMaim
@@ -22,7 +21,6 @@ SupportSlashingWeapon
 SupportSummonGhostOnKill
 ThrownShield
 VaalRighteousFire
-Wither
 // - Provides a secondary skill
 SupportBluntWeapon
 // - Gem affecting supports

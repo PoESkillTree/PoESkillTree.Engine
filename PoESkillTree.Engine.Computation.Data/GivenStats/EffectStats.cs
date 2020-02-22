@@ -65,6 +65,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             { Buff.Rampage, PercentIncrease, Damage, (2 * Buff.Rampage.StackCount.Value / 10).Floor() },
             { Buff.Rampage, PercentIncrease, Stat.MovementSpeed.For(Entity.Minion), (Buff.Rampage.StackCount.Value / 10).Floor() },
             { Buff.Rampage, PercentIncrease, Damage.For(Entity.Minion), (2 * Buff.Rampage.StackCount.Value / 10).Floor() },
+            { Buff.Withered, PercentIncrease, Chaos.Damage.Taken, 6 * Buff.Withered.StackCount.Value },
         };
     }
 }

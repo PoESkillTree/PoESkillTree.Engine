@@ -207,6 +207,7 @@ SupportCastWhileChannellingPlus
 SupportChain
 SupportChainPlus
 SupportChanceToBleed
+SupportChaosAttacks
 SupportChargedMines
 SupportClusterTrap
 SupportColdPenetration
@@ -366,4 +367,5 @@ Vulnerability
 WarlordsMark
 WhirlingBlades
 WildStrike
+Wither
 Wrath

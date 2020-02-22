@@ -385,7 +385,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "non-curse auras from supported skills have effect", Skills.ModifierSourceSkill.Buff.Effect },
                 { "effect of curse against players", Skills.ModifierSourceSkill.Buff.EffectOn(Entity.Character) },
                 // - chance
-                { "chance to (gain|grant) ({BuffMatchers})", Reference.AsBuff.Chance },
+                { "chance to (gain|grant|inflict) ({BuffMatchers})", Reference.AsBuff.Chance },
                 { "chance to ({BuffMatchers})( enemies)?", Reference.AsBuff.Chance },
                 { "chance for attacks to maim", Buff.Maim.Chance.With(DamageSource.Attack) },
                 { "chance to hinder enemies on hit with spells", Buff.Maim.Chance.With(DamageSource.Spell) },
