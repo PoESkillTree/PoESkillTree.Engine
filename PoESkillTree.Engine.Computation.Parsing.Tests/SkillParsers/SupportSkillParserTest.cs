@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Moq;
 using NUnit.Framework;
 using PoESkillTree.Engine.Computation.Builders;
@@ -174,7 +175,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         {
             var activeSkill = CreateActiveSkillDefinition("Clarity", new[] { "aura" }, new[] { Keyword.Aura },
                 providesBuff: true);
-            var level = CreateLevelDefinition();
+            var level = CreateLevelDefinition(cooldown: 1200);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("Clarity", activeSkill, levels),
                 new Skill("Clarity", 1, 0, ItemSlot.Belt, 0, null, isEnabled));
@@ -315,6 +316,69 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateSupport("SupportPointBlank", CreateSupportSkillDefinition(), levels),
                 new Skill("SupportPointBlank", 1, 0, ItemSlot.Belt, 1, null));
+        }
+
+        #endregion
+
+        #region Cast on Critical Strike
+
+        [Test]
+        public void CastOnCritTriggeredSetsCooldown()
+        {
+            var (activeDefinition, activeSkill) = CreateEnfeebleDefinition();
+            var (supportDefinition, supportSkill) = CreateCastOnCritTriggeredDefinition();
+            var context = MockValueCalculationContextForMainSkill(activeSkill,
+                ("MainSkill.Has.Triggered", 1));
+            var sut = CreateSut(activeDefinition, supportDefinition);
+
+            var result = sut.Parse(activeSkill, supportSkill);
+
+            var actual = GetValueForIdentity(result.Modifiers, "Cooldown").Calculate(context);
+            Assert.AreEqual((NodeValue?) supportDefinition.Levels.Values.First().Cooldown, actual);
+        }
+
+        [Test]
+        public void CastOnCritDoesNotSetCooldown()
+        {
+            var (activeDefinition, activeSkill) = CreateEnfeebleDefinition();
+            var (supportDefinition, supportSkill) = CreateCastOnCritDefinition();
+            var context = MockValueCalculationContextForMainSkill(activeSkill);
+            var sut = CreateSut(activeDefinition, supportDefinition);
+
+            var result = sut.Parse(activeSkill, supportSkill);
+
+            var actual = GetValueForIdentity(result.Modifiers, "Cooldown").Calculate(context);
+            Assert.IsNull(actual);
+        }
+
+        [Test]
+        public void CastOnCritTriggeredDoesNotOverrideCooldown()
+        {
+            var (activeDefinition, activeSkill) = CreateClarityDefinition();
+            var (supportDefinition, supportSkill) = CreateCastOnCritTriggeredDefinition();
+            var context = MockValueCalculationContextForMainSkill(activeSkill,
+                ("MainSkill.Has.Triggered", 1));
+            var sut = CreateSut(activeDefinition, supportDefinition);
+
+            var result = sut.Parse(activeSkill, supportSkill);
+
+            Assert.IsEmpty(GetModifiersWithIdentity(result.Modifiers, "Cooldown"));
+        }
+
+        private static (SkillDefinition, Skill) CreateCastOnCritDefinition()
+        {
+            var level = CreateLevelDefinition(cooldown: 1);
+            var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
+            return (CreateSupport("SupportCastOnCrit", CreateSupportSkillDefinition(), levels),
+                new Skill("SupportCastOnCrit", 1, 0, ItemSlot.Belt, 1, null));
+        }
+
+        private static (SkillDefinition, Skill) CreateCastOnCritTriggeredDefinition()
+        {
+            var level = CreateLevelDefinition(cooldown: 1);
+            var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
+            return (CreateSupport("SupportCastOnCritTriggered", CreateSupportSkillDefinition(), levels),
+                new Skill("SupportCastOnCritTriggered", 1, 0, ItemSlot.Belt, 1, null));
         }
 
         #endregion
