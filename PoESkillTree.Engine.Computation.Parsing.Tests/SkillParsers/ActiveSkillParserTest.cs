@@ -1456,6 +1456,41 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
         #endregion
 
+        #region Righteous Fire
+
+        [Test]
+        public void RighteousFireSetsDamageOverTimeBasedOnPools()
+        {
+            var (definition, skill) = CreateRighteousFireDefinition();
+            var valueCalculationContext = MockValueCalculationContextForMainSkill(skill,
+                ("Life", 100),
+                ("EnergyShield", 200));
+            var sut = CreateSut(definition);
+
+            var result = sut.Parse(skill);
+
+            var modifiers = result.Modifiers;
+            var actual = GetValueForIdentity(modifiers, "Fire.Damage.OverTime.Skill").Calculate(valueCalculationContext);
+            Assert.AreEqual(new NodeValue(8), actual);
+        }
+
+        private static (SkillDefinition, Skill) CreateRighteousFireDefinition()
+        {
+            var activeSkill = CreateActiveSkillDefinition("Righteous Fire");
+            var stats = new[]
+            {
+                new UntranslatedStat("base_righteous_fire_%_of_max_life_to_deal_to_nearby_per_minute", 60),
+                new UntranslatedStat("base_righteous_fire_%_of_max_energy_shield_to_deal_to_nearby_per_minute", 120),
+                new UntranslatedStat("base_fire_damage_to_deal_per_minute", 180),
+            };
+            var level = CreateLevelDefinition(stats: stats);
+            var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
+            return (CreateActive("RighteousFire", activeSkill, levels),
+                new Skill("RighteousFire", 1, 10, ItemSlot.Belt, 0, 0));
+        }
+
+        #endregion
+
         private static ActiveSkillParser CreateSut(SkillDefinition skillDefinition)
         {
             var statParser = Mock.Of<IParser<UntranslatedStatParserParameter>>(p =>

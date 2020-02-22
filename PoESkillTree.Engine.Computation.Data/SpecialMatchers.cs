@@ -306,6 +306,12 @@ namespace PoESkillTree.Engine.Computation.Data
                     TotalOverride, 100, Buff.Maim.Chance.WithHits
                 },
                 {
+                    // Vaal Righteous Fire
+                    "sacrifices #% of your total energy shield and life deals #% of sacrificed energy shield and life as fire damage per second",
+                    BaseSet, Values[0].AsPercentage * Values[1].AsPercentage * (Life.Value + EnergyShield.Value),
+                    Fire.Damage.WithSkills(DamageSource.OverTime)
+                },
+                {
                     // Viper Strike
                     "each weapon hits separately if dual wielding, dealing #% less damage",
                     PercentLess, Value, Damage, OffHand.Has(Tags.Weapon)

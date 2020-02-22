@@ -42,6 +42,13 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         }
 
         public IStatBuilder EffectiveRegen(Pool pool) => FromIdentity($"{pool}.EffectiveRegen", typeof(double));
+
+        public IStatBuilder EffectiveDegeneration(Pool pool, DamageType damageType) =>
+            FromIdentity($"{pool}.EffectiveDegeneration.{damageType}", typeof(double));
+
+        public IStatBuilder EffectiveDegeneration(Pool pool) => FromIdentity($"{pool}.EffectiveDegeneration", typeof(double));
+        public IStatBuilder NetRegen(Pool pool) => FromIdentity($"{pool}.NetRegen", typeof(double));
+
         public IStatBuilder EffectiveRecharge(Pool pool) => FromIdentity($"{pool}.EffectiveRecharge", typeof(double));
         public IStatBuilder RechargeStartDelay(Pool pool) => FromIdentity($"{pool}.RechargeStartDelay", typeof(double));
 

@@ -55,10 +55,10 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         private void Parse(IReadOnlyList<UntranslatedStat> stats, IConditionBuilder? partCondition = null)
         {
             ParseHitDamage(stats, partCondition);
+            ParseDamageOverTime(stats, partCondition);
             foreach (var stat in stats)
             {
                 if (TryParseOther(stat, partCondition)
-                    || TryParseDamageOverTime(stat, partCondition)
                     || TryParseConversion(stat, partCondition))
                 {
                     _parsedStats!.Add(stat);
@@ -107,17 +107,35 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             }
         }
 
-        private bool TryParseDamageOverTime(UntranslatedStat stat, IConditionBuilder? partCondition = null)
+        private void ParseDamageOverTime(IReadOnlyList<UntranslatedStat> stats, IConditionBuilder? partCondition = null)
         {
-            var match = SkillStatIds.DamageOverTimeRegex.Match(stat.StatId);
-            if (!match.Success)
-                return false;
+            IStatBuilder? statBuilder = null;
+            var valueBuilder = _builderFactories.ValueBuilders.Create(0);
 
-            var type = Enums.Parse<DamageType>(match.Groups[1].Value, true);
-            var statBuilder = _builderFactories.DamageTypeBuilders.From(type).Damage
-                .WithSkills(DamageSource.OverTime);
-            _parsedModifiers!.AddGlobalForMainSkill(statBuilder, Form.BaseSet, stat.Value / 60D, partCondition);
-            return true;
+            foreach (var stat in stats)
+            {
+                var match = SkillStatIds.DamageOverTimeRegex.Match(stat.StatId);
+                var poolBasedMatch = SkillStatIds.PoolBasedDamageOverTimeRegex.Match(stat.StatId);
+                if (match.Success)
+                {
+                    var type = Enums.Parse<DamageType>(match.Groups[1].Value, true);
+                    statBuilder = _builderFactories.DamageTypeBuilders.From(type).Damage
+                        .WithSkills(DamageSource.OverTime);
+                    valueBuilder = valueBuilder.Add(_builderFactories.ValueBuilders.Create(stat.Value / 60D));
+                    _parsedStats!.Add(stat);
+                }
+                else if (poolBasedMatch.Success)
+                {
+                    var pool = poolBasedMatch.Groups[1].Value == "energy_shield" ? Pool.EnergyShield : Pool.Life;
+                    valueBuilder = valueBuilder.Add((stat.Value / 60D / 100) * _builderFactories.StatBuilders.Pool.From(pool).Value);
+                    _parsedStats!.Add(stat);
+                }
+            }
+
+            if (statBuilder != null)
+            {
+                _parsedModifiers!.AddGlobalForMainSkill(statBuilder, Form.BaseSet, valueBuilder, partCondition);
+            }
         }
 
         private bool TryParseConversion(UntranslatedStat stat, IConditionBuilder? partCondition = null)

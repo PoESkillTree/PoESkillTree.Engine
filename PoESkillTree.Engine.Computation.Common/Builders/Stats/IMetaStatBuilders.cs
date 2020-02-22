@@ -17,8 +17,13 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
     public interface IMetaStatBuilders
     {
         IStatBuilder EffectiveRegen(Pool pool);
+        IStatBuilder EffectiveDegeneration(Pool pool, DamageType damageType);
+        IStatBuilder EffectiveDegeneration(Pool pool);
+        IStatBuilder NetRegen(Pool pool);
+
         IStatBuilder EffectiveRecharge(Pool pool);
         IStatBuilder RechargeStartDelay(Pool pool);
+
         IStatBuilder EffectiveLeechRate(Pool pool);
         IStatBuilder AbsoluteLeechRate(Pool pool);
         IStatBuilder AbsoluteLeechRateLimit(Pool pool);

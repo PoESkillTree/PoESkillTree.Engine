@@ -3,8 +3,10 @@ using System.Runtime.CompilerServices;
 using PoESkillTree.Engine.Computation.Common;
 using PoESkillTree.Engine.Computation.Common.Builders;
 using PoESkillTree.Engine.Computation.Common.Builders.Conditions;
+using PoESkillTree.Engine.Computation.Common.Builders.Damage;
 using PoESkillTree.Engine.Computation.Common.Builders.Entities;
 using PoESkillTree.Engine.Computation.Common.Builders.Resolving;
+using PoESkillTree.Engine.Computation.Common.Builders.Skills;
 using PoESkillTree.Engine.Computation.Common.Builders.Stats;
 using static PoESkillTree.Engine.Computation.Common.ExplicitRegistrationTypes;
 
@@ -38,6 +40,12 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
             (IPoolStatBuilder) base.For(entity);
 
         public IRegenStatBuilder Regen => new RegenStatBuilder(StatFactory, Pool);
+
+        public IStatBuilder Degeneration(IDamageTypeBuilder damageType) =>
+            new StatBuilder(StatFactory,
+                new ParametrisedCoreStatBuilder<IKeywordBuilder>(CreateCoreStatBuilder("Degeneration", typeof(double)), damageType,
+                    (ps, kb, s) => StatFactory.CopyWithSuffix(s, kb.Build(ps).ToString(), typeof(double))));
+
         public IRechargeStatBuilder Recharge => new RechargeStatBuilder(StatFactory, Pool);
         public IStatBuilder RecoveryRate => FromIdentity(typeof(double));
         public IStatBuilder Cost => FromIdentity(typeof(uint));
@@ -170,8 +178,8 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
             => DamageRelatedStatBuilder.Create(StatFactory,
                 CreateCoreStatBuilder(identitySuffix, dataType, explicitRegistrationType));
 
-        private ICoreStatBuilder CreateCoreStatBuilder(
-            string identitySuffix, Type dataType, ExplicitRegistrationType? explicitRegistrationType)
+        protected ICoreStatBuilder CreateCoreStatBuilder(
+            string identitySuffix, Type dataType, ExplicitRegistrationType? explicitRegistrationType = null)
             => new CoreStatBuilderFromCoreBuilder<Pool>(Pool,
                 (e, p) => StatFactory.FromIdentity($"{p}{_identitySuffix}.{identitySuffix}", e, dataType,
                     explicitRegistrationType));

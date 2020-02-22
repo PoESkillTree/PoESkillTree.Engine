@@ -1,9 +1,7 @@
 ﻿// These skills have stat lines that are not parsed successfully (yet)
 // - Require new stats or are otherwise not easy to support
-BloodRage
 CorrosiveShroud
 NewShieldCharge
-RighteousFire
 Slither
 SupportBlockReduction
 SupportGemMirageArcher
@@ -12,7 +10,6 @@ SupportRuthless
 SupportSlashingWeapon
 SupportSummonGhostOnKill
 ThrownShield
-VaalRighteousFire
 // - Provides a secondary skill
 DarkRitual
 SupportBluntWeapon

@@ -20,6 +20,9 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         public static readonly Regex DamageOverTimeRegex =
             new Regex($"^base_{DamageTypeRegex}_damage_to_deal_per_minute$");
 
+        public static readonly Regex PoolBasedDamageOverTimeRegex =
+            new Regex("^base_righteous_fire_%_of_max_(life|energy_shield)_to_deal_to_nearby_per_minute$");
+
         public static readonly Regex SkillDamageConversionRegex =
             new Regex($"^skill_{DamageTypeRegex}_damage_%_to_convert_to_{DamageTypeRegex}$");
     }

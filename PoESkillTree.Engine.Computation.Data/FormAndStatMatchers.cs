@@ -331,6 +331,12 @@ namespace PoESkillTree.Engine.Computation.Data
                     BaseAdd, Values[0] / Values[1], Reference.AsPoolStat.Regen.Percent,
                     Action.ConsumeCorpse.InPastXSeconds(Values[1])
                 },
+                // degen
+                {
+                    "you (take|burn for) #% of your ({PoolStatMatchers}) per second as ({DamageTypeMatchers}) damage",
+                    BaseAdd, Value.AsPercentage * References[0].AsPoolStat.Value,
+                    References[0].AsPoolStat.Degeneration(References[1].AsDamageType)
+                },
                 // gain (need to be FormAndStatMatcher because they also exist with flat values)
                 {
                     "#% of ({PoolStatMatchers}) gained",

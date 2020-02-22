@@ -15,6 +15,7 @@ BladeVortex
 Bladefall
 Bladestorm
 BlastRain
+BloodRage
 BloodSandArmour
 BloodSandStance
 BloodSpears
@@ -150,6 +151,7 @@ RallyingCry
 Reave
 Reckoning
 RejuvenationTotem
+RighteousFire
 Riposte
 Sanctify
 ScourgeArrow
@@ -361,6 +363,7 @@ VaalMoltenShell
 VaalPowerSiphon
 VaalRainOfArrows
 VaalReave
+VaalRighteousFire
 VaalSparkSpiralNova
 VaalStormCall
 VaalThrownWeapon
