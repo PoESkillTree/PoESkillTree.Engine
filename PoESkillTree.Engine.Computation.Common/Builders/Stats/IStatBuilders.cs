@@ -154,7 +154,7 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
         /// <summary>
         /// Returns the value of a stat with type uint that can only be specified by the user.
         /// </summary>
-        ValueBuilder UniqueAmount(string name);
+        ValueBuilder UniqueAmount(string name, double defaultValue = 0);
 
         ValueBuilder UniqueEnum<T>(string name) where T : Enum;
 

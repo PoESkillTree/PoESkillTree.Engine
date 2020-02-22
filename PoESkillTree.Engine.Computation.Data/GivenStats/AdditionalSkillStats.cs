@@ -107,6 +107,8 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                 IsMainSkill("ShatteringSteel", 2)
             },
 
+            { TotalOverride, Skills.FromId("Slither").Buff.AddStatForSource(Buff.Elusive.On(Self), Self), true },
+
             { TotalOverride, Buff.ArcaneSurge.On(Self), 1, SkillIsActive("SupportArcaneSurge") },
 
             { TotalOverride, Buff.Innervation.On(Self), 1, SkillIsActive("SupportOnslaughtOnSlayingShockedEnemy") },

@@ -129,8 +129,8 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
 
         public IStatBuilder DamageTakenGainedAsMana => FromIdentity(typeof(uint));
 
-        public ValueBuilder UniqueAmount(string name)
-            => FromIdentity(name, typeof(uint), UserSpecifiedValue(0)).Value;
+        public ValueBuilder UniqueAmount(string name, double defaultValue = 0)
+            => FromIdentity(name, typeof(uint), UserSpecifiedValue(defaultValue)).Value;
 
         public ValueBuilder UniqueEnum<T>(string name) where T : Enum
             => FromIdentity(name, typeof(T), UserSpecifiedValue(0)).Value;

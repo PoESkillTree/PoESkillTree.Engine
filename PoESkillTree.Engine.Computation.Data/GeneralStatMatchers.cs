@@ -359,6 +359,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "({BuffMatchers}) effect", Reference.AsBuff.Effect },
                 { "effect of ({BuffMatchers})", Reference.AsBuff.Effect },
                 { "effect of ({BuffMatchers}) on you", Reference.AsBuff.EffectOn(Self) },
+                { "effect of ({BuffMatchers}) from this skill", Reference.AsBuff.Effect },
                 { "({SkillMatchers}) has buff effect", Reference.AsSkill.Buff.Effect },
                 { "effect of buffs granted by your golems", Buffs(Entity.Minion).With(Keyword.Golem).Effect },
                 {

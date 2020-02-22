@@ -446,7 +446,7 @@ namespace PoESkillTree.Engine.Computation.Data
                     TotalOverride, 1, Reference.AsBuff.NotAsBuffOn(Self)
                 },
                 {
-                    "(?<!while |chance to )gain ({BuffMatchers})",
+                    "(?<!while |chance to )(gain|grants?) ({BuffMatchers})",
                     TotalOverride, 1, Reference.AsBuff.On(Self)
                 },
                 { "you can have one additional curse", BaseAdd, 1, Buff.CurseLimit },
@@ -467,8 +467,6 @@ namespace PoESkillTree.Engine.Computation.Data
                     "monsters are hexproof",
                     TotalOverride, 0, Buffs(Self, Enemy).With(Keyword.Curse).On, Flag.IgnoreHexproof.IsSet.Not
                 },
-                { "grants? fortify", TotalOverride, 1, Buff.Fortify.On(Self) },
-                { "grants? phasing", TotalOverride, 1, Buff.Phasing.On(Self) },
                 {
                     "you and nearby allies have onslaught",
                     TotalOverride, 1, Buff.Onslaught.On(Self), Buff.Onslaught.On(Ally)

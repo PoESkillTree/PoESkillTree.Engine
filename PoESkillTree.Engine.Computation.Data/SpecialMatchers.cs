@@ -127,6 +127,10 @@ namespace PoESkillTree.Engine.Computation.Data
                     TotalOverride, 0, Damage, Not(Or(MainHand.Has(Tags.Sword), MainHand.Has(Tags.Axe)))
                 },
                 {
+                    "supported skills can only be used with claws and daggers",
+                    TotalOverride, 0, Damage, Not(Or(MainHand.Has(Tags.Claw), MainHand.Has(Tags.Dagger)))
+                },
+                {
                     "mines hinder enemies near them for 2 seconds when they land",
                     TotalOverride, 1, Buff.Hinder.On(Enemy), Condition.Unique("Did a Mine Land near the Enemy in the past 2 seconds?")
                 },

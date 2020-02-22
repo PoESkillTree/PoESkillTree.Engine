@@ -42,6 +42,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
             Snare = Create("Snare");
             Rampage = Create("Rampage");
             Withered = Create("Withered");
+            Elusive = Create("Elusive");
             Conflux = new ConfluxBuffBuilders(statFactory);
             GenericMine = Create("Mine");
             CurseLimit = StatBuilderUtils.FromIdentity(statFactory, "CurseLimit", typeof(uint));
@@ -66,6 +67,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
                 new BuffBuilderWithKeywords(Snare),
                 new BuffBuilderWithKeywords(Rampage),
                 new BuffBuilderWithKeywords(Withered),
+                new BuffBuilderWithKeywords(Elusive),
                 new BuffBuilderWithKeywords(Conflux.Chilling),
                 new BuffBuilderWithKeywords(Conflux.Elemental),
                 new BuffBuilderWithKeywords(Conflux.Igniting),
@@ -104,6 +106,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
         public IBuffBuilder Snare { get; }
         public IBuffBuilder Rampage { get; }
         public IBuffBuilder Withered { get; }
+        public IBuffBuilder Elusive { get; }
         public IBuffBuilder GenericMine { get; }
         public IConfluxBuffBuilders Conflux { get; }
 

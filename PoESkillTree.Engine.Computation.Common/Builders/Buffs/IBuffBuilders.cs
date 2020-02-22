@@ -59,6 +59,7 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Buffs
         IBuffBuilder Snare { get; }
         IBuffBuilder Rampage { get; }
         IBuffBuilder Withered { get; }
+        IBuffBuilder Elusive { get; }
 
         IBuffBuilder GenericMine { get; }
 

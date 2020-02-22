@@ -163,6 +163,7 @@ ShrapnelBallista
 ShrapnelShot
 ShrapnelTrap
 SiegeBallista
+Slither
 Smite
 SmokeMine
 SnappingAdder
@@ -305,6 +306,7 @@ SupportPointBlank
 SupportPoison
 SupportPowerChargeOnCrit
 SupportPulverise
+SupportPuncturingWeapon
 SupportRage
 SupportRangedAttackTotem
 SupportRapidDecay

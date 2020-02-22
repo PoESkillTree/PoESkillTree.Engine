@@ -38,6 +38,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "snares?", Buff.Snare },
                 { "ensnared", Buff.Snare },
                 { "withered", Buff.Withered },
+                { "elusive", Buff.Elusive },
             }; // Add
     }
 }

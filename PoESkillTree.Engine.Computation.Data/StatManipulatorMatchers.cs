@@ -58,6 +58,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "during ({SkillMatchers}) for you and allies", Reference.AsSkill.Buff.AddStat },
                 { "enemies ({AilmentMatchers}) by supported skills have", s => Reference.AsAilment.AddStat(s).For(Enemy) },
                 { "enemies ({BuffMatchers}) by supported skills(?= take)", s => Reference.AsBuff.AddStatForSource(s, Self).For(Enemy) },
+                { "elusive from supported skills also grants (?<inner>.*) for skills supported by nightblade", Buff.Elusive.AddStat, "${inner}" },
                 { @"\(AsItemProperty\)", s => s.AsItemProperty },
                 { @"\(AsPassiveNodeProperty\)", s => s.AsPassiveNodeProperty },
                 { @"\(AsPassiveNodeBaseProperty\)", s => s.AsPassiveNodeBaseProperty },

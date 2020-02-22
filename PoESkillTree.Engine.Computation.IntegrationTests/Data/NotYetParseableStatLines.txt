@@ -28,13 +28,6 @@ Transfiguration of Mind
 Transfiguration of Soul
 // - Unnerve
 Nearby Allies Unnerve Enemies for 4 seconds on Hit
-// - Elusive
-10% chance to gain Elusive on Kill
-20% increased Attack and Cast Speed while Elusive
-25% increased Elusive Effect
-50% chance to gain Elusive on Critical Strike
-8% reduced Damage taken while Elusive
-You take no Extra Damage from Critical Strikes while Elusive
 // More calculations for non-damaging ailments (shock, chill, freeze)
 Chills Enemies as though dealing 195% more Damage
 Shocks Enemies as though dealing 195% more Damage

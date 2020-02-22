@@ -149,6 +149,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             { TotalOverride, Buff.Hinder.Chance.With(DamageSource.Attack), 0 },
             { BaseSet, Buff.Impale.StackCount.Maximum, 5 },
             { BaseSet, Buff.Rampage.StackCount.Maximum, 1000 },
+            { BaseSet, Buff.Withered.StackCount.Maximum, 15 },
             // stun
             { BaseSet, Effect.Stun.Threshold, 1 },
             { BaseSet, Effect.Stun.Recovery, 1 },

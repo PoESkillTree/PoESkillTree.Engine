@@ -598,6 +598,10 @@ namespace PoESkillTree.Engine.GameModel.Skills
                     AddStat("is_area_damage", 1)))
             },
             {
+                "Slither", // Withering Step
+                SelfBuff("phase_through_objects"), Passive("elusive_effect_+%")
+            },
+            {
                 "Smite",
                 new SkillPartDefinitionExtension(
                     ReplaceStat("base_chance_to_shock_%_from_skill", "base_chance_to_shock_%")
@@ -805,6 +809,10 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 "SupportOnslaughtOnSlayingShockedEnemy", // Innervate
                 Passive("support_innervate_minimum_added_lightning_damage",
                     "support_innervate_maximum_added_lightning_damage")
+            },
+            {
+                "SupportPuncturingWeapon", // Nightblade Support
+                Passive("elusive_effect_+%")
             },
             {
                 "SupportRangedAttackTotem", // Ballista Totem Support

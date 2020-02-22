@@ -272,6 +272,8 @@ Chill Enemy for 0.5 seconds when Hit, reducing their Action Speed by 30%
 Uses your Life if no Skeletons in range
 Supported Skills grant Combat Rush on Hit Combat Rush lasts 2 seconds or until you use a Travel Skill
 Combat Rush grants 24% more Attack and Cast Speed to Travel Skills that are not Supported by Close Combat
+Removes existing Elusive before granting a new Elusive Buff when used
+Inflicts 6 Withered Debuffs the first time each Enemy enters the Area
 // passive skills: =====================================================================================================
 10% Chance for Traps to Trigger an additional time
 Share Endurance, Frenzy and Power Charges with nearby party members
