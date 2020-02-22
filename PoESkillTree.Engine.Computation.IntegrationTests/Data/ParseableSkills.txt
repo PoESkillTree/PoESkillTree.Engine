@@ -3,8 +3,10 @@ AccuracyAndCritsAura
 AncestorTotemSlam
 Anger
 Arc
+ArcticArmour
 ArcticBreath
 ArtilleryBallista
+AssassinsMark
 BallLightning
 Barrage
 BearTrap
@@ -40,8 +42,10 @@ Contagion
 ConversionTrap
 Convocation
 CorpseEruption
+CorpseWarp
 Cyclone
 DamageOverTimeAura
+DarkPact
 DecoyTotem
 Desecrate
 Despair

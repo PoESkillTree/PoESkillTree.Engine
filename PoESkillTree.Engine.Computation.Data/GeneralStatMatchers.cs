@@ -140,6 +140,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 { "({KeywordMatchers}) critical strike chance", CriticalStrike.Chance.With(Reference.AsKeyword) },
                 { "projectiles have critical strike chance", CriticalStrike.Chance.With(Keyword.Projectile) },
+                { "you take extra damage from critical strikes", CriticalStrike.ExtraDamageTaken },
                 // - projectiles
                 { "projectile speed", Projectile.Speed },
                 { "arrow speed", Projectile.Speed, And(With(Keyword.Attack), MainHand.Has(Tags.Bow)) },

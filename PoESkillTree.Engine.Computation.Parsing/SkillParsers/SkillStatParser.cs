@@ -71,6 +71,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             IStatBuilder? statBuilder = null;
             double hitDamageMinimum = 0D;
             double? hitDamageMaximum = null;
+            double? percentOfLifeAsDamage = null;
             foreach (var stat in stats)
             {
                 var match = SkillStatIds.HitDamageRegex.Match(stat.StatId);
@@ -88,11 +89,20 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
                     _parsedStats!.Add(stat);
                 }
+                else if (SkillStatIds.PoolBasedHitDamageRegex.IsMatch(stat.StatId))
+                {
+                    percentOfLifeAsDamage = stat.Value;
+                    _parsedStats!.Add(stat);
+                }
             }
             if (hitDamageMaximum.HasValue)
             {
                 var valueBuilder = _builderFactories.ValueBuilders.FromMinAndMax(
                     CreateValue(hitDamageMinimum), CreateValue(hitDamageMaximum.Value));
+                if (percentOfLifeAsDamage.HasValue)
+                {
+                    valueBuilder = valueBuilder.Add((percentOfLifeAsDamage.Value / 100) * _builderFactories.StatBuilders.Pool.From(Pool.Life).Value);
+                }
                 _parsedModifiers!.AddGlobalForMainSkill(statBuilder!, Form.BaseSet, valueBuilder, partCondition);
             }
         }

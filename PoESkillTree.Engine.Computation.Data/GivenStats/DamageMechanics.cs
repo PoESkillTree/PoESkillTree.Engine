@@ -133,7 +133,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                     _ => CriticalStrike.Multiplier.WithHits,
                     (_, resistance, damageTaken, damageMulti, impaleMulti, critMulti) =>
                         ((1 - resistance.Value.AsPercentage) + impaleMulti.Value) * damageTaken.Value * damageMulti.Value.AsPercentage
-                        * critMulti.Value.AsPercentage
+                        * EffectiveCriticalStrikeMultiplier(critMulti)
                 },
                 // - enemy resistance against crit/non-crit hits per source and type
                 {
@@ -170,7 +170,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                     CriticalStrike.Multiplier.WithHits,
                     (damage, multi, critMulti) =>
                         PhysicalDamageReductionFromArmour(Armour.For(Enemy).Value,
-                            damage.Value * multi.Value.AsPercentage * critMulti.Value.AsPercentage)
+                            damage.Value * multi.Value.AsPercentage * EffectiveCriticalStrikeMultiplier(critMulti))
                 },
 
                 // skill damage over time
@@ -373,7 +373,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                     (damage, multi) =>
                         DamageTypeBuilders.From(DamageType.Physical).Resistance.For(Enemy).Value
                         + PhysicalDamageReductionFromArmour(Armour.For(Enemy).Value,
-                            MetaStats.ImpaleRecordedDamage.Value * damage.Value * multi.Value)
+                            MetaStats.ImpaleRecordedDamage.Value * damage.Value * multi.Value.AsPercentage)
                         - Buff.Impale.Penetration.Value
                 },
                 {
@@ -384,7 +384,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                     (damage, multi, critMulti) =>
                         DamageTypeBuilders.From(DamageType.Physical).Resistance.For(Enemy).Value
                         + PhysicalDamageReductionFromArmour(Armour.For(Enemy).Value,
-                            MetaStats.ImpaleRecordedDamage.Value * damage.Value * multi.Value * critMulti.Value)
+                            MetaStats.ImpaleRecordedDamage.Value * damage.Value * multi.Value.AsPercentage * EffectiveCriticalStrikeMultiplier(critMulti))
                         - Buff.Impale.Penetration.Value
                 },
                 { TotalOverride, MetaStats.EnemyResistanceAgainstNonCritImpales.Minimum, 0 },
@@ -447,6 +447,15 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
 
         private IDamageRelatedStatBuilder DamageMultiplierWithNonCrits(DamageType damageType)
             => DamageTypeBuilders.From(damageType).DamageMultiplierWithNonCrits;
+
+        private IValueBuilder EffectiveCriticalStrikeMultiplier(IStatBuilder critMultiStat)
+        {
+            var critMulti = critMultiStat.Value.AsPercentage;
+            return ValueFactory.If(critMulti > 1)
+                .Then(1 + (critMulti - 1) * CriticalStrike.ExtraDamageTaken.For(Enemy).Value)
+                .Else(critMulti);
+        }
+
 
         private IReadOnlyList<IIntermediateModifier> CollectionToList(DataDrivenMechanicCollection collection)
         {

@@ -14,6 +14,9 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         public static readonly Regex HitDamageRegex =
             new Regex($"^(attack|spell|secondary)_(minimum|maximum)_base_{DamageTypeRegex}_damage$");
 
+        public static readonly Regex PoolBasedHitDamageRegex =
+            new Regex($"^(attack|spell|secondary)_base_{DamageTypeRegex}_damage_%_maximum_life$");
+
         public static readonly Regex DamageOverTimeRegex =
             new Regex($"^base_{DamageTypeRegex}_damage_to_deal_per_minute$");
 

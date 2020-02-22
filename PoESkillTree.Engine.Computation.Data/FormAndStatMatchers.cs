@@ -181,8 +181,8 @@ namespace PoESkillTree.Engine.Computation.Data
                 // - crit
                 { @"\+#% critical strike chance", BaseAdd, Value, CriticalStrike.Chance },
                 { @"\+#% critical strike multiplier", BaseAdd, Value, CriticalStrike.Multiplier },
-                { "no critical strike multiplier", TotalOverride, 0, CriticalStrike.Multiplier },
-                { "your critical strikes do not deal extra damage", TotalOverride, 0, CriticalStrike.Multiplier },
+                { "no critical strike multiplier", TotalOverride, 100, CriticalStrike.Multiplier },
+                { "your critical strikes do not deal extra damage", TotalOverride, 100, CriticalStrike.Multiplier },
                 {
                     "ailments never count as being from critical strikes",
                     TotalOverride, 0, CriticalStrike.Chance.WithAilments
@@ -282,10 +282,6 @@ namespace PoESkillTree.Engine.Computation.Data
                 {
                     "#% of physical damage bypasses energy shield",
                     BaseSubtract, Value, Physical.DamageTakenFrom(EnergyShield).Before(Life)
-                },
-                {
-                    "you take #% reduced extra damage from critical strikes",
-                    PercentReduce, Value, CriticalStrike.ExtraDamageTaken
                 },
                 {
                     "you take no extra damage from critical strikes",

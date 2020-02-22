@@ -342,6 +342,8 @@ namespace PoESkillTree.Engine.Computation.Data
                     "(beams?|final wave|shockwaves?|cone|aftershock|explosion) (has a|deals?|will have)",
                     Stat.MainSkillPart.Value.Eq(1)
                 },
+                { "if consuming a corpse", Stat.MainSkillPart.Value.Eq(1) }, // Bodyswap
+                { "if using your life", Stat.MainSkillPart.Value.Eq(0) }, // Dark Pact
                 // - other
                 { "to enemies they're attached to", Flag.IsBrandAttachedToEnemy },
                 { "to branded enemy", Flag.IsBrandAttachedToEnemy },

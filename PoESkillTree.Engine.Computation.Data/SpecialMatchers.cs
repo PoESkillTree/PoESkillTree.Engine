@@ -222,6 +222,13 @@ namespace PoESkillTree.Engine.Computation.Data
                     PercentMore, Value * Skills.ModifierSourceSkill.Buff.StackCount.For(Enemy).Value, Damage.With(Ailment.Ignite)
                 },
                 {
+                    // Dark Pact
+                    "sacrifices #% of skeleton's life to deal that much chaos damage",
+                    BaseAdd,
+                    Value.AsPercentage * ValueFactory.If(Stat.MainSkillPart.Value.Eq(0)).Then(Life.Value).Else(Life.For(Entity.Minion).Value),
+                    Chaos.Damage.WithSkills(DamageSource.Spell)
+                },
+                {
                     // Dread Banner, War Banner
                     @"\+# second to base placed banner duration per stage",
                     BaseAdd, Value * Stat.BannerStage.Value, Stat.Duration

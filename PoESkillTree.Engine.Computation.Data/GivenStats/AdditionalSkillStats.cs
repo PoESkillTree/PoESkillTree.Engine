@@ -39,17 +39,19 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
 
         private GivenStatCollection CreateCollection() => new GivenStatCollection(_modifierBuilder, ValueFactory)
         {
+            { TotalOverride, Skills.FromId("ArcticArmour").Buff.EffectOn(Self), 0, Flag.AlwaysStationary.Not },
+
             {
                 TotalOverride, Stat.SkillNumberOfHitsPerCast, Projectile.Count.Value,
                 IsMainSkill("BlastRain", 1)
             },
 
             {
-                TotalOverride, Buff.Blind.On(Enemy), 1,
+                TotalOverride, Buff.Blind.On(Enemy), true,
                 And(Skills.FromId("BloodSandArmour").Buff.IsOn(Enemy), Flag.InSandStance)
             },
             {
-                TotalOverride, Buff.Maim.On(Enemy), 1,
+                TotalOverride, Buff.Maim.On(Enemy), true,
                 And(Skills.FromId("BloodSandArmour").Buff.IsOn(Enemy), Flag.InBloodStance)
             },
 

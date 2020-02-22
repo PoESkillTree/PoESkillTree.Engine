@@ -1422,6 +1422,40 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
         #endregion
 
+        #region Bodyswap
+
+        [Test]
+        public void BodyswapSetsSpellDamageBasedOnLife()
+        {
+            var (definition, skill) = CreateBodyswapDefinition();
+            var valueCalculationContext = MockValueCalculationContextForMainSkill(skill,
+                ("Life", 100));
+            var sut = CreateSut(definition);
+
+            var result = sut.Parse(skill);
+
+            var modifiers = result.Modifiers;
+            var actual = GetValueForIdentity(modifiers, "Fire.Damage.Spell.Skill").Calculate(valueCalculationContext);
+            Assert.AreEqual(new NodeValue(8, 13), actual);
+        }
+
+        private static (SkillDefinition, Skill) CreateBodyswapDefinition()
+        {
+            var activeSkill = CreateActiveSkillDefinition("Bodyswap");
+            var stats = new[]
+            {
+                new UntranslatedStat("spell_minimum_base_fire_damage", 5),
+                new UntranslatedStat("spell_maximum_base_fire_damage", 10),
+                new UntranslatedStat("spell_base_fire_damage_%_maximum_life", 3),
+            };
+            var level = CreateLevelDefinition(stats: stats);
+            var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
+            return (CreateActive("CorpseWarp", activeSkill, levels),
+                new Skill("CorpseWarp", 1, 10, ItemSlot.Belt, 0, 0));
+        }
+
+        #endregion
+
         private static ActiveSkillParser CreateSut(SkillDefinition skillDefinition)
         {
             var statParser = Mock.Of<IParser<UntranslatedStatParserParameter>>(p =>
