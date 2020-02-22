@@ -56,7 +56,10 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         }
 
         public IStatBuilder AreaOfEffect => FromIdentity(typeof(int));
-        public IStatBuilder Radius => FromIdentity(typeof(uint));
+        public IStatBuilder Radius => PrimaryRadius.Concat(SecondaryRadius).Concat(TertiaryRadius);
+        public IStatBuilder PrimaryRadius => FromIdentity(typeof(uint));
+        public IStatBuilder SecondaryRadius => FromIdentity(typeof(uint));
+        public IStatBuilder TertiaryRadius => FromIdentity(typeof(uint));
 
         public IDamageRelatedStatBuilder Range
             => DamageRelatedFromIdentity(typeof(uint)).WithSkills(DamageSource.Attack);

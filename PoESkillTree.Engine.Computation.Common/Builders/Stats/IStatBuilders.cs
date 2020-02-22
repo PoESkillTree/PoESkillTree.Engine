@@ -67,9 +67,16 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
         IStatBuilder AreaOfEffect { get; }
 
         /// <summary>
-        /// Gets a stat representing the main skill's radius, if it has one.
+        /// Gets a stat representing modifiers to the main skill's radii, if it has any. Consolidation of primary, secondary and tertiary radii.
         /// </summary>
         IStatBuilder Radius { get; }
+
+        /// <summary>
+        /// Gets a stat representing the main skill's primary radius, if it has one.
+        /// </summary>
+        IStatBuilder PrimaryRadius { get; }
+        IStatBuilder SecondaryRadius { get; }
+        IStatBuilder TertiaryRadius { get; }
 
         /// <summary>
         /// Gets a stat representing the weapon range
