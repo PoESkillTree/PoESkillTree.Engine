@@ -39,6 +39,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
 
         IStat ActiveSkillItemSlot(Entity entity, string skillId);
         IStat ActiveSkillSocketIndex(Entity entity, string skillId);
+        IStat SkillReservation(Entity entity, string skillId);
 
         IStat BuffEffect(Entity source, Entity target, string buffIdentity);        
         IStat BuffIsActive(Entity target, string buffIdentity);

@@ -101,6 +101,9 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
             => GetOrAdd($"{skillId}.ActiveSkillSocketIndex", entity, typeof(uint),
                 behaviors: () => _behaviorFactory.ActiveSkillSocketIndex(entity, skillId));
 
+        public IStat SkillReservation(Entity entity, string skillId) =>
+            GetOrAdd($"{skillId}.Reservation", entity, typeof(uint), rounding: RoundingBehaviors.Ceiling);
+
         public IStat BuffEffect(Entity source, Entity target, string buffIdentity) =>
             GetOrAdd($"{buffIdentity}.EffectOn({target.GetName()})", source, typeof(double));
 
@@ -153,18 +156,20 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
                 behaviors: () => _behaviorFactory.ItemProperty(stat, slot));
 
         private IStat CopyWithSuffix(IStat source, string identitySuffix, Type dataType,
-            Func<IReadOnlyList<Behavior>>? behaviors, ExplicitRegistrationType? explicitRegistrationType = null)
+            Func<IReadOnlyList<Behavior>>? behaviors, ExplicitRegistrationType? explicitRegistrationType = null,
+            Func<NodeValue?, NodeValue?>? rounding = null)
         {
             return GetOrAdd(source.Identity + "." + identitySuffix, source.Entity,
-                dataType, explicitRegistrationType, behaviors);
+                dataType, explicitRegistrationType, behaviors, rounding);
         }
 
         private IStat GetOrAdd(string identity, Entity entity, Type dataType,
-            ExplicitRegistrationType? explicitRegistrationType = null, Func<IReadOnlyList<Behavior>>? behaviors = null)
+            ExplicitRegistrationType? explicitRegistrationType = null, Func<IReadOnlyList<Behavior>>? behaviors = null,
+            Func<NodeValue?, NodeValue?>? rounding = null)
         {
             // Func<IReadOnlyList<Behavior>> for performance reasons: Only retrieve behaviors if necessary.
             return _cache.GetOrAdd((identity, entity), _ =>
-                new Stat(identity, entity, dataType, explicitRegistrationType, behaviors?.Invoke()));
+                new Stat(identity, entity, dataType, explicitRegistrationType, behaviors?.Invoke(), rounding));
         }
     }
 }

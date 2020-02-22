@@ -36,14 +36,7 @@ namespace PoESkillTree.Engine.Computation.Core.Nodes
         private static NodeValue Max(NodeValue left, NodeValue? right) =>
             Combine(left, right, Math.Max);
 
-        private static NodeValue Combine(NodeValue left, NodeValue? right, Func<double, double, double> operation)
-        {
-            if (!right.HasValue)
-            {
-                return left;
-            }
-
-            return NodeValue.Combine(left, right.Value, operation);
-        }
+        private static NodeValue Combine(NodeValue left, NodeValue? right, Func<double, double, double> operation) =>
+            NodeValue.Combine(left, right ?? left, operation);
     }
 }
