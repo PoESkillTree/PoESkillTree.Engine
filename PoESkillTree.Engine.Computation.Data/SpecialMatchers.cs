@@ -123,6 +123,10 @@ namespace PoESkillTree.Engine.Computation.Data
                     TotalOverride, 0, Damage, Not(Or(MainHand.Has(ItemClass.Bow), MainHand.Has(ItemClass.Wand)))
                 },
                 {
+                    "supported skills can only be used with axes and swords",
+                    TotalOverride, 0, Damage, Not(Or(MainHand.Has(Tags.Sword), MainHand.Has(Tags.Axe)))
+                },
+                {
                     "mines hinder enemies near them for 2 seconds when they land",
                     TotalOverride, 1, Buff.Hinder.On(Enemy), Condition.Unique("Did a Mine Land near the Enemy in the past 2 seconds?")
                 },
@@ -376,6 +380,25 @@ namespace PoESkillTree.Engine.Computation.Data
                     BaseAdd, Value, Stat.DamageMultiplierOverRepeatCycle
                 },
                 {
+                    // Ruthless Support
+                    "every third attack with supported melee attacks deals a ruthless blow",
+                    TotalOverride, 1/3D, Stat.RuthlessBlowPeriod
+                },
+                {
+                    "ruthless blows with supported skills deal #% more melee damage",
+                    PercentMore, Value * Stat.RuthlessBlowBonus, Damage.With(Keyword.Melee)
+                },
+                {
+                    "ruthless blows with supported skills deal #% more damage with bleeding caused by melee hits",
+                    PercentMore, Value * Stat.RuthlessBlowBonus, Damage.With(Ailment.Bleed), Condition.WithPart(Keyword.Melee)
+                },
+                {
+                    "ruthless blows with supported skills have a base stun duration of # seconds",
+                    PercentMore,
+                    (Value / Effect.Stun.Duration.With(DamageSource.Spell).ValueFor(NodeType.BaseSet)) * Stat.RuthlessBlowBonus,
+                    Effect.Stun.Duration
+                },
+                {
                     // Awakened Spell Echo Support
                     "final repeat of supported skills has #% chance to deal double damage",
                     BaseAdd, Value / Stat.SkillRepeats.Value, Damage.ChanceToDouble
@@ -623,11 +646,6 @@ namespace PoESkillTree.Engine.Computation.Data
                 {
                     "base critical strike chance for attacks with weapons is #%",
                     TotalOverride, Value, CriticalStrike.BaseChance.WithSkills(DamageSource.Attack), MainHand.HasItem
-                },
-                {
-                    "deal up to #% more melee damage to enemies, based on proximity",
-                    PercentMore, Stat.UniqueAmount("#% more Melee Damage from Slayer's Impact"),
-                    Damage.With(Keyword.Melee)
                 },
                 {
                     "your maximum endurance charges is equal to your maximum frenzy charges",

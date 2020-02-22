@@ -268,6 +268,10 @@ Returning Projectiles deal 75% less Damage
 Projectiles from Supported Skills Fork an additional Time
 Supported Curse Skills have 10% chance to apply to Hexproof Enemies
 Supported Curse Skills have 24% chance to apply to Hexproof Enemies
+Chill Enemy for 0.5 seconds when Hit, reducing their Action Speed by 30%
+Uses your Life if no Skeletons in range
+Supported Skills grant Combat Rush on Hit Combat Rush lasts 2 seconds or until you use a Travel Skill
+Combat Rush grants 24% more Attack and Cast Speed to Travel Skills that are not Supported by Close Combat
 // passive skills: =====================================================================================================
 10% Chance for Traps to Trigger an additional time
 Share Endurance, Frenzy and Power Charges with nearby party members
@@ -296,8 +300,6 @@ Moving while Bleeding doesn't cause Minions to take extra Damage
 Skills supported by Unleash have +1 to maximum number of Seals
 Strike Skills target 1 additional nearby Enemy
 You are Unaffected by Bleeding while Leeching
-Chill Enemy for 0.5 seconds when Hit, reducing their Action Speed by 30%
-Uses your Life if no Skeletons in range
 // Side effect from how jewels are currently handled, the stat doesn't actually exist
 +1 Jewel Socket
 // Ascendancies: =======================================================================================================

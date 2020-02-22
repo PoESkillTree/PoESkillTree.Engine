@@ -308,11 +308,13 @@ SupportPulverise
 SupportRage
 SupportRangedAttackTotem
 SupportRapidDecay
+SupportRuthless
 SupportSwiftAfflictionPlus
 SupportReducedDuration
 SupportReducedMana
 SupportRemoteMine
 SupportRemoteMine2
+SupportSlashingWeapon
 SupportSlowerProjectiles
 SupportSpellCascade
 SupportSpellCascadePlus

@@ -105,6 +105,11 @@ namespace PoESkillTree.Engine.Computation.Data
                     BaseSet, ValueFactory.FromMinAndMax(Values[0], Values[1]),
                     Reference.AsDamageType.Damage.WithSkills(DamageSource.Spell)
                 },
+                {
+                    "deal up to #% more melee damage to enemies, based on proximity",
+                    PercentMore, Value * ValueFactory.LinearScale(Enemy.Distance, (15, 1), (40, 0)),
+                    Damage.With(Keyword.Melee)
+                },
                 // - damage taken
                 {
                     "cold damage taken increased by chill effect",

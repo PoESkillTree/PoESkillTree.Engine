@@ -15,6 +15,8 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Entities
 
         ValueBuilder CountRareOrUniqueNearby { get; }
 
+        ValueBuilder Distance { get; }
+
         /// <summary>
         /// Gets a condition that is satisfied if this enemy is Rare. 
         /// </summary>

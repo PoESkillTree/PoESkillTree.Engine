@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using MoreLinq;
+using PoESkillTree.Engine.Computation.Builders.Values;
 using PoESkillTree.Engine.Computation.Common;
 using PoESkillTree.Engine.Computation.Common.Builders;
 using PoESkillTree.Engine.Computation.Common.Builders.Conditions;
@@ -87,6 +88,44 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
 
         public IStatBuilder AttachedBrands => FromIdentity(typeof(uint));
         public IStatBuilder BannerStage => FromIdentity(typeof(uint));
+
+        public IStatBuilder RuthlessBlowPeriod => FromIdentity(typeof(double));
+
+        public ValueBuilder RuthlessBlowBonus
+        {
+            get
+            {
+                var applicationBuilder = FromIdentity(typeof(RuthlessBlowBonusCalculation), UserSpecifiedValue(0)).Value;
+                var periodBuilder = RuthlessBlowPeriod.Value;
+                return new ValueBuilder(new ValueBuilderImpl(Build, _ => Build));
+
+                IValue Build(BuildParameters ps)
+                {
+                    var application = applicationBuilder.Build(ps);
+                    var period = periodBuilder.Build(ps);
+                    return new FunctionalValue(c => Calculate(c, application, period),
+                        $"{application} switch {{ Never => 0, Average => {period}, Always => 1, _ => null }}");
+                }
+
+                static NodeValue? Calculate(IValueCalculationContext context, IValue application, IValue period)
+                {
+                    return (RuthlessBlowBonusCalculation?) application.Calculate(context).SingleOrNull() switch
+                    {
+                        RuthlessBlowBonusCalculation.Never => new NodeValue(0),
+                        RuthlessBlowBonusCalculation.Average => period.Calculate(context),
+                        RuthlessBlowBonusCalculation.Always => new NodeValue(1),
+                        _ => null
+                    };
+                }
+            }
+        }
+
+        private enum RuthlessBlowBonusCalculation
+        {
+            Never,
+            Average,
+            Always,
+        }
 
         public IStatBuilder DamageTakenGainedAsMana => FromIdentity(typeof(uint));
 

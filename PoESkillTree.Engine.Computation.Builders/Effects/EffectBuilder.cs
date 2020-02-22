@@ -116,6 +116,8 @@ namespace PoESkillTree.Engine.Computation.Builders.Effects
         {
         }
 
+        IDamageRelatedStatBuilder IStunEffectBuilder.Duration => (IDamageRelatedStatBuilder) Duration;
+
         public override IStatBuilder Duration =>
             DamageRelatedFromIdentity("Duration", typeof(double)).WithHits;
 
