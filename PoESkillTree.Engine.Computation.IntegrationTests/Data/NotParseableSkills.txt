@@ -11,10 +11,8 @@ NewShieldCharge
 RighteousFire
 Slither
 SupportBlockReduction
-SupportChanceToIgnite
 SupportDecay
 SupportGemMirageArcher
-SupportMaim
 SupportPuncturingWeapon
 SupportRuthless
 SupportSlashingWeapon

@@ -56,6 +56,8 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "({BuffMatchers}) grants", Reference.AsBuff.AddStat },
                 { "hinder enemies with", Buff.Hinder.AddStat },
                 { "during ({SkillMatchers}) for you and allies", Reference.AsSkill.Buff.AddStat },
+                { "enemies ({AilmentMatchers}) by supported skills have", s => Reference.AsAilment.AddStat(s).For(Enemy) },
+                { "enemies ({BuffMatchers}) by supported skills(?= take)", s => Reference.AsBuff.AddStatForSource(s, Self).For(Enemy) },
                 { @"\(AsItemProperty\)", s => s.AsItemProperty },
                 { @"\(AsPassiveNodeProperty\)", s => s.AsPassiveNodeProperty },
                 { @"\(AsPassiveNodeBaseProperty\)", s => s.AsPassiveNodeBaseProperty },

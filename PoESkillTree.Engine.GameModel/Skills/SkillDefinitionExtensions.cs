@@ -791,6 +791,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 "SupportCastWhileChannellingPlus",
                 new SkillPartDefinitionExtension(ReplaceStat("cast_while_channelling_time_ms", "hit_rate_ms"))
             },
+            { "SupportChanceToIgnite", Passive("ignites_apply_fire_resistance_+") },
             {
                 "SupportGemFrenzyPowerOnTrapTrigger", // Charged Traps
                 new SkillPartDefinitionExtension(
@@ -799,6 +800,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
             },
             { "SupportGenerosity", Passive("aura_cannot_affect_self", "non_curse_aura_effect_+%") },
             { "SupportGenerosityPlus", Passive("aura_cannot_affect_self", "non_curse_aura_effect_+%") },
+            { "SupportMaim", Passive("support_maimed_enemies_physical_damage_taken_+%") },
             {
                 "SupportOnslaughtOnSlayingShockedEnemy", // Innervate
                 Passive("support_innervate_minimum_added_lightning_damage",

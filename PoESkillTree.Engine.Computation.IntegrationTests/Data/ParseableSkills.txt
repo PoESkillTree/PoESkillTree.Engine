@@ -207,6 +207,7 @@ SupportCastWhileChannellingPlus
 SupportChain
 SupportChainPlus
 SupportChanceToBleed
+SupportChanceToIgnite
 SupportChaosAttacks
 SupportChargedMines
 SupportClusterTrap
@@ -267,6 +268,7 @@ SupportLifeGainOnHit
 SupportLifeLeech
 SupportLightningPenetration
 SupportLightningPenetrationPlus
+SupportMaim
 SupportManaLeech
 SupportMeleeDamageOnFullLife
 SupportMeleePhysicalDamage
