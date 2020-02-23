@@ -29,6 +29,18 @@ namespace PoESkillTree.Engine.Computation.Builders.Entities
         public IReadOnlyCollection<Entity> Build(Entity modifierSourceEntity) => new[] { modifierSourceEntity };
     }
 
+    public class ModifierSourceTotemEntityBuilder : IEntityBuilder
+    {
+        public IReadOnlyCollection<Entity> Build(Entity modifierSourceEntity) =>
+            modifierSourceEntity == Entity.Character ? new[] {Entity.Totem} : new[] {Entity.None};
+    }
+
+    public class ModifierSourceMinionEntityBuilder : IEntityBuilder
+    {
+        public IReadOnlyCollection<Entity> Build(Entity modifierSourceEntity) =>
+            modifierSourceEntity == Entity.Character ? new[] {Entity.Minion} : new[] {Entity.None};
+    }
+
     public class CompositeEntityBuilder : IEntityBuilder
     {
         private readonly IReadOnlyList<IEntityBuilder> _items;

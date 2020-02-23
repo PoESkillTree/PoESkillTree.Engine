@@ -11,18 +11,18 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Entities
         /// <summary>
         /// Gets the <see cref="BuildParameters.ModifierSourceEntity"/>.
         /// </summary>
-        IEntityBuilder Self { get; }
+        IEntityWithRarityBuilder Self { get; }
 
         /// <summary>
         /// Gets the entity/entities opposing <see cref="BuildParameters.ModifierSourceEntity"/>
         /// (Enemy opposes Character, Minion and Totem).
         /// </summary>
-        IEntityBuilder OpponentOfSelf { get; }
+        IHostileEntityBuilder OpponentOfSelf { get; }
 
         /// <summary>
         /// Gets an entity representing enemies.
         /// </summary>
-        IEnemyBuilder Enemy { get; }
+        IEntityBuilder Enemy { get; }
 
         /// <summary>
         /// Gets an entity representing the player character.
@@ -30,17 +30,17 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Entities
         IEntityBuilder Character { get; }
 
         /// <summary>
-        /// Gets an entity representing the character's allies.
+        /// Gets an entity representing the <see cref="BuildParameters.ModifierSourceEntity"/>'s allies.
         /// </summary>
         ICountableEntityBuilder Ally { get; }
 
         /// <summary>
-        /// Gets an entity representing the character's totems.
+        /// Gets an entity representing the <see cref="BuildParameters.ModifierSourceEntity"/>'s totems.
         /// </summary>
         IEntityBuilder Totem { get; }
 
         /// <summary>
-        /// Gets an entity representing the character's minions.
+        /// Gets an entity representing the <see cref="BuildParameters.ModifierSourceEntity"/>'s minions.
         /// </summary>
         IEntityBuilder Minion { get; }
 

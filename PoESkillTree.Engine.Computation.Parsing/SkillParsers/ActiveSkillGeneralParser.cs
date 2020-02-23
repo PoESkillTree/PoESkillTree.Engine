@@ -194,7 +194,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             if (allAffectedEntities.Contains(Entity.Enemy))
             {
                 _parsedModifiers.AddGlobalForMainSkill(buff.Duration, Form.More,
-                    100 / _builderFactories.EffectBuilders.ExpirationModifier.For(_builderFactories.EntityBuilders.Enemy).Value - 100);
+                    100 / _builderFactories.EffectBuilders.ExpirationModifier.For(_builderFactories.EntityBuilders.OpponentOfSelf).Value - 100);
             }
         }
 

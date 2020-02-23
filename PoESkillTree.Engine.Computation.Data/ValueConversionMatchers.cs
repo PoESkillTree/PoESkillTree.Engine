@@ -94,9 +94,9 @@ namespace PoESkillTree.Engine.Computation.Data
                     "when placed, (?<inner>.*) per stage",
                     Stat.BannerStage.Value, Flag.IsBannerPlanted, "${inner}"
                 },
-                { "per nearby enemy", Enemy.CountNearby },
-                { "per one hundred nearby enemies", Enemy.CountNearby / 100 },
-                { @"per nearby enemy, up to \+#%?", CappedMultiplier(Enemy.CountNearby, Value) },
+                { "per nearby enemy", OpponentOfSelf.CountNearby },
+                { "per one hundred nearby enemies", OpponentOfSelf.CountNearby / 100 },
+                { @"per nearby enemy, up to \+#%?", CappedMultiplier(OpponentOfSelf.CountNearby, Value) },
                 {
                     "per # unreserved maximum mana, up to #%",
                     CappedMultiplier(((Mana.Value - Mana.Reservation.Value) / Values[0]).Floor(), Values[1])
@@ -113,24 +113,24 @@ namespace PoESkillTree.Engine.Computation.Data
                 // buffs
                 { "per buff on you", Buffs(targets: Self).Count() },
                 { "per curse on you", Buffs(targets: Self).With(Keyword.Curse).Count() },
-                { "per curse on enemy", Buffs(targets: Enemy).With(Keyword.Curse).Count() },
-                { "for each curse on that enemy,", Buffs(targets: Enemy).With(Keyword.Curse).Count() },
-                { "for each impale on enemy", Buff.Impale.StackCount.For(Enemy).Value },
-                { "each ({BuffMatchers}) applies", Reference.AsBuff.StackCount.For(Enemy).Value },
+                { "per curse on enemy", Buffs(targets: OpponentOfSelf).With(Keyword.Curse).Count() },
+                { "for each curse on that enemy,", Buffs(targets: OpponentOfSelf).With(Keyword.Curse).Count() },
+                { "for each impale on enemy", Buff.Impale.StackCount.For(OpponentOfSelf).Value },
+                { "each ({BuffMatchers}) applies", Reference.AsBuff.StackCount.For(OpponentOfSelf).Value },
                 // ailments
-                { "for each poison on the enemy", Ailment.Poison.InstancesOn(Enemy).Value },
-                { "per poison on enemy", Ailment.Poison.InstancesOn(Enemy).Value },
+                { "for each poison on the enemy", Ailment.Poison.InstancesOn(OpponentOfSelf).Value },
+                { "per poison on enemy", Ailment.Poison.InstancesOn(OpponentOfSelf).Value },
                 { "per poison on you", Ailment.Poison.InstancesOn(Self).Value },
-                { "per poison(?= affecting enemies)", Ailment.Poison.InstancesOn(Enemy).Value },
+                { "per poison(?= affecting enemies)", Ailment.Poison.InstancesOn(OpponentOfSelf).Value },
                 {
                     @"per poison affecting enemy, up to \+#%",
-                    CappedMultiplier(Ailment.Poison.InstancesOn(Enemy).Value, Value)
+                    CappedMultiplier(Ailment.Poison.InstancesOn(OpponentOfSelf).Value, Value)
                 },
                 {
                     "for each poison on the enemy, up to #",
-                    CappedMultiplier(Ailment.Poison.InstancesOn(Enemy).Value, Value)
+                    CappedMultiplier(Ailment.Poison.InstancesOn(OpponentOfSelf).Value, Value)
                 },
-                { "per elemental ailment on the enemy", Ailment.Elemental.Count(b => b.IsOn(Enemy)) },
+                { "per elemental ailment on the enemy", Ailment.Elemental.Count(b => b.IsOn(OpponentOfSelf)) },
                 // skills
                 { "for each zombie you own", Skills.RaiseZombie.Instances.Value },
                 { "for each raised zombie", Skills.RaiseZombie.Instances.Value },
@@ -220,7 +220,7 @@ namespace PoESkillTree.Engine.Computation.Data
             }; // add
 
         private ValueBuilder MineAura()
-            => Mines.CombinedInstances.Value * Buff.GenericMine.EffectOn(Enemy).Value;
+            => Mines.CombinedInstances.Value * Buff.GenericMine.EffectOn(OpponentOfSelf).Value;
 
         private Func<ValueBuilder, ValueBuilder> CappedMultiplier(ValueBuilder multiplier, IValueBuilder maximum)
             => v => ValueFactory.Minimum(v * multiplier, maximum);

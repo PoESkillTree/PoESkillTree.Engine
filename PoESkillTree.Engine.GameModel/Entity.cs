@@ -8,6 +8,8 @@
         Character,
         Totem,
         Minion,
-        Enemy
+        Enemy,
+        // Irrelevant dummy entity
+        None,
     }
 }

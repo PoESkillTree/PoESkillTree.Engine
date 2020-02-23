@@ -132,7 +132,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 {
                     "mines hinder enemies near them for 2 seconds when they land",
-                    TotalOverride, 1, Buff.Hinder.On(Enemy), Condition.Unique("Did a Mine Land near the Enemy in the past 2 seconds?")
+                    TotalOverride, 1, Buff.Hinder.On(OpponentOfSelf), Condition.Unique("Did a Mine Land near the Enemy in the past 2 seconds?")
                 },
                 // Jewels
                 {
@@ -227,7 +227,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 {
                     // Burning Arrow
                     "if this skill ignites an enemy, it also inflicts a burning debuff debuff deals fire damage per second equal to #% of ignite damage per second",
-                    PercentMore, Value * Skills.ModifierSourceSkill.Buff.StackCount.For(Enemy).Value, Damage.With(Ailment.Ignite)
+                    PercentMore, Value * Skills.ModifierSourceSkill.Buff.StackCount.For(OpponentOfSelf).Value, Damage.With(Ailment.Ignite)
                 },
                 {
                     // Dark Pact
@@ -266,7 +266,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 {
                     // Freeze Mine
                     "enemies lose #% cold resistance while frozen",
-                    BaseSubtract, Value, Cold.Resistance.For(Enemy), Ailment.Freeze.IsOn(Enemy)
+                    BaseSubtract, Value, Cold.Resistance.For(OpponentOfSelf), Ailment.Freeze.IsOn(OpponentOfSelf)
                 },
                 {
                     // Infernal Blow
@@ -278,12 +278,12 @@ namespace PoESkillTree.Engine.Computation.Data
                 {
                     // Scorching Ray
                     "burning debuff can have a maximum of # stages",
-                    TotalOverride, Value, Skills.ModifierSourceSkill.Buff.StackCount.Maximum.For(Enemy)
+                    TotalOverride, Value, Skills.ModifierSourceSkill.Buff.StackCount.Maximum.For(OpponentOfSelf)
                 },
                 {
                     "additional debuff stages add #% of damage",
                     PercentMore,
-                    ValueBuilderUtils.PerStatAfterFirst(Skills.ModifierSourceSkill.Buff.StackCount.For(Enemy))(Value),
+                    ValueBuilderUtils.PerStatAfterFirst(Skills.ModifierSourceSkill.Buff.StackCount.For(OpponentOfSelf))(Value),
                     Damage
                 },
                 {
@@ -332,9 +332,9 @@ namespace PoESkillTree.Engine.Computation.Data
                 {
                     // Wave of Conviction
                     "exposure applies #% to elemental resistance matching highest damage taken",
-                    (BaseSet, Value, Buff.Temporary(Lightning.Exposure, WaveOfConvictionExposureType.Lightning).For(Enemy)),
-                    (BaseSet, Value, Buff.Temporary(Cold.Exposure, WaveOfConvictionExposureType.Cold).For(Enemy)),
-                    (BaseSet, Value, Buff.Temporary(Fire.Exposure, WaveOfConvictionExposureType.Fire).For(Enemy))
+                    (BaseSet, Value, Buff.Temporary(Lightning.Exposure, WaveOfConvictionExposureType.Lightning).For(OpponentOfSelf)),
+                    (BaseSet, Value, Buff.Temporary(Cold.Exposure, WaveOfConvictionExposureType.Cold).For(OpponentOfSelf)),
+                    (BaseSet, Value, Buff.Temporary(Fire.Exposure, WaveOfConvictionExposureType.Fire).For(OpponentOfSelf))
                 },
                 {
                     // Wild Strike
@@ -472,7 +472,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 {
                     // Runebinder
                     "you can have an additional brand attached to an enemy",
-                    BaseAdd, 1, Stat.AttachedBrands.For(Enemy).Maximum
+                    BaseAdd, 1, Stat.AttachedBrands.For(OpponentOfSelf).Maximum
                 },
                 {
                     // Blood Magic
@@ -493,7 +493,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 // - Crimson Dance
                 {
                     "your bleeding does not deal extra damage while the enemy is moving",
-                    PercentLess, 50, Damage.With(Ailment.Bleed), Enemy.IsMoving
+                    PercentLess, 50, Damage.With(Ailment.Bleed), OpponentOfSelf.IsMoving
                 },
                 {
                     "you can inflict bleeding on an enemy up to 8 times",
@@ -554,8 +554,8 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "your curses can apply to hexproof enemies", TotalOverride, 1, Flag.IgnoreHexproof },
                 {
                     "enemies you curse have malediction",
-                    (PercentReduce, 10, Buff.Buff(Damage, Enemy), Buffs(Self, Enemy).With(Keyword.Curse).Any()),
-                    (PercentIncrease, 10, Buff.Buff(Damage.Taken, Enemy), Buffs(Self, Enemy).With(Keyword.Curse).Any())
+                    (PercentReduce, 10, Buff.Buff(Damage, OpponentOfSelf), Buffs(Self, OpponentOfSelf).With(Keyword.Curse).Any()),
+                    (PercentIncrease, 10, Buff.Buff(Damage.Taken, OpponentOfSelf), Buffs(Self, OpponentOfSelf).With(Keyword.Curse).Any())
                 },
                 // - Elementalist
                 {
@@ -608,7 +608,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 // - Gladiator
                 {
                     "attacks maim on hit against bleeding enemies",
-                    TotalOverride, 100, Buff.Maim.Chance.With(Keyword.Attack), Ailment.Bleed.IsOn(Enemy)
+                    TotalOverride, 100, Buff.Maim.Chance.With(Keyword.Attack), Ailment.Bleed.IsOn(OpponentOfSelf)
                 },
                 {
                     "your counterattacks deal double damage",
@@ -622,12 +622,12 @@ namespace PoESkillTree.Engine.Computation.Data
                 // - Champion
                 {
                     "your hits permanently intimidate enemies that are on full life",
-                    TotalOverride, 1, Buff.Intimidate.On(Enemy),
+                    TotalOverride, 1, Buff.Intimidate.On(OpponentOfSelf),
                     Action.Unique("On Hit against a full life Enemy").On
                 },
                 {
                     "enemies taunted by you cannot evade attacks",
-                    TotalOverride, 0, Evasion.For(Enemy), Buff.Taunt.IsOn(Self, Enemy)
+                    TotalOverride, 0, Evasion.For(OpponentOfSelf), Buff.Taunt.IsOn(Self, OpponentOfSelf)
                 },
                 {
                     "gain adrenaline for # seconds when you reach low life if you do not have adrenaline",
@@ -639,7 +639,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 {
                     "impales you inflict last # additional hits",
-                    BaseAdd, Value, Buff.Impale.StackCount.For(Enemy).Maximum
+                    BaseAdd, Value, Buff.Impale.StackCount.For(OpponentOfSelf).Maximum
                 },
                 {
                     "banner skills reserve no mana",
@@ -672,7 +672,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 // - Hierophant
                 {
                     "enemies take #% increased damage for each of your brands attached to them",
-                    PercentIncrease, Value * Stat.AttachedBrands.For(Enemy).Maximum.Value, Damage.Taken.For(Enemy)
+                    PercentIncrease, Value * Stat.AttachedBrands.For(OpponentOfSelf).Maximum.Value, Damage.Taken.For(OpponentOfSelf)
                 },
                 // - Guardian
                 {
@@ -700,7 +700,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 {
                     "minions intimidate enemies for # seconds on hit",
-                    TotalOverride, 1, Buff.Intimidate.On(Enemy), Action.Hit.By(Entity.Minion).Recently
+                    TotalOverride, 1, Buff.Intimidate.On(OpponentOfSelf), Action.Hit.By(Entity.Minion).Recently
                 },
                 {
                     "every # seconds, regenerate #% of life over one second",
@@ -710,7 +710,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 {
                     // Ascendant
                     "your critical strikes with attacks maim enemies",
-                    TotalOverride, 1, Buff.Maim.On(Enemy),
+                    TotalOverride, 1, Buff.Maim.On(OpponentOfSelf),
                     And(Condition.WithPart(Keyword.Attack), CriticalStrike.On)
                 },
                 // - Trickster
@@ -720,7 +720,7 @@ namespace PoESkillTree.Engine.Computation.Data
                     BaseAdd, Values[0] * Values[1] / 100, Chaos.Invert.Damage.WithHits.GainAs(Chaos.Damage.WithHits)
                 },
                 // - Saboteur
-                { "nearby enemies are blinded", TotalOverride, 1, Buff.Blind.On(Enemy), Enemy.IsNearby },
+                { "nearby enemies are blinded", TotalOverride, 1, Buff.Blind.On(OpponentOfSelf), OpponentOfSelf.IsNearby },
                 // - Ascendant (generic)
                 {
                     "can allocate passives from the marauder's starting point",
@@ -784,9 +784,9 @@ namespace PoESkillTree.Engine.Computation.Data
                 IConditionBuilder EnemyHitBy(IDamageTypeBuilder damageType) =>
                     Action.HitWith(damageType).InPastXSeconds(ValueFactory.Create(5));
 
-                yield return (BaseAdd, Values[0], type.Resistance.For(Enemy), EnemyHitBy(type));
+                yield return (BaseAdd, Values[0], type.Resistance.For(OpponentOfSelf), EnemyHitBy(type));
                 var otherTypes = ElementalDamageTypes.Except(type);
-                yield return (BaseSubtract, Values[1], type.Resistance.For(Enemy),
+                yield return (BaseSubtract, Values[1], type.Resistance.For(OpponentOfSelf),
                     And(Not(EnemyHitBy(type)), otherTypes.Select(EnemyHitBy).ToArray()));
             }
         }
@@ -819,7 +819,7 @@ namespace PoESkillTree.Engine.Computation.Data
         {
             foreach (var type in ElementalDamageTypes)
             {
-                yield return (PercentIncrease, Value, type.Damage, Action.HitWith(type).By(Enemy).Recently);
+                yield return (PercentIncrease, Value, type.Damage, Action.HitWith(type).By(OpponentOfSelf).Recently);
             }
         }
 
@@ -828,7 +828,7 @@ namespace PoESkillTree.Engine.Computation.Data
         {
             foreach (var type in ElementalDamageTypes)
             {
-                yield return (PercentReduce, Value, type.Damage.Taken, Action.HitWith(type).By(Enemy).Recently);
+                yield return (PercentReduce, Value, type.Damage.Taken, Action.HitWith(type).By(OpponentOfSelf).Recently);
             }
         }
 

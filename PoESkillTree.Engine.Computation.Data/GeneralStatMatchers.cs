@@ -223,7 +223,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "chance to block attack damage", Block.AttackChance },
                 { "chance to block spell damage", Block.SpellChance },
                 { "chance to block spell and attack damage", Block.SpellChance, Block.AttackChance },
-                { "enemy block chance", ApplyOnce(Block.SpellChance, Block.AttackChance).For(Enemy) },
+                { "enemy block chance", ApplyOnce(Block.SpellChance, Block.AttackChance).For(OpponentOfSelf) },
                 { "maximum chance to block attack damage", Block.AttackChance.Maximum },
                 // - other
                 { "chance to dodge attacks", Stat.Dodge.AttackChance },
@@ -232,7 +232,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "chance to dodge attack and spell hits", Stat.Dodge.AttackChance, Stat.Dodge.SpellChance },
                 {
                     "enemies have chance to dodge hits",
-                    ApplyOnce(Stat.Dodge.AttackChance, Stat.Dodge.SpellChance).For(Enemy)
+                    ApplyOnce(Stat.Dodge.AttackChance, Stat.Dodge.SpellChance).For(OpponentOfSelf)
                 },
                 { "chance to evade( attacks)?", Evasion.Chance },
                 { "chance to evade projectile attacks", Evasion.ChanceAgainstProjectileAttacks },
@@ -391,7 +391,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "chance to ({BuffMatchers})( enemies)?", Reference.AsBuff.Chance },
                 { "chance for attacks to maim", Buff.Maim.Chance.With(DamageSource.Attack) },
                 { "chance to hinder enemies on hit with spells", Buff.Maim.Chance.With(DamageSource.Spell) },
-                { "chance to cover rare or unique enemies in ash", Buff.CoveredInAsh.Chance, Enemy.IsRareOrUnique },
+                { "chance to cover rare or unique enemies in ash", Buff.CoveredInAsh.Chance, OpponentOfSelf.IsRareOrUnique },
                 { "chance to create consecrated ground", Ground.Consecrated.Chance },
                 // - duration
                 { "({BuffMatchers}) duration", Reference.AsBuff.Duration },
@@ -424,7 +424,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "block and stun recovery", Effect.Stun.Recovery, Block.Recovery },
                 { "block recovery", Block.Recovery },
                 { "stun threshold", Effect.Stun.Threshold },
-                { "enemy stun threshold", Effect.Stun.Threshold.For(Enemy) },
+                { "enemy stun threshold", Effect.Stun.Threshold.For(OpponentOfSelf) },
                 { "stun duration( on enemies)?", Effect.Stun.Duration },
                 { "stun duration (?<inner>with .*) on enemies", Effect.Stun.Duration, "${inner}" },
                 {

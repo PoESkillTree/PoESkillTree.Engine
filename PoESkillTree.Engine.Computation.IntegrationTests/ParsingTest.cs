@@ -162,7 +162,7 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
                     damageType.Damage.Taken,
                     _f.FormBuilders.PercentReduce,
                     _f.ValueBuilders.Create(8),
-                    _f.ActionBuilders.HitWith(damageType).By(_f.EntityBuilders.Enemy).Recently);
+                    _f.ActionBuilders.HitWith(damageType).By(_f.EntityBuilders.OpponentOfSelf).Recently);
         }
 
         [Test]

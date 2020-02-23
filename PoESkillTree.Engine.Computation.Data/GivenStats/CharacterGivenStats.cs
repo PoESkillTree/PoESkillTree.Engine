@@ -137,11 +137,6 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             { TotalOverride, Buff.Infusion.On(Self), 1, Condition.Unique("Infusion.ExplicitlyActive") },
             { TotalOverride, Buff.Elusive.On(Self), 1, Condition.Unique("Elusive.ExplicitlyActive") },
             { PercentReduce, Buff.Elusive.Effect, 20 * Stat.UniqueAmount("Elusive.SecondsOfDecay", 2.5) },
-            { TotalOverride, Buff.Maim.On(Enemy), 1, Condition.Unique("Maim.ExplicitlyActiveOnEnemy") },
-            { TotalOverride, Buff.Hinder.On(Enemy), 1, Condition.Unique("Hinder.ExplicitlyActiveOnEnemy") },
-            { TotalOverride, Buff.Blind.On(Enemy), 1, Condition.Unique("Blind.ExplicitlyActiveOnEnemy") },
-            { TotalOverride, Buff.Intimidate.On(Enemy), 1, Condition.Unique("Intimidate.ExplicitlyActiveOnEnemy") },
-            { TotalOverride, Buff.CoveredInAsh.On(Enemy), 1, Condition.Unique("CoveredInAsh.ExplicitlyActiveOnEnemy") },
             // character class connections
             {
                 TotalOverride, PassiveTree.ConnectsToClass(CharacterClass.Scion), 1,

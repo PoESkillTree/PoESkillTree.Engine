@@ -47,15 +47,15 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             },
 
             {
-                TotalOverride, Buff.Blind.On(Enemy), true,
-                And(Skills.FromId("BloodSandArmour").Buff.IsOn(Enemy), Flag.InSandStance)
+                TotalOverride, Buff.Blind.On(OpponentOfSelf), true,
+                And(Skills.FromId("BloodSandArmour").Buff.IsOn(OpponentOfSelf), Flag.InSandStance)
             },
             {
-                TotalOverride, Buff.Maim.On(Enemy), true,
-                And(Skills.FromId("BloodSandArmour").Buff.IsOn(Enemy), Flag.InBloodStance)
+                TotalOverride, Buff.Maim.On(OpponentOfSelf), true,
+                And(Skills.FromId("BloodSandArmour").Buff.IsOn(OpponentOfSelf), Flag.InBloodStance)
             },
 
-            { TotalOverride, Skills.FromId("BurningArrow").Buff.StackCount.For(Enemy).Maximum, 5 },
+            { TotalOverride, Skills.FromId("BurningArrow").Buff.StackCount.For(OpponentOfSelf).Maximum, 5 },
 
             { TotalOverride, Skills[Keyword.Banner].Reservation, 0, Flag.IsBannerPlanted },
 
@@ -63,11 +63,11 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             { TotalOverride, Cold.Invert.Damage, 0, IsMainSkill("ElementalHit", 1) },
             { TotalOverride, Lightning.Invert.Damage, 0, IsMainSkill("ElementalHit", 2) },
 
-            { TotalOverride, Skills.FromId("FireBeam").Buff.On(Enemy), 1, SkillIsActive("FireBeam") },
+            { TotalOverride, Skills.FromId("FireBeam").Buff.On(OpponentOfSelf), 1, SkillIsActive("FireBeam") },
             {
-                BaseSet, Fire.Exposure.For(Enemy), -25,
-                SkillIsActive("FireBeam").And(Skills.FromId("FireBeam").Buff.StackCount.For(Enemy).Value
-                                              >= Skills.FromId("FireBeam").Buff.StackCount.For(Enemy).Maximum.Value)
+                BaseSet, Fire.Exposure.For(OpponentOfSelf), -25,
+                SkillIsActive("FireBeam").And(Skills.FromId("FireBeam").Buff.StackCount.For(OpponentOfSelf).Value
+                                              >= Skills.FromId("FireBeam").Buff.StackCount.For(OpponentOfSelf).Maximum.Value)
             },
 
             {
@@ -121,7 +121,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                 PercentLess, Skills.FromId("TemporalChains").Buff.Duration, 40
             },
 
-            { TotalOverride, Buff.Withered.On(Enemy), 1, SkillIsActive("Wither") },
+            { TotalOverride, Buff.Withered.On(OpponentOfSelf), 1, SkillIsActive("Wither") },
         };
 
         private IConditionBuilder IsMainSkill(string skillId, int skillPart)

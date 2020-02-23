@@ -44,7 +44,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                 {
                     BaseAdd, MetaStats.ResistanceAgainstHits(DamageType.Physical),
                     PhysicalDamageReductionFromArmour(Armour.Value,
-                        Physical.Damage.WithSkills.With(AttackDamageHand.MainHand).For(Enemy).Value)
+                        Physical.Damage.WithSkills.With(AttackDamageHand.MainHand).For(OpponentOfSelf).Value)
                 },
                 // damage mitigation (1 - (1 - resistance / 100) * damage taken)
                 {
@@ -60,8 +60,8 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                 // chance to evade
                 {
                     BaseSet, Evasion.Chance,
-                    100 - ChanceToHitValue(Stat.Accuracy.With(AttackDamageHand.MainHand).For(Enemy), Evasion,
-                        Buff.Blind.IsOn(Enemy))
+                    100 - ChanceToHitValue(Stat.Accuracy.With(AttackDamageHand.MainHand).For(OpponentOfSelf), Evasion,
+                        Buff.Blind.IsOn(OpponentOfSelf))
                 },
                 // chance to avoid
                 {
@@ -98,7 +98,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                     (p, dt) => p.Degeneration(DamageTypeBuilders.From(dt)).Value * MetaStats.MitigationAgainstDoTs(dt).Value
                 },
                 // ailments
-                { PercentMore, a => Ailment.From(a).Duration, a => 100 / Effect.ExpirationModifier.For(Enemy).Value - 100 },
+                { PercentMore, a => Ailment.From(a).Duration, a => 100 / Effect.ExpirationModifier.For(OpponentOfSelf).Value - 100 },
                 // stun (see https://pathofexile.gamepedia.com/Stun)
                 {
                     TotalOverride, MetaStats.StunAvoidanceWhileCasting,
