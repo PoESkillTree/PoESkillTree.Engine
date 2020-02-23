@@ -687,5 +687,28 @@
     "ids": [
       "physical_damage_taken_+%_final"
     ]
+  },
+  {
+    "English": [
+      {
+        "condition": [
+          {
+            "max": -1 
+          }
+        ],
+        "format": [
+          "#"
+        ],
+        "index_handlers": [
+          [
+            "negate"
+          ]
+        ],
+        "string": "Effects expire {0}% slower"
+      }
+    ],
+    "ids": [
+      "buff_time_passed_+%_other_than_temporal_chains"
+    ]
   }
 ]

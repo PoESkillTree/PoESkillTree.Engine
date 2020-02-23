@@ -299,6 +299,11 @@ namespace PoESkillTree.Engine.Computation.Data
                         Ailment.Ignite.Duration, Ailment.Bleed.Duration, Ailment.Poison.Duration)
                 },
                 {
+                    // Temporal Chains
+                    "effects expire #% slower",
+                    PercentReduce, Value, Effect.ExpirationModifier
+                },
+                {
                     // Vaal Ground Slam
                     "stuns enemies",
                     TotalOverride, 100, Effect.Stun.Chance

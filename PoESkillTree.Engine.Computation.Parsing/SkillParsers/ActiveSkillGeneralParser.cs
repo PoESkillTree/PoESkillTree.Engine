@@ -174,6 +174,12 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             {
                 _parsedModifiers!.AddGlobal(buff.On(target), Form.BaseSet, 1, isActiveSkill);
             }
+
+            if (allAffectedEntities.Contains(Entity.Enemy))
+            {
+                _parsedModifiers.AddGlobalForMainSkill(buff.Duration, Form.More,
+                    100 / _builderFactories.EffectBuilders.ExpirationModifier.For(_builderFactories.EntityBuilders.Enemy).Value - 100);
+            }
         }
 
         private IEquipmentBuilder MainHand => Equipment[ItemSlot.MainHand];

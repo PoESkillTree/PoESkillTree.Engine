@@ -97,6 +97,8 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                     TotalOverride, MetaStats.EffectiveDegeneration,
                     (p, dt) => p.Degeneration(DamageTypeBuilders.From(dt)).Value * MetaStats.MitigationAgainstDoTs(dt).Value
                 },
+                // ailments
+                { PercentMore, a => Ailment.From(a).Duration, a => 100 / Effect.ExpirationModifier.For(Enemy).Value - 100 },
                 // stun (see https://pathofexile.gamepedia.com/Stun)
                 {
                     TotalOverride, MetaStats.StunAvoidanceWhileCasting,

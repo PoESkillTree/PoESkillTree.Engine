@@ -113,6 +113,14 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
 
             { TotalOverride, Buff.Innervation.On(Self), 1, SkillIsActive("SupportOnslaughtOnSlayingShockedEnemy") },
 
+            {
+                // The reduction to ExpirationModifier is already built into Temporal Chains' duration.
+                // Calculate the duration without it so it can be applied again, but while being affected by Curse Effect modifiers.
+                // Without Curse Effect, ExpirationModifier will be 0.6, which is a 1 / 0.6 multiplier to Duration.
+                // 40 PercentLess is a 0.6 modifier, negating that.
+                PercentLess, Skills.FromId("TemporalChains").Buff.Duration, 40
+            },
+
             { TotalOverride, Buff.Withered.On(Enemy), 1, SkillIsActive("Wither") },
         };
 

@@ -1,11 +1,12 @@
 ﻿using PoESkillTree.Engine.Computation.Builders.Stats;
 using PoESkillTree.Engine.Computation.Common.Builders.Effects;
+using PoESkillTree.Engine.Computation.Common.Builders.Stats;
 
 namespace PoESkillTree.Engine.Computation.Builders.Effects
 {
-    internal class EffectBuilders : IEffectBuilders
+    internal class EffectBuilders : StatBuildersBase, IEffectBuilders
     {
-        public EffectBuilders(IStatFactory statFactory)
+        public EffectBuilders(IStatFactory statFactory) : base(statFactory)
         {
             Stun = new StunEffectBuilder(statFactory);
             Knockback = new KnockbackEffectBuilder(statFactory);
@@ -17,5 +18,6 @@ namespace PoESkillTree.Engine.Computation.Builders.Effects
         public IKnockbackEffectBuilder Knockback { get; }
         public IAilmentBuilders Ailment { get; }
         public IGroundEffectBuilders Ground { get; }
+        public IStatBuilder ExpirationModifier => FromIdentity(typeof(int));
     }
 }

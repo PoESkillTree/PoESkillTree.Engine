@@ -138,6 +138,8 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             { BaseSet, Ailment.Poison.Duration, 2 },
             { PercentLess, Damage.With(Ailment.Poison), 80 },
             // buffs
+            { BaseSet, Effect.ExpirationModifier, 1 },
+            { TotalOverride, Effect.ExpirationModifier.Minimum, 0.25 },
             { BaseSet, Buff.CurseLimit, 1 },
             { BaseSet, Buffs(Self).Effect, 1 },
             { BaseSet, Buff.Fortify.Duration, 4 },
