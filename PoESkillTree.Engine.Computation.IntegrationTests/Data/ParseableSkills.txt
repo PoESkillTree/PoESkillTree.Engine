@@ -129,6 +129,7 @@ MoltenShell
 MoltenStrike
 MortarBarrageMine
 NewPhaseRun
+NewShieldCharge
 OrbOfStorms
 PhysCascadeTrap
 PhysicalDamageAura
@@ -336,6 +337,7 @@ SupportWeaponElementalDamagePlus
 Sweep
 TempestShield
 TemporalChains
+ThrownShield
 ThrownWeapon
 TornadoShot
 TotemMelee

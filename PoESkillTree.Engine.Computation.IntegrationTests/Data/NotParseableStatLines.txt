@@ -144,8 +144,6 @@ Projectiles are fired in a Nova (Hidden)
 Shields break after 1508 total Damage is prevented
 80% reduced Visibility to Enemies
 50% reduced Visibility to Enemies
-50% increased Stun Threshold reduction on enemies at Maximum charge distance
-200% more Damage with Hits at Maximum Charge Distance
 Beams Split towards 4 additional targets
 Strikes every 1 second
 Releases 5 waves

@@ -388,32 +388,34 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         }
 
         [Test]
-        public void ShieldChargeDoesNotUseOffHand()
+        public void ShieldChargeDoesNotUseMainHand()
         {
             var (definition, skill) = CreateShieldChargeDefinition();
             var valueCalculationContext = MockValueCalculationContextForMainSkill(skill,
-                ("OffHand.ItemTags", Tags.Shield.EncodeAsDouble()));
-            var sut = CreateSut(definition);
-
-            var result = sut.Parse(skill);
-
-            var actual = GetValueForIdentity(result.Modifiers, "SkillUses.OffHand")
-                .Calculate(valueCalculationContext);
-            Assert.IsFalse(actual.IsTrue());
-        }
-
-        [TestCase(Tags.Shield)]
-        [TestCase(Tags.Weapon)]
-        public void ShieldChargeUsesMainHandIfOffHandHasShield(Tags offHandTags)
-        {
-            var (definition, skill) = CreateShieldChargeDefinition();
-            var valueCalculationContext = MockValueCalculationContextForMainSkill(skill,
-                ("OffHand.ItemTags", offHandTags.EncodeAsDouble()));
+                ("OffHand.ItemTags", Tags.Shield.EncodeAsDouble()),
+                ("OffHand.ItemClass", (int) ItemClass.Shield));
             var sut = CreateSut(definition);
 
             var result = sut.Parse(skill);
 
             var actual = GetValueForIdentity(result.Modifiers, "SkillUses.MainHand")
+                .Calculate(valueCalculationContext);
+            Assert.IsFalse(actual.IsTrue());
+        }
+
+        [TestCase(Tags.Shield, ItemClass.Shield)]
+        [TestCase(Tags.Weapon, ItemClass.OneHandSword)]
+        public void ShieldChargeUsesOffHandIfItHasShield(Tags offHandTags, ItemClass offHandItemClass)
+        {
+            var (definition, skill) = CreateShieldChargeDefinition();
+            var valueCalculationContext = MockValueCalculationContextForMainSkill(skill,
+                ("OffHand.ItemTags", offHandTags.EncodeAsDouble()),
+                ("OffHand.ItemClass", (int) offHandItemClass));
+            var sut = CreateSut(definition);
+
+            var result = sut.Parse(skill);
+
+            var actual = GetValueForIdentity(result.Modifiers, "SkillUses.OffHand")
                 .Calculate(valueCalculationContext);
             Assert.AreEqual(offHandTags.HasFlag(Tags.Shield), actual.IsTrue());
         }
@@ -423,7 +425,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var types = new[]
                 { ActiveSkillType.Attack, ActiveSkillType.RequiresShield };
             var activeSkill = CreateActiveSkillDefinition("ShieldCharge", types,
-                new[] { Keyword.Attack, Keyword.AreaOfEffect });
+                new[] {Keyword.Attack, Keyword.AreaOfEffect}, weaponRestrictions: new[] {ItemClass.Shield});
             var stats = new[] { new UntranslatedStat("is_area_damage", 1), };
             var level = CreateLevelDefinition(stats: stats);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };

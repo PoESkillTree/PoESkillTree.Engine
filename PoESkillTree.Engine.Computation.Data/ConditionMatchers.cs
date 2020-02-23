@@ -345,6 +345,8 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 { "if consuming a corpse", Stat.MainSkillPart.Value.Eq(1) }, // Bodyswap
                 { "if using your life", Stat.MainSkillPart.Value.Eq(0) }, // Dark Pact
+                { "shard", Stat.MainSkillPart.Value.Eq(1) }, // Spectral Shield Throw
+                { "at maximum charge distance", Stat.MainSkillPart.Value.Eq(1) }, // Shield Charge
                 // - other
                 { "to enemies they're attached to", Flag.IsBrandAttachedToEnemy },
                 { "to branded enemy", Flag.IsBrandAttachedToEnemy },

@@ -38,22 +38,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
             AddHitDamageSourceModifiers(preParseResult);
 
-            var offHandHasWeapon = OffHand.Has(Tags.Weapon);
-            var usesMainHandCondition = isMainSkill;
-            var usesOffHandCondition = isMainSkill.And(offHandHasWeapon);
-            if (activeSkill.ActiveSkillTypes.Contains(ActiveSkillType.RequiresDualWield))
-                usesMainHandCondition = usesMainHandCondition.And(offHandHasWeapon);
-            else if (activeSkill.ActiveSkillTypes.Contains(ActiveSkillType.RequiresShield))
-                usesMainHandCondition = usesMainHandCondition.And(OffHand.Has(Tags.Shield));
-            if (activeSkill.WeaponRestrictions.Any())
-            {
-                var suitableMainHand = CreateWeaponRestrictionCondition(MainHand, activeSkill.WeaponRestrictions);
-                var suitableOffHand = CreateWeaponRestrictionCondition(OffHand, activeSkill.WeaponRestrictions);
-                usesMainHandCondition = usesMainHandCondition
-                    .And(suitableMainHand).And(suitableOffHand.Or(offHandHasWeapon.Not));
-                usesOffHandCondition = usesOffHandCondition
-                    .And(suitableMainHand).And(suitableOffHand);
-            }
+            var (usesMainHandCondition, usesOffHandCondition) = GetUsesHandConditions(isMainSkill, activeSkill);
             _parsedModifiers.AddGlobal(MetaStats.SkillUsesHand(AttackDamageHand.MainHand),
                 Form.TotalOverride, 1, usesMainHandCondition);
             _parsedModifiers.AddGlobal(MetaStats.SkillUsesHand(AttackDamageHand.OffHand),
@@ -143,6 +128,37 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                     return Enums.Parse<DamageSource>(match.Groups[1].Value, true);
             }
             return null;
+        }
+
+        private (IConditionBuilder usesMainHandCondition, IConditionBuilder usesOffHandCondition) GetUsesHandConditions(IConditionBuilder isMainSkill,
+            ActiveSkillDefinition activeSkill)
+        {
+            var shieldOnly = activeSkill.WeaponRestrictions.Contains(ItemClass.Shield);
+            var offHandHasWeapon = OffHand.Has(Tags.Weapon);
+            var usesMainHandCondition = isMainSkill;
+            var usesOffHandCondition = isMainSkill;
+            if (activeSkill.ActiveSkillTypes.Contains(ActiveSkillType.RequiresDualWield))
+                usesMainHandCondition = usesMainHandCondition.And(offHandHasWeapon);
+            else if (activeSkill.ActiveSkillTypes.Contains(ActiveSkillType.RequiresShield))
+                usesMainHandCondition = usesMainHandCondition.And(OffHand.Has(Tags.Shield));
+            if (!shieldOnly)
+            {
+                usesOffHandCondition = usesOffHandCondition.And(offHandHasWeapon);
+            }
+            if (activeSkill.WeaponRestrictions.Any())
+            {
+                var suitableMainHand = CreateWeaponRestrictionCondition(MainHand, activeSkill.WeaponRestrictions);
+                var suitableOffHand = CreateWeaponRestrictionCondition(OffHand, activeSkill.WeaponRestrictions);
+                usesMainHandCondition = usesMainHandCondition.And(suitableMainHand);
+                usesOffHandCondition = usesOffHandCondition.And(suitableOffHand);
+                if (!shieldOnly)
+                {
+                    usesMainHandCondition = usesMainHandCondition.And(suitableOffHand.Or(offHandHasWeapon.Not));
+                    usesOffHandCondition = usesOffHandCondition.And(suitableMainHand);
+                }
+            }
+
+            return (usesMainHandCondition, usesOffHandCondition);
         }
 
         private static IConditionBuilder CreateWeaponRestrictionCondition(

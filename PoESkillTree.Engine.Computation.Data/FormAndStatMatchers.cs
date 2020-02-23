@@ -106,6 +106,11 @@ namespace PoESkillTree.Engine.Computation.Data
                     Reference.AsDamageType.Damage.WithSkills(DamageSource.Spell)
                 },
                 {
+                    "# to # base off hand ({DamageTypeMatchers}) damage",
+                    BaseSet, ValueFactory.FromMinAndMax(Values[0], Values[1]),
+                    Reference.AsDamageType.Damage.WithSkills.With(AttackDamageHand.OffHand)
+                },
+                {
                     "deal up to #% more melee damage to enemies, based on proximity",
                     PercentMore, Value * ValueFactory.LinearScale(Enemy.Distance, (15, 1), (40, 0)),
                     Damage.With(Keyword.Melee)
@@ -194,6 +199,10 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 { "never deal critical strikes", TotalOverride, 0, CriticalStrike.Chance },
                 { "your critical strike chance is lucky", TotalOverride, 1, Flag.CriticalStrikeChanceIsLucky },
+                {
+                    "base off hand critical strike chance is #%",
+                    BaseSet, Value, CriticalStrike.Chance.WithSkills.With(AttackDamageHand.OffHand)
+                },
                 // - speed
                 { "actions are #% slower", PercentLess, Value, Stat.ActionSpeed },
                 {
@@ -201,6 +210,11 @@ namespace PoESkillTree.Engine.Computation.Data
                     TotalOverride, 1, Stat.ActionSpeed.Minimum
                 },
                 { @"\+# seconds to attack time", BaseAdd, Value, Stat.BaseCastTime.With(DamageSource.Attack) },
+                {
+                    "base off hand attack time is # seconds",
+                    (BaseSet, Value, Stat.BaseCastTime.With(AttackDamageHand.OffHand)),
+                    (BaseSet, Stat.BaseCastTime.With(AttackDamageHand.OffHand).Value.Invert, Stat.CastRate.With(AttackDamageHand.OffHand))
+                },
                 // - projectiles
                 { "fires? # additional projectiles", BaseAdd, Value, Projectile.Count },
                 { "fires? # additional arrows", BaseAdd, Value, Projectile.Count, With(Keyword.Attack) },
@@ -541,6 +555,7 @@ namespace PoESkillTree.Engine.Computation.Data
                     PercentIncrease, Value, Ailment.Ignite.TickRateModifier, Ailment.Bleed.TickRateModifier, Ailment.Poison.TickRateModifier
                 },
                 // stun
+                { "#% increased stun threshold reduction on enemies", PercentReduce, Value, Effect.Stun.Threshold.For(Enemy) },
                 { "(you )?cannot be stunned", TotalOverride, 100, Effect.Stun.Avoidance },
                 { "additional #% chance to be stunned", BaseAdd, Value, Effect.Stun.Chance.For(Entity.OpponentOfSelf) },
                 // knockback

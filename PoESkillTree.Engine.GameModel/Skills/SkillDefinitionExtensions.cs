@@ -487,6 +487,11 @@ namespace PoESkillTree.Engine.GameModel.Skills
                     removedKeywords: new[] { Keyword.Melee }))
             },
             {
+                "NewShieldCharge", // Shield Charge
+                ("Unspecified Charge Distance", new SkillPartDefinitionExtension()),
+                ("Maximum Charge Distance", new SkillPartDefinitionExtension())
+            },
+            {
                 "OrbOfStorms",
                 new SkillPartDefinitionExtension(ReplaceStat("orb_of_storms_base_bolt_frequency_ms", "hit_rate_ms"))
             },

@@ -67,6 +67,19 @@ namespace PoESkillTree.Engine.Computation.Data
                         Reference.AsStat.ValueFor(NodeType.Base, new ModifierSource.Local.Item(ItemSlot.BodyArmour)),
                         divideBy: Value)
                 },
+                {
+                    "per # ({StatMatchers}) on shield",
+                    PerStat(
+                        Reference.AsStat.ValueFor(NodeType.Base, new ModifierSource.Local.Item(ItemSlot.OffHand)),
+                        divideBy: Value)
+                },
+                {
+                    "per # ({StatMatchers}) or ({StatMatchers}) on shield",
+                    PerStat(
+                        References[0].AsStat.ValueFor(NodeType.Base, new ModifierSource.Local.Item(ItemSlot.OffHand))
+                        + References[1].AsStat.ValueFor(NodeType.Base, new ModifierSource.Local.Item(ItemSlot.OffHand)),
+                        divideBy: Value)
+                },
                 { "per grand spectrum", PerStat(stat: Stat.GrandSpectrumJewelsSocketed) },
                 { "per level", PerStat(Stat.Level) },
                 { "per (stage|fuse charge|explosive arrow on target)", PerStat(Stat.SkillStage) },
