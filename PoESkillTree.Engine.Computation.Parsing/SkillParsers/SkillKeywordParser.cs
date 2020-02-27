@@ -56,7 +56,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
         public PartialSkillParseResult Parse(Skill mainSkill, Skill parsedSkill, SkillPreParseResult preParseResult)
         {
-            _parsedModifiers = new ModifierCollection(_builderFactories, preParseResult.LocalSource);
+            _parsedModifiers = new ModifierCollection(_builderFactories, preParseResult.LocalSource, preParseResult.ModifierSourceEntity);
             _parsedStats = new HashSet<UntranslatedStat>();
             _preParseResult = preParseResult;
 

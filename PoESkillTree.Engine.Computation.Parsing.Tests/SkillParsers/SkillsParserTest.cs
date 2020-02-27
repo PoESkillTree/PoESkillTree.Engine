@@ -4,6 +4,7 @@ using Moq;
 using NUnit.Framework;
 using PoESkillTree.Engine.Computation.Builders.Stats;
 using PoESkillTree.Engine.Computation.Common;
+using PoESkillTree.Engine.GameModel;
 using PoESkillTree.Engine.GameModel.Items;
 using PoESkillTree.Engine.GameModel.Skills;
 using static PoESkillTree.Engine.Computation.Common.Helper;
@@ -21,7 +22,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var skill = CreateSkill("0", 0);
             var sut = CreateSut();
 
-            var actual = sut.Parse(new[] { skill });
+            var actual = Parse(sut, new[] { skill });
 
             Assert.AreEqual(expected, actual);
         }
@@ -34,7 +35,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var supports = new[] { CreateSkill("a", 0), CreateSkill("b", 0) };
             var sut = CreateSut();
 
-            var actual = sut.Parse(supports.Prepend(active).ToList());
+            var actual = Parse(sut, supports.Prepend(active).ToList());
 
             Assert.AreEqual(expected, actual);
         }
@@ -47,7 +48,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var supports = new[] { CreateSkill("a", 1), CreateSkill("b", 0) };
             var sut = CreateSut();
 
-            var actual = sut.Parse(supports.Prepend(active).ToList());
+            var actual = Parse(sut, supports.Prepend(active).ToList());
 
             Assert.AreEqual(expected, actual);
         }
@@ -76,16 +77,16 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             };
             var sut = CreateSut();
 
-            var actual = sut.Parse(actives.Concat(supports).ToList());
+            var actual = Parse(sut, actives.Concat(supports).ToList());
 
             Assert.AreEqual(expected, actual);
         }
 
         private static SkillsParser CreateSut()
         {
-            var activeParser = new Mock<IParser<Skill>>();
-            activeParser.Setup(p => p.Parse(It.IsAny<Skill>()))
-                .Returns((Skill s) => CreateParseResultForActive(s.Id));
+            var activeParser = new Mock<IParser<ActiveSkillParserParameter>>();
+            activeParser.Setup(p => p.Parse(It.IsAny<ActiveSkillParserParameter>()))
+                .Returns((ActiveSkillParserParameter p) => CreateParseResultForActive(p.ActiveSkill.Id));
             var supportParser = new Mock<IParser<SupportSkillParserParameter>>();
             supportParser.Setup(p => p.Parse(It.IsAny<SupportSkillParserParameter>()))
                 .Returns((SupportSkillParserParameter p)
@@ -125,5 +126,8 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
         private static Modifier CreateModifier(string id)
             => MockModifier(new Stat(id), value: new Constant(0));
+
+        public static ParseResult Parse(IParser<SkillsParserParameter> sut, IReadOnlyList<Skill> skills) =>
+            sut.Parse(skills, Entity.Character);
     }
 }

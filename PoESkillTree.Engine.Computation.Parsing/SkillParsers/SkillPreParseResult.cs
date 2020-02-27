@@ -1,5 +1,6 @@
 ﻿using PoESkillTree.Engine.Computation.Common;
 using PoESkillTree.Engine.Computation.Common.Builders.Conditions;
+using PoESkillTree.Engine.GameModel;
 using PoESkillTree.Engine.GameModel.Skills;
 
 namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
@@ -9,7 +10,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         public SkillPreParseResult(
             SkillDefinition skillDefinition, SkillLevelDefinition levelDefinition, SkillDefinition mainSkillDefinition,
             ModifierSource.Local.Skill localSource, ModifierSource.Global globalSource,
-            ModifierSource.Local.Gem gemSource,
+            ModifierSource.Local.Gem gemSource, Entity modifierSourceEntity,
             IConditionBuilder isMainSkill, IConditionBuilder isActiveSkill)
         {
             SkillDefinition = skillDefinition;
@@ -18,6 +19,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             LocalSource = localSource;
             GlobalSource = globalSource;
             GemSource = gemSource;
+            ModifierSourceEntity = modifierSourceEntity;
             IsMainSkill = isMainSkill;
             IsActiveSkill = isActiveSkill;
         }
@@ -41,6 +43,8 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         public ModifierSource.Local.Skill LocalSource { get; }
         public ModifierSource.Global GlobalSource { get; }
         public ModifierSource.Local.Gem GemSource { get; }
+
+        public Entity ModifierSourceEntity { get; }
 
         public IConditionBuilder IsMainSkill { get; }
         public IConditionBuilder IsActiveSkill { get; }

@@ -88,9 +88,9 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         private ParseResult TranslateAndParse(
             string statTranslationFileName, IEnumerable<UntranslatedStat> stats, IConditionBuilder condition)
         {
-            var result = TranslateAndParse(_preParseResult!.LocalSource, stats, Entity.Character,
+            var result = TranslateAndParse(_preParseResult!.LocalSource, stats, _preParseResult.ModifierSourceEntity,
                 statTranslationFileName);
-            return result.ApplyCondition(condition.Build);
+            return result.ApplyCondition(condition.Build, _preParseResult.ModifierSourceEntity);
         }
 
         private ParseResult TranslateAndParseBuff(IEnumerable<BuffStat> buffStats, IConditionBuilder condition)
@@ -104,11 +104,11 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             {
                 var result = TranslateAndParse(_preParseResult.LocalSource, stats, affectedEntity,
                     StatTranslationFileNames.Main, StatTranslationFileNames.Skill);
-                result = result.ApplyCondition(condition.Build);
+                result = result.ApplyCondition(condition.Build, _preParseResult.ModifierSourceEntity);
 
                 var buildParameters = new BuildParameters(_preParseResult.GlobalSource, affectedEntity, default);
-                var multiplier = buffBuilder.BuildAddStatMultiplier(buildParameters, new[] { Entity.Character });
-                result = result.ApplyMultiplier(_ => multiplier);
+                var multiplier = buffBuilder.BuildAddStatMultiplier(buildParameters, new[] { _preParseResult.ModifierSourceEntity });
+                result = result.ApplyMultiplier(_ => multiplier, _preParseResult.ModifierSourceEntity);
                 results.Add(result);
             }
 

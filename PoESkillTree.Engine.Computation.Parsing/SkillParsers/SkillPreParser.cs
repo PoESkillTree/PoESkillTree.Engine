@@ -1,5 +1,6 @@
 ﻿using PoESkillTree.Engine.Computation.Common;
 using PoESkillTree.Engine.Computation.Common.Builders.Stats;
+using PoESkillTree.Engine.GameModel;
 using PoESkillTree.Engine.GameModel.Skills;
 
 namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
@@ -16,13 +17,13 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         public SkillPreParser(SkillDefinitions skillDefinitions, IMetaStatBuilders metaStatBuilders)
             => (_skillDefinitions, _metaStatBuilders) = (skillDefinitions, metaStatBuilders);
 
-        public SkillPreParseResult ParseActive(Skill activeSkill)
-            => Parse(activeSkill, activeSkill);
+        public SkillPreParseResult ParseActive(ActiveSkillParserParameter parameter)
+            => Parse(parameter.ActiveSkill, parameter.ActiveSkill, parameter.Entity);
 
-        public SkillPreParseResult ParseSupport(Skill activeSkill, Skill supportSkill)
-            => Parse(activeSkill, supportSkill);
+        public SkillPreParseResult ParseSupport(SupportSkillParserParameter parameter)
+            => Parse(parameter.ActiveSkill, parameter.SupportSkill, parameter.Entity);
 
-        private SkillPreParseResult Parse(Skill mainSkill, Skill parsedSkill)
+        private SkillPreParseResult Parse(Skill mainSkill, Skill parsedSkill, Entity entity)
         {
             var mainSkillDefinition = _skillDefinitions.GetSkillById(mainSkill.Id);
             var parsedSkillDefinition = _skillDefinitions.GetSkillById(parsedSkill.Id);
@@ -40,7 +41,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var isActiveSkill = _metaStatBuilders.IsActiveSkill(mainSkill);
 
             return new SkillPreParseResult(parsedSkillDefinition, parsedSkillLevel, mainSkillDefinition,
-                localSource, globalSource, gemSource,
+                localSource, globalSource, gemSource, entity,
                 isMainSkill, isActiveSkill);
         }
     }

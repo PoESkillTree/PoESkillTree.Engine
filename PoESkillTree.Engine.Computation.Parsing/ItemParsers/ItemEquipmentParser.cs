@@ -16,8 +16,8 @@ namespace PoESkillTree.Engine.Computation.Parsing.ItemParsers
 
         public ParseResult Parse(PartialItemParserParameter parameter)
         {
-            var (item, slot, baseItemDefinition, localSource, _) = parameter;
-            var modifiers = new ModifierCollection(_builderFactories, localSource);
+            var (item, slot, entity, baseItemDefinition, localSource, _) = parameter;
+            var modifiers = new ModifierCollection(_builderFactories, localSource, entity);
             var equipmentBuilder = _builderFactories.EquipmentBuilders.Equipment[slot];
 
             modifiers.AddGlobal(equipmentBuilder.ItemTags, Form.TotalOverride, baseItemDefinition.Tags.EncodeAsDouble());

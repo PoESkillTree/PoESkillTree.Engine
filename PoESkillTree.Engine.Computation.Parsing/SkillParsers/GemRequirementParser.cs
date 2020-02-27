@@ -20,7 +20,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             if (!parsedSkill.GemGroup.HasValue)
                 return new PartialSkillParseResult(new Modifier[0], new UntranslatedStat[0]);
 
-            var modifiers = new ModifierCollection(_builderFactories, preParseResult.GemSource);
+            var modifiers = new ModifierCollection(_builderFactories, preParseResult.GemSource, preParseResult.ModifierSourceEntity);
             var level = preParseResult.LevelDefinition;
             var requirementStats = _builderFactories.StatBuilders.Requirements;
 

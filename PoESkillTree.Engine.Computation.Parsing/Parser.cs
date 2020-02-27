@@ -27,8 +27,8 @@ namespace PoESkillTree.Engine.Computation.Parsing
         private readonly IParser<ItemParserParameter> _itemParser;
         private readonly IParser<ItemParserParameter> _itemJewelParser;
         private readonly IParser<JewelInSkillTreeParserParameter> _treeJewelParser;
-        private readonly IParser<IReadOnlyList<Skill>> _skillsParser;
-        private readonly IParser<Skill> _activeSkillParser;
+        private readonly IParser<SkillsParserParameter> _skillsParser;
+        private readonly IParser<ActiveSkillParserParameter> _activeSkillParser;
         private readonly IParser<SupportSkillParserParameter> _supportSkillParser;
 
         private readonly StatTranslators _statTranslators;
@@ -103,23 +103,23 @@ namespace PoESkillTree.Engine.Computation.Parsing
         public ParseResult ParseSkilledPassiveNode(ushort nodeId)
             => _skilledPassiveNodeParser.Parse(nodeId);
 
-        public ParseResult ParseItem(Item item, ItemSlot itemSlot)
-            => _itemParser.Parse(new ItemParserParameter(item, itemSlot));
+        public ParseResult ParseItem(Item item, ItemSlot itemSlot, Entity entity = Entity.Character)
+            => _itemParser.Parse(new ItemParserParameter(item, itemSlot, entity));
 
         public ParseResult ParseJewelSocketedInItem(Item item, ItemSlot itemSlot)
-            => _itemJewelParser.Parse(new ItemParserParameter(item, itemSlot));
+            => _itemJewelParser.Parse(new ItemParserParameter(item, itemSlot, Entity.Character));
 
         public ParseResult ParseJewelSocketedInSkillTree(Item item, JewelRadius jewelRadius, ushort nodeId)
             => _treeJewelParser.Parse(new JewelInSkillTreeParserParameter(item, jewelRadius, nodeId));
 
-        public ParseResult ParseSkills(IReadOnlyList<Skill> skills)
-            => _skillsParser.Parse(new SequenceEquatableListView<Skill>(skills));
+        public ParseResult ParseSkills(IReadOnlyList<Skill> skills, Entity entity = Entity.Character)
+            => _skillsParser.Parse(new SequenceEquatableListView<Skill>(skills), entity);
 
-        public ParseResult ParseActiveSkill(Skill activeSkill)
-            => _activeSkillParser.Parse(activeSkill);
+        public ParseResult ParseActiveSkill(Skill activeSkill, Entity entity = Entity.Character)
+            => _activeSkillParser.Parse(activeSkill, entity);
 
-        public ParseResult ParseSupportSkill(Skill activeSkill, Skill supportSkill)
-            => _supportSkillParser.Parse(activeSkill, supportSkill);
+        public ParseResult ParseSupportSkill(Skill activeSkill, Skill supportSkill, Entity entity = Entity.Character)
+            => _supportSkillParser.Parse(activeSkill, supportSkill, entity);
 
         public IReadOnlyList<Modifier> ParseGivenModifiers()
             => GivenStatsParser.Parse(_coreParser, _givenStats);

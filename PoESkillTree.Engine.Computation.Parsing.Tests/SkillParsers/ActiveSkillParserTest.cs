@@ -34,7 +34,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 ("OffHand.ItemTags", offHandTags.EncodeAsDouble()));
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var actual = GetValueForIdentity(result.Modifiers, "SkillUses.OffHand")
                 .Calculate(valueCalculationContext);
@@ -50,7 +50,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 ("MainHand.ItemTags", mainHandTags.EncodeAsDouble()));
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var actual = GetValueForIdentity(result.Modifiers, "MainSkillPart.Has.Melee")
                 .Calculate(valueCalculationContext);
@@ -66,7 +66,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 ("MainHand.ItemTags", mainHandTags.EncodeAsDouble()));
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var actual = GetValueForIdentity(result.Modifiers, "MainSkillPart.Has.Projectile")
                 .Calculate(valueCalculationContext);
@@ -81,7 +81,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 ("Frenzy.Cost", 20));
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var actual = GetValueForIdentity(result.Modifiers, "Mana.Cost")
                 .Calculate(valueCalculationContext);
@@ -97,7 +97,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var sut = CreateSut(definition);
             var context = MockValueCalculationContext(skill, false, isActiveSkill);
             
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             var actualForFrenzy = GetValueForIdentity(modifiers, "Frenzy.Instances").Calculate(context);
@@ -116,7 +116,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (definition, skill) = CreateFrenzyDefinition(false);
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             Assert.IsEmpty(result.Modifiers);
         }
@@ -142,7 +142,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var valueCalculationContext = MockValueCalculationContextForMainSkill(skill);
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var actual = GetValueForIdentity(result.Modifiers, "SkillHitDamageSource")
                 .Calculate(valueCalculationContext);
@@ -155,7 +155,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (definition, skill) = CreateFlameTotemDefinition();
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             Assert.IsTrue(AnyModifierHasIdentity(modifiers, "MainSkillPart.Has.Projectile"));
@@ -171,7 +171,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var valueCalculationContext = MockValueCalculationContextForMainSkill(skill);
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             var actual = GetValueForIdentity(modifiers, "BaseCastTime.Spell.Skill").Calculate(valueCalculationContext);
@@ -187,7 +187,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var valueCalculationContext = MockValueCalculationContextForMainSkill(skill);
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var lifeModifier = result.Modifiers.First(m => m.Stats.First().Identity == "Life");
             Assert.AreEqual(Entity.Totem, lifeModifier.Stats.First().Entity);
@@ -204,7 +204,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var valueCalculationContext = MockValueCalculationContextForMainSkill(skill);
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifier = result.Modifiers.First(m => m.Stats.First().Identity == "CriticalStrike.Chance.Spell.Skill");
             Assert.AreEqual(Form.BaseSet, modifier.Form);
@@ -219,7 +219,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var valueCalculationContext = MockValueCalculationContextForMainSkill(skill);
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             Assert.IsFalse(AnyModifierHasIdentity(modifiers, "Dexterity.Required"));
@@ -236,7 +236,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var valueCalculationContext = MockValueCalculationContextForMainSkill(skill);
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             var actual = GetValueForIdentity(modifiers, "Fire.Damage.Spell.Skill").Calculate(valueCalculationContext);
@@ -271,7 +271,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 p.Parse(EmptyParserParameter(source)) == EmptyParseResult);
             var sut = CreateSut(definition, statParser);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             Assert.IsTrue(AnyModifierHasIdentity(modifiers, "s1"));
@@ -309,7 +309,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (definition, skill) = CreateContagionDefinition();
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             Assert.IsFalse(AnyModifierHasIdentity(modifiers, "SkillHitDamageSource"));
@@ -321,7 +321,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (definition, skill) = CreateContagionDefinition();
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             Assert.IsFalse(AnyModifierHasIdentity(modifiers, "MainSkillPart.Damage.OverTime.Has.Spell"));
@@ -336,7 +336,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var valueCalculationContext = MockValueCalculationContextForMainSkill(skill);
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             var actual = GetValueForIdentity(modifiers, "Chaos.Damage.OverTime.Skill")
@@ -350,7 +350,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (definition, skill) = CreateContagionDefinition();
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             Assert.IsFalse(AnyModifierHasIdentity(modifiers, "Level.Required"));
@@ -381,7 +381,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (definition, skill) = CreateShieldChargeDefinition();
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             Assert.IsTrue(AnyModifierHasIdentity(modifiers, "MainSkillPart.Damage.Attack.Has.AreaOfEffect"));
@@ -396,7 +396,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 ("OffHand.ItemClass", (int) ItemClass.Shield));
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var actual = GetValueForIdentity(result.Modifiers, "SkillUses.MainHand")
                 .Calculate(valueCalculationContext);
@@ -413,7 +413,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 ("OffHand.ItemClass", (int) offHandItemClass));
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var actual = GetValueForIdentity(result.Modifiers, "SkillUses.OffHand")
                 .Calculate(valueCalculationContext);
@@ -448,7 +448,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 ("OffHand.ItemTags", offHandTags.EncodeAsDouble()));
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var actual = GetValueForIdentity(result.Modifiers, "SkillUses.MainHand")
                 .Calculate(valueCalculationContext);
@@ -471,7 +471,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 ("OffHand.ItemTags", Tags.Weapon.EncodeAsDouble()));
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var actual = GetValueForIdentity(result.Modifiers, "SkillUses.MainHand")
                 .Calculate(valueCalculationContext);
@@ -502,7 +502,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (definition, skill) = CreateCausticArrowDefinition();
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             Assert.IsFalse(AnyModifierHasIdentity(modifiers, "MainSkillPart.Damage.Attack.Has.AreaOfEffect"));
@@ -515,7 +515,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (definition, skill) = CreateCausticArrowDefinition();
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             var expectedIdentity =
@@ -552,7 +552,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var valueCalculationContext = MockValueCalculationContextForMainSkill(skill);
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var actual = GetValueForIdentity(result.Modifiers, "SkillHitDamageSource")
                 .Calculate(valueCalculationContext);
@@ -566,7 +566,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var valueCalculationContext = MockValueCalculationContextForMainSkill(skill);
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifier = result.Modifiers.First(m => m.Stats.First().Identity == "Cooldown");
             Assert.AreEqual(Form.BaseSet, modifier.Form);
@@ -598,7 +598,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (definition, skill) = CreateDoubleStrikeDefinition();
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             Assert.IsTrue(AnyModifierHasIdentity(result.Modifiers, "SkillNumberOfHitsPerCast"));
         }
@@ -626,7 +626,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (definition, skill) = CreateCleaveDefinition();
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             Assert.IsTrue(AnyModifierHasIdentity(result.Modifiers, "SkillDoubleHitsWhenDualWielding"));
         }
@@ -654,7 +654,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (definition, skill) = CreateClarityDefinition();
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifier = GetFirstModifierWithIdentity(result.Modifiers, "Belt.0.Cost");
             var actualValue = modifier.Value.Calculate(null!);
@@ -670,7 +670,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 ($"Belt.0.Type.{ActiveSkillType.ManaCostIsReservation}", 1),
                 ("Clarity.Cost", 20));
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifier = GetFirstModifierWithIdentity(result.Modifiers, "Clarity.Reservation");
             var actualValue = modifier.Value.Calculate(context);
@@ -689,7 +689,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 ("Clarity.Reservation", 20),
                 ("Clarity.ReservationPool", (double) pool));
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifier = GetFirstModifierWithIdentity(result.Modifiers, pool + ".Reservation");
             Assert.AreEqual(new NodeValue(20), modifier.Value.Calculate(context));
@@ -707,7 +707,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 ("Clarity.Reservation", 20),
                 ("Clarity.ReservationPool", (double) Pool.Mana));
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifier = GetFirstModifierWithIdentity(result.Modifiers, "Clarity.Reservation");
             Assert.IsNull(modifier.Value.Calculate(context));
@@ -721,7 +721,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (definition, skill) = CreateClarityDefinition();
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifier = GetFirstModifierWithIdentity(result.Modifiers, "Clarity.ActiveSkillItemSlot");
             Assert.AreEqual(new NodeValue((double) skill.ItemSlot), modifier.Value.Calculate(null!));
@@ -766,7 +766,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 ("Clarity.BuffSourceIs(Character)", Entity.Character, 1),
                 ("Clarity.BuffSourceIs(Character)", Entity.Minion, 1));
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = GetModifiersWithIdentity(result.Modifiers, "Mana.Regen").ToList();
             var actualValues = modifiers.Select(m => m.Value).Calculate(context).ToList();
@@ -804,7 +804,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 p.Parse(EmptyParserParameter(source)) == EmptyParseResult);
             var sut = CreateSut(definition, CreateParser);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             Assert.IsTrue(AnyModifierHasIdentity(result.Modifiers, "Mana.Regen"));
 
@@ -833,7 +833,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var sut = CreateSut(definition);
             var context = MockValueCalculationContext(skill, false, isActiveSkill);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             var activeModifier = GetFirstModifierWithIdentity(modifiers, "Clarity.Active");
@@ -877,7 +877,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 ("Hatred.ReservationPool", (double) Pool.Mana),
                 ("Mana", 200));
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifier = GetFirstModifierWithIdentity(result.Modifiers, "Mana.Reservation");
             Assert.AreEqual(new NodeValue(120), modifier.Value.Calculate(context));
@@ -926,7 +926,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var context = MockValueCalculationContextForMainSkill(skill,
                 ("MainSkillPart", skillPart));
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             var actualCastRate = GetValueForIdentity(modifiers, "CastRate.Attack.MainHand.Skill").Calculate(context);
@@ -950,7 +950,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var sut = CreateSut(definition);
             var context = MockValueCalculationContextForMainSkill(skill);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             var actual = GetValueForIdentity(modifiers, "MainSkillPart.Maximum").Calculate(context);
@@ -964,7 +964,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var sut = CreateSut(definition);
             var context = MockValueCalculationContextForMainSkill(skill);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             var actual = GetValueForIdentity(modifiers, "CastRate.Attack.MainHand.Skill").Calculate(context);
@@ -1006,7 +1006,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var context = MockValueCalculationContextForMainSkill(skill,
                 ("MainSkillPart", skillPart));
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             var fireConversionIdentity =
@@ -1037,7 +1037,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var context = MockValueCalculationContextForMainSkill(skill,
                 ("MainSkillPart", skillPart));
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             var actualHasAttack = GetValuesForIdentity(modifiers, "MainSkillPart.Has.Attack").Calculate(context);
@@ -1107,7 +1107,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var context = MockValueCalculationContextForMainSkill(skill,
                 ("MainSkillPart", skillPart));
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             var actual = GetValuesForIdentity(modifiers, "SkillHitDamageSource").Calculate(context).ToList();
@@ -1169,7 +1169,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var context = MockValueCalculationContextForMainSkill(skill,
                 ("MainSkillPart", skillPart));
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             var actual = GetValueForIdentity(modifiers, "s1").Calculate(context);
@@ -1205,7 +1205,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var sut = CreateSut(definition);
             var context = MockValueCalculationContextForMainSkill(skill);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var actual = GetValueForIdentity(result.Modifiers, "HitRate").Calculate(context);
             Assert.AreEqual((NodeValue?) 1000 / 600D, actual);
@@ -1243,7 +1243,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var sut = CreateSut(definition, statParser);
             var context = MockValueCalculationContextForActiveSkill(skill);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var actual = GetValueForIdentity(result.Modifiers, "Cold.Damage.Attack.MainHand.Skill").Calculate(context);
             Assert.AreEqual((NodeValue?) 15, actual);
@@ -1268,7 +1268,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var sut = CreateSut(definition, statParser);
             var context = MockValueCalculationContextForActiveSkill(skill);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var actual = GetValueForIdentity(result.Modifiers, "Cold.Damage.Spell.Skill").Calculate(context);
             Assert.AreEqual(expected, actual);
@@ -1311,7 +1311,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var sut = CreateSut(definition, statParser);
             var context = MockValueCalculationContextForMainSkill(skill);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             var actual = GetValueForIdentity(modifiers, "CanBypassSkillCooldown").Calculate(context);
@@ -1342,7 +1342,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var sut = CreateSut(definition, statParser);
             var context = MockValueCalculationContextForActiveSkill(skill);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             var actual = GetValueForIdentity(modifiers, "ActiveCurses").Calculate(context);
@@ -1358,7 +1358,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var sut = CreateSut(definition, statParser);
             var context = MockValueCalculationContextForCurse(skill, 1, false, 11, 12);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var actual = GetValueForIdentity(result.Modifiers, "Flammability.Active").Calculate(context);
             Assert.AreEqual((NodeValue?) false, actual);
@@ -1374,7 +1374,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var sut = CreateSut(definition, statParser);
             var context = MockValueCalculationContextForCurse(skill, curseLimit, false, activeCurse1, activeCurse2);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var actual = GetValueForIdentity(result.Modifiers, "Flammability.Active").Calculate(context);
             Assert.AreEqual((NodeValue?) true, actual);
@@ -1389,7 +1389,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var sut = CreateSut(definition, statParser);
             var context = MockValueCalculationContextForCurse(skill, 1, true, 11, 12);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var actual = GetValueForIdentity(result.Modifiers, "Flammability.Active").Calculate(context);
             Assert.AreEqual((NodeValue?) true, actual);
@@ -1434,7 +1434,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 ("Life", 100));
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             var actual = GetValueForIdentity(modifiers, "Fire.Damage.Spell.Skill").Calculate(valueCalculationContext);
@@ -1469,7 +1469,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 ("EnergyShield", 200));
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             var actual = GetValueForIdentity(modifiers, "Fire.Damage.OverTime.Skill").Calculate(valueCalculationContext);
@@ -1521,5 +1521,8 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var actual = actualValues.Select(v => v.IsTrue()).ToArray();
             Assert.AreEqual(expected, actual);
         }
+
+        private static ParseResult Parse(IParser<ActiveSkillParserParameter> sut, Skill activeSkill) =>
+            sut.Parse(activeSkill, Entity.Character);
     }
 }

@@ -29,7 +29,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (supportDefinition, supportSkill) = CreateBlasphemyDefinition();
             var sut = CreateSut(activeDefinition, supportDefinition);
 
-            var result = sut.Parse(activeSkill, supportSkill);
+            var result = Parse(sut, activeSkill, supportSkill);
 
             Assert.IsTrue(AnyModifierHasIdentity(result.Modifiers, "MainSkill.Has.Aura"));
         }
@@ -41,7 +41,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (supportDefinition, supportSkill) = CreateBlasphemyDefinition();
             var sut = CreateSut(activeDefinition, supportDefinition);
 
-            var result = sut.Parse(activeSkill, supportSkill);
+            var result = Parse(sut, activeSkill, supportSkill);
 
             var modifier = GetFirstModifierWithIdentity(result.Modifiers, "Belt.0.Cost");
             Assert.AreEqual(Form.TotalOverride, modifier.Form);
@@ -55,7 +55,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (supportDefinition, supportSkill) = CreateBlasphemyDefinition();
             var sut = CreateSut(activeDefinition, supportDefinition);
 
-            var result = sut.Parse(activeSkill, supportSkill);
+            var result = Parse(sut, activeSkill, supportSkill);
 
             var modifier = GetFirstModifierWithIdentity(result.Modifiers,
                 $"Belt.0.Type.{ActiveSkillType.ManaCostIsReservation}");
@@ -73,7 +73,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var sut = CreateSut(activeDefinition, supportDefinition);
             var context = MockValueCalculationContext(activeSkill, false, isActiveSkill);
 
-            var result = sut.Parse(activeSkill, supportSkill);
+            var result = Parse(sut, activeSkill, supportSkill);
 
             var actualItemSlot =
                 GetValueForIdentity(result.Modifiers, "Blasphemy.ActiveSkillItemSlot").Calculate(context);
@@ -103,7 +103,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 ("Blasphemy.ActiveSkillItemSlot", isActiveSkill ? (double?) supportSkill.ItemSlot : null),
                 ("Blasphemy.ActiveSkillSocketIndex", 1));
 
-            var result = sut.Parse(activeSkill, supportSkill);
+            var result = Parse(sut, activeSkill, supportSkill);
 
             var actual = GetValueForIdentity(result.Modifiers, "Blasphemy.EffectOn(Character)").Calculate(context);
             Assert.AreEqual(expected, actual);
@@ -119,7 +119,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var sut = CreateSut(activeDefinition, supportDefinition);
             var context = MockValueCalculationContext(activeSkill, false, isActiveSkill);
 
-            var result = sut.Parse(activeSkill, supportSkill);
+            var result = Parse(sut, activeSkill, supportSkill);
 
             var actual = GetValueForIdentity(result.Modifiers, "Skills[Aura].Instances").Calculate(context);
             Assert.AreEqual(expected, actual);
@@ -132,7 +132,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (supportDefinition, supportSkill) = CreateBlasphemyDefinition();
             var sut = CreateSut(activeDefinition, supportDefinition);
 
-            var result = sut.Parse(activeSkill, supportSkill);
+            var result = Parse(sut, activeSkill, supportSkill);
 
             Assert.False(AnyModifierHasIdentity(result.Modifiers, "Skills[Aura].Instances"));
         }
@@ -144,7 +144,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (supportDefinition, supportSkill) = CreateBlasphemyDefinition();
             var sut = CreateSut(activeDefinition, supportDefinition);
 
-            var result = sut.Parse(activeSkill, supportSkill);
+            var result = Parse(sut, activeSkill, supportSkill);
 
             Assert.IsEmpty(result.Modifiers);
         }
@@ -156,7 +156,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (supportDefinition, supportSkill) = CreateBlasphemyDefinition(false);
             var sut = CreateSut(activeDefinition, supportDefinition);
 
-            var result = sut.Parse(activeSkill, supportSkill);
+            var result = Parse(sut, activeSkill, supportSkill);
 
             Assert.IsEmpty(result.Modifiers);
         }
@@ -205,7 +205,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (supportDefinition, supportSkill) = CreatePhysicalToLightningDefinition();
             var sut = CreateSut(activeDefinition, supportDefinition);
 
-            var result = sut.Parse(activeSkill, supportSkill);
+            var result = Parse(sut, activeSkill, supportSkill);
 
             var modifiers = result.Modifiers;
             var expectedIdentity =
@@ -241,7 +241,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var sut = CreateSut(activeDefinition, supportDefinition);
             var context = MockValueCalculationContext(activeSkill, false, isActive);
 
-            var result = sut.Parse(activeSkill, supportSkill);
+            var result = Parse(sut, activeSkill, supportSkill);
 
             var modifier = GetValueForIdentity(result.Modifiers, "Enfeeble.ReservationPool");
             Assert.AreEqual(expected, modifier.Calculate(context));
@@ -257,7 +257,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var sut = CreateSut(activeDefinition, supportDefinition);
             var context = MockValueCalculationContext(activeSkill, isMain, false);
 
-            var result = sut.Parse(activeSkill, supportSkill);
+            var result = Parse(sut, activeSkill, supportSkill);
 
             var modifier = GetValueForIdentity(result.Modifiers, "Mana.Cost.ConvertTo(Life.Cost)");
             Assert.AreEqual(expected, modifier.Calculate(context));
@@ -296,7 +296,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 p.Parse(EmptyParserParameter(source)) == EmptyParseResult);
             var sut = CreateSut(activeDefinition, supportDefinition, GetStatParser);
 
-            var result = sut.Parse(activeSkill, supportSkill);
+            var result = Parse(sut, activeSkill, supportSkill);
 
             Assert.IsTrue(AnyModifierHasIdentity(result.Modifiers, "PointBlank"));
 
@@ -331,7 +331,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 ("MainSkill.Has.Triggered", 1));
             var sut = CreateSut(activeDefinition, supportDefinition);
 
-            var result = sut.Parse(activeSkill, supportSkill);
+            var result = Parse(sut, activeSkill, supportSkill);
 
             var actual = GetValueForIdentity(result.Modifiers, "Cooldown").Calculate(context);
             Assert.AreEqual((NodeValue?) supportDefinition.Levels.Values.First().Cooldown, actual);
@@ -345,7 +345,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var context = MockValueCalculationContextForMainSkill(activeSkill);
             var sut = CreateSut(activeDefinition, supportDefinition);
 
-            var result = sut.Parse(activeSkill, supportSkill);
+            var result = Parse(sut, activeSkill, supportSkill);
 
             var actual = GetValueForIdentity(result.Modifiers, "Cooldown").Calculate(context);
             Assert.IsNull(actual);
@@ -360,7 +360,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 ("MainSkill.Has.Triggered", 1));
             var sut = CreateSut(activeDefinition, supportDefinition);
 
-            var result = sut.Parse(activeSkill, supportSkill);
+            var result = Parse(sut, activeSkill, supportSkill);
 
             Assert.IsEmpty(GetModifiersWithIdentity(result.Modifiers, "Cooldown"));
         }
@@ -404,5 +404,8 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 new BuilderFactories(new PassiveTreeDefinition(new PassiveNodeDefinition[0]), skillDefinitions);
             return new SupportSkillParser(skillDefinitions, builderFactories, statParserFactory);
         }
+
+        private static ParseResult Parse(IParser<SupportSkillParserParameter> sut, Skill activeSkill, Skill supportSkill) =>
+            sut.Parse(activeSkill, supportSkill, Entity.Character);
     }
 }

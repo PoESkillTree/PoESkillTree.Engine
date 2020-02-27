@@ -31,7 +31,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         public PartialSkillParseResult Parse(Skill mainSkill, Skill parsedSkill, SkillPreParseResult preParseResult)
         {
             _parsedModifiers = new SkillModifierCollection(_builderFactories,
-                preParseResult.IsMainSkill, preParseResult.LocalSource);
+                preParseResult.IsMainSkill, preParseResult.LocalSource, preParseResult.ModifierSourceEntity);
             var activeSkill = preParseResult.SkillDefinition.ActiveSkill;
             var isMainSkill = preParseResult.IsMainSkill;
             var isActiveSkill = preParseResult.IsActiveSkill;

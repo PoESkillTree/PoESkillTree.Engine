@@ -26,7 +26,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         public PartialSkillParseResult Parse(Skill mainSkill, Skill parsedSkill, SkillPreParseResult preParseResult)
         {
             _modifiers = new SkillModifierCollection(_builderFactories,
-                preParseResult.IsMainSkill, preParseResult.LocalSource);
+                preParseResult.IsMainSkill, preParseResult.LocalSource, preParseResult.ModifierSourceEntity);
             _preParseResult = preParseResult;
             var level = preParseResult.LevelDefinition;
 

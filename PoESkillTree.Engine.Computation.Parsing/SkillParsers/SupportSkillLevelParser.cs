@@ -21,7 +21,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         public PartialSkillParseResult Parse(Skill mainSkill, Skill parsedSkill, SkillPreParseResult preParseResult)
         {
             var level = preParseResult.LevelDefinition;
-            var modifiers = new ModifierCollection(_builderFactories, preParseResult.LocalSource);
+            var modifiers = new ModifierCollection(_builderFactories, preParseResult.LocalSource, preParseResult.ModifierSourceEntity);
 
             if (level.ManaMultiplier is double multiplier)
             {
