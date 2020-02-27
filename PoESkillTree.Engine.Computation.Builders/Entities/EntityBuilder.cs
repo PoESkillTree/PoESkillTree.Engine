@@ -32,7 +32,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Entities
     public class ModifierSourceTotemEntityBuilder : IEntityBuilder
     {
         public IReadOnlyCollection<Entity> Build(Entity modifierSourceEntity) =>
-            modifierSourceEntity == Entity.Character ? new[] {Entity.Totem} : new[] {Entity.None};
+            modifierSourceEntity == Entity.Character ? new[] {Entity.Totem} : Array.Empty<Entity>();
     }
 
     public class ModifierSourceMinionEntityBuilder : IEntityBuilder

@@ -16,6 +16,7 @@ using PoESkillTree.Engine.Computation.Common.Builders.Stats;
 using PoESkillTree.Engine.Computation.Common.Builders.Values;
 using PoESkillTree.Engine.GameModel;
 using PoESkillTree.Engine.Utils;
+using PoESkillTree.Engine.Utils.Extensions;
 
 namespace PoESkillTree.Engine.Computation.Builders.Buffs
 {
@@ -92,6 +93,9 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
         private IValue BuildAddStatMultiplier(
             string identity, IReadOnlyCollection<Entity> possibleSources, Entity target)
         {
+            if (possibleSources.IsEmpty())
+                return new Constant(1);
+
             var buffActiveValue = new StatValue(BuildBuffActiveStat(target, identity));
             var buffSourceValues = possibleSources.ToDictionary(Funcs.Identity,
                 e => new StatValue(BuildBuffSourceStat(e, target, identity)));

@@ -13,8 +13,6 @@ namespace PoESkillTree.Engine.GameModel
         Totem,
         Minion,
         Enemy,
-        // Irrelevant dummy entity
-        None,
     }
 
     public static class EntityExtensions
@@ -26,7 +24,6 @@ namespace PoESkillTree.Engine.GameModel
                 Entity.Totem => new[] {Entity.Enemy},
                 Entity.Minion => new[] {Entity.Enemy},
                 Entity.Enemy => new[] {Entity.Character, Entity.Totem, Entity.Minion},
-                Entity.None => new[] {Entity.None},
                 _ => throw new ArgumentOutOfRangeException(nameof(@this), @this, null)
             };
 
@@ -36,8 +33,7 @@ namespace PoESkillTree.Engine.GameModel
                 Entity.Character => new[] {Entity.Totem, Entity.Minion},
                 Entity.Totem => new[] {Entity.Character, Entity.Minion},
                 Entity.Minion => new[] {Entity.Character, Entity.Totem},
-                Entity.Enemy => new[] {Entity.None},
-                Entity.None => new[] {Entity.None},
+                Entity.Enemy => Array.Empty<Entity>(),
                 _ => throw new ArgumentOutOfRangeException(nameof(@this), @this, null)
             };
 
@@ -45,6 +41,6 @@ namespace PoESkillTree.Engine.GameModel
             @this.Allies().Prepend(@this);
 
         public static IEnumerable<Entity> Minions(this Entity @this) =>
-            @this == Entity.Character ? new[] {Entity.Minion} : new[] {Entity.None};
+            @this == Entity.Character ? new[] {Entity.Minion} : Array.Empty<Entity>();
     }
 }
