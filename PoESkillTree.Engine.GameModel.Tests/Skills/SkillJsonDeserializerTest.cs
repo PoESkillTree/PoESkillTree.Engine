@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using FluentAssertions;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using PoESkillTree.Engine.GameModel.Items;
@@ -148,11 +149,10 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 new UntranslatedStat("base_deal_no_damage", 1),
             }, level20.Stats);
             Assert.IsEmpty(level20.QualityBuffStats);
-            Assert.AreEqual(new[]
-            {
-                new BuffStat(new UntranslatedStat("base_mana_regeneration_rate_per_minute", 1031),
-                    new[] { Entity.Character, Entity.Minion, Entity.Totem }),
-            }, level20.BuffStats);
+            level20.BuffStats.Should().HaveCount(1);
+            var buffStat = level20.BuffStats.Single();
+            buffStat.Stat.Should().BeEquivalentTo(new UntranslatedStat("base_mana_regeneration_rate_per_minute", 1031));
+            buffStat.GetAffectedEntities(Entity.Character).Should().BeEquivalentTo(new[] {Entity.Character, Entity.Minion, Entity.Totem});
         }
 
         [Test]

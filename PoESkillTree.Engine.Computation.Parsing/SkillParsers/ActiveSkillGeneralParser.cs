@@ -169,7 +169,9 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         {
             var allBuffStats =
                 preParseResult.LevelDefinition.BuffStats.Concat(preParseResult.LevelDefinition.QualityBuffStats);
-            var allAffectedEntities = allBuffStats.SelectMany(s => s.AffectedEntities).Distinct().ToList();
+            var allAffectedEntities = allBuffStats
+                .SelectMany(s => s.GetAffectedEntities(preParseResult.ModifierSourceEntity))
+                .Distinct().ToList();
             if (!allAffectedEntities.Any())
                 return;
 

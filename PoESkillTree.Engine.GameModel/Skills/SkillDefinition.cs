@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using PoESkillTree.Engine.GameModel.Items;
 using PoESkillTree.Engine.Utils;
@@ -159,18 +160,15 @@ namespace PoESkillTree.Engine.GameModel.Skills
         public SkillTooltipDefinition Tooltip { get; }
     }
 
-    public class BuffStat : ValueObject
+    public class BuffStat
     {
-        public BuffStat(UntranslatedStat stat, IReadOnlyList<Entity> affectedEntities)
-            => (Stat, AffectedEntities) = (stat, affectedEntities);
+        private readonly Func<Entity, IEnumerable<Entity>> _affectedEntitiesForSource;
 
-        public void Deconstruct(out UntranslatedStat stat, out IReadOnlyList<Entity> affectedEntities)
-            => (stat, affectedEntities) = (Stat, AffectedEntities);
+        public BuffStat(UntranslatedStat stat, Func<Entity, IEnumerable<Entity>> affectedEntitiesForSource) =>
+            (Stat, _affectedEntitiesForSource) = (stat, affectedEntitiesForSource);
 
         public UntranslatedStat Stat { get; }
-        public IReadOnlyList<Entity> AffectedEntities { get; }
-
-        protected override object ToTuple() => (Stat, WithSequenceEquality(AffectedEntities));
+        public IEnumerable<Entity> GetAffectedEntities(Entity sourceEntity) => _affectedEntitiesForSource(sourceEntity);
     }
 
     public class SkillTooltipDefinition

@@ -853,7 +853,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var buffStats = new[]
             {
                 new BuffStat(new UntranslatedStat("base_mana_regeneration_rate_per_minute", 240),
-                    new[] { Entity.Character, Entity.Minion }),
+                    _ => new[] { Entity.Character, Entity.Minion }),
             };
             var level = CreateLevelDefinition(manaCost: 10, buffStats: buffStats);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
@@ -1282,14 +1282,14 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var buffStats = new[]
             {
                 new BuffStat(new UntranslatedStat("spell_minimum_added_cold_damage", 38),
-                    new[] { Entity.Character }),
+                    _ => new[] { Entity.Character }),
                 new BuffStat(new UntranslatedStat("spell_maximum_added_cold_damage", 56),
-                    new[] { Entity.Character }),
+                    _ => new[] { Entity.Character }),
             };
             var qualityBuffStats = new[]
             {
                 new BuffStat(new UntranslatedStat("herald_of_ice_cold_damage_+%", 750),
-                    new[] { Entity.Character }),
+                    _ => new[] { Entity.Character }),
             };
             var level = CreateLevelDefinition(manaCost: 10, buffStats: buffStats, qualityBuffStats: qualityBuffStats);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
@@ -1401,7 +1401,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 new[] { "spell" }, new[] { Keyword.Spell, Keyword.Curse }, true);
             var buffStats = new[]
             {
-                new BuffStat(new UntranslatedStat("base_fire_damage_resistance_%", -10), new[] {Entity.Enemy}),
+                new BuffStat(new UntranslatedStat("base_fire_damage_resistance_%", -10), _ => new[] {Entity.Enemy}),
             };
             var level = CreateLevelDefinition(buffStats: buffStats);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using PoESkillTree.Engine.Computation.Builders.Conditions;
 using PoESkillTree.Engine.Computation.Builders.Stats;
@@ -20,16 +21,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Entities
         public ModifierSourceOpponentEntityBuilder(IStatFactory statFactory) =>
             _statFactory = statFactory;
 
-        public IReadOnlyCollection<Entity> Build(Entity modifierSourceEntity) =>
-            modifierSourceEntity switch
-            {
-                Entity.Character => new[] {Entity.Enemy},
-                Entity.Totem => new[] {Entity.Enemy},
-                Entity.Minion => new[] {Entity.Enemy},
-                Entity.Enemy => new[] {Entity.Character, Entity.Totem, Entity.Minion},
-                Entity.None => new[] {Entity.None},
-                _ => throw new ArgumentOutOfRangeException(nameof(modifierSourceEntity), modifierSourceEntity, null)
-            };
+        public IReadOnlyCollection<Entity> Build(Entity modifierSourceEntity) => modifierSourceEntity.Opponents().ToList();
 
         public ValueBuilder CountNearby => CreateValue();
         public IConditionBuilder IsNearby => CreateCondition();

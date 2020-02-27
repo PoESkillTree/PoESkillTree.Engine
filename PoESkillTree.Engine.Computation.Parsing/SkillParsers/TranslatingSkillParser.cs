@@ -68,8 +68,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 parseResults.Add(result);
             }
 
-            var qualityBuffStats =
-                level.QualityBuffStats.Select(s => new BuffStat(ApplyQuality(s.Stat, skill), s.AffectedEntities));
+            var qualityBuffStats = level.QualityBuffStats.Select(s => new BuffStat(ApplyQuality(s.Stat, skill), s.GetAffectedEntities));
             parseResults.Add(TranslateAndParseBuff(qualityBuffStats, isActiveSkill));
             parseResults.Add(TranslateAndParseBuff(level.BuffStats, isActiveSkill));
 
@@ -95,20 +94,21 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
         private ParseResult TranslateAndParseBuff(IEnumerable<BuffStat> buffStats, IConditionBuilder condition)
         {
+            var sourceEntity = _preParseResult!.ModifierSourceEntity;
             var results = new List<ParseResult>();
-            var buffBuilder = _builderFactories.SkillBuilders.FromId(_preParseResult!.SkillDefinition.Id).Buff;
+            var buffBuilder = _builderFactories.SkillBuilders.FromId(_preParseResult.SkillDefinition.Id).Buff;
             var statLookup = buffStats
-                .SelectMany(t => t.AffectedEntities.Select(e => (e, t.Stat)))
+                .SelectMany(t => t.GetAffectedEntities(sourceEntity).Select(e => (e, t.Stat)))
                 .ToLookup();
             foreach (var (affectedEntity, stats) in statLookup)
             {
                 var result = TranslateAndParse(_preParseResult.LocalSource, stats, affectedEntity,
                     StatTranslationFileNames.Main, StatTranslationFileNames.Skill);
-                result = result.ApplyCondition(condition.Build, _preParseResult.ModifierSourceEntity);
+                result = result.ApplyCondition(condition.Build, sourceEntity);
 
                 var buildParameters = new BuildParameters(_preParseResult.GlobalSource, affectedEntity, default);
-                var multiplier = buffBuilder.BuildAddStatMultiplier(buildParameters, new[] { _preParseResult.ModifierSourceEntity });
-                result = result.ApplyMultiplier(_ => multiplier, _preParseResult.ModifierSourceEntity);
+                var multiplier = buffBuilder.BuildAddStatMultiplier(buildParameters, new[] { sourceEntity });
+                result = result.ApplyMultiplier(_ => multiplier, sourceEntity);
                 results.Add(result);
             }
 

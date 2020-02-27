@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using PoESkillTree.Engine.Computation.Builders.Stats;
 using PoESkillTree.Engine.Computation.Common;
 using PoESkillTree.Engine.Computation.Common.Builders.Entities;
@@ -19,15 +20,6 @@ namespace PoESkillTree.Engine.Computation.Builders.Entities
             => StatBuilderUtils.FromIdentity(_statFactory, "Ally.CountNearby", typeof(uint),
                 ExplicitRegistrationTypes.UserSpecifiedValue(0)).Value;
 
-        public IReadOnlyCollection<Entity> Build(Entity modifierSourceEntity) =>
-            modifierSourceEntity switch
-            {
-                Entity.Character => new[] {Entity.Totem, Entity.Minion},
-                Entity.Totem => new[] {Entity.Character, Entity.Minion},
-                Entity.Minion => new[] {Entity.Character, Entity.Totem},
-                Entity.Enemy => new[] {Entity.None},
-                Entity.None => new[] {Entity.None},
-                _ => throw new ArgumentOutOfRangeException(nameof(modifierSourceEntity), modifierSourceEntity, null)
-            };
+        public IReadOnlyCollection<Entity> Build(Entity modifierSourceEntity) => modifierSourceEntity.Allies().ToList();
     }
 }
