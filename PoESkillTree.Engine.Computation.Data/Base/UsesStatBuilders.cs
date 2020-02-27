@@ -91,7 +91,8 @@ namespace PoESkillTree.Engine.Computation.Data.Base
         protected IEntityBuilders Entity => BuilderFactories.EntityBuilders;
 
         protected IEntityWithRarityBuilder Self => Entity.Self;
-        protected IHostileEntityBuilder OpponentOfSelf => Entity.OpponentOfSelf;
+        protected IHostileEntityBuilder OpponentsOfSelf => Entity.OpponentsOfSelf;
+        protected IEntityBuilder MainOpponentOfSelf => Entity.MainOpponentOfSelf;
         protected IEntityBuilder Enemy => Entity.Enemy;
         protected ICountableEntityBuilder Ally => Entity.Ally;
 

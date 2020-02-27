@@ -22,7 +22,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
         protected override GivenStatCollection CreateCollection()
             => new GivenStatCollection(ModifierBuilder, ValueFactory)
             {
-                { PercentIncrease, Ground.Consecrated.AddStat(CriticalStrike.Chance.For(OpponentOfSelf)), 100 },
+                { PercentIncrease, Ground.Consecrated.AddStat(CriticalStrike.Chance.For(OpponentsOfSelf)), 100 },
                 // Level based
                 { BaseSet, Stat.Level, ValueFactory.Minimum(Stat.Level.For(Entity.Character).Value, 84) },
                 { BaseSet, Life, LevelBased(l => MonsterBaseStats.EnemyLife(l), "EnemyLife") },

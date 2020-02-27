@@ -31,14 +31,14 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
         private static double ChanceToHit(ICalculator calculator)
         {
             var enemyEvasionStat =
-                Build(_builderFactories.StatBuilders.Evasion.For(_builderFactories.EntityBuilders.OpponentOfSelf)).Single();
+                Build(_builderFactories.StatBuilders.Evasion.For(_builderFactories.EntityBuilders.Enemy)).Single();
             var enemyEvasion = calculator.NodeRepository.GetNode(enemyEvasionStat).Value.Single();
             return Math.Floor(100 * 1.15 * Accuracy / (Accuracy + Math.Pow(enemyEvasion / 4.0, 0.8))) / 100;
         }
 
         private static double DamageReductionFromArmour(ICalculator calculator, double additionalDamageMultiplier = 1)
         {
-            var enemyArmourStat = Build(_builderFactories.StatBuilders.Armour.For(_builderFactories.EntityBuilders.OpponentOfSelf)).Single();
+            var enemyArmourStat = Build(_builderFactories.StatBuilders.Armour.For(_builderFactories.EntityBuilders.Enemy)).Single();
             var enemyArmour = calculator.NodeRepository.GetNode(enemyArmourStat).Value.Single();
             var physicalDamageStat = BuildMainHandSkillSingle(_builderFactories.DamageTypeBuilders.Physical.Damage);
             var physicalDamage = calculator.NodeRepository.GetNode(physicalDamageStat).Value.Single();
@@ -61,11 +61,11 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
                 .Append(
                     new Modifier(
                         Build(_builderFactories.DamageTypeBuilders.Physical.Damage.Taken
-                            .For(_builderFactories.EntityBuilders.OpponentOfSelf)),
+                            .For(_builderFactories.EntityBuilders.Enemy)),
                         Form.Increase, new Constant(20), modSource),
                     new Modifier(
                         Build(_builderFactories.DamageTypeBuilders.Physical.Resistance
-                            .For(_builderFactories.EntityBuilders.OpponentOfSelf)),
+                            .For(_builderFactories.EntityBuilders.Enemy)),
                         Form.BaseSet, new Constant(60), modSource),
                     new Modifier(
                         Build(_builderFactories.DamageTypeBuilders.Physical.DamageMultiplier),
@@ -245,7 +245,7 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
                 .DoUpdate();
 
             var enemyDamageStat = BuildMainHandSkillSingle(
-                _builderFactories.DamageTypeBuilders.Physical.Damage.For(_builderFactories.EntityBuilders.OpponentOfSelf));
+                _builderFactories.DamageTypeBuilders.Physical.Damage.For(_builderFactories.EntityBuilders.Enemy));
             var enemyDamage = nodes.GetNode(enemyDamageStat).Value.Single();
             var armour = 4000;
             var expected = 50 + 100 * armour / (armour + 10 * enemyDamage);
@@ -265,12 +265,12 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
                 .AddModifiers(_givenMods)
                 .AddModifier(Build(_builderFactories.StatBuilders.Armour), Form.BaseAdd, 4000)
                 .AddModifier(
-                    Build(_builderFactories.EffectBuilders.Stun.Threshold.For(_builderFactories.EntityBuilders.OpponentOfSelf)),
+                    Build(_builderFactories.EffectBuilders.Stun.Threshold.For(_builderFactories.EntityBuilders.Enemy)),
                     Form.Increase, -100)
                 .DoUpdate();
 
             var enemyLifeStat = Build(_builderFactories.StatBuilders.Pool.From(Pool.Life)
-                .For(_builderFactories.EntityBuilders.OpponentOfSelf)).Single();
+                .For(_builderFactories.EntityBuilders.Enemy)).Single();
             var enemyLife = nodes.GetNode(enemyLifeStat).Value.Single();
             var damage = BasePhysicalDamage * EffectiveDamageMultiplierWithNonCritsIncludingArmour(calculator) * ChanceToHit(calculator);
             var expected = Math.Floor(200 * damage / (enemyLife * 0.125));

@@ -24,7 +24,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                 // Level based
                 { BaseSet, Life, LevelBased(l => MonsterBaseStats.AllyLife(l), "AllyLife") },
                 // ailments
-                { PercentMore, Damage.With(Ailment.Bleed), 100, OpponentOfSelf.IsMoving },
+                { PercentMore, Damage.With(Ailment.Bleed), 100, OpponentsOfSelf.IsMoving },
             };
     }
 }

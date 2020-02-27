@@ -118,7 +118,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                 {
                     BaseSet, dt => MetaStats.EffectiveDamageMultiplierWithNonCrits(dt).WithHits,
                     dt => MetaStats.EnemyResistanceAgainstNonCrits(dt),
-                    dt => DamageTaken(dt).WithHits.For(OpponentOfSelf),
+                    dt => DamageTaken(dt).WithHits.For(Enemy),
                     dt => DamageMultiplierWithNonCrits(dt).WithHits,
                     _ => MetaStats.EffectiveImpaleDamageMultiplierAgainstNonCrits,
                     (dt, resistance, damageTaken, damageMulti, impaleMulti) =>
@@ -127,7 +127,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                 {
                     BaseSet, dt => MetaStats.EffectiveDamageMultiplierWithCrits(dt).WithHits,
                     dt => MetaStats.EnemyResistanceAgainstCrits(dt),
-                    dt => DamageTaken(dt).WithHits.For(OpponentOfSelf),
+                    dt => DamageTaken(dt).WithHits.For(Enemy),
                     dt => DamageMultiplierWithCrits(dt).WithHits,
                     _ => MetaStats.EffectiveImpaleDamageMultiplierAgainstNonCrits,
                     _ => CriticalStrike.Multiplier.WithHits,
@@ -160,7 +160,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                     Physical.Damage.WithHits,
                     DamageMultiplierWithNonCrits(DamageType.Physical).WithHits,
                     (damage, multi) =>
-                        PhysicalDamageReductionFromArmour(Armour.For(OpponentOfSelf).Value,
+                        PhysicalDamageReductionFromArmour(Armour.For(Enemy).Value,
                             damage.Value * multi.Value.AsPercentage)
                 },
                 {
@@ -169,7 +169,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                     DamageMultiplierWithCrits(DamageType.Physical).WithHits,
                     CriticalStrike.Multiplier.WithHits,
                     (damage, multi, critMulti) =>
-                        PhysicalDamageReductionFromArmour(Armour.For(OpponentOfSelf).Value,
+                        PhysicalDamageReductionFromArmour(Armour.For(Enemy).Value,
                             damage.Value * multi.Value.AsPercentage * EffectiveCriticalStrikeMultiplier(critMulti))
                 },
 
@@ -265,12 +265,12 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                 // chance to hit
                 {
                     BaseSet, Stat.ChanceToHit.With(AttackDamageHand.MainHand),
-                    ChanceToHitValue(Stat.Accuracy.With(AttackDamageHand.MainHand), Evasion.For(OpponentOfSelf),
+                    ChanceToHitValue(Stat.Accuracy.With(AttackDamageHand.MainHand), Evasion.For(Enemy),
                         Buff.Blind.IsOn(Self))
                 },
                 {
                     BaseSet, Stat.ChanceToHit.With(AttackDamageHand.OffHand),
-                    ChanceToHitValue(Stat.Accuracy.With(AttackDamageHand.OffHand), Evasion.For(OpponentOfSelf),
+                    ChanceToHitValue(Stat.Accuracy.With(AttackDamageHand.OffHand), Evasion.For(Enemy),
                         Buff.Blind.IsOn(Self))
                 },
                 // crit
@@ -320,7 +320,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                     (ailment, ailmentChance, ailmentChanceWithCrits, critChance)
                         => (ailmentChance.Value.AsPercentage * (1 - critChance.Value) +
                             ailmentChanceWithCrits.Value.AsPercentage * critChance.Value) *
-                           (1 - Ailment.From(ailment).Avoidance.For(OpponentOfSelf).Value.AsPercentage)
+                           (1 - Ailment.From(ailment).Avoidance.For(Enemy).Value.AsPercentage)
                 },
                 {
                     TotalOverride, MetaStats.AilmentChanceWithCrits,
@@ -332,11 +332,11 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                 // - AilmentEffectiveInstances
                 {
                     TotalOverride, MetaStats.AilmentEffectiveInstances(Common.Builders.Effects.Ailment.Ignite),
-                    Ailment.Ignite.InstancesOn(OpponentOfSelf).Maximum.Value
+                    Ailment.Ignite.InstancesOn(Enemy).Maximum.Value
                 },
                 {
                     TotalOverride, MetaStats.AilmentEffectiveInstances(Common.Builders.Effects.Ailment.Bleed),
-                    Ailment.Bleed.InstancesOn(OpponentOfSelf).Maximum.Value
+                    Ailment.Bleed.InstancesOn(Enemy).Maximum.Value
                 },
                 {
                     TotalOverride, MetaStats.AilmentEffectiveInstances(Common.Builders.Effects.Ailment.Poison),
@@ -361,8 +361,8 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                 {
                     TotalOverride, MetaStats.ImpaleDamageMultiplier,
                     Buff.Impale.Chance,
-                    chance => ValueFactory.If(Buff.Impale.IsOn(Self, OpponentOfSelf))
-                        .Then(MetaStats.ImpaleRecordedDamage.Value * Buff.Impale.StackCount.For(OpponentOfSelf).Value
+                    chance => ValueFactory.If(Buff.Impale.IsOn(Self, Enemy))
+                        .Then(MetaStats.ImpaleRecordedDamage.Value * Buff.Impale.StackCount.For(Enemy).Value
                               * chance.WithCondition(Hit.On).Value.AsPercentage)
                         .Else(0)
                 },
@@ -371,8 +371,8 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                     Physical.Damage.WithHits,
                     DamageMultiplierWithNonCrits(DamageType.Physical).WithHits,
                     (damage, multi) =>
-                        DamageTypeBuilders.From(DamageType.Physical).Resistance.For(OpponentOfSelf).Value
-                        + PhysicalDamageReductionFromArmour(Armour.For(OpponentOfSelf).Value,
+                        DamageTypeBuilders.From(DamageType.Physical).Resistance.For(Enemy).Value
+                        + PhysicalDamageReductionFromArmour(Armour.For(Enemy).Value,
                             MetaStats.ImpaleRecordedDamage.Value * damage.Value * multi.Value.AsPercentage)
                         - Buff.Impale.Penetration.Value
                 },
@@ -382,22 +382,22 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                     DamageMultiplierWithCrits(DamageType.Physical).WithHits,
                     CriticalStrike.Multiplier.WithHits,
                     (damage, multi, critMulti) =>
-                        DamageTypeBuilders.From(DamageType.Physical).Resistance.For(OpponentOfSelf).Value
-                        + PhysicalDamageReductionFromArmour(Armour.For(OpponentOfSelf).Value,
+                        DamageTypeBuilders.From(DamageType.Physical).Resistance.For(Enemy).Value
+                        + PhysicalDamageReductionFromArmour(Armour.For(Enemy).Value,
                             MetaStats.ImpaleRecordedDamage.Value * damage.Value * multi.Value.AsPercentage * EffectiveCriticalStrikeMultiplier(critMulti))
                         - Buff.Impale.Penetration.Value
                 },
                 { TotalOverride, MetaStats.EnemyResistanceAgainstNonCritImpales.Minimum, 0 },
                 { TotalOverride, MetaStats.EnemyResistanceAgainstNonCritImpales.Maximum, 100 },
-                { TotalOverride, MetaStats.ImpaleRecordedDamage, 0.1 * Buff.Impale.EffectOn(OpponentOfSelf).Value },
+                { TotalOverride, MetaStats.ImpaleRecordedDamage, 0.1 * Buff.Impale.EffectOn(Enemy).Value },
                 { TotalOverride, Buff.Impale.Chance.WithCondition(Hit.On).Maximum, 100 },
                 // stun (see https://pathofexile.gamepedia.com/Stun)
-                { PercentMore, Effect.Stun.Duration, 100 / Effect.Stun.Recovery.For(OpponentOfSelf).Value - 100 },
+                { PercentMore, Effect.Stun.Duration, 100 / Effect.Stun.Recovery.For(Enemy).Value - 100 },
                 {
                     BaseSet, Effect.Stun.Chance,
-                    MetaStats.AverageDamage.WithHits, MetaStats.EffectiveStunThreshold.For(OpponentOfSelf),
+                    MetaStats.AverageDamage.WithHits, MetaStats.EffectiveStunThreshold.For(Enemy),
                     (damage, threshold)
-                        => 200 * damage.Value / (Life.For(OpponentOfSelf).ValueFor(NodeType.Subtotal) * threshold.Value)
+                        => 200 * damage.Value / (Life.For(Enemy).ValueFor(NodeType.Subtotal) * threshold.Value)
                 },
                 // flags
                 {
@@ -429,7 +429,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
         private ValueBuilder EnemyResistanceAgainstHits(
             DamageType dt, IStatBuilder ignoreResistance, IStatBuilder penetration, IStatBuilder resistanceFromArmour)
         {
-            var resistance = DamageTypeBuilders.From(dt).Resistance.For(OpponentOfSelf).Value - penetration.Value;
+            var resistance = DamageTypeBuilders.From(dt).Resistance.For(Enemy).Value - penetration.Value;
             if (dt == DamageType.Physical)
             {
                 resistance += resistanceFromArmour.Value;
@@ -439,8 +439,8 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
         }
 
         private ValueBuilder EnemyDamageTakenMultiplier(DamageType resistanceType, IStatBuilder damageTaken)
-            => DamageTakenMultiplier(DamageTypeBuilders.From(resistanceType).Resistance.For(OpponentOfSelf),
-                damageTaken.For(OpponentOfSelf));
+            => DamageTakenMultiplier(DamageTypeBuilders.From(resistanceType).Resistance.For(Enemy),
+                damageTaken.For(Enemy));
 
         private IDamageRelatedStatBuilder DamageMultiplierWithCrits(DamageType damageType)
             => DamageTypeBuilders.From(damageType).DamageMultiplierWithCrits;
@@ -452,7 +452,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
         {
             var critMulti = critMultiStat.Value.AsPercentage;
             return ValueFactory.If(critMulti > 1)
-                .Then(1 + (critMulti - 1) * CriticalStrike.ExtraDamageTaken.For(OpponentOfSelf).Value)
+                .Then(1 + (critMulti - 1) * CriticalStrike.ExtraDamageTaken.For(Enemy).Value)
                 .Else(critMulti);
         }
 

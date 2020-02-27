@@ -13,7 +13,8 @@ namespace PoESkillTree.Engine.Computation.Builders.Entities
         public EntityBuilders(IStatFactory statFactory) => _statFactory = statFactory;
 
         public IEntityWithRarityBuilder Self => new ModifierSourceEntityWithRarityBuilder(_statFactory);
-        public IHostileEntityBuilder OpponentOfSelf => new ModifierSourceOpponentEntityBuilder(_statFactory);
+        public IHostileEntityBuilder OpponentsOfSelf => new ModifierSourceOpponentEntityBuilder(_statFactory);
+        public IEntityBuilder MainOpponentOfSelf => new MainOpponentOfModifierSourceEntityBuilder();
         public IEntityBuilder Enemy => new EntityBuilder(Entity.Enemy);
         public IEntityBuilder Character => new EntityBuilder(Entity.Character);
         public ICountableEntityBuilder Ally => new ModifierSourceAllyEntityBuilder(_statFactory);

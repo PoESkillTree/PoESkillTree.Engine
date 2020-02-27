@@ -41,6 +41,12 @@ namespace PoESkillTree.Engine.Computation.Builders.Entities
             modifierSourceEntity == Entity.Character ? new[] {Entity.Minion} : new[] {Entity.None};
     }
 
+    public class MainOpponentOfModifierSourceEntityBuilder : IEntityBuilder
+    {
+        public IReadOnlyCollection<Entity> Build(Entity modifierSourceEntity) =>
+            modifierSourceEntity == Entity.Enemy ? new[] {Entity.Character} : new[] {Entity.Enemy};
+    }
+
     public class CompositeEntityBuilder : IEntityBuilder
     {
         private readonly IReadOnlyList<IEntityBuilder> _items;

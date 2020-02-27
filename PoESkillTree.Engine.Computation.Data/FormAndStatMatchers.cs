@@ -112,7 +112,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 {
                     "deal up to #% more melee damage to enemies, based on proximity",
-                    PercentMore, Value * ValueFactory.LinearScale(OpponentOfSelf.Distance, (15, 1), (40, 0)),
+                    PercentMore, Value * ValueFactory.LinearScale(OpponentsOfSelf.Distance, (15, 1), (40, 0)),
                     Damage.With(Keyword.Melee)
                 },
                 // - damage taken
@@ -242,7 +242,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 {
                     "projectiles pierce all nearby targets",
-                    TotalOverride, double.PositiveInfinity, Projectile.PierceCount, OpponentOfSelf.IsNearby
+                    TotalOverride, double.PositiveInfinity, Projectile.PierceCount, OpponentsOfSelf.IsNearby
                 },
                 {
                     "projectiles pierce all targets",
@@ -465,8 +465,8 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 { "you can have one additional curse", BaseAdd, 1, Buff.CurseLimit },
                 { "an additional curse can be applied to you", BaseAdd, 1, Buff.CurseLimit },
-                { "enemies can have # additional curse", BaseAdd, Value, Buff.CurseLimit.For(OpponentOfSelf) },
-                { "(you|supported skills) can apply an additional curse", BaseAdd, 1, Buff.CurseLimit.For(OpponentOfSelf) },
+                { "enemies can have # additional curse", BaseAdd, Value, Buff.CurseLimit.For(OpponentsOfSelf) },
+                { "(you|supported skills) can apply an additional curse", BaseAdd, 1, Buff.CurseLimit.For(OpponentsOfSelf) },
                 { "unaffected by curses", PercentLess, 100, Buffs(targets: Self).With(Keyword.Curse).Effect },
                 {
                     "unaffected by ({SkillMatchers})",
@@ -479,7 +479,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 {
                     "monsters are hexproof",
-                    TotalOverride, 0, Buffs(Self, OpponentOfSelf).With(Keyword.Curse).On, Flag.IgnoreHexproof.IsSet.Not
+                    TotalOverride, 0, Buffs(Self, OpponentsOfSelf).With(Keyword.Curse).On, Flag.IgnoreHexproof.IsSet.Not
                 },
                 {
                     "you and nearby allies have onslaught",
@@ -495,7 +495,7 @@ namespace PoESkillTree.Engine.Computation.Data
                     TotalOverride, 0, Skills.ModifierSourceSkill.Buff.EffectOn(Self)
                 },
                 { "totems cannot gain ({BuffMatchers})", TotalOverride, 0, Reference.AsBuff.On(Entity.Totem) },
-                { "maximum # ({BuffMatchers}) per enemy", TotalOverride, Value, Reference.AsBuff.StackCount.For(OpponentOfSelf).Maximum },
+                { "maximum # ({BuffMatchers}) per enemy", TotalOverride, Value, Reference.AsBuff.StackCount.For(OpponentsOfSelf).Maximum },
                 // flags
                 // ailments
                 { "causes bleeding", TotalOverride, 100, Ailment.Bleed.Chance },
@@ -504,7 +504,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "always ({AilmentMatchers}) enemies", TotalOverride, 100, Reference.AsAilment.Chance },
                 {
                     "({AilmentMatchers}) nearby enemies",
-                    TotalOverride, 100, Reference.AsAilment.Chance, OpponentOfSelf.IsNearby
+                    TotalOverride, 100, Reference.AsAilment.Chance, OpponentsOfSelf.IsNearby
                 },
                 { "cannot cause bleeding", TotalOverride, 0, Ailment.Bleed.Chance },
                 { "cannot ignite", TotalOverride, 0, Ailment.Ignite.Chance },
@@ -512,7 +512,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "cannot inflict elemental ailments", TotalOverride, 0, Ailment.Elemental.Select(s => s.Chance) },
                 {
                     "(you )?can (afflict|inflict) an additional ignite on an enemy",
-                    BaseAdd, 1, Ailment.Ignite.InstancesOn(OpponentOfSelf).Maximum
+                    BaseAdd, 1, Ailment.Ignite.InstancesOn(OpponentsOfSelf).Maximum
                 },
                 {
                     "(you are )?(immune|immunity) to ({AilmentMatchers})",
@@ -555,9 +555,9 @@ namespace PoESkillTree.Engine.Computation.Data
                     PercentIncrease, Value, Ailment.Ignite.TickRateModifier, Ailment.Bleed.TickRateModifier, Ailment.Poison.TickRateModifier
                 },
                 // stun
-                { "#% increased stun threshold reduction on enemies", PercentReduce, Value, Effect.Stun.Threshold.For(OpponentOfSelf) },
+                { "#% increased stun threshold reduction on enemies", PercentReduce, Value, Effect.Stun.Threshold.For(OpponentsOfSelf) },
                 { "(you )?cannot be stunned", TotalOverride, 100, Effect.Stun.Avoidance },
-                { "additional #% chance to be stunned", BaseAdd, Value, Effect.Stun.Chance.For(OpponentOfSelf) },
+                { "additional #% chance to be stunned", BaseAdd, Value, Effect.Stun.Chance.For(OpponentsOfSelf) },
                 // knockback
                 { "knocks back enemies", TotalOverride, 100, Effect.Knockback.Chance },
                 { "knocks enemies back", TotalOverride, 100, Effect.Knockback.Chance },
