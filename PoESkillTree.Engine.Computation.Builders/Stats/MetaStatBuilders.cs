@@ -198,12 +198,13 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
 
         public IStatBuilder MainSkillItemSlot => FromIdentity(typeof(ItemSlot));
         public IStatBuilder MainSkillSocketIndex => FromIdentity(typeof(uint));
+        public IStatBuilder MainSkillSkillIndex => FromIdentity(typeof(uint));
 
-        public IStatBuilder SkillBaseCost(ItemSlot itemSlot, int socketIndex)
-            => FromIdentity($"{itemSlot.GetName()}.{socketIndex}.Cost", typeof(uint));
+        public IStatBuilder SkillBaseCost(ItemSlot itemSlot, int socketIndex, int skillIndex)
+            => FromIdentity($"{itemSlot.GetName()}.{socketIndex}.{skillIndex}.Cost", typeof(uint));
 
-        public IStatBuilder SkillHasType(ItemSlot itemSlot, int socketIndex, string activeSkillType)
-            => FromIdentity($"{itemSlot.GetName()}.{socketIndex}.Type.{activeSkillType}", typeof(bool));
+        public IStatBuilder SkillHasType(ItemSlot itemSlot, int socketIndex, int skillIndex, string activeSkillType)
+            => FromIdentity($"{itemSlot.GetName()}.{socketIndex}.{skillIndex}.Type.{activeSkillType}", typeof(bool));
 
         public IStatBuilder ActiveCurses => FromIdentity(typeof(int));
 

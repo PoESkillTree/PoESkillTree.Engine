@@ -213,18 +213,19 @@ namespace PoESkillTree.Engine.Computation.Common
             /// </summary>
             public sealed class Gem : Local
             {
-                public Gem(ItemSlot slot, int socketIndex, string skillId, string? displayName)
-                    : base(new Gem(slot, socketIndex, skillId), displayName)
-                    => (Slot, SocketIndex, SkillId) = (slot, socketIndex, skillId);
+                public Gem(ItemSlot slot, int socketIndex, int skillIndex, string skillId, string? displayName)
+                    : base(new Gem(slot, socketIndex, skillIndex, skillId), displayName)
+                    => (Slot, SocketIndex, SkillIndex, SkillId) = (slot, socketIndex, skillIndex, skillId);
 
-                public Gem(ItemSlot slot, int socketIndex, string skillId)
-                    => (Slot, SocketIndex, SkillId) = (slot, socketIndex, skillId);
+                public Gem(ItemSlot slot, int socketIndex, int skillIndex, string skillId)
+                    => (Slot, SocketIndex, SkillIndex, SkillId) = (slot, socketIndex, skillIndex, skillId);
 
                 public ItemSlot Slot { get; }
                 public int SocketIndex { get; }
+                public int SkillIndex { get; }
                 public string SkillId { get; }
 
-                protected override object ToTuple() => (base.ToTuple(), Slot, SocketIndex);
+                protected override object ToTuple() => (base.ToTuple(), Slot, SocketIndex, SkillIndex);
             }
 
             public sealed class UserSpecified : Local

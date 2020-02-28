@@ -656,7 +656,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
             var result = Parse(sut, skill);
 
-            var modifier = GetFirstModifierWithIdentity(result.Modifiers, "Belt.0.Cost");
+            var modifier = GetFirstModifierWithIdentity(result.Modifiers, "Belt.0.0.Cost");
             var actualValue = modifier.Value.Calculate(null!);
             Assert.AreEqual(new NodeValue(10), actualValue);
         }
@@ -667,7 +667,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (definition, skill) = CreateClarityDefinition();
             var sut = CreateSut(definition);
             var context = MockValueCalculationContextForActiveSkill(skill,
-                ($"Belt.0.Type.{ActiveSkillType.ManaCostIsReservation}", 1),
+                ($"Belt.0.0.Type.{ActiveSkillType.ManaCostIsReservation}", 1),
                 ("Clarity.Cost", 20));
 
             var result = Parse(sut, skill);
@@ -685,7 +685,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (definition, skill) = CreateClarityDefinition();
             var sut = CreateSut(definition);
             var context = MockValueCalculationContextForActiveSkill(skill,
-                ($"Belt.0.Type.{ActiveSkillType.ManaCostIsReservation}", 1),
+                ($"Belt.0.0.Type.{ActiveSkillType.ManaCostIsReservation}", 1),
                 ("Clarity.Reservation", 20),
                 ("Clarity.ReservationPool", (double) pool));
 
@@ -703,7 +703,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (definition, skill) = CreateClarityDefinition();
             var sut = CreateSut(definition);
             var context = MockValueCalculationContextForInactiveSkill(skill,
-                ($"Belt.0.Type.{ActiveSkillType.ManaCostIsReservation}", 1),
+                ($"Belt.0.0.Type.{ActiveSkillType.ManaCostIsReservation}", 1),
                 ("Clarity.Reservation", 20),
                 ("Clarity.ReservationPool", (double) Pool.Mana));
 
@@ -871,8 +871,8 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (definition, skill) = CreateHatredDefinition();
             var sut = CreateSut(definition);
             var context = MockValueCalculationContextForActiveSkill(skill,
-                ($"Belt.0.Type.{ActiveSkillType.ManaCostIsReservation}", 1),
-                ($"Belt.0.Type.{ActiveSkillType.ManaCostIsPercentage}", 1),
+                ($"Belt.0.0.Type.{ActiveSkillType.ManaCostIsReservation}", 1),
+                ($"Belt.0.0.Type.{ActiveSkillType.ManaCostIsPercentage}", 1),
                 ("Hatred.Reservation", 60),
                 ("Hatred.ReservationPool", (double) Pool.Mana),
                 ("Mana", 200));

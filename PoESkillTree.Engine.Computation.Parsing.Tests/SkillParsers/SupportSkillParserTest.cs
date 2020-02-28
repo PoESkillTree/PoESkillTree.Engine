@@ -43,7 +43,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
             var result = Parse(sut, activeSkill, supportSkill);
 
-            var modifier = GetFirstModifierWithIdentity(result.Modifiers, "Belt.0.Cost");
+            var modifier = GetFirstModifierWithIdentity(result.Modifiers, "Belt.0.0.Cost");
             Assert.AreEqual(Form.TotalOverride, modifier.Form);
             Assert.AreEqual(new NodeValue(42), modifier.Value.Calculate(null!));
         }
@@ -58,7 +58,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var result = Parse(sut, activeSkill, supportSkill);
 
             var modifier = GetFirstModifierWithIdentity(result.Modifiers,
-                $"Belt.0.Type.{ActiveSkillType.ManaCostIsReservation}");
+                $"Belt.0.0.Type.{ActiveSkillType.ManaCostIsReservation}");
             Assert.AreEqual(new NodeValue(1), modifier.Value.Calculate(null!));
         }
 

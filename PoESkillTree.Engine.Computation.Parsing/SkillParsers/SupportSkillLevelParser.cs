@@ -32,7 +32,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
             if (level.ManaCostOverride is int manaCostOverride)
             {
-                modifiers.AddGlobal(MetaStats.SkillBaseCost(mainSkill.ItemSlot, mainSkill.SocketIndex),
+                modifiers.AddGlobal(MetaStats.SkillBaseCost(mainSkill.ItemSlot, mainSkill.SocketIndex, mainSkill.SkillIndex),
                     Form.TotalOverride, manaCostOverride);
             }
 

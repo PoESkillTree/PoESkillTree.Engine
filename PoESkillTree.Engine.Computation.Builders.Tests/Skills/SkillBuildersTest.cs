@@ -27,7 +27,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Skills
         {
             yield return new ModifierSource.Local.Skill(SkillId, "");
             yield return new ModifierSource.Global(new ModifierSource.Local.Skill(SkillId, ""));
-            yield return new ModifierSource.Local.Gem(default, 0, SkillId, "");
+            yield return new ModifierSource.Local.Gem(default, 0, 0, SkillId, "");
         }
 
         [TestCaseSource(nameof(FailureTestCases))]
