@@ -53,6 +53,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
         {
             var castTime = gemJson.Value<int>("cast_time");
             var statTranslationFile = gemJson.Value<string>("stat_translation_file");
+            var secondarySkillId = gemJson.Value<string?>("secondary_granted_effect");
 
             var baseItemJson = gemJson["base_item"]!;
             HashSet<string> gemTags;
@@ -95,7 +96,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 var activeSkillDefinition = new ActiveSkillDefinition(
                     displayName, castTime, activeSkillTypes, minionActiveSkillTypes, keywords,
                     GetKeywordsPerPart(keywords), providesBuff, totemLifeMultiplier, weaponRestrictions);
-                return SkillDefinition.CreateActive(skillId, numericId, statTranslationFile,
+                return SkillDefinition.CreateActive(skillId, numericId, statTranslationFile, secondarySkillId,
                     _definitionExtension.PartNames, baseItemDefinition, activeSkillDefinition, levels);
             }
             else
@@ -109,7 +110,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
                     supportSkillJson["allowed_types"]!.Values<string>().ToList(),
                     supportSkillJson["excluded_types"]!.Values<string>().ToList(),
                     addedActiveSkillTypes, addedKeywords);
-                return SkillDefinition.CreateSupport(skillId, numericId, statTranslationFile,
+                return SkillDefinition.CreateSupport(skillId, numericId, statTranslationFile, secondarySkillId,
                     _definitionExtension.PartNames, baseItemDefinition, supportSkillDefinition, levels);
             }
         }

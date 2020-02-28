@@ -13,11 +13,11 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
     {
         public static SkillDefinition CreateActive(
             string id, ActiveSkillDefinition activeSkill, IReadOnlyDictionary<int, SkillLevelDefinition> levels)
-            => SkillDefinition.CreateActive(id, 0, "", new[] { "" }, null, activeSkill, levels);
+            => SkillDefinition.CreateActive(id, 0, "", null, new[] { "" }, null, activeSkill, levels);
 
         public static SkillDefinition CreateSupport(
             string id, SupportSkillDefinition supportSkill, IReadOnlyDictionary<int, SkillLevelDefinition> levels)
-            => SkillDefinition.CreateSupport(id, 0, "", new[] { "" }, null, supportSkill, levels);
+            => SkillDefinition.CreateSupport(id, 0, "", null, new[] { "" }, null, supportSkill, levels);
 
         public static ActiveSkillDefinition CreateActiveSkillDefinition(
             string displayName, IEnumerable<string> activeSkillTypes, IReadOnlyList<Keyword> keywords,

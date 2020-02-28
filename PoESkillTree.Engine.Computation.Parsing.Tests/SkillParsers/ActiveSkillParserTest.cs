@@ -1405,7 +1405,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             };
             var level = CreateLevelDefinition(buffStats: buffStats);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
-            return (SkillDefinition.CreateActive("Flammability", 12, "", new string[0], null, activeSkill, levels),
+            return (SkillDefinition.CreateActive("Flammability", 12, "", null, new string[0], null, activeSkill, levels),
                 new Skill("Flammability", 1, 0, ItemSlot.Belt, 0, null));
         }
 

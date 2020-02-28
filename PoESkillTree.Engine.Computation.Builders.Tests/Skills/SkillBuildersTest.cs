@@ -56,7 +56,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Skills
             => new SkillBuilders(new StatFactory(), new SkillDefinitions(new[] { SkillDefinition }));
         
         private static readonly SkillDefinition SkillDefinition =
-            SkillDefinition.CreateActive(SkillId, 0, "", new string[0], null, null!,
+            SkillDefinition.CreateActive(SkillId, 0, "", null, new string[0], null, null!,
                 new Dictionary<int, SkillLevelDefinition>());
 
         private const string SkillId = "skill";

@@ -9,30 +9,31 @@ namespace PoESkillTree.Engine.GameModel.Skills
     public class SkillDefinition : IDefinition<string>
     {
         private SkillDefinition(
-            string id, int numericId, bool isSupport, string statTranslationFile, IReadOnlyList<string> partNames,
+            string id, int numericId, bool isSupport, string statTranslationFile, string? secondarySkillId, IReadOnlyList<string> partNames,
             SkillBaseItemDefinition? baseItem, ActiveSkillDefinition? activeSkill, SupportSkillDefinition? supportSkill,
             IReadOnlyDictionary<int, SkillLevelDefinition> levels)
-            => (Id, NumericId, IsSupport, PartNames, BaseItem, ActiveSkill, SupportSkill, Levels, StatTranslationFile) =
-                (id, numericId, isSupport, partNames, baseItem, activeSkill!, supportSkill!, levels, statTranslationFile);
+            => (Id, NumericId, IsSupport, PartNames, BaseItem, ActiveSkill, SupportSkill, Levels, StatTranslationFile, SecondarySkillId) =
+                (id, numericId, isSupport, partNames, baseItem, activeSkill!, supportSkill!, levels, statTranslationFile, secondarySkillId);
 
         public static SkillDefinition CreateActive(
-            string id, int numericId, string statTranslationFile, IReadOnlyList<string> partNames,
+            string id, int numericId, string statTranslationFile, string? secondarySkillId, IReadOnlyList<string> partNames,
             SkillBaseItemDefinition? baseItem, ActiveSkillDefinition activeSkill,
             IReadOnlyDictionary<int, SkillLevelDefinition> levels)
-            => new SkillDefinition(id, numericId, false, statTranslationFile, partNames, baseItem, activeSkill, null,
-                levels);
+            => new SkillDefinition(id, numericId, false, statTranslationFile, secondarySkillId, partNames, baseItem,
+                activeSkill, null, levels);
 
         public static SkillDefinition CreateSupport(
-            string id, int numericId, string statTranslationFile, IReadOnlyList<string> partNames,
+            string id, int numericId, string statTranslationFile, string? secondarySkillId, IReadOnlyList<string> partNames,
             SkillBaseItemDefinition? baseItem, SupportSkillDefinition supportSkill,
             IReadOnlyDictionary<int, SkillLevelDefinition> levels)
-            => new SkillDefinition(id, numericId, true, statTranslationFile, partNames, baseItem, null, supportSkill,
-                levels);
+            => new SkillDefinition(id, numericId, true, statTranslationFile, secondarySkillId, partNames, baseItem,
+                null, supportSkill, levels);
 
         public string Id { get; }
         public int NumericId { get; }
         public bool IsSupport { get; }
         public string StatTranslationFile { get; }
+        public string? SecondarySkillId { get; }
 
         public IReadOnlyList<string> PartNames { get; }
 

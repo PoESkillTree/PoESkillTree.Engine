@@ -63,7 +63,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Skills
 
         private static SkillDefinition CreateSkill(string id, int numericId)
             => SkillDefinition.CreateActive(
-                id, numericId, "", new[] { "" }, null,
+                id, numericId, "", null, new[] { "" }, null,
                 new ActiveSkillDefinition(id, 0, new string[0], new string[0], new Keyword[0],
                     new[] { new Keyword[0], }, false, null, new ItemClass[0]),
                 new Dictionary<int, SkillLevelDefinition>());
