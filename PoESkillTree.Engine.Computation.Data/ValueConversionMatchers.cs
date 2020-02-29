@@ -110,6 +110,7 @@ namespace PoESkillTree.Engine.Computation.Data
                     PerStat(Stat.Range.With(AttackDamageHand.MainHand).ValueFor(NodeType.BaseAdd), Value)
                 },
                 { "per projectile", PerStat(Projectile.Count) },
+                { "per curse applied", PerStat(Stat.CursesLinkedToBane) },
                 // buffs
                 { "per buff on you", Buffs(targets: Self).Count() },
                 { "per curse on you", Buffs(targets: Self).With(Keyword.Curse).Count() },

@@ -302,6 +302,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "spell skills have", With(Keyword.Spell) },
                 { "(with|of|for) ({KeywordMatchers}) skills", With(Reference.AsKeyword) },
                 { "(supported )?({KeywordMatchers}) skills (have|deal)", With(Reference.AsKeyword) },
+                { "(supported )?({KeywordMatchers}) spells (have|deal)", And(With(Reference.AsKeyword), With(Keyword.Spell)) },
                 {
                     "({KeywordMatchers}) ({KeywordMatchers}) skills (have|deal)",
                     And(With(References[0].AsKeyword), With(References[1].AsKeyword))

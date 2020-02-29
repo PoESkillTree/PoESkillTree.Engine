@@ -131,6 +131,10 @@ namespace PoESkillTree.Engine.Computation.Data
                     TotalOverride, 0, Damage, Not(Or(MainHand.Has(Tags.Claw), MainHand.Has(Tags.Dagger)))
                 },
                 {
+                    "supported skills can only be used with maces, sceptres and staves",
+                    TotalOverride, 0, Damage, Not(Or(MainHand.Has(Tags.Mace), MainHand.Has(Tags.Sceptre), MainHand.Has(Tags.Staff)))
+                },
+                {
                     "mines hinder enemies near them for 2 seconds when they land",
                     TotalOverride, 1, Buff.Hinder.On(OpponentsOfSelf), Condition.Unique("Did a Mine Land near the Enemy in the past 2 seconds?")
                 },
@@ -224,6 +228,11 @@ namespace PoESkillTree.Engine.Computation.Data
                         PassiveNodeType.Small)
                 },
                 // skills
+                {
+                    // Bane
+                    "this curse is applied by bane",
+                    BaseAdd, 1, Stat.CursesLinkedToBane
+                },
                 {
                     // Burning Arrow
                     "if this skill ignites an enemy, it also inflicts a burning debuff debuff deals fire damage per second equal to #% of ignite damage per second",

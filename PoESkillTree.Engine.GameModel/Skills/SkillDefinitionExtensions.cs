@@ -225,6 +225,10 @@ namespace PoESkillTree.Engine.GameModel.Skills
                             "hit_ailment_damage_+%_final")))),
                 ("Cast on Skeleton", new SkillPartDefinitionExtension())
             },
+            {
+                "DarkRitual", // Bane
+                new SkillPartDefinitionExtension(RemoveStat("display_linked_curse_effect_+%"))
+            },
             { "Desecrate", SkillDotIsAreaDamageExtension },
             {
                 "Despair",
@@ -799,6 +803,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 new SkillPartDefinitionExtension(ReplaceStat("cast_while_channelling_time_ms", "hit_rate_ms"))
             },
             { "SupportChanceToIgnite", Passive("ignites_apply_fire_resistance_+") },
+            { "SupportDarkRitual", Passive("apply_linked_curses_with_dark_ritual") },
             {
                 "SupportGemFrenzyPowerOnTrapTrigger", // Charged Traps
                 new SkillPartDefinitionExtension(

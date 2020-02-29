@@ -134,6 +134,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "(global )?critical strike multiplier", CriticalStrike.Multiplier },
                 { "(global )?critical strike chance", CriticalStrike.Chance },
                 { "attack critical strike chance", CriticalStrike.Chance.With(DamageSource.Attack) },
+                { "spell critical strike chance", CriticalStrike.Chance.With(DamageSource.Spell) },
                 {
                     "({KeywordMatchers}) critical strike multiplier",
                     CriticalStrike.Multiplier.With(Reference.AsKeyword)
@@ -322,7 +323,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "({SkillMatchers}) has mana reservation", Reference.AsSkill.Reservation },
                 { "skill effect duration", Stat.Duration },
                 { "skill duration", Stat.Duration },
-                { "buff duration", Stat.Duration },
+                { "(de)?buff duration", Stat.Duration },
                 { "warcry duration", Stat.Duration, With(Keyword.Warcry) },
                 { "curse duration", Stat.Duration, With(Keyword.Curse) },
                 { "({SkillMatchers}) duration", Stat.Duration, With(Reference.AsSkill) },
