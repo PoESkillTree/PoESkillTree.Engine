@@ -479,7 +479,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 {
                     "monsters are hexproof",
-                    TotalOverride, 0, Buffs(Self, OpponentsOfSelf).With(Keyword.Curse).On, Flag.IgnoreHexproof.IsSet.Not
+                    TotalOverride, 0, Buffs(Self, OpponentsOfSelf).With(Keyword.Curse).On, Flag.IgnoreHexproof.IsTrue.Not
                 },
                 {
                     "you and nearby allies have onslaught",

@@ -91,7 +91,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
 
             IStatBuilder GetStatBuilder(PassiveNodeDefinition node)
                 => onlyIfSkilled
-                    ? NodeEffectiveness(node.Id).WithCondition(NodeAllocated(node.Id).IsSet)
+                    ? NodeEffectiveness(node.Id).WithCondition(NodeAllocated(node.Id).IsTrue)
                     : NodeEffectiveness(node.Id);
         }
 

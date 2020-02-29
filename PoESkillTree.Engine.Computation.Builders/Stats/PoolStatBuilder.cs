@@ -54,13 +54,13 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         public IDamageRelatedStatBuilder Gain => DamageRelatedFromIdentity(typeof(int)).WithHits;
 
         public IConditionBuilder IsFull =>
-            (Reservation.Value <= 0).And(FromIdentity(typeof(bool), UserSpecifiedValue(false)).IsSet);
+            (Reservation.Value <= 0).And(FromIdentity(typeof(bool), UserSpecifiedValue(false)).IsTrue);
 
         public IConditionBuilder IsLow =>
-            (Reservation.Value >= 0.65 * Value).Or(FromIdentity(typeof(bool), UserSpecifiedValue(false)).IsSet);
+            (Reservation.Value >= 0.65 * Value).Or(FromIdentity(typeof(bool), UserSpecifiedValue(false)).IsTrue);
 
         public IConditionBuilder IsEmpty
-            => (Value <= 0).Or(Reservation.Value >= 100).Or(FromIdentity(typeof(bool), UserSpecifiedValue(true)).IsSet);
+            => (Value <= 0).Or(Reservation.Value >= 100).Or(FromIdentity(typeof(bool), UserSpecifiedValue(true)).IsTrue);
 
         public Pool BuildPool(BuildParameters parameters) => Pool.Build(parameters);
     }
@@ -82,7 +82,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
 
         public IStatBuilder Start => FromIdentity(typeof(double));
 
-        public IConditionBuilder StartedRecently => FromIdentity(typeof(bool), UserSpecifiedValue(false)).IsSet;
+        public IConditionBuilder StartedRecently => FromIdentity(typeof(bool), UserSpecifiedValue(false)).IsTrue;
     }
 
     internal class RegenStatBuilder : StatBuilderWithPool, IRegenStatBuilder
@@ -132,7 +132,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         public IStatBuilder RateLimit => FromIdentity(typeof(uint));
         public IStatBuilder Rate => FromIdentity(typeof(double));
         public IStatBuilder MaximumRecoveryPerInstance => FromIdentity(typeof(double));
-        public IConditionBuilder IsActive => FromIdentity(typeof(bool), UserSpecifiedValue(false)).IsSet;
+        public IConditionBuilder IsActive => FromIdentity(typeof(bool), UserSpecifiedValue(false)).IsTrue;
         public IStatBuilder IsInstant => FromIdentity(typeof(bool));
     }
 

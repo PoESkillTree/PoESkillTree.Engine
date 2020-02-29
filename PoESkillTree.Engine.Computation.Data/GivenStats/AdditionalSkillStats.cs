@@ -131,6 +131,6 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             => MetaStats.MainSkillId.Value.Eq(Skills.FromId(skillId).SkillId);
 
         private IConditionBuilder SkillIsActive(string skillId)
-            => MetaStats.ActiveSkillItemSlot(skillId).IsSet;
+            => MetaStats.ActiveSkillItemSlot(skillId).IsTrue;
     }
 }

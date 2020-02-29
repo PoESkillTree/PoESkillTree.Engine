@@ -57,12 +57,12 @@ namespace PoESkillTree.Engine.Computation.Parsing.PassiveTreeParsers
                 var passivePointStat = nodeDefinition.IsAscendancyNode
                     ? _builderFactories.StatBuilders.AscendancyPassivePoints
                     : _builderFactories.StatBuilders.PassivePoints;
-                modifiers.AddGlobal(passivePointStat, Form.BaseAdd, 1, skillPointSpentStat.IsSet);
+                modifiers.AddGlobal(passivePointStat, Form.BaseAdd, 1, skillPointSpentStat.IsTrue);
             }
             if (nodeDefinition.PassivePointsGranted > 0)
             {
                 modifiers.AddGlobal(_builderFactories.StatBuilders.PassivePoints.Maximum,
-                    Form.BaseAdd, nodeDefinition.PassivePointsGranted, isAllocatedStat.IsSet);
+                    Form.BaseAdd, nodeDefinition.PassivePointsGranted, isAllocatedStat.IsTrue);
             }
 
             var attributes = _builderFactories.StatBuilders.Attribute;

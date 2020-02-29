@@ -382,6 +382,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         }
 
         [TestCase(null, false)]
+        [TestCase(0.0, true)]
         [TestCase(1.0, true)]
         public void IsSetCalculatesCorrectValue(double? input, bool expected)
         {
@@ -393,6 +394,24 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
             var sut = CreateSut(coreStatBuilder);
 
             var conditionBuilder = sut.IsSet;
+            var actual = conditionBuilder.Build().Value.Calculate(context);
+
+            Assert.AreEqual(expected, actual.IsTrue());
+        }
+
+        [TestCase(null, false)]
+        [TestCase(0.0, false)]
+        [TestCase(1.0, true)]
+        public void IsTrueCalculatesCorrectValue(double? input, bool expected)
+        {
+            var stat = new Stat("s");
+            var results = new[] { new StatBuilderResult(new[] { stat }, null!, Funcs.Identity), };
+            var coreStatBuilder = Mock.Of<ICoreStatBuilder>(b => b.Build(default) == results);
+            var context = Mock.Of<IValueCalculationContext>(c =>
+                c.GetValue(stat, NodeType.Total, PathDefinition.MainPath) == (NodeValue?) input);
+            var sut = CreateSut(coreStatBuilder);
+
+            var conditionBuilder = sut.IsTrue;
             var actual = conditionBuilder.Build().Value.Calculate(context);
 
             Assert.AreEqual(expected, actual.IsTrue());

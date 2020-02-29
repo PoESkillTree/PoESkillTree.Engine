@@ -39,7 +39,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             if (level.Cooldown is int cooldown && preParseResult.MainSkillDefinition.Levels[mainSkill.Level].Cooldown is null)
             {
                 modifiers.AddGlobal(_builderFactories.StatBuilders.Cooldown, Form.BaseSet, cooldown,
-                    preParseResult.IsMainSkill.And(MetaStats.MainSkillHasKeyword(Keyword.Triggered).IsSet));
+                    preParseResult.IsMainSkill.And(MetaStats.MainSkillHasKeyword(Keyword.Triggered).IsTrue));
             }
 
             return new PartialSkillParseResult(modifiers.Modifiers, new UntranslatedStat[0]);

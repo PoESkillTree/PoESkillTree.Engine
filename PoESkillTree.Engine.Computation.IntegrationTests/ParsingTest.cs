@@ -101,13 +101,13 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
                         .Before(_f.StatBuilders.Pool.From(Pool.Life)),
                     _f.FormBuilders.BaseAdd,
                     _f.ValueBuilders.Create(50),
-                    _f.EquipmentBuilders.Equipment.Count(e => e.Corrupted.IsSet) >= 5),
+                    _f.EquipmentBuilders.Equipment.Count(e => e.Corrupted.IsTrue) >= 5),
                 CreateModifier(
                     _f.DamageTypeBuilders.Physical.DamageTakenFrom(_f.StatBuilders.Pool.From(Pool.EnergyShield))
                         .Before(_f.StatBuilders.Pool.From(Pool.Life)),
                     _f.FormBuilders.BaseSubtract,
                     _f.ValueBuilders.Create(50),
-                    _f.EquipmentBuilders.Equipment.Count(e => e.Corrupted.IsSet) >= 5)
+                    _f.EquipmentBuilders.Equipment.Count(e => e.Corrupted.IsTrue) >= 5)
             }.Flatten();
             var actual = Parse(
                     "With 5 Corrupted Items Equipped: 50% of Chaos Damage does not bypass Energy Shield, and 50% of Physical Damage bypasses Energy Shield")

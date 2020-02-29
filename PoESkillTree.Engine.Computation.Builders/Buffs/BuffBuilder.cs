@@ -64,7 +64,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
         private IConditionBuilder IsFromSource(IEntityBuilder source, IEntityBuilder target)
         {
             var core = FromStatFactory(BuildStats);
-            return new StatBuilder(StatFactory, core).For(target).IsSet;
+            return new StatBuilder(StatFactory, core).For(target).IsTrue;
 
             IEnumerable<IStat> BuildStats(BuildParameters parameters, Entity t, string identity)
                 => source.Build(parameters.ModifierSourceEntity)

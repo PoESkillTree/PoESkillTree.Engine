@@ -182,10 +182,10 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 var numericSkillId = preParseResult.SkillDefinition.NumericId;
                 _parsedModifiers!.AddGlobal(MetaStats.ActiveCurses.For(target),
                     Form.BaseAdd, numericSkillId,
-                    isActiveSkill.And(buff.IgnoresCurseLimit.IsSet.Not));
+                    isActiveSkill.And(buff.IgnoresCurseLimit.IsTrue.Not));
                 _parsedModifiers.AddGlobal(buff.On(target),
                     Form.BaseSet, 1,
-                    isActiveSkill.And(buff.IgnoresCurseLimit.IsSet
+                    isActiveSkill.And(buff.IgnoresCurseLimit.IsTrue
                         .Or(MetaStats.ActiveCurseIndex(numericSkillId) < _builderFactories.BuffBuilders.CurseLimit.Value)));
             }
             else

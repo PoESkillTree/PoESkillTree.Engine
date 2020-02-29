@@ -200,7 +200,7 @@ namespace PoESkillTree.Engine.Computation.Data
                     "from equipped shield",
                     And(Condition.BaseValueComesFrom(ItemSlot.OffHand), OffHand.Has(Tags.Shield))
                 },
-                { "with # corrupted items equipped", Equipment.Count(e => e.Corrupted.IsSet) >= Value },
+                { "with # corrupted items equipped", Equipment.Count(e => e.Corrupted.IsTrue) >= Value },
                 // stats
                 // - pool
                 { "(when|while) on low ({PoolStatMatchers})", Reference.AsPoolStat.IsLow },
@@ -415,13 +415,13 @@ namespace PoESkillTree.Engine.Computation.Data
                     >= Value
                 },
                 // passive tree
-                { "marauder:", PassiveTree.ConnectsToClass(CharacterClass.Marauder).IsSet },
-                { "duelist:", PassiveTree.ConnectsToClass(CharacterClass.Duelist).IsSet },
-                { "ranger:", PassiveTree.ConnectsToClass(CharacterClass.Ranger).IsSet },
-                { "shadow:", PassiveTree.ConnectsToClass(CharacterClass.Shadow).IsSet },
-                { "witch:", PassiveTree.ConnectsToClass(CharacterClass.Witch).IsSet },
-                { "templar:", PassiveTree.ConnectsToClass(CharacterClass.Templar).IsSet },
-                { "scion:", PassiveTree.ConnectsToClass(CharacterClass.Scion).IsSet },
+                { "marauder:", PassiveTree.ConnectsToClass(CharacterClass.Marauder).IsTrue },
+                { "duelist:", PassiveTree.ConnectsToClass(CharacterClass.Duelist).IsTrue },
+                { "ranger:", PassiveTree.ConnectsToClass(CharacterClass.Ranger).IsTrue },
+                { "shadow:", PassiveTree.ConnectsToClass(CharacterClass.Shadow).IsTrue },
+                { "witch:", PassiveTree.ConnectsToClass(CharacterClass.Witch).IsTrue },
+                { "templar:", PassiveTree.ConnectsToClass(CharacterClass.Templar).IsTrue },
+                { "scion:", PassiveTree.ConnectsToClass(CharacterClass.Scion).IsTrue },
                 // stance
                 { "(while )?in blood stance", Flag.InBloodStance },
                 { "(while )?in sand stance", Flag.InSandStance },

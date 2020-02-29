@@ -274,16 +274,16 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         public IStatBuilder FarShot => FromIdentity(typeof(bool));
 
         public IConditionBuilder AlwaysMoving
-            => FromIdentity("Are you always moving?", typeof(bool), UserSpecifiedValue(false)).IsSet;
+            => FromIdentity("Are you always moving?", typeof(bool), UserSpecifiedValue(false)).IsTrue;
 
         public IConditionBuilder AlwaysStationary
-            => FromIdentity("Are you always stationary?", typeof(bool), UserSpecifiedValue(false)).IsSet;
+            => FromIdentity("Are you always stationary?", typeof(bool), UserSpecifiedValue(false)).IsTrue;
 
         public IConditionBuilder IsBrandAttachedToEnemy
-            => FromIdentity("Is your Brand attached to an enemy?", typeof(bool), UserSpecifiedValue(false)).IsSet;
+            => FromIdentity("Is your Brand attached to an enemy?", typeof(bool), UserSpecifiedValue(false)).IsTrue;
 
         public IConditionBuilder IsBannerPlanted
-            => FromIdentity("Is your Banner planted?", typeof(bool), UserSpecifiedValue(false)).IsSet;
+            => FromIdentity("Is your Banner planted?", typeof(bool), UserSpecifiedValue(false)).IsTrue;
 
         public IConditionBuilder InBloodStance => StanceValue.Eq((int) Stance.BloodStance);
         public IConditionBuilder InSandStance => StanceValue.Eq((int) Stance.SandStance);
@@ -298,7 +298,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
             SandStance,
         }
 
-        public IConditionBuilder BypassSkillCooldown => FromIdentity(typeof(bool), UserSpecifiedValue(false)).IsSet;
+        public IConditionBuilder BypassSkillCooldown => FromIdentity(typeof(bool), UserSpecifiedValue(false)).IsTrue;
 
         public IStatBuilder IncreasesToSourceApplyToTarget(IStatBuilder source, IStatBuilder target)
             => new StatBuilder(StatFactory,
