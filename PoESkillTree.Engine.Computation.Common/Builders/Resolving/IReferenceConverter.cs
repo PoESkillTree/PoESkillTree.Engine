@@ -33,5 +33,7 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Resolving
         IBuffBuilder AsBuff { get; }
 
         ISkillBuilder AsSkill { get; }
+
+        IGemTagBuilder AsGemTag { get; }
     }
 }

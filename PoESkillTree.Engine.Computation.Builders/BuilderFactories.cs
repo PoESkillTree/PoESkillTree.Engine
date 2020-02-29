@@ -49,6 +49,7 @@ namespace PoESkillTree.Engine.Computation.Builders
             KeywordBuilders = new KeywordBuilders();
             PassiveTreeBuilders = new PassiveTreeBuilders(statFactory, tree);
             SkillBuilders = new SkillBuilders(statFactory, skills);
+            GemTagBuilders = new GemTagBuilders();
             StatBuilders = new StatBuilders(statFactory);
             ValueBuilders = new ValueBuilders();
             MetaStatBuilders = new MetaStatBuilders(statFactory);
@@ -72,6 +73,7 @@ namespace PoESkillTree.Engine.Computation.Builders
         public IKeywordBuilders KeywordBuilders { get; }
         public IPassiveTreeBuilders PassiveTreeBuilders { get; }
         public ISkillBuilders SkillBuilders { get; }
+        public IGemTagBuilders GemTagBuilders { get; }
         public IStatBuilders StatBuilders { get; }
         public IValueBuilders ValueBuilders { get; }
         public IMetaStatBuilders MetaStatBuilders { get; }
