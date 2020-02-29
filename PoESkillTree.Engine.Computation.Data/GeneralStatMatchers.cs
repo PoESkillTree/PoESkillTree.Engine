@@ -476,6 +476,19 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "melee range", Stat.Range.With(Keyword.Melee) },
                 { "melee weapon range", Stat.Range.With(Keyword.Melee), MainHand.HasItem },
                 { "weapon range", Stat.Range },
+                // gem level
+                { "level of all ({GemTagMatchers}) skill gems", Gem.AdditionalActiveLevels(Reference.AsGemTag) },
+                { "level of all ({GemTagMatchers}) spell skill gems", Gem.AdditionalActiveSpellLevels(Reference.AsGemTag) },
+                { "level of socketed gems", Gem.AdditionalLevelsForModifierSourceItemSlot() },
+                { "level of socketed active skill gems", Gem.AdditionalActiveLevelsForModifierSourceItemSlot() },
+                { "level of socketed ({GemTagMatchers}) gems", Gem.AdditionalLevelsForModifierSourceItemSlot(Reference.AsGemTag) },
+                {
+                    "level of socketed ({GemTagMatchers}) or ({GemTagMatchers}) gems",
+                    Gem.AdditionalLevelsForModifierSourceItemSlot(References[0].AsGemTag),
+                    Gem.AdditionalLevelsForModifierSourceItemSlot(References[1].AsGemTag)
+                },
+                { "level of supported active skill gems", Gem.AdditionalActiveLevelsForModifierSourceGemGroup() },
+                { "level of supported ({GemTagMatchers}) skill gems", Gem.AdditionalActiveLevelsForModifierSourceGemGroup(Reference.AsGemTag) },
                 // other
                 { "reflected damage taken", AnyDamageType.ReflectedDamageTaken },
                 { "reflected elemental damage taken", Elemental.ReflectedDamageTaken },

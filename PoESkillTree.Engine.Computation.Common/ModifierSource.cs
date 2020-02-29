@@ -79,6 +79,13 @@ namespace PoESkillTree.Engine.Computation.Common
         /// </summary>
         public string? SourceName { get; }
 
+        public Local? GetLocalSource() =>
+            this switch
+            {
+                Local local => local,
+                Global global => global.LocalSource,
+                _ => null
+            };
 
         /// <summary>
         /// This modifier is global. Includes mods from the tree, given mods and most mods on items and skills.
@@ -213,19 +220,20 @@ namespace PoESkillTree.Engine.Computation.Common
             /// </summary>
             public sealed class Gem : Local
             {
-                public Gem(ItemSlot slot, int socketIndex, int skillIndex, string skillId, string? displayName)
-                    : base(new Gem(slot, socketIndex, skillIndex, skillId), displayName)
-                    => (Slot, SocketIndex, SkillIndex, SkillId) = (slot, socketIndex, skillIndex, skillId);
+                public Gem(ItemSlot slot, int socketIndex, int skillIndex, int? gemGroup, string skillId, string? displayName)
+                    : base(new Gem(slot, socketIndex, skillIndex, gemGroup, skillId), displayName)
+                    => (Slot, SocketIndex, SkillIndex, GemGroup, SkillId) = (slot, socketIndex, skillIndex, gemGroup, skillId);
 
-                public Gem(ItemSlot slot, int socketIndex, int skillIndex, string skillId)
-                    => (Slot, SocketIndex, SkillIndex, SkillId) = (slot, socketIndex, skillIndex, skillId);
+                public Gem(ItemSlot slot, int socketIndex, int skillIndex, int? gemGroup, string skillId)
+                    => (Slot, SocketIndex, SkillIndex, GemGroup, SkillId) = (slot, socketIndex, skillIndex, gemGroup, skillId);
 
                 public ItemSlot Slot { get; }
                 public int SocketIndex { get; }
                 public int SkillIndex { get; }
+                public int? GemGroup { get; }
                 public string SkillId { get; }
 
-                protected override object ToTuple() => (base.ToTuple(), Slot, SocketIndex, SkillIndex);
+                protected override object ToTuple() => (base.ToTuple(), Slot, SocketIndex, SkillIndex, GemGroup);
             }
 
             public sealed class UserSpecified : Local

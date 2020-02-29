@@ -87,8 +87,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         private ParseResult TranslateAndParse(
             IEnumerable<UntranslatedStat> stats, IConditionBuilder condition, params string[] statTranslationFileNames)
         {
-            var result = TranslateAndParse(_preParseResult!.LocalSource, stats, _preParseResult.ModifierSourceEntity,
-                statTranslationFileNames);
+            var result = TranslateAndParse(stats, _preParseResult!.ModifierSourceEntity, statTranslationFileNames);
             return result.ApplyCondition(condition.Build, _preParseResult.ModifierSourceEntity);
         }
 
@@ -102,8 +101,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 .ToLookup();
             foreach (var (affectedEntity, stats) in statLookup)
             {
-                var result = TranslateAndParse(_preParseResult.LocalSource, stats, affectedEntity,
-                    StatTranslationFileNames.Main, StatTranslationFileNames.Skill);
+                var result = TranslateAndParse(stats, affectedEntity, StatTranslationFileNames.Main, StatTranslationFileNames.Skill);
                 result = result.ApplyCondition(condition.Build, sourceEntity);
 
                 var buildParameters = new BuildParameters(_preParseResult.GlobalSource, affectedEntity, default);
@@ -115,15 +113,25 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             return ParseResult.Aggregate(results);
         }
 
-        private ParseResult TranslateAndParse(
-            ModifierSource.Local.Skill localModifierSource,
-            IEnumerable<UntranslatedStat> stats,
+        private ParseResult TranslateAndParse(IEnumerable<UntranslatedStat> stats,
             Entity modifierSourceEntity,
             params string[] statTranslationFileNames)
         {
             var unparsedStats = stats.Except(_parsedStats).ToList();
+            var (statsWithGemSource, statsWithLocalSource) =
+                unparsedStats.Partition(s => SkillStatIds.ManipulatesSupportedGems.IsMatch(s.StatId));
             var statParser = _statParserFactory(statTranslationFileNames);
-            return statParser.Parse(localModifierSource, modifierSourceEntity, unparsedStats);
+            var gemSourceResult = Parse(statParser, _preParseResult!.GemSource, modifierSourceEntity, statsWithGemSource.ToList());
+            var localSourceResult = Parse(statParser, _preParseResult.LocalSource, modifierSourceEntity, statsWithLocalSource.ToList());
+            return ParseResult.Aggregate(new[] {gemSourceResult, localSourceResult});
+        }
+
+        private static ParseResult Parse(IParser<UntranslatedStatParserParameter> parser,
+            ModifierSource.Local modifierSource, Entity modifierSourceEntity, IReadOnlyList<UntranslatedStat> stats)
+        {
+            if (stats.IsEmpty())
+                return ParseResult.Empty;
+            return parser.Parse(modifierSource, modifierSourceEntity, stats);
         }
 
         private static UntranslatedStat ApplyQuality(UntranslatedStat qualityStat, Skill skill)

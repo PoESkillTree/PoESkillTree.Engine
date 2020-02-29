@@ -1,3 +1,5 @@
+using PoESkillTree.Engine.Computation.Common.Builders.Skills;
+
 namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
 {
     /// <summary>
@@ -5,12 +7,14 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
     /// </summary>
     public interface IGemStatBuilders
     {
-        /// <summary>
-        /// A stat representing the modifier to the level of support gems.
-        /// </summary>
-        /// <remarks>
-        /// This stat is used locally to increase the level of socketed gems.
-        /// </remarks>
-        IStatBuilder IncreaseSupportLevel { get; }
+        IStatBuilder AdditionalActiveLevels(IGemTagBuilder gemTag);
+        IStatBuilder AdditionalActiveSpellLevels(IGemTagBuilder gemTag);
+
+        IStatBuilder AdditionalLevelsForModifierSourceItemSlot();
+        IStatBuilder AdditionalLevelsForModifierSourceItemSlot(IGemTagBuilder gemTag);
+        IStatBuilder AdditionalActiveLevelsForModifierSourceItemSlot();
+
+        IStatBuilder AdditionalActiveLevelsForModifierSourceGemGroup();
+        IStatBuilder AdditionalActiveLevelsForModifierSourceGemGroup(IGemTagBuilder gemTag);
     }
 }

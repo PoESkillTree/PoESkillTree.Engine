@@ -274,6 +274,7 @@ Removes existing Elusive before granting a new Elusive Buff when used
 Inflicts 6 Withered Debuffs the first time each Enemy enters the Area
 Traps are thrown randomly around you
 Supported Skills will Trigger Shockwave on Melee Hit
+This Gem gains 100% increased Experience
 // passive skills: =====================================================================================================
 10% Chance for Traps to Trigger an additional time
 Share Endurance, Frenzy and Power Charges with nearby party members

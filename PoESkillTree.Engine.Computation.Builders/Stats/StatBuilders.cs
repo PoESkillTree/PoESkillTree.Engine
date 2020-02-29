@@ -340,13 +340,4 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
             }
         }
     }
-
-    internal class GemStatBuilders : StatBuildersBase, IGemStatBuilders
-    {
-        public GemStatBuilders(IStatFactory statFactory) : base(statFactory)
-        {
-        }
-
-        public IStatBuilder IncreaseSupportLevel => FromIdentity("Level of socketed support gems", typeof(int));
-    }
 }

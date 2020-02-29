@@ -40,10 +40,6 @@ namespace PoESkillTree.Engine.Computation.Data
             new FormAndStatMatcherCollection(_modifierBuilder, ValueFactory)
             {
                 {
-                    @"\+# to level of socketed support gems",
-                    BaseAdd, Value, Gem.IncreaseSupportLevel
-                },
-                {
                     "ignore all movement penalties from armour",
                     TotalOverride, 0,
                     Stat.MovementSpeed.AsItemPropertyForSlot(ItemSlot.BodyArmour),

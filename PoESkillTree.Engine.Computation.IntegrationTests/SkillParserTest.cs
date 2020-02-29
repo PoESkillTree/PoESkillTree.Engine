@@ -39,7 +39,7 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
             var levelDefinition = definition.Levels[20];
             var local = new ModifierSource.Local.Skill("Frenzy", "Frenzy");
             var global = new ModifierSource.Global(local);
-            var gemSource = new ModifierSource.Local.Gem(ItemSlot.Boots, 0, 0, "Frenzy", "Frenzy");
+            var gemSource = new ModifierSource.Local.Gem(ItemSlot.Boots, 0, 0, frenzy.GemGroup, "Frenzy", "Frenzy");
             var valueCalculationContextMock = new Mock<IValueCalculationContext>();
             var isMainSkillStat = SetupIsActiveSkillInContext(valueCalculationContextMock, frenzy);
             var offHandTagsStat = new Stat("OffHand.ItemTags");
@@ -153,7 +153,7 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
             var levelDefinition = definition.Levels[20];
             var local = new ModifierSource.Local.Skill("Frenzy", "Added Cold Damage Support");
             var global = new ModifierSource.Global(local);
-            var gemSource = new ModifierSource.Local.Gem(support.ItemSlot, support.SocketIndex, support.SkillIndex,
+            var gemSource = new ModifierSource.Local.Gem(support.ItemSlot, support.SocketIndex, support.SkillIndex, support.GemGroup,
                 "Frenzy", "Added Cold Damage Support");
             var valueCalculationContextMock = new Mock<IValueCalculationContext>();
             var isMainSkillStat = SetupIsActiveSkillInContext(valueCalculationContextMock, frenzy);

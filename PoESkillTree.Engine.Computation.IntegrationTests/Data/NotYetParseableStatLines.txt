@@ -38,29 +38,6 @@ You have Fortify during Effect of any Life Flask
 Remove a Curse when you use a Mana Flask
 Remove a random Elemental Ailment when you use a Mana Flask
 // Socketed gem modifiers
-+2 to Level of Socketed Gems
-+1 to Level of Socketed Active Skill Gems
-+1 to Level of Socketed AoE Gems
-+2 to Level of Socketed Aura Gems
-+1 to Level of Socketed Bow Gems
-+1 to Level of Socketed Chaos Gems
-+1 to Level of Socketed Cold Gems
-+2 to Level of Socketed Curse Gems
-+1 to Level of Socketed Fire Gems
-+1 to Level of Socketed Gems
-+1 to Level of Socketed Lightning Gems
-+1 to Level of Socketed Melee Gems
-+1 to Level of Socketed Minion Gems
-+1 to Level of Socketed Projectile Gems
-+1 to Level of Socketed Spell Gems
-+2 to Level of Socketed Trap Gems
-+2 to Level of Socketed Trap or Mine Gems
-+4 to Level of Supported Active Skill Gems
-+4 to Level of Supported Cold Skill Gems
-+4 to Level of Supported Fire Skill Gems
-+4 to Level of Supported Lightning Skill Gems
-+1 to Level of Supported Curse Skill Gems
-+1 to Level of Supported Aura Skill Gems
 Socketed Attacks have +1% to Critical Strike Chance
 Socketed Attacks have +30% to Critical Strike Multiplier
 Socketed Gems Chain 1 additional times
@@ -78,15 +55,7 @@ Socketed Spells have +1% to Critical Strike Chance
 Socketed Spells have +30% to Critical Strike Multiplier
 +5% to Quality of Socketed Gems
 +4% to Quality of Socketed Support Gems
-// Equipped gem modifiers
-+1 to Level of all Chaos Spell Skill Gems
-+1 to Level of all Cold Spell Skill Gems
-+1 to Level of all Fire Spell Skill Gems
-+1 to Level of all Lightning Spell Skill Gems
-+1 to Level of all Minion Skill Gems
-+2 to Level of all Minion Skill Gems
-+1 to Level of all Physical Spell Skill Gems
-+1 to Level of all Spell Skill Gems
++72% to Quality of Supported Active Skill Gems
 // Item-inherent skills
 Curse Enemies with Level 10 Flammability on Hit
 Curse Enemies with Level 8 Assassin's Mark on Hit

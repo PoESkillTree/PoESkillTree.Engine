@@ -191,6 +191,9 @@ SupportAddedFireDamagePlus
 SupportAddedLightningDamage
 SupportAddedLightningDamagePlus
 SupportAdditionalAccuracy
+SupportAdditionalLevel
+SupportAdditionalQuality
+SupportAdditionalXP
 SupportAilments
 SupportUnboundAilmentsPlus
 SupportArcaneSurge
