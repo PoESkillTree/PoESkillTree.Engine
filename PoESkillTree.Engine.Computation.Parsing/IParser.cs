@@ -24,8 +24,6 @@ namespace PoESkillTree.Engine.Computation.Parsing
         ParseResult ParseJewelSocketedInSkillTree(Item item, JewelRadius jewelRadius, ushort nodeId);
         
         ParseResult ParseSkills(IReadOnlyList<Skill> skills, Entity entity = Entity.Character);
-        ParseResult ParseActiveSkill(Skill activeSkill, Entity entity = Entity.Character);
-        ParseResult ParseSupportSkill(Skill activeSkill, Skill supportSkill, Entity entity = Entity.Character);
 
         IReadOnlyList<Modifier> ParseGivenModifiers();
         // This method looks weird, but the delegates are necessary for caller-defined concurrency

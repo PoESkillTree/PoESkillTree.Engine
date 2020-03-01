@@ -7,6 +7,7 @@ using NUnit.Framework;
 using PoESkillTree.Engine.Computation.Builders.Stats;
 using PoESkillTree.Engine.Computation.Common;
 using PoESkillTree.Engine.Computation.Common.Builders.Damage;
+using PoESkillTree.Engine.Computation.Data.Steps;
 using PoESkillTree.Engine.Computation.Parsing;
 using PoESkillTree.Engine.GameModel;
 using PoESkillTree.Engine.GameModel.Items;
@@ -21,7 +22,7 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
     {
 #pragma warning disable 8618 // Initialized in ClassInit
         private SkillDefinitions _skillDefinitions;
-        private IParser _parser;
+        private Parser<ParsingStep> _parser;
 #pragma warning restore 8618
 
         [SetUp]

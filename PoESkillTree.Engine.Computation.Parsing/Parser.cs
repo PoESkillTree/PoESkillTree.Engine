@@ -38,7 +38,7 @@ namespace PoESkillTree.Engine.Computation.Parsing
             _untranslatedStatParsers =
                 new ConcurrentDictionary<IReadOnlyList<string>, IParser<UntranslatedStatParserParameter>>();
 
-        public static async Task<IParser> CreateAsync(
+        public static async Task<Parser<TStep>> CreateAsync(
             GameData gameData, Task<IBuilderFactories> builderFactoriesTask, Task<IParsingData<TStep>> parsingDataTask)
         {
             var passiveTreeTask = gameData.PassiveTree;

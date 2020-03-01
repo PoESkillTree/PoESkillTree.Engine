@@ -22,8 +22,8 @@ namespace PoESkillTree.Engine.Computation.Console
             _builderFactories = new Lazy<Task<IBuilderFactories>>(
                 () => Builders.BuilderFactories.CreateAsync(_gameData.Value));
             _parser = new Lazy<Task<IParser>>(
-                () => Parser<ParsingStep>.CreateAsync(_gameData.Value, _builderFactories.Value,
-                    ParsingData.CreateAsync(_gameData.Value, _builderFactories.Value)));
+                async () => await Parser<ParsingStep>.CreateAsync(_gameData.Value, _builderFactories.Value,
+                    ParsingData.CreateAsync(_gameData.Value, _builderFactories.Value)).ConfigureAwait(false));
         }
 
         public GameData GameData => _gameData.Value;
