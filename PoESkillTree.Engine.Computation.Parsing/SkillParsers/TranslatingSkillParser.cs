@@ -118,12 +118,8 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             params string[] statTranslationFileNames)
         {
             var unparsedStats = stats.Except(_parsedStats).ToList();
-            var (statsWithGemSource, statsWithLocalSource) =
-                unparsedStats.Partition(s => SkillStatIds.ManipulatesSupportedGems.IsMatch(s.StatId));
             var statParser = _statParserFactory(statTranslationFileNames);
-            var gemSourceResult = Parse(statParser, _preParseResult!.GemSource, modifierSourceEntity, statsWithGemSource.ToList());
-            var localSourceResult = Parse(statParser, _preParseResult.LocalSource, modifierSourceEntity, statsWithLocalSource.ToList());
-            return ParseResult.Aggregate(new[] {gemSourceResult, localSourceResult});
+            return Parse(statParser, _preParseResult!.LocalSource, modifierSourceEntity, unparsedStats);
         }
 
         private static ParseResult Parse(IParser<UntranslatedStatParserParameter> parser,

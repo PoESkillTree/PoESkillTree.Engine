@@ -38,19 +38,6 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
                 _ => throw new ParseException($"ModifierSource must be Item or Gem, {source} given")
             };
 
-        public IStatBuilder AdditionalActiveLevelsForModifierSourceGemGroup() =>
-            AdditionalLevels(".ActiveSkill", GetItemSlotAndGemGroup);
-
-        public IStatBuilder AdditionalActiveLevelsForModifierSourceGemGroup(IGemTagBuilder gemTag) =>
-            AdditionalLevels(".ActiveSkill", gemTag, (ps, t) => $"{t}.{GetItemSlotAndGemGroup(ps.ModifierSource)}");
-
-        private static string GetItemSlotAndGemGroup(ModifierSource source) =>
-            source.GetLocalSource() switch
-            {
-                ModifierSource.Local.Gem gemSource => $"{gemSource.SourceGem.ItemSlot}.{gemSource.SourceGem.Group}",
-                _ => throw new ParseException($"ModifierSource must be Gem, {source} given")
-            };
-
         private IStatBuilder AdditionalLevels(string identityInfix, IGemTagBuilder gemTag, Func<BuildParameters, string, string> buildIdentitySuffix)
         {
             var coreBuilder = new CoreStatBuilderFromCoreBuilder<string>(

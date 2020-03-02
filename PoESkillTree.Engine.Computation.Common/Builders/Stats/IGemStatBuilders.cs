@@ -13,8 +13,5 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
         IStatBuilder AdditionalLevelsForModifierSourceItemSlot();
         IStatBuilder AdditionalLevelsForModifierSourceItemSlot(IGemTagBuilder gemTag);
         IStatBuilder AdditionalActiveLevelsForModifierSourceItemSlot();
-
-        IStatBuilder AdditionalActiveLevelsForModifierSourceGemGroup();
-        IStatBuilder AdditionalActiveLevelsForModifierSourceGemGroup(IGemTagBuilder gemTag);
     }
 }

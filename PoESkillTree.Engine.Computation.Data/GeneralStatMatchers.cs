@@ -487,8 +487,6 @@ namespace PoESkillTree.Engine.Computation.Data
                     Gem.AdditionalLevelsForModifierSourceItemSlot(References[0].AsGemTag),
                     Gem.AdditionalLevelsForModifierSourceItemSlot(References[1].AsGemTag)
                 },
-                { "level of supported active skill gems", Gem.AdditionalActiveLevelsForModifierSourceGemGroup() },
-                { "level of supported ({GemTagMatchers}) skill gems", Gem.AdditionalActiveLevelsForModifierSourceGemGroup(Reference.AsGemTag) },
                 // other
                 { "reflected damage taken", AnyDamageType.ReflectedDamageTaken },
                 { "reflected elemental damage taken", Elemental.ReflectedDamageTaken },
