@@ -243,7 +243,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
                     addedActiveSkillTypes, new Keyword[0]), new Dictionary<int, SkillLevelDefinition>());
 
         private static Skill CreateSkillFromGem(string skillId, ItemSlot itemSlot, int socketIndex, int gemGroup) =>
-            Skill.FromGem(new Gem(skillId, 20, 20, itemSlot, socketIndex, gemGroup, true), 0, true);
+            Skill.FromGem(new Gem(skillId, 20, 20, itemSlot, socketIndex, gemGroup, true), true);
 
         private static Skill CreateSkillFromItem(string skillId, ItemSlot itemSlot, int skillIndex) =>
             Skill.FromItem(skillId, 20, 20, itemSlot, skillIndex, true);

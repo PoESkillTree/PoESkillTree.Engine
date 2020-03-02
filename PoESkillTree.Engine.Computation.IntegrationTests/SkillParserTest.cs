@@ -36,12 +36,11 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
         public void ParseFrenzyReturnsCorrectResult()
         {
             var frenzyGem = new Gem("Frenzy", 20, 20, ItemSlot.Boots, 0, 0, true);
-            var frenzy = Skill.FromGem(frenzyGem, 0, true);
+            var frenzy = Skill.FromGem(frenzyGem, true);
             var definition = _skillDefinitions.GetSkillById("Frenzy");
             var levelDefinition = definition.Levels[20];
             var local = new ModifierSource.Local.Skill("Frenzy", "Frenzy");
             var global = new ModifierSource.Global(local);
-            var gemSource = new ModifierSource.Local.Gem(frenzyGem, "Frenzy");
             var valueCalculationContextMock = new Mock<IValueCalculationContext>();
             var isMainSkillStat = SetupIsActiveSkillInContext(valueCalculationContextMock, frenzy);
             var offHandTagsStat = new Stat("OffHand.ItemTags");
@@ -118,8 +117,6 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
                     ("Life.Reservation", Form.BaseAdd, null, global, false),
                     ("EnergyShield.Reservation", Form.BaseAdd, null, global, false),
                     ("Mana.Reservation", Form.BaseAdd, null, global, false),
-                    ("Level.Required", Form.BaseSet, levelDefinition.Requirements.Level, gemSource, false),
-                    ("Dexterity.Required", Form.BaseSet, levelDefinition.Requirements.Dexterity, gemSource, false),
                     ("CastRate.Attack.MainHand.Skill", Form.Increase, levelDefinition.QualityStats[0].Value * 20 / 1000,
                         global, true),
                     ("CastRate.Attack.OffHand.Skill", Form.Increase, levelDefinition.QualityStats[0].Value * 20 / 1000,
@@ -150,14 +147,13 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
         public void ParseAddedColdDamageSupportReturnsCorrectResult()
         {
             var frenzyGem = new Gem("Frenzy", 20, 20, ItemSlot.Boots, 0, 0, true);
-            var frenzy = Skill.FromGem(frenzyGem, 0, true);
+            var frenzy = Skill.FromGem(frenzyGem, true);
             var supportGem = new Gem("SupportAddedColdDamage", 20, 20, ItemSlot.Boots, 1, 0, true);
-            var support = Skill.FromGem(supportGem, 0, true);
+            var support = Skill.FromGem(supportGem, true);
             var definition = _skillDefinitions.GetSkillById(support.Id);
             var levelDefinition = definition.Levels[20];
             var local = new ModifierSource.Local.Skill("Frenzy", "Added Cold Damage Support");
             var global = new ModifierSource.Global(local);
-            var gemSource = new ModifierSource.Local.Gem(supportGem, "Added Cold Damage Support");
             var valueCalculationContextMock = new Mock<IValueCalculationContext>();
             var isMainSkillStat = SetupIsActiveSkillInContext(valueCalculationContextMock, frenzy);
             var addedDamageValue = new NodeValue(levelDefinition.Stats[0].Value, levelDefinition.Stats[1].Value);
@@ -169,8 +165,6 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
                     ("SupportAddedColdDamage.ActiveSkillSocketIndex",
                         Form.BaseSet, support.SocketIndex, global, false),
                     ("Frenzy.Cost", Form.More, levelDefinition.ManaMultiplier * 100 - 100, global, false),
-                    ("Level.Required", Form.BaseSet, levelDefinition.Requirements.Level, gemSource, false),
-                    ("Dexterity.Required", Form.BaseSet, levelDefinition.Requirements.Dexterity, gemSource, false),
                     ("Cold.Damage.Attack.MainHand.Skill", Form.Increase,
                         levelDefinition.QualityStats[0].Value * 20 / 1000, global, true),
                     ("Cold.Damage.Attack.OffHand.Skill", Form.Increase,
@@ -308,15 +302,15 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
             if (definition.IsSupport)
             {
                 var activeGem = new Gem("BloodRage", 20, 20, default, 0, 0, true);
-                var activeSkill = Skill.FromGem(activeGem, 0, true);
+                var activeSkill = Skill.FromGem(activeGem, true);
                 var supportGem = new Gem(skillId, level, 20, default, 1, 0, true);
-                var supportSkill = Skill.FromGem(supportGem, 0, true);
+                var supportSkill = Skill.FromGem(supportGem, true);
                 return _parser.ParseSupportSkill(activeSkill, supportSkill);
             }
             else
             {
                 var gem = new Gem(skillId, level, 20, default, 0, 0, true);
-                var skill = Skill.FromGem(gem, 0, true);
+                var skill = Skill.FromGem(gem, true);
                 return _parser.ParseActiveSkill(skill);
             }
         }

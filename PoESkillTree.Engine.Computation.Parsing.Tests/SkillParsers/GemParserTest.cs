@@ -31,14 +31,20 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             GetValueForIdentity(modifiers, "Strength.Required").Calculate(null!).Should().Be(new NodeValue(98));
         }
 
-        private static (SkillDefinition, Gem) CreateFlameTotemDefinition()
+        [Test]
+        public void FlameTotemHasASingleSkill()
         {
-            var activeSkill = CreateActiveSkillDefinition("Flame Totem");
-            var level = CreateLevelDefinition(requiredLevel: 74, requiredIntelligence: 68, requiredStrength: 98);
-            var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
-            return (CreateActive("FlameTotem", activeSkill, levels),
-                new Gem("FlameTotem", 1, 10, ItemSlot.Belt, 0, 0, true));
+            var (definition, gem) = CreateFlameTotemDefinition();
+            var expected = Skill.FromGem(gem, true);
+            var sut = CreateSut(definition);
+
+            sut.Parse(gem, Entity.Character, out var actual);
+
+            actual.Should().BeEquivalentTo(expected);
         }
+
+        private static (SkillDefinition, Gem) CreateFlameTotemDefinition() =>
+            CreateDefinition("FlameTotem", requiredLevel: 74, requiredIntelligence: 68, requiredStrength: 98);
 
         [Test]
         public void CastOnCriticalStrikeHasCorrectDexterityRequirement()
@@ -52,16 +58,58 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             GetValueForIdentity(modifiers, "Dexterity.Required").Calculate(null!).Should().Be(new NodeValue(40));
         }
 
-        private static (SkillDefinition, Gem) CreateCastOnCriticalStrikeDefinition()
+        [Test]
+        public void CastOnCriticalStrikeHasTwoEnabledSkills()
         {
-            var activeSkill = CreateActiveSkillDefinition("Cast On Critical Strike Support");
-            var level = CreateLevelDefinition(requiredLevel: 38, requiredDexterity: 40, requiredIntelligence: 27);
-            var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
-            return (CreateActive("SupportCastOnCrit", activeSkill, levels),
-                new Gem("SupportCastOnCrit", 1, 10, ItemSlot.Belt, 0, 0, true));
+            var (definition, gem) = CreateCastOnCriticalStrikeDefinition();
+            IReadOnlyList<Skill> expected = new[]
+            {
+                Skill.FromGem(gem, true),
+                Skill.SecondaryFromGem("SupportCastOnCritTriggered", gem, true),
+            };
+            var sut = CreateSut(definition);
+
+            sut.Parse(gem, Entity.Character, out var actual);
+
+            actual.Should().BeEquivalentTo(expected);
         }
 
-        // TODO test skills output
+        private static (SkillDefinition, Gem) CreateCastOnCriticalStrikeDefinition() =>
+            CreateDefinition("SupportCastOnCrit", "SupportCastOnCritTriggered",
+                requiredLevel: 38, requiredDexterity: 40, requiredIntelligence: 27);
+
+        [Test]
+        public void VaalGraceHasDisabledSecondarySkill()
+        {
+            var (definition, gem) = CreateVaalGraceDefinition();
+            IReadOnlyList<Skill> expected = new[]
+            {
+                Skill.FromGem(gem, true),
+                Skill.SecondaryFromGem("Grace", gem, false),
+            };
+            var sut = CreateSut(definition);
+
+            sut.Parse(gem, Entity.Character, out var actual);
+
+            actual.Should().BeEquivalentTo(expected);
+        }
+
+        private static (SkillDefinition, Gem) CreateVaalGraceDefinition() =>
+            CreateDefinition("VaalGrace", "Grace", gemTags: new[] {"vaal"});
+
+        private static (SkillDefinition, Gem) CreateDefinition(
+            string skillId, string? secondarySkillId = null, string[]? gemTags = null,
+            int requiredLevel = 0, int requiredDexterity = 0, int requiredIntelligence = 0, int requiredStrength = 0)
+        {
+            var activeSkill = CreateActiveSkillDefinition(skillId);
+            var level = CreateLevelDefinition(requiredLevel: requiredLevel, requiredDexterity: requiredDexterity,
+                requiredIntelligence: requiredIntelligence, requiredStrength: requiredStrength);
+            var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
+            return (SkillDefinition.CreateActive(skillId, 0, "", secondarySkillId, Array.Empty<string>(),
+                    new SkillBaseItemDefinition(skillId, "", default, gemTags ?? Array.Empty<string>()),
+                    activeSkill, levels),
+                new Gem(skillId, 1, 0, ItemSlot.Belt, 0, 0, true));
+        }
 
         private static GemParser CreateSut(SkillDefinition definition)
         {

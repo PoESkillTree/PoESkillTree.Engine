@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using PoESkillTree.Engine.Computation.Common;
 using PoESkillTree.Engine.Computation.Common.Builders;
 using PoESkillTree.Engine.GameModel;
@@ -20,8 +21,23 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         public ParseResult Parse(GemParserParameter parameter)
         {
             var (gem, modifierSourceEntity) = parameter;
-
             var skillDefinition = _skillDefinitions.GetSkillById(gem.SkillId);
+            parameter.Skills.AddRange(ParseSkills(gem, skillDefinition));
+            return ParseRequirements(gem, modifierSourceEntity, skillDefinition);
+        }
+
+        private static IEnumerable<Skill> ParseSkills(Gem gem, SkillDefinition skillDefinition)
+        {
+            yield return Skill.FromGem(gem, true);
+            if (skillDefinition.SecondarySkillId is string secondarySkillId)
+            {
+                var isEnabled = !skillDefinition.BaseItem?.GemTags.Contains("vaal") ?? true;
+                yield return Skill.SecondaryFromGem(secondarySkillId, gem, isEnabled);
+            }
+        }
+
+        private ParseResult ParseRequirements(Gem gem, Entity modifierSourceEntity, SkillDefinition skillDefinition)
+        {
             var levelDefinition = skillDefinition.Levels[gem.Level];
             var modifierSource = new ModifierSource.Local.Gem(gem, skillDefinition.DisplayName);
             var modifiers = new ModifierCollection(_builderFactories, modifierSource, modifierSourceEntity);

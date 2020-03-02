@@ -110,7 +110,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         private static Skill CreateSkill(string id, int? gemGroup)
         {
             if (gemGroup.HasValue)
-                return Skill.FromGem(new Gem(id, 1, 0, ItemSlot.Belt, 0, gemGroup.Value, true), 0, true);
+                return Skill.FromGem(new Gem(id, 1, 0, ItemSlot.Belt, 0, gemGroup.Value, true), true);
             else
                 return Skill.FromItem(id, 1, 0, ItemSlot.Belt, 0, true);
         }

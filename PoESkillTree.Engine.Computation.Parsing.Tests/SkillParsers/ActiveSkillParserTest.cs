@@ -1476,7 +1476,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         #endregion
 
         private static Skill CreateSkillFromGem(string skillId, int level, int quality = 0, bool isEnabled = true) =>
-            Skill.FromGem(new Gem(skillId, level, quality, ItemSlot.Belt, 0, 0, isEnabled), 0, isEnabled);
+            Skill.FromGem(new Gem(skillId, level, quality, ItemSlot.Belt, 0, 0, isEnabled), isEnabled);
 
         private static Skill CreateSkillFromItem(string skillId, int level, int quality = 0) =>
             Skill.FromItem(skillId, level, quality, ItemSlot.Belt, 0, true);
