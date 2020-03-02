@@ -34,7 +34,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
             source.GetLocalSource() switch
             {
                 ModifierSource.Local.Item itemSource => itemSource.Slot,
-                ModifierSource.Local.Gem gemSource => gemSource.Slot,
+                ModifierSource.Local.Gem gemSource => gemSource.SourceGem.ItemSlot,
                 _ => throw new ParseException($"ModifierSource must be Item or Gem, {source} given")
             };
 
@@ -47,7 +47,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         private static string GetItemSlotAndGemGroup(ModifierSource source) =>
             source.GetLocalSource() switch
             {
-                ModifierSource.Local.Gem gemSource => $"{gemSource.Slot}.{gemSource.GemGroup}",
+                ModifierSource.Local.Gem gemSource => $"{gemSource.SourceGem.ItemSlot}.{gemSource.SourceGem.Group}",
                 _ => throw new ParseException($"ModifierSource must be Gem, {source} given")
             };
 

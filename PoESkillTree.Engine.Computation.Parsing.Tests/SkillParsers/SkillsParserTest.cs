@@ -60,7 +60,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             {
                 CreateParseResult("0", "b", "c"),
                 CreateParseResult("1", "b"),
-                CreateParseResult("2", "a", "b", "d"),
+                CreateParseResult("2", "b", "a", "d"),
             });
             var actives = new[]
             {
@@ -108,7 +108,12 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         }
 
         private static Skill CreateSkill(string id, int? gemGroup)
-            => new Skill(id, 1, 0, ItemSlot.Belt, 0, gemGroup);
+        {
+            if (gemGroup.HasValue)
+                return Skill.FromGem(new Gem(id, 1, 0, ItemSlot.Belt, 0, gemGroup.Value, true), 0, true);
+            else
+                return Skill.FromItem(id, 1, 0, ItemSlot.Belt, 0, true);
+        }
 
         private static ParseResult CreateParseResultForActive(string activeId)
             => ParseResult.Success(new[] { CreateModifier(activeId) });

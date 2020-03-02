@@ -35,12 +35,13 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
         [Test]
         public void ParseFrenzyReturnsCorrectResult()
         {
-            var frenzy = new Skill("Frenzy", 20, 20, ItemSlot.Boots, 0, 0);
+            var frenzyGem = new Gem("Frenzy", 20, 20, ItemSlot.Boots, 0, 0, true);
+            var frenzy = Skill.FromGem(frenzyGem, 0, true);
             var definition = _skillDefinitions.GetSkillById("Frenzy");
             var levelDefinition = definition.Levels[20];
             var local = new ModifierSource.Local.Skill("Frenzy", "Frenzy");
             var global = new ModifierSource.Global(local);
-            var gemSource = new ModifierSource.Local.Gem(ItemSlot.Boots, 0, 0, frenzy.GemGroup, "Frenzy", "Frenzy");
+            var gemSource = new ModifierSource.Local.Gem(frenzyGem, "Frenzy");
             var valueCalculationContextMock = new Mock<IValueCalculationContext>();
             var isMainSkillStat = SetupIsActiveSkillInContext(valueCalculationContextMock, frenzy);
             var offHandTagsStat = new Stat("OffHand.ItemTags");
@@ -148,14 +149,15 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
         [Test]
         public void ParseAddedColdDamageSupportReturnsCorrectResult()
         {
-            var frenzy = new Skill("Frenzy", 20, 20, ItemSlot.Boots, 0, 0);
-            var support = new Skill("SupportAddedColdDamage", 20, 20, ItemSlot.Boots, 1, 0);
+            var frenzyGem = new Gem("Frenzy", 20, 20, ItemSlot.Boots, 0, 0, true);
+            var frenzy = Skill.FromGem(frenzyGem, 0, true);
+            var supportGem = new Gem("SupportAddedColdDamage", 20, 20, ItemSlot.Boots, 1, 0, true);
+            var support = Skill.FromGem(supportGem, 0, true);
             var definition = _skillDefinitions.GetSkillById(support.Id);
             var levelDefinition = definition.Levels[20];
             var local = new ModifierSource.Local.Skill("Frenzy", "Added Cold Damage Support");
             var global = new ModifierSource.Global(local);
-            var gemSource = new ModifierSource.Local.Gem(support.ItemSlot, support.SocketIndex, support.SkillIndex, support.GemGroup,
-                "Frenzy", "Added Cold Damage Support");
+            var gemSource = new ModifierSource.Local.Gem(supportGem, "Added Cold Damage Support");
             var valueCalculationContextMock = new Mock<IValueCalculationContext>();
             var isMainSkillStat = SetupIsActiveSkillInContext(valueCalculationContextMock, frenzy);
             var addedDamageValue = new NodeValue(levelDefinition.Stats[0].Value, levelDefinition.Stats[1].Value);
@@ -305,13 +307,16 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
             var level = Math.Min(definition.Levels.Keys.Max(), 20);
             if (definition.IsSupport)
             {
-                var activeSkill = new Skill("BloodRage", 20, 20, default, 0, 0);
-                var supportSkill = new Skill(skillId, level, 20, default, 1, 0);
+                var activeGem = new Gem("BloodRage", 20, 20, default, 0, 0, true);
+                var activeSkill = Skill.FromGem(activeGem, 0, true);
+                var supportGem = new Gem(skillId, level, 20, default, 1, 0, true);
+                var supportSkill = Skill.FromGem(supportGem, 0, true);
                 return _parser.ParseSupportSkill(activeSkill, supportSkill);
             }
             else
             {
-                var skill = new Skill(skillId, level, 20, default, 0, 0);
+                var gem = new Gem(skillId, level, 20, default, 0, 0, true);
+                var skill = Skill.FromGem(gem, 0, true);
                 return _parser.ParseActiveSkill(skill);
             }
         }

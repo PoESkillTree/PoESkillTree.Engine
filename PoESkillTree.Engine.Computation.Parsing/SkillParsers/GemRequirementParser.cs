@@ -17,7 +17,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
         public PartialSkillParseResult Parse(Skill mainSkill, Skill parsedSkill, SkillPreParseResult preParseResult)
         {
-            if (!parsedSkill.GemGroup.HasValue)
+            if (parsedSkill.Gem is null)
                 return new PartialSkillParseResult(new Modifier[0], new UntranslatedStat[0]);
 
             var modifiers = new ModifierCollection(_builderFactories, preParseResult.GemSource, preParseResult.ModifierSourceEntity);

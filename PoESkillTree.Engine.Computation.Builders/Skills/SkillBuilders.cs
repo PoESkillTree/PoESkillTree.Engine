@@ -40,7 +40,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Skills
             parameters.ModifierSource.GetLocalSource() switch
             {
                 ModifierSource.Local.Skill skillSource => _skills.GetSkillById(skillSource.SkillId),
-                ModifierSource.Local.Gem gemSource => _skills.GetSkillById(gemSource.SkillId),
+                ModifierSource.Local.Gem gemSource => _skills.GetSkillById(gemSource.SourceGem.SkillId),
                 _ => throw new ParseException($"ModifierSource must be a skill, {parameters.ModifierSource} given")
             };
     }

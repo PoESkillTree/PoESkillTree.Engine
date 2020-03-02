@@ -128,7 +128,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition(manaCost: 10);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("Frenzy", activeSkill, levels),
-                new Skill("Frenzy", 1, 0, ItemSlot.Belt, 0, 0, isEnabled));
+                CreateSkillFromGem("Frenzy", 1, 0, isEnabled));
         }
 
         #endregion
@@ -296,7 +296,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 qualityStats: qualityStats, stats: stats);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("FlameTotem", activeSkill, levels),
-                new Skill("FlameTotem", 1, 10, ItemSlot.Belt, 0, 0));
+                CreateSkillFromGem("FlameTotem", 1, 10));
         }
 
         #endregion
@@ -368,7 +368,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition(stats: stats);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("Contagion", activeSkill, levels),
-                new Skill("Contagion", 1, 0, ItemSlot.Belt, 0, null));
+                CreateSkillFromItem("Contagion", 1));
         }
 
         #endregion
@@ -430,7 +430,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition(stats: stats);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("ShieldCharge", activeSkill, levels),
-                new Skill("ShieldCharge", 1, 0, ItemSlot.Belt, 0, null));
+                CreateSkillFromItem("ShieldCharge", 1));
         }
 
         #endregion
@@ -489,7 +489,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition();
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("DualStrike", activeSkill, levels),
-                new Skill("DualStrike", 1, 0, ItemSlot.Belt, 0, null));
+                CreateSkillFromItem("DualStrike", 1));
         }
 
         #endregion
@@ -538,7 +538,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition(stats: stats);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("PoisonArrow", activeSkill, levels),
-                new Skill("PoisonArrow", 1, 0, ItemSlot.Belt, 0, null));
+                CreateSkillFromItem("PoisonArrow", 1));
         }
 
         #endregion
@@ -585,7 +585,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition(cooldown: 4000, stats: stats);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("AbyssalCry", activeSkill, levels),
-                new Skill("AbyssalCry", 1, 0, ItemSlot.Belt, 0, null));
+                CreateSkillFromItem("AbyssalCry", 1));
         }
 
         #endregion
@@ -613,7 +613,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition(stats: stats);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("DoubleStrike", activeSkill, levels),
-                new Skill("DoubleStrike", 1, 0, ItemSlot.Belt, 0, null));
+                CreateSkillFromItem("DoubleStrike", 1));
         }
 
         #endregion
@@ -641,7 +641,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition(stats: stats);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("Cleave", activeSkill, levels),
-                new Skill("Cleave", 1, 0, ItemSlot.Belt, 0, null));
+                CreateSkillFromItem("Cleave", 1));
         }
 
         #endregion
@@ -858,7 +858,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition(manaCost: 10, buffStats: buffStats);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("Clarity", activeSkill, levels),
-                new Skill("Clarity", 1, 0, ItemSlot.Belt, 0, null));
+                CreateSkillFromGem("Clarity", 1));
         }
 
         #endregion
@@ -891,7 +891,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition(manaCost: 50);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("Hatred", activeSkill, levels),
-                new Skill("Hatred", 1, 0, ItemSlot.Belt, 0, null));
+                CreateSkillFromGem("Hatred", 1));
         }
 
         #endregion
@@ -989,7 +989,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 additionalStatsPerPart: additionalStatsPerPart);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("ChargedAttack", activeSkill, levels),
-                new Skill("ChargedAttack", 1, 0, ItemSlot.Belt, 0, null));
+                CreateSkillFromItem("ChargedAttack", 1));
         }
 
         #endregion
@@ -1090,7 +1090,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition(additionalStatsPerPart: additionalStatsPerPart);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("WildStrike", activeSkill, levels),
-                new Skill("WildStrike", 1, 0, ItemSlot.Belt, 0, null));
+                CreateSkillFromItem("WildStrike", 1));
         }
 
         #endregion
@@ -1133,7 +1133,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition(additionalStatsPerPart: additionalStatsPerPart);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("InfernalBlow", activeSkill, levels),
-                new Skill("InfernalBlow", 1, 0, ItemSlot.Belt, 0, null));
+                CreateSkillFromItem("InfernalBlow", 1));
         }
 
         #endregion
@@ -1191,7 +1191,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition(stats: stats, additionalStatsPerPart: additionalStatsPerPart);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("IceSpear", activeSkill, levels),
-                new Skill("IceSpear", 1, 0, ItemSlot.Belt, 0, null));
+                CreateSkillFromItem("IceSpear", 1));
         }
 
         #endregion
@@ -1221,7 +1221,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition(stats: stats);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("BladeVortex", activeSkill, levels),
-                new Skill("BladeVortex", 1, 0, ItemSlot.Belt, 0, null));
+                CreateSkillFromItem("BladeVortex", 1));
         }
 
         #endregion
@@ -1294,7 +1294,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition(manaCost: 10, buffStats: buffStats, qualityBuffStats: qualityBuffStats);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("HeraldOfIce", activeSkill, levels),
-                new Skill("HeraldOfIce", 1, 20, ItemSlot.Belt, 0, null));
+                CreateSkillFromItem("HeraldOfIce", 1, 20));
         }
 
         #endregion
@@ -1326,7 +1326,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition(stats: stats, canBypassCooldown: true);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("ColdSnap", activeSkill, levels),
-                new Skill("ColdSnap", 1, 0, ItemSlot.Belt, 0, null));
+                CreateSkillFromItem("ColdSnap", 1));
         }
 
         #endregion
@@ -1406,7 +1406,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition(buffStats: buffStats);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (SkillDefinition.CreateActive("Flammability", 12, "", null, new string[0], null, activeSkill, levels),
-                new Skill("Flammability", 1, 0, ItemSlot.Belt, 0, null));
+                CreateSkillFromItem("Flammability", 1));
         }
 
         private static IValueCalculationContext MockValueCalculationContextForCurse(
@@ -1453,7 +1453,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition(stats: stats);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("CorpseWarp", activeSkill, levels),
-                new Skill("CorpseWarp", 1, 10, ItemSlot.Belt, 0, 0));
+                CreateSkillFromGem("CorpseWarp", 1, 10));
         }
 
         #endregion
@@ -1488,10 +1488,16 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition(stats: stats);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("RighteousFire", activeSkill, levels),
-                new Skill("RighteousFire", 1, 10, ItemSlot.Belt, 0, 0));
+                CreateSkillFromGem("RighteousFire", 1, 10));
         }
 
         #endregion
+
+        private static Skill CreateSkillFromGem(string skillId, int level, int quality = 0, bool isEnabled = true) =>
+            Skill.FromGem(new Gem(skillId, level, quality, ItemSlot.Belt, 0, 0, isEnabled), 0, isEnabled);
+
+        private static Skill CreateSkillFromItem(string skillId, int level, int quality = 0) =>
+            Skill.FromItem(skillId, level, quality, ItemSlot.Belt, 0, true);
 
         private static ActiveSkillParser CreateSut(SkillDefinition skillDefinition)
         {

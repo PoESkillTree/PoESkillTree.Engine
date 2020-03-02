@@ -168,7 +168,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition();
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("Enfeeble", activeSkill, levels),
-                new Skill("Enfeeble", 1, 0, ItemSlot.Belt, 0, null));
+                CreateSkillFromGem("Enfeeble", 1, 0, 0));
         }
 
         private static (SkillDefinition, Skill) CreateClarityDefinition(bool isEnabled = true)
@@ -178,7 +178,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition(cooldown: 1200);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("Clarity", activeSkill, levels),
-                new Skill("Clarity", 1, 0, ItemSlot.Belt, 0, null, isEnabled));
+                CreateSkillFromGem("Clarity", 1, 0, 0, isEnabled));
         }
 
         private static (SkillDefinition, Skill) CreateBlasphemyDefinition(bool isEnabled = true)
@@ -191,7 +191,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition(manaCostOverride: 42, qualityPassiveStats: qualityPassiveStats);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateSupport("Blasphemy", supportSkill, levels),
-                new Skill("Blasphemy", 1, 20, ItemSlot.Belt, 1, null, isEnabled));
+                CreateSkillFromGem("Blasphemy", 1, 20, 1, isEnabled));
         }
 
         #endregion
@@ -224,7 +224,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition(stats: stats);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateSupport("SupportPhysicalToLightning", CreateSupportSkillDefinition(), levels),
-                new Skill("SupportPhysicalToLightning", 1, 0, ItemSlot.Belt, 1, null));
+                CreateSkillFromItem("SupportPhysicalToLightning", 1, 0, 1));
         }
 
         #endregion
@@ -272,7 +272,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition(stats: stats);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateSupport("SupportBloodMagic", CreateSupportSkillDefinition(), levels),
-                new Skill("SupportBloodMagic", 1, 0, ItemSlot.Belt, 1, null));
+                CreateSkillFromItem("SupportBloodMagic", 1, 0, 1));
         }
 
         #endregion
@@ -315,7 +315,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition(stats: stats);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateSupport("SupportPointBlank", CreateSupportSkillDefinition(), levels),
-                new Skill("SupportPointBlank", 1, 0, ItemSlot.Belt, 1, null));
+                CreateSkillFromItem("SupportPointBlank", 1, 0, 1));
         }
 
         #endregion
@@ -370,7 +370,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition(cooldown: 1);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateSupport("SupportCastOnCrit", CreateSupportSkillDefinition(), levels),
-                new Skill("SupportCastOnCrit", 1, 0, ItemSlot.Belt, 1, null));
+                CreateSkillFromItem("SupportCastOnCrit", 1, 0, 1));
         }
 
         private static (SkillDefinition, Skill) CreateCastOnCritTriggeredDefinition()
@@ -378,10 +378,16 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition(cooldown: 1);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateSupport("SupportCastOnCritTriggered", CreateSupportSkillDefinition(), levels),
-                new Skill("SupportCastOnCritTriggered", 1, 0, ItemSlot.Belt, 1, null));
+                CreateSkillFromItem("SupportCastOnCritTriggered", 1, 0, 1));
         }
 
         #endregion
+
+        private static Skill CreateSkillFromGem(string skillId, int level, int quality, int socketIndex, bool isEnabled = true) =>
+            Skill.FromGem(new Gem(skillId, level, quality, ItemSlot.Belt, socketIndex, 0, isEnabled), 0, isEnabled);
+
+        private static Skill CreateSkillFromItem(string skillId, int level, int quality, int skillIndex, bool isEnabled = true) =>
+            Skill.FromItem(skillId, level, quality, ItemSlot.Belt, skillIndex, isEnabled);
 
         private static SupportSkillParser CreateSut(SkillDefinition activeSkillDefinition, SkillDefinition supportSkillDefinition)
         {
