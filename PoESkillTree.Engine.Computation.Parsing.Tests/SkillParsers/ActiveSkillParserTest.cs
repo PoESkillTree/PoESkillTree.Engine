@@ -213,23 +213,6 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         }
 
         [Test]
-        public void FlameTotemHasCorrectRequirements()
-        {
-            var (definition, skill) = CreateFlameTotemDefinition();
-            var valueCalculationContext = MockValueCalculationContextForMainSkill(skill);
-            var sut = CreateSut(definition);
-
-            var result = Parse(sut, skill);
-
-            var modifiers = result.Modifiers;
-            Assert.IsFalse(AnyModifierHasIdentity(modifiers, "Dexterity.Required"));
-            var actualInt = GetValueForIdentity(modifiers, "Intelligence.Required").Calculate(valueCalculationContext);
-            Assert.AreEqual(new NodeValue(68), actualInt);
-            var actualStr = GetValueForIdentity(modifiers, "Strength.Required").Calculate(valueCalculationContext);
-            Assert.AreEqual(new NodeValue(98), actualStr);
-        }
-
-        [Test]
         public void FlameTotemSetsSpellDamage()
         {
             var (definition, skill) = CreateFlameTotemDefinition();
@@ -292,8 +275,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 new UntranslatedStat("spell_maximum_base_fire_damage", 10),
                 new UntranslatedStat("number_of_additional_projectiles", 2),
             };
-            var level = CreateLevelDefinition(criticalStrikeChance: 5, requiredIntelligence: 68, requiredStrength: 98,
-                qualityStats: qualityStats, stats: stats);
+            var level = CreateLevelDefinition(criticalStrikeChance: 5, qualityStats: qualityStats, stats: stats);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("FlameTotem", activeSkill, levels),
                 CreateSkillFromGem("FlameTotem", 1, 10));

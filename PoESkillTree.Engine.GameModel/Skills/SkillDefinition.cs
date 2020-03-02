@@ -43,6 +43,10 @@ namespace PoESkillTree.Engine.GameModel.Skills
         public SupportSkillDefinition SupportSkill { get; }
 
         public IReadOnlyDictionary<int, SkillLevelDefinition> Levels { get; }
+
+        public string? DisplayName => IsSupport
+            ? BaseItem?.DisplayName
+            : ActiveSkill.DisplayName;
     }
 
     public class SkillBaseItemDefinition

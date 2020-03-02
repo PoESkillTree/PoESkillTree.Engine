@@ -30,6 +30,7 @@ namespace PoESkillTree.Engine.Computation.Parsing
         private readonly IParser<SkillsParserParameter> _skillsParser;
         private readonly IParser<ActiveSkillParserParameter> _activeSkillParser;
         private readonly IParser<SupportSkillParserParameter> _supportSkillParser;
+        private readonly IParser<GemParserParameter> _gemParser;
 
         private readonly StatTranslators _statTranslators;
         private readonly IEnumerable<IGivenStats> _givenStats;
@@ -73,6 +74,7 @@ namespace PoESkillTree.Engine.Computation.Parsing
             _supportSkillParser =
                 Caching(new SupportSkillParser(skills, builderFactories, GetOrAddUntranslatedStatParser));
             _skillsParser = new SkillsParser(skills, _activeSkillParser, _supportSkillParser);
+            _gemParser = new GemParser(skills, builderFactories);
         }
 
         private IParser<UntranslatedStatParserParameter> GetOrAddUntranslatedStatParser(
@@ -106,14 +108,17 @@ namespace PoESkillTree.Engine.Computation.Parsing
         public ParseResult ParseItem(Item item, ItemSlot itemSlot, Entity entity = Entity.Character)
             => _itemParser.Parse(new ItemParserParameter(item, itemSlot, entity));
 
-        public ParseResult ParseJewelSocketedInItem(Item item, ItemSlot itemSlot)
-            => _itemJewelParser.Parse(new ItemParserParameter(item, itemSlot, Entity.Character));
+        public ParseResult ParseJewelSocketedInItem(Item item, ItemSlot itemSlot, Entity entity = Entity.Character)
+            => _itemJewelParser.Parse(new ItemParserParameter(item, itemSlot, entity));
 
         public ParseResult ParseJewelSocketedInSkillTree(Item item, JewelRadius jewelRadius, ushort nodeId)
             => _treeJewelParser.Parse(new JewelInSkillTreeParserParameter(item, jewelRadius, nodeId));
 
         public ParseResult ParseSkills(IReadOnlyList<Skill> skills, Entity entity = Entity.Character)
             => _skillsParser.Parse(new SequenceEquatableListView<Skill>(skills), entity);
+
+        public ParseResult ParseGem(Gem gem, out IReadOnlyList<Skill> skills, Entity entity = Entity.Character) =>
+            _gemParser.Parse(gem, entity, out skills);
 
         public ParseResult ParseActiveSkill(Skill activeSkill, Entity entity = Entity.Character)
             => _activeSkillParser.Parse(activeSkill, entity);

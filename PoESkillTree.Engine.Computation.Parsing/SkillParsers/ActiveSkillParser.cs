@@ -53,7 +53,6 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 SkillKeywordParser.CreateActive(_builderFactories),
                 SkillTypeParser.CreateActive(_builderFactories),
                 new ActiveSkillLevelParser(_builderFactories),
-                new GemRequirementParser(_builderFactories),
                 new SkillStatParser(_builderFactories),
             };
     }
