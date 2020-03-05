@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using MoreLinq;
+using PoESkillTree.Engine.Computation.Common;
 using PoESkillTree.Engine.Computation.Common.Builders.Skills;
 using PoESkillTree.Engine.Computation.Common.Builders.Stats;
 using PoESkillTree.Engine.Computation.Common.Builders.Values;
+using PoESkillTree.Engine.GameModel;
 using PoESkillTree.Engine.GameModel.Skills;
 #if NETSTANDARD2_0
 using PoESkillTree.Engine.Utils.Extensions;
@@ -17,21 +19,26 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         private readonly IGemStatBuilders _gemStatBuilders;
         private readonly IGemTagBuilders _gemTagBuilders;
         private readonly IValueBuilders _valueBuilders;
+        private readonly IValueCalculationContext _valueCalculationContext;
 
         public AdditionalSkillLevelParser(
-            SkillDefinitions skillDefinitions, IGemStatBuilders gemStatBuilders, IGemTagBuilders gemTagBuilders, IValueBuilders valueBuilders)
+            SkillDefinitions skillDefinitions, IGemStatBuilders gemStatBuilders, IGemTagBuilders gemTagBuilders, IValueBuilders valueBuilders,
+            IValueCalculationContext valueCalculationContext)
         {
             _skillDefinitions = skillDefinitions;
             _gemStatBuilders = gemStatBuilders;
             _gemTagBuilders = gemTagBuilders;
             _valueBuilders = valueBuilders;
+            _valueCalculationContext = valueCalculationContext;
         }
 
-        public IReadOnlyDictionary<Skill, IValueBuilder> Parse(Skill activeSkill, IReadOnlyList<Skill> supportingSkills)
+        public AdditionalSkillLevels Parse(Skill activeSkill, IReadOnlyList<Skill> supportingSkills, Entity modifierSourceEntity)
         {
             var dict = supportingSkills.Select(skill => (skill, ParseSupport(skill))).ToDictionary();
             dict[activeSkill] = ParseActive(activeSkill, dict);
-            return dict.ToDictionary(p => p.Key, p => (IValueBuilder) p.Value);
+            return AdditionalSkillLevels.Calculate(
+                dict.ToDictionary(p => p.Key, p => (IValueBuilder) p.Value),
+                _skillDefinitions, modifierSourceEntity, _valueCalculationContext);
         }
 
         private ValueBuilder ParseSupport(Skill supportingSkill)
