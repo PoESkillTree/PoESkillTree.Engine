@@ -5,17 +5,17 @@ namespace PoESkillTree.Engine.Computation.Core.Nodes
 {
     /// <summary>
     /// Implementation of <see cref="IValueCalculationContext"/> using <see cref="INodeRepository"/>.
-    /// Stores the <see cref="ICalculationNode"/>s and <see cref="IObservableCollection"/>s used to allow subscribing
+    /// Tracks the <see cref="ICalculationNode"/>s and <see cref="IObservableCollection"/>s used to allow subscribing
     /// to them.
     /// </summary>
-    public class ValueCalculationContext : IValueCalculationContext
+    public class TrackingValueCalculationContext : IValueCalculationContext
     {
         private readonly INodeRepository _nodeRepository;
 
         // Cuts down the memory footprint of GetValues.
         private static readonly Stack<HashSet<ICalculationNode>> NodeSets = new Stack<HashSet<ICalculationNode>>();
 
-        public ValueCalculationContext(INodeRepository nodeRepository, PathDefinition currentPath)
+        public TrackingValueCalculationContext(INodeRepository nodeRepository, PathDefinition currentPath)
         {
             _nodeRepository = nodeRepository;
             CurrentPath = currentPath;
