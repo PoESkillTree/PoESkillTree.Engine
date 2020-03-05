@@ -117,7 +117,9 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             Entity modifierSourceEntity,
             params string[] statTranslationFileNames)
         {
-            var unparsedStats = stats.Except(_parsedStats).ToList();
+            var unparsedStats = stats.Except(_parsedStats)
+                .Where(s => !SkillStatIds.SupportedSkillGemLevelRegex.IsMatch(s.StatId))
+                .ToList();
             var statParser = _statParserFactory(statTranslationFileNames);
             return Parse(statParser, _preParseResult!.LocalSource, modifierSourceEntity, unparsedStats);
         }

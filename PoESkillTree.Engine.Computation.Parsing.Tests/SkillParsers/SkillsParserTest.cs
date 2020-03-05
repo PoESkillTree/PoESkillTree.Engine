@@ -4,6 +4,7 @@ using Moq;
 using NUnit.Framework;
 using PoESkillTree.Engine.Computation.Builders.Stats;
 using PoESkillTree.Engine.Computation.Common;
+using PoESkillTree.Engine.Computation.Common.Builders.Values;
 using PoESkillTree.Engine.GameModel;
 using PoESkillTree.Engine.GameModel.Items;
 using PoESkillTree.Engine.GameModel.Skills;
@@ -84,6 +85,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
         private static SkillsParser CreateSut()
         {
+            var skillDefinitions = CreateSkillDefinitions();
             var activeParser = new Mock<IParser<ActiveSkillParserParameter>>();
             activeParser.Setup(p => p.Parse(It.IsAny<ActiveSkillParserParameter>()))
                 .Returns((ActiveSkillParserParameter p) => CreateParseResultForActive(p.ActiveSkill.Id));
@@ -91,7 +93,8 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             supportParser.Setup(p => p.Parse(It.IsAny<SupportSkillParserParameter>()))
                 .Returns((SupportSkillParserParameter p)
                     => CreateParseResultForSupport(p.ActiveSkill.Id, p.SupportSkill.Id));
-            return new SkillsParser(CreateSkillDefinitions(), activeParser.Object, supportParser.Object);
+            return new SkillsParser(skillDefinitions, activeParser.Object, supportParser.Object,
+                (_, __, ___) => new AdditionalSkillLevels(new Dictionary<Skill, IValueBuilder>(), new Dictionary<Skill, int>()));
         }
 
         private static SkillDefinitions CreateSkillDefinitions()

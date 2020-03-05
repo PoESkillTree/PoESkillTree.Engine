@@ -22,9 +22,14 @@ namespace PoESkillTree.Engine.Computation.Parsing
 
         ParseResult ParseJewelSocketedInItem(Item item, ItemSlot itemSlot, Entity entity = Entity.Character);
         ParseResult ParseJewelSocketedInSkillTree(Item item, JewelRadius jewelRadius, ushort nodeId);
-        
-        ParseResult ParseSkills(IReadOnlyList<Skill> skills, Entity entity = Entity.Character);
+
         ParseResult ParseGem(Gem gem, out IReadOnlyList<Skill> skills, Entity entity = Entity.Character);
+
+        /// <summary>
+        /// Parses the given list of skills. Because the actual skill's level and quality values are calculated while parsing, this method has to be
+        /// called in a second step after everything else has been parsed and added to the calculator.
+        /// </summary>
+        ParseResult ParseSkills(IReadOnlyList<Skill> skills, Entity entity = Entity.Character);
 
         IReadOnlyList<Modifier> ParseGivenModifiers();
         // This method looks weird, but the delegates are necessary for caller-defined concurrency

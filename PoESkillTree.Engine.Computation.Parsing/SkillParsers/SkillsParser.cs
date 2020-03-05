@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using MoreLinq;
 using PoESkillTree.Engine.GameModel;
 using PoESkillTree.Engine.GameModel.Skills;
 using PoESkillTree.Engine.Utils;
@@ -10,46 +12,46 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
     /// </summary>
     public class SkillsParser : IParser<SkillsParserParameter>
     {
+        public delegate AdditionalSkillLevels AdditionalSkillLevelParserDelegate(
+            Skill activeSkill, IReadOnlyList<Skill> supportingSkills, Entity modifierSourceEntity);
+
         private readonly SkillDefinitions _skillDefinitions;
         private readonly SupportabilityTester _supportabilityTester;
         private readonly IParser<ActiveSkillParserParameter> _activeSkillParser;
         private readonly IParser<SupportSkillParserParameter> _supportSkillParser;
+        private readonly AdditionalSkillLevelParserDelegate _additionalSkillLevelParser;
 
         public SkillsParser(
             SkillDefinitions skillDefinitions,
-            IParser<ActiveSkillParserParameter> activeSkillParser, IParser<SupportSkillParserParameter> supportSkillParser)
+            IParser<ActiveSkillParserParameter> activeSkillParser, IParser<SupportSkillParserParameter> supportSkillParser,
+            AdditionalSkillLevelParserDelegate additionalSkillLevelParser)
         {
             _skillDefinitions = skillDefinitions;
             _supportabilityTester = new SupportabilityTester(skillDefinitions);
             _activeSkillParser = activeSkillParser;
             _supportSkillParser = supportSkillParser;
+            _additionalSkillLevelParser = additionalSkillLevelParser;
         }
 
         public ParseResult Parse(SkillsParserParameter parameter)
         {
             var (skills, entity) = parameter;
-            var activeSkills = new List<Skill>();
-            var supportSkills = new List<Skill>(skills.Count);
-            foreach (var skill in skills)
-            {
-                if (_skillDefinitions.GetSkillById(skill.Id).IsSupport)
-                    supportSkills.Add(skill);
-                else
-                    activeSkills.Add(skill);
-            }
+            var (supportSkills, activeSkills) = skills.Partition(s => _skillDefinitions.GetSkillById(s.Id).IsSupport);
+            return ParseResult.Aggregate(Parse(activeSkills.ToList(), supportSkills.ToList(), entity));
+        }
 
-            var parseResults = new List<ParseResult>(activeSkills.Count * supportSkills.Count);
+        private IEnumerable<ParseResult> Parse(IEnumerable<Skill> activeSkills, IReadOnlyList<Skill> supportSkills, Entity entity)
+        {
             foreach (var activeSkill in activeSkills)
             {
-                parseResults.Add(_activeSkillParser.Parse(activeSkill, entity));
                 var supportingSkills = _supportabilityTester.SelectSupportingSkills(activeSkill, supportSkills);
+                var additionalSkillLevels = _additionalSkillLevelParser(activeSkill, supportSkills, entity);
+                yield return _activeSkillParser.Parse(activeSkill, entity, additionalSkillLevels);
                 foreach (var supportingSkill in supportingSkills)
                 {
-                    parseResults.Add(_supportSkillParser.Parse(activeSkill, supportingSkill, entity));
+                    yield return _supportSkillParser.Parse(activeSkill, supportingSkill, entity, additionalSkillLevels);
                 }
             }
-
-            return ParseResult.Aggregate(parseResults);
         }
     }
 

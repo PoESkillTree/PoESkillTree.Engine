@@ -24,7 +24,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
         public ParseResult Parse(SupportSkillParserParameter parameter)
         {
-            var (active, support, _) = parameter;
+            var (active, support, _, _) = parameter;
             if (!active.IsEnabled || !support.IsEnabled)
                 return ParseResult.Empty;
 
@@ -59,23 +59,24 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
     public static class SupportSkillParserExtensions
     {
-        public static ParseResult Parse(
-            this IParser<SupportSkillParserParameter> @this, Skill activeSkill, Skill supportSkill, Entity entity)
-            => @this.Parse(new SupportSkillParserParameter(activeSkill, supportSkill, entity));
+        public static ParseResult Parse(this IParser<SupportSkillParserParameter> @this,
+            Skill activeSkill, Skill supportSkill, Entity entity, AdditionalSkillLevels additionalSkillLevels) =>
+            @this.Parse(new SupportSkillParserParameter(activeSkill, supportSkill, entity, additionalSkillLevels));
     }
 
     public class SupportSkillParserParameter : ValueObject
     {
-        public SupportSkillParserParameter(Skill activeSkill, Skill supportSkill, Entity entity)
-            => (ActiveSkill, SupportSkill, Entity) = (activeSkill, supportSkill, entity);
+        public SupportSkillParserParameter(Skill activeSkill, Skill supportSkill, Entity entity, AdditionalSkillLevels additionalSkillLevels)
+            => (ActiveSkill, SupportSkill, Entity, AdditionalSkillLevels) = (activeSkill, supportSkill, entity, additionalSkillLevels);
 
-        public void Deconstruct(out Skill activeSkill, out Skill supportSkill, out Entity entity)
-            => (activeSkill, supportSkill, entity) = (ActiveSkill, SupportSkill, Entity);
+        public void Deconstruct(out Skill activeSkill, out Skill supportSkill, out Entity entity, out AdditionalSkillLevels additionalSkillLevels)
+            => (activeSkill, supportSkill, entity, additionalSkillLevels) = (ActiveSkill, SupportSkill, Entity, AdditionalSkillLevels);
 
         public Skill ActiveSkill { get; }
         public Skill SupportSkill { get; }
         public Entity Entity { get; }
+        public AdditionalSkillLevels AdditionalSkillLevels { get; }
 
-        protected override object ToTuple() => (ActiveSkill, SupportSkill, Entity);
+        protected override object ToTuple() => (ActiveSkill, SupportSkill, Entity, AdditionalSkillLevels);
     }
 }

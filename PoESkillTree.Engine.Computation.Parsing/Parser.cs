@@ -40,7 +40,8 @@ namespace PoESkillTree.Engine.Computation.Parsing
                 new ConcurrentDictionary<IReadOnlyList<string>, IParser<UntranslatedStatParserParameter>>();
 
         public static async Task<Parser<TStep>> CreateAsync(
-            GameData gameData, Task<IBuilderFactories> builderFactoriesTask, Task<IParsingData<TStep>> parsingDataTask)
+            GameData gameData, Task<IBuilderFactories> builderFactoriesTask, Task<IParsingData<TStep>> parsingDataTask,
+            IValueCalculationContext valueCalculationContext)
         {
             var passiveTreeTask = gameData.PassiveTree;
             var baseItemsTask = gameData.BaseItems;
@@ -52,12 +53,14 @@ namespace PoESkillTree.Engine.Computation.Parsing
                 await skillsTask.ConfigureAwait(false),
                 await statTranslatorsTask.ConfigureAwait(false),
                 await builderFactoriesTask.ConfigureAwait(false),
-                await parsingDataTask.ConfigureAwait(false));
+                await parsingDataTask.ConfigureAwait(false),
+                valueCalculationContext);
         }
 
         private Parser(
             PassiveTreeDefinition passiveTree, BaseItemDefinitions baseItems, SkillDefinitions skills,
-            StatTranslators statTranslators, IBuilderFactories builderFactories, IParsingData<TStep> parsingData)
+            StatTranslators statTranslators, IBuilderFactories builderFactories, IParsingData<TStep> parsingData,
+            IValueCalculationContext valueCalculationContext)
         {
             _statTranslators = statTranslators;
             _coreParser = new CoreParser<TStep>(parsingData, builderFactories);
@@ -73,7 +76,9 @@ namespace PoESkillTree.Engine.Computation.Parsing
                 Caching(new ActiveSkillParser(skills, builderFactories, GetOrAddUntranslatedStatParser));
             _supportSkillParser =
                 Caching(new SupportSkillParser(skills, builderFactories, GetOrAddUntranslatedStatParser));
-            _skillsParser = new SkillsParser(skills, _activeSkillParser, _supportSkillParser);
+            var additionalSkillLevelParser = new AdditionalSkillLevelParser(skills, builderFactories.StatBuilders.Gem,
+                builderFactories.GemTagBuilders, builderFactories.ValueBuilders, valueCalculationContext);
+            _skillsParser = new SkillsParser(skills, _activeSkillParser, _supportSkillParser, additionalSkillLevelParser.Parse);
             _gemParser = new GemParser(skills, builderFactories);
         }
 
@@ -120,11 +125,11 @@ namespace PoESkillTree.Engine.Computation.Parsing
         public ParseResult ParseGem(Gem gem, out IReadOnlyList<Skill> skills, Entity entity = Entity.Character) =>
             _gemParser.Parse(gem, entity, out skills);
 
-        public ParseResult ParseActiveSkill(Skill activeSkill, Entity entity = Entity.Character)
-            => _activeSkillParser.Parse(activeSkill, entity);
+        public ParseResult ParseActiveSkill(ActiveSkillParserParameter parameter) =>
+            _activeSkillParser.Parse(parameter);
 
-        public ParseResult ParseSupportSkill(Skill activeSkill, Skill supportSkill, Entity entity = Entity.Character)
-            => _supportSkillParser.Parse(activeSkill, supportSkill, entity);
+        public ParseResult ParseSupportSkill(SupportSkillParserParameter parameter) =>
+            _supportSkillParser.Parse(parameter);
 
         public IReadOnlyList<Modifier> ParseGivenModifiers()
             => GivenStatsParser.Parse(_coreParser, _givenStats);

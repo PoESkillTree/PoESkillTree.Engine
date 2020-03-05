@@ -24,7 +24,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
         public ParseResult Parse(ActiveSkillParserParameter parameter)
         {
-            var (skill, _) = parameter;
+            var (skill, _, _) = parameter;
 
             if (!skill.IsEnabled)
                 return ParseResult.Empty;
@@ -59,21 +59,23 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
     public static class ActiveSkillParserExtensions
     {
-        public static ParseResult Parse(this IParser<ActiveSkillParserParameter> @this, Skill activeSkill, Entity entity) =>
-            @this.Parse(new ActiveSkillParserParameter(activeSkill, entity));
+        public static ParseResult Parse(this IParser<ActiveSkillParserParameter> @this,
+            Skill activeSkill, Entity entity, AdditionalSkillLevels additionalSkillLevels) =>
+            @this.Parse(new ActiveSkillParserParameter(activeSkill, entity, additionalSkillLevels));
     }
 
     public class ActiveSkillParserParameter : ValueObject
     {
-        public ActiveSkillParserParameter(Skill activeSkill, Entity entity)
-            => (ActiveSkill, Entity) = (activeSkill, entity);
+        public ActiveSkillParserParameter(Skill activeSkill, Entity entity, AdditionalSkillLevels additionalSkillLevels)
+            => (ActiveSkill, Entity, AdditionalSkillLevels) = (activeSkill, entity, additionalSkillLevels);
 
-        public void Deconstruct(out Skill activeSkill, out Entity entity)
-            => (activeSkill, entity) = (ActiveSkill, Entity);
+        public void Deconstruct(out Skill activeSkill, out Entity entity, out AdditionalSkillLevels additionalSkillLevels)
+            => (activeSkill, entity, additionalSkillLevels) = (ActiveSkill, Entity, AdditionalSkillLevels);
 
         public Skill ActiveSkill { get; }
         public Entity Entity { get; }
+        public AdditionalSkillLevels AdditionalSkillLevels { get; }
 
-        protected override object ToTuple() => (ActiveSkill, Entity);
+        protected override object ToTuple() => (ActiveSkill, Entity, AdditionalSkillLevels);
     }
 }

@@ -5,10 +5,11 @@ using PoESkillTree.Engine.Computation.Common.Builders;
 using PoESkillTree.Engine.Computation.Common.Builders.Values;
 using PoESkillTree.Engine.GameModel;
 using PoESkillTree.Engine.GameModel.Skills;
+using PoESkillTree.Engine.Utils;
 
 namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 {
-    public class AdditionalSkillLevels
+    public class AdditionalSkillLevels : ValueObject
     {
         private readonly IReadOnlyDictionary<Skill, IValueBuilder> _valueBuilders;
         private readonly IReadOnlyDictionary<Skill, int> _values;
@@ -45,5 +46,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         public IValueBuilder GetAdditionalLevelBuilder(Skill skill) => _valueBuilders[skill];
 
         public int GetAdditionalLevel(Skill skill) => _values[skill];
+
+        protected override object ToTuple() => WithSequenceEquality(_values.ToList());
     }
 }
