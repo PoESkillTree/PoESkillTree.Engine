@@ -8,7 +8,6 @@ using PoESkillTree.Engine.Computation.Common.Builders.Conditions;
 using PoESkillTree.Engine.Computation.Common.Builders.Resolving;
 using PoESkillTree.Engine.Computation.Common.Builders.Values;
 using PoESkillTree.Engine.Computation.Common.Parsing;
-using PoESkillTree.Engine.Utils.Extensions;
 
 namespace PoESkillTree.Engine.Computation.Builders.Values
 {

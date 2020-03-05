@@ -27,6 +27,6 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             new Regex($"^skill_{DamageTypeRegex}_damage_%_to_convert_to_{DamageTypeRegex}$");
 
         public static readonly Regex SupportedSkillGemLevelRegex =
-            new Regex(@"^supported_\w+_skill_gem_level_\+$");
+            new Regex(@"^supported_(\w+)_skill_gem_level_\+$");
     }
 }

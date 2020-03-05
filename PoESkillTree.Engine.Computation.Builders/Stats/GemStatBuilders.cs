@@ -8,7 +8,7 @@ using PoESkillTree.Engine.GameModel.Items;
 
 namespace PoESkillTree.Engine.Computation.Builders.Stats
 {
-    internal class GemStatBuilders : StatBuildersBase, IGemStatBuilders
+    public class GemStatBuilders : StatBuildersBase, IGemStatBuilders
     {
         public GemStatBuilders(IStatFactory statFactory) : base(statFactory)
         {
