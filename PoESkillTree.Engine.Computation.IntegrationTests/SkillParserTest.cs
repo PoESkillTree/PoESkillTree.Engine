@@ -7,7 +7,6 @@ using NUnit.Framework;
 using PoESkillTree.Engine.Computation.Builders.Stats;
 using PoESkillTree.Engine.Computation.Common;
 using PoESkillTree.Engine.Computation.Common.Builders.Damage;
-using PoESkillTree.Engine.Computation.Common.Builders.Values;
 using PoESkillTree.Engine.Computation.Data.Steps;
 using PoESkillTree.Engine.Computation.Parsing;
 using PoESkillTree.Engine.Computation.Parsing.SkillParsers;
@@ -140,7 +139,7 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
                     ("Range.Attack.OffHand.Skill", Form.BaseAdd, null, global, true),
                 }.Select(t => (t.stat, t.form, (NodeValue?) t.value, t.source, t.mainSkillOnly)).ToArray();
 
-            var actual = _parser.ParseActiveSkill(new ActiveSkillParserParameter(frenzy, Entity.Character, AdditionalSkillLevels));
+            var actual = _parser.ParseActiveSkill(new ActiveSkillParserParameter(frenzy, Entity.Character, SkillModification));
 
             AssertCorrectModifiers(valueCalculationContextMock, isMainSkillStat, expectedModifiers, actual);
         }
@@ -209,7 +208,7 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
                     ("Cold.Damage.Secondary.Skill", Form.BaseAdd, addedDamageValue, global, true))
                 .ToArray();
 
-            var actual = _parser.ParseSupportSkill(new SupportSkillParserParameter(frenzy, support, Entity.Character, AdditionalSkillLevels));
+            var actual = _parser.ParseSupportSkill(new SupportSkillParserParameter(frenzy, support, Entity.Character, SkillModification));
 
             AssertCorrectModifiers(valueCalculationContextMock, isMainSkillStat, expectedModifiers, actual);
         }
@@ -307,13 +306,13 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
                 var activeSkill = Skill.FromGem(activeGem, true);
                 var supportGem = new Gem(skillId, level, 20, default, 1, 0, true);
                 var supportSkill = Skill.FromGem(supportGem, true);
-                return _parser.ParseSupportSkill(new SupportSkillParserParameter(activeSkill, supportSkill, Entity.Character, AdditionalSkillLevels));
+                return _parser.ParseSupportSkill(new SupportSkillParserParameter(activeSkill, supportSkill, Entity.Character, SkillModification));
             }
             else
             {
                 var gem = new Gem(skillId, level, 20, default, 0, 0, true);
                 var skill = Skill.FromGem(gem, true);
-                return _parser.ParseActiveSkill(new ActiveSkillParserParameter(skill, Entity.Character, AdditionalSkillLevels));
+                return _parser.ParseActiveSkill(new ActiveSkillParserParameter(skill, Entity.Character, SkillModification));
             }
         }
 
@@ -323,7 +322,6 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
         private static IEnumerable<string> ReadNotParseableSkills()
             => ReadDataLines("NotParseableSkills");
 
-        private static readonly AdditionalSkillLevels AdditionalSkillLevels =
-            new AdditionalSkillLevels(new Dictionary<Skill, IValueBuilder>(), new Dictionary<Skill, int>());
+        private static readonly SkillModification SkillModification = new SkillModification(0);
     }
 }

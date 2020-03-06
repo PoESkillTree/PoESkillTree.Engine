@@ -8,7 +8,6 @@ using PoESkillTree.Engine.Computation.Builders.Stats;
 using PoESkillTree.Engine.Computation.Common;
 using PoESkillTree.Engine.Computation.Common.Builders.Damage;
 using PoESkillTree.Engine.Computation.Common.Builders.Stats;
-using PoESkillTree.Engine.Computation.Common.Builders.Values;
 using PoESkillTree.Engine.GameModel;
 using PoESkillTree.Engine.GameModel.Items;
 using PoESkillTree.Engine.GameModel.PassiveTree;
@@ -1512,7 +1511,6 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         }
 
         private static ParseResult Parse(IParser<ActiveSkillParserParameter> sut, Skill activeSkill) =>
-            sut.Parse(activeSkill, Entity.Character,
-                new AdditionalSkillLevels(new Dictionary<Skill, IValueBuilder>(), new Dictionary<Skill, int>()));
+            sut.Parse(activeSkill, Entity.Character, new SkillModification(0));
     }
 }

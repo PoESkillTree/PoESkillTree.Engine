@@ -93,8 +93,9 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             supportParser.Setup(p => p.Parse(It.IsAny<SupportSkillParserParameter>()))
                 .Returns((SupportSkillParserParameter p)
                     => CreateParseResultForSupport(p.ActiveSkill.Id, p.SupportSkill.Id));
+            var additionalSkillLevelsDict = Mock.Of<IReadOnlyDictionary<Skill, int>>(d => d[It.IsAny<Skill>()] == 0);
             return new SkillsParser(skillDefinitions, activeParser.Object, supportParser.Object,
-                (_, __, ___) => new AdditionalSkillLevels(new Dictionary<Skill, IValueBuilder>(), new Dictionary<Skill, int>()));
+                (_, __, ___) => new AdditionalSkillLevels(new Dictionary<Skill, IValueBuilder>(), additionalSkillLevelsDict));
         }
 
         private static SkillDefinitions CreateSkillDefinitions()

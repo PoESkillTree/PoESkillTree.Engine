@@ -46,10 +46,12 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             {
                 var supportingSkills = _supportabilityTester.SelectSupportingSkills(activeSkill, supportSkills);
                 var additionalSkillLevels = _additionalSkillLevelParser(activeSkill, supportSkills, entity);
-                yield return _activeSkillParser.Parse(activeSkill, entity, additionalSkillLevels);
+                var activeModification = new SkillModification(additionalSkillLevels.GetAdditionalLevel(activeSkill));
+                yield return _activeSkillParser.Parse(activeSkill, entity, activeModification);
                 foreach (var supportingSkill in supportingSkills)
                 {
-                    yield return _supportSkillParser.Parse(activeSkill, supportingSkill, entity, additionalSkillLevels);
+                    var supportModification = new SkillModification(additionalSkillLevels.GetAdditionalLevel(supportingSkill));
+                    yield return _supportSkillParser.Parse(activeSkill, supportingSkill, entity, supportModification);
                 }
             }
         }

@@ -60,22 +60,22 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
     public static class ActiveSkillParserExtensions
     {
         public static ParseResult Parse(this IParser<ActiveSkillParserParameter> @this,
-            Skill activeSkill, Entity entity, AdditionalSkillLevels additionalSkillLevels) =>
-            @this.Parse(new ActiveSkillParserParameter(activeSkill, entity, additionalSkillLevels));
+            Skill activeSkill, Entity entity, SkillModification modification) =>
+            @this.Parse(new ActiveSkillParserParameter(activeSkill, entity, modification));
     }
 
     public class ActiveSkillParserParameter : ValueObject
     {
-        public ActiveSkillParserParameter(Skill activeSkill, Entity entity, AdditionalSkillLevels additionalSkillLevels)
-            => (ActiveSkill, Entity, AdditionalSkillLevels) = (activeSkill, entity, additionalSkillLevels);
+        public ActiveSkillParserParameter(Skill activeSkill, Entity entity, SkillModification modification)
+            => (ActiveSkill, Entity, Modification) = (activeSkill, entity, modification);
 
-        public void Deconstruct(out Skill activeSkill, out Entity entity, out AdditionalSkillLevels additionalSkillLevels)
-            => (activeSkill, entity, additionalSkillLevels) = (ActiveSkill, Entity, AdditionalSkillLevels);
+        public void Deconstruct(out Skill activeSkill, out Entity entity, out SkillModification modification)
+            => (activeSkill, entity, modification) = (ActiveSkill, Entity, Modification);
 
         public Skill ActiveSkill { get; }
         public Entity Entity { get; }
-        public AdditionalSkillLevels AdditionalSkillLevels { get; }
+        public SkillModification Modification { get; }
 
-        protected override object ToTuple() => (ActiveSkill, Entity, AdditionalSkillLevels);
+        protected override object ToTuple() => (ActiveSkill, Entity, Modification);
     }
 }
