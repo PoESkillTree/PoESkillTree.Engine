@@ -59,6 +59,11 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Conditions
         IConditionBuilder ModifierSourceIs(ModifierSource modifierSource);
 
         /// <summary>
+        /// Returns a condition that is satisfied if the modifier source's ItemSlot is the same as the main skill's ItemSlot.
+        /// </summary>
+        IConditionBuilder MainSkillHasModifierSourceItemSlot { get; }
+
+        /// <summary>
         /// Returns a condition that is satisfied if the source of modified base values is an item in the specified
         /// <paramref name="slot"/>.
         /// </summary>

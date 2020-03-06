@@ -61,14 +61,29 @@ namespace PoESkillTree.Engine.Computation.Builders.Conditions
             => new ValueConditionBuilder(
                 ps => new Constant(ps.ModifierSource.CanonicalSource.Equals(modifierSource.CanonicalSource)));
 
+        public IConditionBuilder MainSkillHasModifierSourceItemSlot => new ValueConditionBuilder(BuildMainSkillHasModifierSourceItemSlot);
+
+        private IValue BuildMainSkillHasModifierSourceItemSlot(BuildParameters parameters)
+        {
+            var mainSkillItemSlotValue = new StatValue(_statFactory.MainSkillItemSlot(parameters.ModifierSourceEntity));
+            var modifierSourceItemSlot = GetItemSlot(parameters.ModifierSource);
+            return new ConditionalValue(c => mainSkillItemSlotValue.Calculate(c) == (NodeValue) (int) modifierSourceItemSlot,
+                $"{mainSkillItemSlotValue} == {modifierSourceItemSlot}");
+        }
+
+        private static ItemSlot GetItemSlot(ModifierSource source) =>
+            source.GetLocalSource() is ModifierSource.Local.Item itemSource
+                ? itemSource.Slot
+                : throw new ParseException($"ModifierSource must be Item, {source} given");
+
         public IConditionBuilder BaseValueComesFrom(ItemSlot slot)
         {
-            var modiiferSource = new ModifierSource.Local.Item(slot);
+            var modifierSource = new ModifierSource.Local.Item(slot);
             return new StatConvertingConditionBuilder(ConvertStat);
 
             IStatBuilder ConvertStat(IStatBuilder stat) =>
                 new StatBuilder(_statFactory,
-                    new StatBuilderWithModifierSource(new StatBuilderAdapter(stat), modiiferSource));
+                    new StatBuilderWithModifierSource(new StatBuilderAdapter(stat), modifierSource));
         }
 
         public IConditionBuilder Unique(string name)

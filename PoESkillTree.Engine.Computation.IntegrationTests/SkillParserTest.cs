@@ -225,7 +225,7 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
                 .Setup(c => c.GetValue(activeSkillSocketIndexStat, NodeType.Total, PathDefinition.MainPath))
                 .Returns(new NodeValue(frenzy.SocketIndex));
 
-            var mainSkillItemSlotStat = new Stat("MainSkillItemSlot");
+            var mainSkillItemSlotStat = new Stat("MainSkill.ItemSlot");
             contextMock
                 .Setup(c => c.GetValue(mainSkillItemSlotStat, NodeType.Total, PathDefinition.MainPath))
                 .Returns(new NodeValue((double) frenzy.ItemSlot));

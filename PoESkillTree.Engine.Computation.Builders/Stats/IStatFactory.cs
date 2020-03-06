@@ -31,6 +31,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         IStat RegenTargetPool(Entity entity, Pool regenPool);
 
         IStat MainSkillId(Entity entity);
+        IStat MainSkillItemSlot(Entity entity);
         IStat MainSkillHasKeyword(Entity entity, Keyword keyword);
         IStat MainSkillPartHasKeyword(Entity entity, Keyword keyword);
         IStat MainSkillPartCastRateHasKeyword(Entity entity, Keyword keyword);

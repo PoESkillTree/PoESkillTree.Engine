@@ -348,6 +348,11 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "if using your life", Stat.MainSkillPart.Value.Eq(0) }, // Dark Pact
                 { "shard", Stat.MainSkillPart.Value.Eq(1) }, // Spectral Shield Throw
                 { "at maximum charge distance", Stat.MainSkillPart.Value.Eq(1) }, // Shield Charge
+                // - socketed
+                { "socketed gems", Condition.MainSkillHasModifierSourceItemSlot },
+                { "socketed gems (deal|have)", Condition.MainSkillHasModifierSourceItemSlot },
+                { "socketed attacks have", And(Condition.With(DamageSource.Attack), Condition.MainSkillHasModifierSourceItemSlot) },
+                { "socketed spells have", And(Condition.With(DamageSource.Spell), Condition.MainSkillHasModifierSourceItemSlot) },
                 // - other
                 { "to enemies they're attached to", Flag.IsBrandAttachedToEnemy },
                 { "to branded enemy", Flag.IsBrandAttachedToEnemy },

@@ -134,6 +134,11 @@ namespace PoESkillTree.Engine.Computation.Data
                     "mines hinder enemies near them for 2 seconds when they land",
                     TotalOverride, 1, Buff.Hinder.On(OpponentsOfSelf), Condition.Unique("Did a Mine Land near the Enemy in the past 2 seconds?")
                 },
+                // Socketed gem modifiers
+                {
+                    "socketed movement skills have no mana cost",
+                    TotalOverride, 0, Mana.Cost, And(Condition.MainSkillHasModifierSourceItemSlot, With(Keyword.Movement))
+                },
                 // Jewels
                 {
                     "primordial",

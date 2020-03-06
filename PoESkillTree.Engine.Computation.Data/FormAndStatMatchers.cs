@@ -253,6 +253,7 @@ namespace PoESkillTree.Engine.Computation.Data
                     TotalOverride, double.PositiveInfinity, Projectile.PierceCount, With(Keyword.Attack)
                 },
                 { @"chains \+# times", BaseAdd, Value, Projectile.ChainCount },
+                { @"chain # additional times", BaseAdd, Value, Projectile.ChainCount },
                 { @"(supported )?skills chain \+# times", BaseAdd, Value, Projectile.ChainCount },
                 {
                     "fires? projectiles sequentially",

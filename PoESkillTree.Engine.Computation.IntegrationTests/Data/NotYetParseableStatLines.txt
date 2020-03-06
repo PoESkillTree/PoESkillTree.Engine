@@ -37,22 +37,6 @@ Mana Flasks gain 1 Charge every 3 seconds
 You have Fortify during Effect of any Life Flask
 Remove a Curse when you use a Mana Flask
 Remove a random Elemental Ailment when you use a Mana Flask
-// Socketed gem modifiers
-Socketed Attacks have +1% to Critical Strike Chance
-Socketed Attacks have +30% to Critical Strike Multiplier
-Socketed Gems Chain 1 additional times
-Socketed Gems deal 175 to 225 additional Fire Damage
-Socketed Gems deal 30% more Damage over Time
-Socketed Gems deal 30% more Elemental Damage
-Socketed Gems gain 50% of Physical Damage as extra Lightning Damage
-Socketed Gems have 50% chance to Ignite
-Socketed Gems have 20% more Attack and Cast Speed
-Socketed Gems have 10% reduced Mana Reservation
-Socketed Gems have +3.5% Critical Strike Chance
-Socketed Movement Skills have no Mana Cost
-Socketed Non-Curse Aura Gems have 20% increased Aura Effect
-Socketed Spells have +1% to Critical Strike Chance
-Socketed Spells have +30% to Critical Strike Multiplier
 // Item-inherent skills
 Curse Enemies with Level 10 Flammability on Hit
 Curse Enemies with Level 8 Assassin's Mark on Hit

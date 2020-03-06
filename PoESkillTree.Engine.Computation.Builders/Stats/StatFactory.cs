@@ -78,6 +78,9 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         public IStat MainSkillId(Entity entity) =>
             GetOrAdd("MainSkill.Id", entity, typeof(int));
 
+        public IStat MainSkillItemSlot(Entity entity) =>
+            GetOrAdd("MainSkill.ItemSlot", entity, typeof(ItemSlot));
+
         public IStat MainSkillHasKeyword(Entity entity, Keyword keyword) =>
             GetOrAdd($"MainSkill.Has.{keyword}", entity, typeof(bool));
 
