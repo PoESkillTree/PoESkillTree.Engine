@@ -88,6 +88,24 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             Assert.AreEqual(new NodeValue(20), actual);
         }
 
+        [TestCase(0, ExpectedResult = 10)]
+        [TestCase(2, ExpectedResult = 20)]
+        [TestCase(3, ExpectedResult = 40)]
+        [TestCase(4, ExpectedResult = 40)]
+        public int? FrenzyIsParsedUsingItsActualSkillLevel(int additionalLevels)
+        {
+            var (definition, skill) = CreateFrenzyDefinition(true,
+                (1, 10), (4, 40), (2, 20));
+            var valueCalculationContext = MockValueCalculationContextForMainSkill(skill);
+            var sut = CreateSut(definition);
+
+            var result = sut.Parse(skill, Entity.Character, new SkillModification(additionalLevels));
+
+            var actual = GetValueForIdentity(result.Modifiers, "Belt.0.0.Cost")
+                .Calculate(valueCalculationContext);
+            return (int?) actual.SingleOrNull();
+        }
+
         [TestCase(true)]
         [TestCase(false)]
         public void FrenzyAddsToSkillInstances(bool isActiveSkill)
@@ -121,13 +139,17 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             Assert.IsEmpty(result.Modifiers);
         }
 
-        private static (SkillDefinition, Skill) CreateFrenzyDefinition(bool isEnabled = true)
+        private static (SkillDefinition, Skill) CreateFrenzyDefinition(bool isEnabled = true) =>
+            CreateFrenzyDefinition(isEnabled, (1, 10));
+
+        private static (SkillDefinition, Skill) CreateFrenzyDefinition(bool isEnabled, params (int level, int manaCost)[] levels)
         {
             var activeSkill = CreateActiveSkillDefinition("Frenzy", new[] { "attack" },
                 new[] { Keyword.Melee, Keyword.Projectile });
-            var level = CreateLevelDefinition(manaCost: 10);
-            var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
-            return (CreateActive("Frenzy", activeSkill, levels),
+            var levelDefinitions = levels
+                .Select(t => (t.level, CreateLevelDefinition(manaCost: t.manaCost)))
+                .ToDictionary();
+            return (CreateActive("Frenzy", activeSkill, levelDefinitions),
                 CreateSkillFromGem("Frenzy", 1, 0, isEnabled));
         }
 
