@@ -72,6 +72,7 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
                         true),
                     ("Frenzy.ActiveSkillItemSlot", Form.BaseSet, (double) frenzy.ItemSlot, global, false),
                     ("Frenzy.ActiveSkillSocketIndex", Form.BaseSet, frenzy.SocketIndex, global, false),
+                    ("Frenzy.Reservation", Form.Increase, null, global, false),
                     ("Frenzy.Instances", Form.BaseAdd, 1, global, false),
                     ("Skills[].Instances", Form.BaseAdd, 1, global, false),
                     ("Skills[Attack].Instances", Form.BaseAdd, 1, global, false),

@@ -677,7 +677,8 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
             var result = Parse(sut, skill);
 
-            var modifier = GetFirstModifierWithIdentity(result.Modifiers, "Clarity.Reservation");
+            var modifier = GetModifiersWithIdentity(result.Modifiers, "Clarity.Reservation")
+                .First(m => m.Form == Form.BaseSet);
             var actualValue = modifier.Value.Calculate(context);
             Assert.AreEqual(new NodeValue(20), actualValue);
         }

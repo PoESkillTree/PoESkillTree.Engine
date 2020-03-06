@@ -69,8 +69,11 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
             if (activeSkill.ProvidesBuff)
             {
-                AddBuffModifiers(preParseResult, activeSkill, isActiveSkill);
+                AddBuffModifiers(mainSkill, preParseResult, activeSkill, isActiveSkill);
             }
+
+            _parsedModifiers.AddGlobal(_builderFactories.SkillBuilders.FromId(mainSkill.Id).Reservation,
+                Form.Increase, _builderFactories.StatBuilders.Gem.IncreasedReservationForItemSlot(mainSkill.ItemSlot).Value, isActiveSkill);
 
             _parsedModifiers.AddGlobal(_builderFactories.SkillBuilders.FromId(mainSkill.Id).Instances,
                 Form.BaseAdd, 1, isActiveSkill);
@@ -165,7 +168,8 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             IEquipmentBuilder hand, IEnumerable<ItemClass> weaponRestrictions)
             => weaponRestrictions.Select(hand.Has).Aggregate((l, r) => l.Or(r));
 
-        private void AddBuffModifiers(SkillPreParseResult preParseResult, ActiveSkillDefinition activeSkill, IConditionBuilder isActiveSkill)
+        private void AddBuffModifiers(
+            Skill mainSkill, SkillPreParseResult preParseResult, ActiveSkillDefinition activeSkill, IConditionBuilder isActiveSkill)
         {
             var allBuffStats =
                 preParseResult.LevelDefinition.BuffStats.Concat(preParseResult.LevelDefinition.QualityBuffStats);
@@ -191,6 +195,11 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             else
             {
                 _parsedModifiers!.AddGlobal(buff.On(target), Form.BaseSet, 1, isActiveSkill);
+                if (activeSkill.Keywords.Contains(Keyword.Aura))
+                {
+                    _parsedModifiers.AddGlobal(buff.Effect, Form.Increase,
+                        _builderFactories.StatBuilders.Gem.IncreasedNonCurseAuraEffectForItemSlot(mainSkill.ItemSlot).Value, isActiveSkill);
+                }
             }
 
             if (allAffectedEntities.Contains(Entity.Enemy))

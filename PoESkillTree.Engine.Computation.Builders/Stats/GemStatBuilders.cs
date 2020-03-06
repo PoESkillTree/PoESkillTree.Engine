@@ -23,13 +23,13 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
             AdditionalLevels(identityInfix, gemTag, (_, i) => i);
 
         public IStatBuilder AdditionalLevelsForModifierSourceItemSlot() =>
-            AdditionalLevels("", m => GetItemSlot(m).ToString());
+            AdditionalLevels("", GetItemSlot);
 
         public IStatBuilder AdditionalLevelsForModifierSourceItemSlot(IGemTagBuilder gemTag) =>
             AdditionalLevels("", gemTag, (ps, t) => $"{t}.{GetItemSlot(ps.ModifierSource)}");
 
         public IStatBuilder AdditionalActiveLevelsForModifierSourceItemSlot() =>
-            AdditionalLevels(".ActiveSkill", m => GetItemSlot(m).ToString());
+            AdditionalLevels(".ActiveSkill", GetItemSlot);
 
         private IStatBuilder AdditionalLevels(string identityInfix, IGemTagBuilder gemTag, Func<BuildParameters, string, string> buildIdentitySuffix)
         {
@@ -48,28 +48,44 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
 
 
         public IStatBuilder AdditionalQualityForModifierSourceItemSlot =>
-            Additional("Quality", m => GetItemSlot(m).ToString());
+            Additional("Quality", GetItemSlot);
 
         public IStatBuilder AdditionalSupportQualityForModifierSourceItemSlot =>
-            Additional("Quality.SupportSkill", m => GetItemSlot(m).ToString());
+            Additional("Quality.SupportSkill", GetItemSlot);
 
         public IStatBuilder AdditionalQuality(Skill skill) =>
             FromIdentity($"Skill.AdditionalQuality.{skill.ItemSlot}.{skill.SocketIndex}.{skill.SkillIndex}", typeof(int),
                 ExplicitRegistrationTypes.ChangeInvalidatesSkillParse(skill));
 
 
-        private static ItemSlot GetItemSlot(ModifierSource source) =>
-            source.GetLocalSource() switch
+        public IStatBuilder IncreasedReservationForModifierSourceItemSlot =>
+            CreateSourceDependentStat("IncreasedReservation", GetItemSlot);
+
+        public IStatBuilder IncreasedReservationForItemSlot(ItemSlot itemSlot) =>
+            FromIdentity($"IncreasedReservation.{itemSlot}", typeof(int));
+
+        public IStatBuilder IncreasedNonCurseAuraEffectForModifierSourceItemSlot =>
+            CreateSourceDependentStat("IncreasedNonCurseAuraEffect", GetItemSlot);
+
+        public IStatBuilder IncreasedNonCurseAuraEffectForItemSlot(ItemSlot itemSlot) =>
+            FromIdentity($"IncreasedNonCurseAuraEffect.{itemSlot}", typeof(int));
+
+
+        private static string GetItemSlot(ModifierSource source) =>
+            (source.GetLocalSource() switch
             {
                 ModifierSource.Local.Item itemSource => itemSource.Slot,
                 ModifierSource.Local.Gem gemSource => gemSource.SourceGem.ItemSlot,
                 _ => throw new ParseException($"ModifierSource must be Item or Gem, {source} given")
-            };
+            }).ToString();
 
-        private IStatBuilder Additional(string identityInfix, Func<ModifierSource, string> buildIdentitySuffix)
+        private IStatBuilder Additional(string identityInfix, Func<ModifierSource, string> buildIdentitySuffix) =>
+            CreateSourceDependentStat($"Gem.Additional{identityInfix}", buildIdentitySuffix);
+
+        private IStatBuilder CreateSourceDependentStat(string identityPrefix, Func<ModifierSource, string> buildIdentitySuffix)
         {
             var coreBuilder = new StatBuilderWithStatConverter(
-                new LeafCoreStatBuilder(e => StatFactory.FromIdentity($"Gem.Additional{identityInfix}", e, typeof(int))),
+                new LeafCoreStatBuilder(e => StatFactory.FromIdentity(identityPrefix, e, typeof(int))),
                 (m, s) => StatFactory.CopyWithSuffix(s, buildIdentitySuffix(m), typeof(int)));
             return new StatBuilder(StatFactory, coreBuilder);
         }

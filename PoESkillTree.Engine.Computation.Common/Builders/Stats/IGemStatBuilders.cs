@@ -1,4 +1,5 @@
 using PoESkillTree.Engine.Computation.Common.Builders.Skills;
+using PoESkillTree.Engine.GameModel.Items;
 using PoESkillTree.Engine.GameModel.Skills;
 
 namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
@@ -22,5 +23,12 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
         IStatBuilder AdditionalSupportQualityForModifierSourceItemSlot { get; }
 
         IStatBuilder AdditionalQuality(Skill skill);
+
+
+        IStatBuilder IncreasedReservationForModifierSourceItemSlot { get; }
+        IStatBuilder IncreasedReservationForItemSlot(ItemSlot itemSlot);
+
+        IStatBuilder IncreasedNonCurseAuraEffectForModifierSourceItemSlot { get; }
+        IStatBuilder IncreasedNonCurseAuraEffectForItemSlot(ItemSlot itemSlot);
     }
 }

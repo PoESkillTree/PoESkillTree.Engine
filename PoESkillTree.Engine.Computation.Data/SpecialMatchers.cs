@@ -139,6 +139,14 @@ namespace PoESkillTree.Engine.Computation.Data
                     "socketed movement skills have no mana cost",
                     TotalOverride, 0, Mana.Cost, And(Condition.MainSkillHasModifierSourceItemSlot, With(Keyword.Movement))
                 },
+                {
+                    "socketed gems have #% reduced mana reservation",
+                    BaseAdd, -Value, Gem.IncreasedReservationForModifierSourceItemSlot
+                },
+                {
+                    "socketed non-curse aura gems have #% increased aura effect",
+                    BaseAdd, Value, Gem.IncreasedNonCurseAuraEffectForModifierSourceItemSlot
+                },
                 // Jewels
                 {
                     "primordial",
