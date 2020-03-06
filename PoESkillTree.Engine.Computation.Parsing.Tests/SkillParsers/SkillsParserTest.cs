@@ -20,7 +20,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         [Test]
         public void ParsesSingleActiveSkillCorrectly()
         {
-            var expected = CreateParseResultForActive("0");
+            var expected = CreateParseResultForActive("0").Modifiers;
             var skill = CreateSkill("0", 0);
             var sut = CreateSut();
 
@@ -58,12 +58,9 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         [Test]
         public void ParseMultipleSupportedActiveSkillsCorrectly()
         {
-            var expected = ParseResult.Aggregate(new[]
-            {
-                CreateParseResult("0", "b", "c"),
-                CreateParseResult("1", "b"),
-                CreateParseResult("2", "b", "a", "d"),
-            });
+            var expected = CreateParseResult("0", "b", "c")
+                    .Concat(CreateParseResult("1", "b"))
+                    .Concat(CreateParseResult("2", "b", "a", "d"));
             var actives = new[]
             {
                 CreateSkill("0", 0),
@@ -127,18 +124,20 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         private static ParseResult CreateParseResultForSupport(string activeId, string supportId)
             => ParseResult.Success(new[] { CreateModifier($"{activeId} {supportId}") });
 
-        private static ParseResult CreateParseResult(string activeId, params string[] supportIds)
+        private static IEnumerable<Modifier> CreateParseResult(string activeId, params string[] supportIds)
         {
-            var modifiers = supportIds
+            return supportIds
                 .Select(s => CreateModifier($"{activeId} {s}"))
                 .Prepend(CreateModifier(activeId));
-            return ParseResult.Success(modifiers.ToList());
         }
 
         private static Modifier CreateModifier(string id)
             => MockModifier(new Stat(id), value: new Constant(0));
 
-        public static ParseResult Parse(IParser<SkillsParserParameter> sut, IReadOnlyList<Skill> skills) =>
-            sut.Parse(skills, Entity.Character);
+        public static IEnumerable<Modifier> Parse(IParser<SkillsParserParameter> sut, IReadOnlyList<Skill> skills)
+        {
+            var result = sut.Parse(skills, Entity.Character);
+            return result.Modifiers.Where(m => m.Stats.All(s => !s.Identity.Contains("Skill.Additional")));
+        }
     }
 }

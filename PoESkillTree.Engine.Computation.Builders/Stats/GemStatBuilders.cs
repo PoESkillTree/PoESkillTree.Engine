@@ -5,6 +5,7 @@ using PoESkillTree.Engine.Computation.Common.Builders.Skills;
 using PoESkillTree.Engine.Computation.Common.Builders.Stats;
 using PoESkillTree.Engine.Computation.Common.Parsing;
 using PoESkillTree.Engine.GameModel.Items;
+using PoESkillTree.Engine.GameModel.Skills;
 
 namespace PoESkillTree.Engine.Computation.Builders.Stats
 {
@@ -53,5 +54,9 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
                 (m, s) => StatFactory.CopyWithSuffix(s, buildIdentitySuffix(m), typeof(int)));
             return new StatBuilder(StatFactory, coreBuilder);
         }
+
+        public IStatBuilder AdditionalLevels(Skill skill) =>
+            FromIdentity($"Skill.AdditionalLevels.{skill.ItemSlot}.{skill.SocketIndex}.{skill.SkillIndex}", typeof(int),
+                ExplicitRegistrationTypes.ChangeInvalidatesSkillParse(skill));
     }
 }

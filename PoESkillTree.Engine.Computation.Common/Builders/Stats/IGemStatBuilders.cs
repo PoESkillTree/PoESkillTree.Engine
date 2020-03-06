@@ -1,4 +1,5 @@
 using PoESkillTree.Engine.Computation.Common.Builders.Skills;
+using PoESkillTree.Engine.GameModel.Skills;
 
 namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
 {
@@ -13,5 +14,7 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
         IStatBuilder AdditionalLevelsForModifierSourceItemSlot();
         IStatBuilder AdditionalLevelsForModifierSourceItemSlot(IGemTagBuilder gemTag);
         IStatBuilder AdditionalActiveLevelsForModifierSourceItemSlot();
+
+        IStatBuilder AdditionalLevels(Skill skill);
     }
 }
