@@ -99,7 +99,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var valueCalculationContext = MockValueCalculationContextForMainSkill(skill);
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill, Entity.Character, new SkillModification(additionalLevels));
+            var result = sut.Parse(skill, Entity.Character, new SkillModification(additionalLevels, 0));
 
             var actual = GetValueForIdentity(result.Modifiers, "Belt.0.0.Cost")
                 .Calculate(valueCalculationContext);
@@ -249,8 +249,9 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             Assert.IsFalse(AnyModifierHasIdentity(modifiers, "Fire.Damage.Spell.Ignite"));
         }
 
-        [Test]
-        public void FlameTotemStatsAreParsedCorrectly()
+        [TestCase(0)]
+        [TestCase(10)]
+        public void FlameTotemStatsAreParsedCorrectly(int additionalQuality)
         {
             var (definition, skill) = CreateFlameTotemDefinition();
             var source = new ModifierSource.Local.Skill("FlameTotem", "Flame Totem");
@@ -263,7 +264,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             {
                 new UntranslatedStatParserParameter(source, new[]
                 {
-                    new UntranslatedStat("totem_life_+%", 10),
+                    new UntranslatedStat("totem_life_+%", 10 + additionalQuality),
                 }),
                 new UntranslatedStatParserParameter(source, new[]
                 {
@@ -276,7 +277,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 p.Parse(EmptyParserParameter(source)) == EmptyParseResult);
             var sut = CreateSut(definition, statParser);
 
-            var result = Parse(sut, skill);
+            var result = sut.Parse(skill, Entity.Character, new SkillModification(0, additionalQuality));
 
             var modifiers = result.Modifiers;
             Assert.IsTrue(AnyModifierHasIdentity(modifiers, "s1"));
@@ -1533,6 +1534,6 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         }
 
         private static ParseResult Parse(IParser<ActiveSkillParserParameter> sut, Skill activeSkill) =>
-            sut.Parse(activeSkill, Entity.Character, new SkillModification(0));
+            sut.Parse(activeSkill, Entity.Character, new SkillModification(0, 0));
     }
 }

@@ -2,7 +2,6 @@
 using System.Linq;
 using MoreLinq;
 using PoESkillTree.Engine.Computation.Common;
-using PoESkillTree.Engine.Computation.Common.Builders;
 using PoESkillTree.Engine.Computation.Common.Builders.Skills;
 using PoESkillTree.Engine.Computation.Common.Builders.Stats;
 using PoESkillTree.Engine.Computation.Common.Builders.Values;
@@ -14,17 +13,16 @@ using PoESkillTree.Engine.Utils.Extensions;
 
 namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 {
-    public class AdditionalSkillLevelParser
+    public class AdditionalSkillLevelParser : AdditionalSkillStatParser
     {
-        private readonly SkillDefinitions _skillDefinitions;
         private readonly IGemStatBuilders _gemStatBuilders;
         private readonly IGemTagBuilders _gemTagBuilders;
         private readonly IValueBuilders _valueBuilders;
 
         public AdditionalSkillLevelParser(
             SkillDefinitions skillDefinitions, IGemStatBuilders gemStatBuilders, IGemTagBuilders gemTagBuilders, IValueBuilders valueBuilders)
+            : base(skillDefinitions)
         {
-            _skillDefinitions = skillDefinitions;
             _gemStatBuilders = gemStatBuilders;
             _gemTagBuilders = gemTagBuilders;
             _valueBuilders = valueBuilders;
@@ -34,20 +32,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         {
             var dict = supportingSkills.Select(skill => (skill, ParseSupport(skill))).ToDictionary();
             dict[activeSkill] = ParseActive(activeSkill, dict);
-            return dict.ToDictionary(p => p.Key,
-                p => Build(p.Key, p.Value, modifierSourceEntity));
-        }
-
-        private IValue Build(Skill skill, IValueBuilder valueBuilder, Entity modifierSourceEntity)
-        {
-            var gem = skill.Gem;
-            if (gem is null)
-                return new Constant(0);
-
-            var displayName = _skillDefinitions.GetSkillById(gem.SkillId).DisplayName;
-            var gemModifierSource = new ModifierSource.Local.Gem(gem, displayName);
-            var buildParameters = new BuildParameters(new ModifierSource.Global(gemModifierSource), modifierSourceEntity, default);
-            return valueBuilder.Build(buildParameters);
+            return Build(dict, modifierSourceEntity);
         }
 
         private ValueBuilder ParseSupport(Skill supportingSkill)
@@ -111,21 +96,8 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
             int SelectActiveAdditionalLevels(Skill supportingSkill, int supportAdditionalLevels)
             {
-                var supportDefinition = _skillDefinitions.GetSkillById(supportingSkill.Id);
-                var level = supportingSkill.Level + supportAdditionalLevels;
-
-                if (!supportDefinition.Levels.TryGetValue(level, out var levelDefinition))
-                {
-                    levelDefinition = supportDefinition.Levels
-                        .OrderBy(p => p.Key)
-                        .LastOrDefault(p => p.Key <= level)
-                        .Value;
-                    if (levelDefinition is null)
-                        return 0;
-                }
-
                 var value = 0;
-                foreach (var untranslatedStat in levelDefinition.Stats)
+                foreach (var untranslatedStat in GetLevelStats(supportingSkill, supportAdditionalLevels))
                 {
                     var match = SkillStatIds.SupportedSkillGemLevelRegex.Match(untranslatedStat.StatId);
                     var tag = match.Groups[1].Value;
@@ -140,7 +112,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         }
 
         private SkillBaseItemDefinition? GetBaseItem(Skill skill) =>
-            _skillDefinitions.GetSkillById(skill.Gem!.SkillId).BaseItem;
+            GetSkillDefinition(skill.Gem!.SkillId).BaseItem;
 
         private IEnumerable<IGemTagBuilder> GetGemTagBuilders(SkillBaseItemDefinition baseItem) =>
             baseItem.GemTags.Select(_gemTagBuilders.From);

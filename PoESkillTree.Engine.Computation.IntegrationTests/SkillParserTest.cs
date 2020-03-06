@@ -322,6 +322,6 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
         private static IEnumerable<string> ReadNotParseableSkills()
             => ReadDataLines("NotParseableSkills");
 
-        private static readonly SkillModification SkillModification = new SkillModification(0);
+        private static readonly SkillModification SkillModification = new SkillModification(0, 0);
     }
 }

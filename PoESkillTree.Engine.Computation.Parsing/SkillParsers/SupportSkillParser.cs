@@ -24,7 +24,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
         public ParseResult Parse(SupportSkillParserParameter parameter)
         {
-            var (active, support, _, _) = parameter;
+            var (active, support, _, supportModification) = parameter;
             if (!active.IsEnabled || !support.IsEnabled)
                 return ParseResult.Empty;
 
@@ -42,7 +42,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             }
 
             var translatingParser = new TranslatingSkillParser(_builderFactories, _statParserFactory);
-            return translatingParser.Parse(support, preParseResult,
+            return translatingParser.Parse(support, supportModification, preParseResult,
                 new PartialSkillParseResult(modifiers, parsedStats));
         }
 

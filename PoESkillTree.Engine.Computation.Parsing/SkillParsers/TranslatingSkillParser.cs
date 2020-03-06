@@ -42,7 +42,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 (builderFactories, statParserFactory);
 
         public ParseResult Parse(
-            Skill skill, SkillPreParseResult preParseResult, PartialSkillParseResult partialResult)
+            Skill skill, SkillModification skillModification, SkillPreParseResult preParseResult, PartialSkillParseResult partialResult)
         {
             _preParseResult = preParseResult;
             _parsedStats = partialResult.ParsedStats.ToHashSet();
@@ -50,7 +50,8 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var isMainSkill = preParseResult.IsMainSkill;
             var isActiveSkill = _builderFactories.MetaStatBuilders.IsActiveSkill(skill);
             var level = preParseResult.LevelDefinition;
-            var qualityStats = level.QualityStats.Select(s => ApplyQuality(s, skill));
+            var quality = skill.Quality + skillModification.AdditionalQuality;
+            var qualityStats = level.QualityStats.Select(s => ApplyQuality(s, quality));
             var (keystoneStats, levelStats) = level.Stats.Partition(s => KeystoneStatRegex.IsMatch(s.StatId));
             var parseResults = new List<ParseResult>(4 + level.AdditionalStatsPerPart.Count + 4)
             {
@@ -68,11 +69,11 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 parseResults.Add(result);
             }
 
-            var qualityBuffStats = level.QualityBuffStats.Select(s => new BuffStat(ApplyQuality(s.Stat, skill), s.GetAffectedEntities));
+            var qualityBuffStats = level.QualityBuffStats.Select(s => new BuffStat(ApplyQuality(s.Stat, quality), s.GetAffectedEntities));
             parseResults.Add(TranslateAndParseBuff(qualityBuffStats, isActiveSkill));
             parseResults.Add(TranslateAndParseBuff(level.BuffStats, isActiveSkill));
 
-            var qualityPassiveStats = level.QualityPassiveStats.Select(s => ApplyQuality(s, skill));
+            var qualityPassiveStats = level.QualityPassiveStats.Select(s => ApplyQuality(s, quality));
             parseResults.Add(TranslateAndParse(qualityPassiveStats, isActiveSkill));
             parseResults.Add(TranslateAndParse(level.PassiveStats, isActiveSkill));
 
@@ -133,7 +134,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             return parser.Parse(modifierSource, modifierSourceEntity, stats);
         }
 
-        private static UntranslatedStat ApplyQuality(UntranslatedStat qualityStat, Skill skill)
-            => new UntranslatedStat(qualityStat.StatId, qualityStat.Value * skill.Quality / 1000);
+        private static UntranslatedStat ApplyQuality(UntranslatedStat qualityStat, int quality)
+            => new UntranslatedStat(qualityStat.StatId, qualityStat.Value * quality / 1000);
     }
 }
