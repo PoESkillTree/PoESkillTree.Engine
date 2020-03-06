@@ -2,6 +2,7 @@
 using System.Linq;
 using MoreLinq;
 using PoESkillTree.Engine.Computation.Common;
+using PoESkillTree.Engine.Computation.Common.Builders;
 using PoESkillTree.Engine.Computation.Common.Builders.Skills;
 using PoESkillTree.Engine.Computation.Common.Builders.Stats;
 using PoESkillTree.Engine.Computation.Common.Builders.Values;
@@ -19,26 +20,34 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         private readonly IGemStatBuilders _gemStatBuilders;
         private readonly IGemTagBuilders _gemTagBuilders;
         private readonly IValueBuilders _valueBuilders;
-        private readonly IValueCalculationContext _valueCalculationContext;
 
         public AdditionalSkillLevelParser(
-            SkillDefinitions skillDefinitions, IGemStatBuilders gemStatBuilders, IGemTagBuilders gemTagBuilders, IValueBuilders valueBuilders,
-            IValueCalculationContext valueCalculationContext)
+            SkillDefinitions skillDefinitions, IGemStatBuilders gemStatBuilders, IGemTagBuilders gemTagBuilders, IValueBuilders valueBuilders)
         {
             _skillDefinitions = skillDefinitions;
             _gemStatBuilders = gemStatBuilders;
             _gemTagBuilders = gemTagBuilders;
             _valueBuilders = valueBuilders;
-            _valueCalculationContext = valueCalculationContext;
         }
 
-        public AdditionalSkillLevels Parse(Skill activeSkill, IReadOnlyList<Skill> supportingSkills, Entity modifierSourceEntity)
+        public IReadOnlyDictionary<Skill, IValue> Parse(Skill activeSkill, IReadOnlyList<Skill> supportingSkills, Entity modifierSourceEntity)
         {
             var dict = supportingSkills.Select(skill => (skill, ParseSupport(skill))).ToDictionary();
             dict[activeSkill] = ParseActive(activeSkill, dict);
-            return AdditionalSkillLevels.Calculate(
-                dict.ToDictionary(p => p.Key, p => (IValueBuilder) p.Value),
-                _skillDefinitions, modifierSourceEntity, _valueCalculationContext);
+            return dict.ToDictionary(p => p.Key,
+                p => Build(p.Key, p.Value, modifierSourceEntity));
+        }
+
+        private IValue Build(Skill skill, IValueBuilder valueBuilder, Entity modifierSourceEntity)
+        {
+            var gem = skill.Gem;
+            if (gem is null)
+                return new Constant(0);
+
+            var displayName = _skillDefinitions.GetSkillById(gem.SkillId).DisplayName;
+            var gemModifierSource = new ModifierSource.Local.Gem(gem, displayName);
+            var buildParameters = new BuildParameters(new ModifierSource.Global(gemModifierSource), modifierSourceEntity, default);
+            return valueBuilder.Build(buildParameters);
         }
 
         private ValueBuilder ParseSupport(Skill supportingSkill)
@@ -108,9 +117,8 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 if (!supportDefinition.Levels.TryGetValue(level, out var levelDefinition))
                 {
                     levelDefinition = supportDefinition.Levels
-                        .Where(p => p.Key <= level)
-                        .MaxBy(p => p.Key)
-                        .FirstOrDefault()
+                        .OrderBy(p => p.Key)
+                        .LastOrDefault(p => p.Key <= level)
                         .Value;
                     if (levelDefinition is null)
                         return 0;

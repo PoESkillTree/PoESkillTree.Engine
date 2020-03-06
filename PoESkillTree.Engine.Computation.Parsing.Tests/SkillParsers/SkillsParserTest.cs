@@ -2,11 +2,12 @@
 using System.Linq;
 using Moq;
 using NUnit.Framework;
+using PoESkillTree.Engine.Computation.Builders;
 using PoESkillTree.Engine.Computation.Builders.Stats;
 using PoESkillTree.Engine.Computation.Common;
-using PoESkillTree.Engine.Computation.Common.Builders.Values;
 using PoESkillTree.Engine.GameModel;
 using PoESkillTree.Engine.GameModel.Items;
+using PoESkillTree.Engine.GameModel.PassiveTree;
 using PoESkillTree.Engine.GameModel.Skills;
 using static PoESkillTree.Engine.Computation.Common.Helper;
 using static PoESkillTree.Engine.Computation.Parsing.SkillParsers.SkillParserTestUtils;
@@ -93,9 +94,10 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             supportParser.Setup(p => p.Parse(It.IsAny<SupportSkillParserParameter>()))
                 .Returns((SupportSkillParserParameter p)
                     => CreateParseResultForSupport(p.ActiveSkill.Id, p.SupportSkill.Id));
-            var additionalSkillLevelsDict = Mock.Of<IReadOnlyDictionary<Skill, int>>(d => d[It.IsAny<Skill>()] == 0);
-            return new SkillsParser(skillDefinitions, activeParser.Object, supportParser.Object,
-                (_, __, ___) => new AdditionalSkillLevels(new Dictionary<Skill, IValueBuilder>(), additionalSkillLevelsDict));
+            var skillModificationParser = new SkillModificationParser(skillDefinitions,
+                new BuilderFactories(new PassiveTreeDefinition(new PassiveNodeDefinition[0]), skillDefinitions),
+                Mock.Of<IValueCalculationContext>());
+            return new SkillsParser(skillDefinitions, activeParser.Object, supportParser.Object, skillModificationParser);
         }
 
         private static SkillDefinitions CreateSkillDefinitions()

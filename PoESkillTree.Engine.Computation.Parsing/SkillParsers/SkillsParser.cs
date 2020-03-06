@@ -12,25 +12,22 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
     /// </summary>
     public class SkillsParser : IParser<SkillsParserParameter>
     {
-        public delegate AdditionalSkillLevels AdditionalSkillLevelParserDelegate(
-            Skill activeSkill, IReadOnlyList<Skill> supportingSkills, Entity modifierSourceEntity);
-
         private readonly SkillDefinitions _skillDefinitions;
         private readonly SupportabilityTester _supportabilityTester;
         private readonly IParser<ActiveSkillParserParameter> _activeSkillParser;
         private readonly IParser<SupportSkillParserParameter> _supportSkillParser;
-        private readonly AdditionalSkillLevelParserDelegate _additionalSkillLevelParser;
+        private readonly SkillModificationParser _skillModificationParser;
 
         public SkillsParser(
             SkillDefinitions skillDefinitions,
             IParser<ActiveSkillParserParameter> activeSkillParser, IParser<SupportSkillParserParameter> supportSkillParser,
-            AdditionalSkillLevelParserDelegate additionalSkillLevelParser)
+            SkillModificationParser skillModificationParser)
         {
             _skillDefinitions = skillDefinitions;
             _supportabilityTester = new SupportabilityTester(skillDefinitions);
             _activeSkillParser = activeSkillParser;
             _supportSkillParser = supportSkillParser;
-            _additionalSkillLevelParser = additionalSkillLevelParser;
+            _skillModificationParser = skillModificationParser;
         }
 
         public ParseResult Parse(SkillsParserParameter parameter)
@@ -45,13 +42,12 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             foreach (var activeSkill in activeSkills)
             {
                 var supportingSkills = _supportabilityTester.SelectSupportingSkills(activeSkill, supportSkills);
-                var additionalSkillLevels = _additionalSkillLevelParser(activeSkill, supportSkills, entity);
-                var activeModification = new SkillModification(additionalSkillLevels.GetAdditionalLevel(activeSkill));
-                yield return _activeSkillParser.Parse(activeSkill, entity, activeModification);
+                var (additionalStatParseResult, skillModifications) = _skillModificationParser.Parse(activeSkill, supportSkills, entity);
+                yield return additionalStatParseResult;
+                yield return _activeSkillParser.Parse(activeSkill, entity, skillModifications[activeSkill]);
                 foreach (var supportingSkill in supportingSkills)
                 {
-                    var supportModification = new SkillModification(additionalSkillLevels.GetAdditionalLevel(supportingSkill));
-                    yield return _supportSkillParser.Parse(activeSkill, supportingSkill, entity, supportModification);
+                    yield return _supportSkillParser.Parse(activeSkill, supportingSkill, entity, skillModifications[supportingSkill]);
                 }
             }
         }
