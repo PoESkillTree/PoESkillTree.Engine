@@ -31,14 +31,6 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         public IStatBuilder AdditionalActiveLevelsForModifierSourceItemSlot() =>
             AdditionalLevels(".ActiveSkill", m => GetItemSlot(m).ToString());
 
-        private static ItemSlot GetItemSlot(ModifierSource source) =>
-            source.GetLocalSource() switch
-            {
-                ModifierSource.Local.Item itemSource => itemSource.Slot,
-                ModifierSource.Local.Gem gemSource => gemSource.SourceGem.ItemSlot,
-                _ => throw new ParseException($"ModifierSource must be Item or Gem, {source} given")
-            };
-
         private IStatBuilder AdditionalLevels(string identityInfix, IGemTagBuilder gemTag, Func<BuildParameters, string, string> buildIdentitySuffix)
         {
             var coreBuilder = new CoreStatBuilderFromCoreBuilder<string>(
@@ -47,16 +39,39 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
             return new StatBuilder(StatFactory, coreBuilder);
         }
 
-        private IStatBuilder AdditionalLevels(string identityInfix, Func<ModifierSource, string> buildIdentitySuffix)
-        {
-            var coreBuilder = new StatBuilderWithStatConverter(
-                new LeafCoreStatBuilder(e => StatFactory.FromIdentity($"Gem.AdditionalLevels{identityInfix}", e, typeof(int))),
-                (m, s) => StatFactory.CopyWithSuffix(s, buildIdentitySuffix(m), typeof(int)));
-            return new StatBuilder(StatFactory, coreBuilder);
-        }
+        private IStatBuilder AdditionalLevels(string identityInfix, Func<ModifierSource, string> buildIdentitySuffix) =>
+            Additional("Levels" + identityInfix, buildIdentitySuffix);
 
         public IStatBuilder AdditionalLevels(Skill skill) =>
             FromIdentity($"Skill.AdditionalLevels.{skill.ItemSlot}.{skill.SocketIndex}.{skill.SkillIndex}", typeof(int),
                 ExplicitRegistrationTypes.ChangeInvalidatesSkillParse(skill));
+
+
+        public IStatBuilder AdditionalQualityForModifierSourceItemSlot =>
+            Additional("Quality", m => GetItemSlot(m).ToString());
+
+        public IStatBuilder AdditionalSupportQualityForModifierSourceItemSlot =>
+            Additional("Quality.SupportSkill", m => GetItemSlot(m).ToString());
+
+        public IStatBuilder AdditionalQuality(Skill skill) =>
+            FromIdentity($"Skill.AdditionalQuality.{skill.ItemSlot}.{skill.SocketIndex}.{skill.SkillIndex}", typeof(int),
+                ExplicitRegistrationTypes.ChangeInvalidatesSkillParse(skill));
+
+
+        private static ItemSlot GetItemSlot(ModifierSource source) =>
+            source.GetLocalSource() switch
+            {
+                ModifierSource.Local.Item itemSource => itemSource.Slot,
+                ModifierSource.Local.Gem gemSource => gemSource.SourceGem.ItemSlot,
+                _ => throw new ParseException($"ModifierSource must be Item or Gem, {source} given")
+            };
+
+        private IStatBuilder Additional(string identityInfix, Func<ModifierSource, string> buildIdentitySuffix)
+        {
+            var coreBuilder = new StatBuilderWithStatConverter(
+                new LeafCoreStatBuilder(e => StatFactory.FromIdentity($"Gem.Additional{identityInfix}", e, typeof(int))),
+                (m, s) => StatFactory.CopyWithSuffix(s, buildIdentitySuffix(m), typeof(int)));
+            return new StatBuilder(StatFactory, coreBuilder);
+        }
     }
 }

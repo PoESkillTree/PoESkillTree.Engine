@@ -28,5 +28,8 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
         public static readonly Regex SupportedSkillGemLevelRegex =
             new Regex(@"^supported_(\w+)_skill_gem_level_\+$");
+
+        public static readonly Regex SupportedSkillGemQualityRegex =
+            new Regex("^supported_active_skill_gem_quality_%$");
     }
 }

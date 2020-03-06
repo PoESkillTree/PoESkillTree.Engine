@@ -487,6 +487,8 @@ namespace PoESkillTree.Engine.Computation.Data
                     Gem.AdditionalLevelsForModifierSourceItemSlot(References[0].AsGemTag),
                     Gem.AdditionalLevelsForModifierSourceItemSlot(References[1].AsGemTag)
                 },
+                { "quality of socketed gems", Gem.AdditionalQualityForModifierSourceItemSlot },
+                { "quality of socketed support gems", Gem.AdditionalSupportQualityForModifierSourceItemSlot },
                 // other
                 { "reflected damage taken", AnyDamageType.ReflectedDamageTaken },
                 { "reflected elemental damage taken", Elemental.ReflectedDamageTaken },

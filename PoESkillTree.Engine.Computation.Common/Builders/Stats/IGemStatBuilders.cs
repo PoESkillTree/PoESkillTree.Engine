@@ -16,5 +16,11 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
         IStatBuilder AdditionalActiveLevelsForModifierSourceItemSlot();
 
         IStatBuilder AdditionalLevels(Skill skill);
+
+
+        IStatBuilder AdditionalQualityForModifierSourceItemSlot { get; }
+        IStatBuilder AdditionalSupportQualityForModifierSourceItemSlot { get; }
+
+        IStatBuilder AdditionalQuality(Skill skill);
     }
 }

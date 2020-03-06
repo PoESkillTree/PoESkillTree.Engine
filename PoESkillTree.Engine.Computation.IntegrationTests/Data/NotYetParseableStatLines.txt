@@ -53,9 +53,6 @@ Socketed Movement Skills have no Mana Cost
 Socketed Non-Curse Aura Gems have 20% increased Aura Effect
 Socketed Spells have +1% to Critical Strike Chance
 Socketed Spells have +30% to Critical Strike Multiplier
-+5% to Quality of Socketed Gems
-+4% to Quality of Socketed Support Gems
-+72% to Quality of Supported Active Skill Gems
 // Item-inherent skills
 Curse Enemies with Level 10 Flammability on Hit
 Curse Enemies with Level 8 Assassin's Mark on Hit
