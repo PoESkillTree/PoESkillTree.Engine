@@ -15,7 +15,6 @@ using PoESkillTree.Engine.GameModel.Items;
 using PoESkillTree.Engine.GameModel.PassiveTree;
 using PoESkillTree.Engine.GameModel.Skills;
 using PoESkillTree.Engine.GameModel.StatTranslation;
-using PoESkillTree.Engine.Utils;
 
 namespace PoESkillTree.Engine.Computation.Parsing
 {
@@ -119,7 +118,7 @@ namespace PoESkillTree.Engine.Computation.Parsing
             => _treeJewelParser.Parse(new JewelInSkillTreeParserParameter(item, jewelRadius, nodeId));
 
         public ParseResult ParseSkills(IReadOnlyList<Skill> skills, Entity entity = Entity.Character)
-            => _skillsParser.Parse(new SequenceEquatableListView<Skill>(skills), entity);
+            => _skillsParser.Parse(skills, entity);
 
         public ParseResult ParseGem(Gem gem, out IReadOnlyList<Skill> skills, Entity entity = Entity.Character) =>
             _gemParser.Parse(gem, entity, out skills);
