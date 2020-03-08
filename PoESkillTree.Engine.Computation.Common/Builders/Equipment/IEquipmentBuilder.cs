@@ -41,7 +41,7 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Equipment
         IConditionBuilder HasItem { get; }
 
         /// <summary>
-        /// Is set if this slot holds a corrupted item.
+        /// Is true if this slot holds a corrupted item.
         /// </summary>
         IStatBuilder Corrupted { get; }
     }

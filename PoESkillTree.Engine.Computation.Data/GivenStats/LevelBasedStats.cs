@@ -11,7 +11,7 @@ using PoESkillTree.Engine.GameModel;
 
 namespace PoESkillTree.Engine.Computation.Data.GivenStats
 {
-    public abstract class LevelBasedStats : UsesStatBuilders, IGivenStats
+    public abstract class LevelBasedStats : UsesConditionBuilders, IGivenStats
     {
         protected IModifierBuilder ModifierBuilder { get; }
         protected MonsterBaseStats MonsterBaseStats { get; }

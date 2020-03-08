@@ -23,7 +23,7 @@ namespace PoESkillTree.Engine.Computation.Parsing
 
         public ModifierCollection(
             IBuilderFactories builderFactories, ModifierSource.Local localModifierSource,
-            Entity modifierSourceEntity = Entity.Character)
+            Entity modifierSourceEntity)
         {
             (_builderFactories, _localModifierSource, _modifierSourceEntity) =
                 (builderFactories, localModifierSource, modifierSourceEntity);

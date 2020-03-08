@@ -34,7 +34,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 ("OffHand.ItemTags", offHandTags.EncodeAsDouble()));
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var actual = GetValueForIdentity(result.Modifiers, "SkillUses.OffHand")
                 .Calculate(valueCalculationContext);
@@ -50,7 +50,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 ("MainHand.ItemTags", mainHandTags.EncodeAsDouble()));
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var actual = GetValueForIdentity(result.Modifiers, "MainSkillPart.Has.Melee")
                 .Calculate(valueCalculationContext);
@@ -66,7 +66,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 ("MainHand.ItemTags", mainHandTags.EncodeAsDouble()));
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var actual = GetValueForIdentity(result.Modifiers, "MainSkillPart.Has.Projectile")
                 .Calculate(valueCalculationContext);
@@ -78,14 +78,32 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         {
             var (definition, skill) = CreateFrenzyDefinition();
             var valueCalculationContext = MockValueCalculationContextForMainSkill(skill,
-                ("Belt.0.Cost", 20));
+                ("Frenzy.Cost", 20));
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var actual = GetValueForIdentity(result.Modifiers, "Mana.Cost")
                 .Calculate(valueCalculationContext);
             Assert.AreEqual(new NodeValue(20), actual);
+        }
+
+        [TestCase(0, ExpectedResult = 10)]
+        [TestCase(2, ExpectedResult = 20)]
+        [TestCase(3, ExpectedResult = 40)]
+        [TestCase(4, ExpectedResult = 40)]
+        public int? FrenzyIsParsedUsingItsActualSkillLevel(int additionalLevels)
+        {
+            var (definition, skill) = CreateFrenzyDefinition(true,
+                (1, 10), (4, 40), (2, 20));
+            var valueCalculationContext = MockValueCalculationContextForMainSkill(skill);
+            var sut = CreateSut(definition);
+
+            var result = sut.Parse(skill, Entity.Character, new SkillModification(additionalLevels, 0));
+
+            var actual = GetValueForIdentity(result.Modifiers, "Belt.0.0.Cost")
+                .Calculate(valueCalculationContext);
+            return (int?) actual.SingleOrNull();
         }
 
         [TestCase(true)]
@@ -97,7 +115,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var sut = CreateSut(definition);
             var context = MockValueCalculationContext(skill, false, isActiveSkill);
             
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             var actualForFrenzy = GetValueForIdentity(modifiers, "Frenzy.Instances").Calculate(context);
@@ -116,19 +134,23 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (definition, skill) = CreateFrenzyDefinition(false);
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             Assert.IsEmpty(result.Modifiers);
         }
 
-        private static (SkillDefinition, Skill) CreateFrenzyDefinition(bool isEnabled = true)
+        private static (SkillDefinition, Skill) CreateFrenzyDefinition(bool isEnabled = true) =>
+            CreateFrenzyDefinition(isEnabled, (1, 10));
+
+        private static (SkillDefinition, Skill) CreateFrenzyDefinition(bool isEnabled, params (int level, int manaCost)[] levels)
         {
             var activeSkill = CreateActiveSkillDefinition("Frenzy", new[] { "attack" },
                 new[] { Keyword.Melee, Keyword.Projectile });
-            var level = CreateLevelDefinition(manaCost: 10);
-            var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
-            return (CreateActive("Frenzy", activeSkill, levels),
-                new Skill("Frenzy", 1, 0, ItemSlot.Belt, 0, 0, isEnabled));
+            var levelDefinitions = levels
+                .Select(t => (t.level, CreateLevelDefinition(manaCost: t.manaCost)))
+                .ToDictionary();
+            return (CreateActive("Frenzy", activeSkill, levelDefinitions),
+                CreateSkillFromGem("Frenzy", 1, 0, isEnabled));
         }
 
         #endregion
@@ -142,7 +164,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var valueCalculationContext = MockValueCalculationContextForMainSkill(skill);
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var actual = GetValueForIdentity(result.Modifiers, "SkillHitDamageSource")
                 .Calculate(valueCalculationContext);
@@ -155,7 +177,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (definition, skill) = CreateFlameTotemDefinition();
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             Assert.IsTrue(AnyModifierHasIdentity(modifiers, "MainSkillPart.Has.Projectile"));
@@ -171,7 +193,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var valueCalculationContext = MockValueCalculationContextForMainSkill(skill);
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             var actual = GetValueForIdentity(modifiers, "BaseCastTime.Spell.Skill").Calculate(valueCalculationContext);
@@ -187,7 +209,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var valueCalculationContext = MockValueCalculationContextForMainSkill(skill);
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var lifeModifier = result.Modifiers.First(m => m.Stats.First().Identity == "Life");
             Assert.AreEqual(Entity.Totem, lifeModifier.Stats.First().Entity);
@@ -204,29 +226,12 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var valueCalculationContext = MockValueCalculationContextForMainSkill(skill);
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifier = result.Modifiers.First(m => m.Stats.First().Identity == "CriticalStrike.Chance.Spell.Skill");
             Assert.AreEqual(Form.BaseSet, modifier.Form);
             var actual = modifier.Value.Calculate(valueCalculationContext);
             Assert.AreEqual(new NodeValue(5), actual);
-        }
-
-        [Test]
-        public void FlameTotemHasCorrectRequirements()
-        {
-            var (definition, skill) = CreateFlameTotemDefinition();
-            var valueCalculationContext = MockValueCalculationContextForMainSkill(skill);
-            var sut = CreateSut(definition);
-
-            var result = sut.Parse(skill);
-
-            var modifiers = result.Modifiers;
-            Assert.IsFalse(AnyModifierHasIdentity(modifiers, "Dexterity.Required"));
-            var actualInt = GetValueForIdentity(modifiers, "Intelligence.Required").Calculate(valueCalculationContext);
-            Assert.AreEqual(new NodeValue(68), actualInt);
-            var actualStr = GetValueForIdentity(modifiers, "Strength.Required").Calculate(valueCalculationContext);
-            Assert.AreEqual(new NodeValue(98), actualStr);
         }
 
         [Test]
@@ -236,7 +241,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var valueCalculationContext = MockValueCalculationContextForMainSkill(skill);
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             var actual = GetValueForIdentity(modifiers, "Fire.Damage.Spell.Skill").Calculate(valueCalculationContext);
@@ -244,8 +249,9 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             Assert.IsFalse(AnyModifierHasIdentity(modifiers, "Fire.Damage.Spell.Ignite"));
         }
 
-        [Test]
-        public void FlameTotemStatsAreParsedCorrectly()
+        [TestCase(0)]
+        [TestCase(10)]
+        public void FlameTotemStatsAreParsedCorrectly(int additionalQuality)
         {
             var (definition, skill) = CreateFlameTotemDefinition();
             var source = new ModifierSource.Local.Skill("FlameTotem", "Flame Totem");
@@ -258,7 +264,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             {
                 new UntranslatedStatParserParameter(source, new[]
                 {
-                    new UntranslatedStat("totem_life_+%", 10),
+                    new UntranslatedStat("totem_life_+%", 10 + additionalQuality),
                 }),
                 new UntranslatedStatParserParameter(source, new[]
                 {
@@ -271,7 +277,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 p.Parse(EmptyParserParameter(source)) == EmptyParseResult);
             var sut = CreateSut(definition, statParser);
 
-            var result = sut.Parse(skill);
+            var result = sut.Parse(skill, Entity.Character, new SkillModification(0, additionalQuality));
 
             var modifiers = result.Modifiers;
             Assert.IsTrue(AnyModifierHasIdentity(modifiers, "s1"));
@@ -292,11 +298,10 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 new UntranslatedStat("spell_maximum_base_fire_damage", 10),
                 new UntranslatedStat("number_of_additional_projectiles", 2),
             };
-            var level = CreateLevelDefinition(criticalStrikeChance: 5, requiredIntelligence: 68, requiredStrength: 98,
-                qualityStats: qualityStats, stats: stats);
+            var level = CreateLevelDefinition(criticalStrikeChance: 5, qualityStats: qualityStats, stats: stats);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("FlameTotem", activeSkill, levels),
-                new Skill("FlameTotem", 1, 10, ItemSlot.Belt, 0, 0));
+                CreateSkillFromGem("FlameTotem", 1, 10));
         }
 
         #endregion
@@ -309,7 +314,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (definition, skill) = CreateContagionDefinition();
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             Assert.IsFalse(AnyModifierHasIdentity(modifiers, "SkillHitDamageSource"));
@@ -321,7 +326,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (definition, skill) = CreateContagionDefinition();
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             Assert.IsFalse(AnyModifierHasIdentity(modifiers, "MainSkillPart.Damage.OverTime.Has.Spell"));
@@ -336,7 +341,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var valueCalculationContext = MockValueCalculationContextForMainSkill(skill);
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             var actual = GetValueForIdentity(modifiers, "Chaos.Damage.OverTime.Skill")
@@ -350,7 +355,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (definition, skill) = CreateContagionDefinition();
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             Assert.IsFalse(AnyModifierHasIdentity(modifiers, "Level.Required"));
@@ -368,7 +373,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition(stats: stats);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("Contagion", activeSkill, levels),
-                new Skill("Contagion", 1, 0, ItemSlot.Belt, 0, null));
+                CreateSkillFromItem("Contagion", 1));
         }
 
         #endregion
@@ -381,39 +386,41 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (definition, skill) = CreateShieldChargeDefinition();
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             Assert.IsTrue(AnyModifierHasIdentity(modifiers, "MainSkillPart.Damage.Attack.Has.AreaOfEffect"));
         }
 
         [Test]
-        public void ShieldChargeDoesNotUseOffHand()
+        public void ShieldChargeDoesNotUseMainHand()
         {
             var (definition, skill) = CreateShieldChargeDefinition();
             var valueCalculationContext = MockValueCalculationContextForMainSkill(skill,
-                ("OffHand.ItemTags", Tags.Shield.EncodeAsDouble()));
+                ("OffHand.ItemTags", Tags.Shield.EncodeAsDouble()),
+                ("OffHand.ItemClass", (int) ItemClass.Shield));
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
-            var actual = GetValueForIdentity(result.Modifiers, "SkillUses.OffHand")
+            var actual = GetValueForIdentity(result.Modifiers, "SkillUses.MainHand")
                 .Calculate(valueCalculationContext);
             Assert.IsFalse(actual.IsTrue());
         }
 
-        [TestCase(Tags.Shield)]
-        [TestCase(Tags.Weapon)]
-        public void ShieldChargeUsesMainHandIfOffHandHasShield(Tags offHandTags)
+        [TestCase(Tags.Shield, ItemClass.Shield)]
+        [TestCase(Tags.Weapon, ItemClass.OneHandSword)]
+        public void ShieldChargeUsesOffHandIfItHasShield(Tags offHandTags, ItemClass offHandItemClass)
         {
             var (definition, skill) = CreateShieldChargeDefinition();
             var valueCalculationContext = MockValueCalculationContextForMainSkill(skill,
-                ("OffHand.ItemTags", offHandTags.EncodeAsDouble()));
+                ("OffHand.ItemTags", offHandTags.EncodeAsDouble()),
+                ("OffHand.ItemClass", (int) offHandItemClass));
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
-            var actual = GetValueForIdentity(result.Modifiers, "SkillUses.MainHand")
+            var actual = GetValueForIdentity(result.Modifiers, "SkillUses.OffHand")
                 .Calculate(valueCalculationContext);
             Assert.AreEqual(offHandTags.HasFlag(Tags.Shield), actual.IsTrue());
         }
@@ -423,12 +430,12 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var types = new[]
                 { ActiveSkillType.Attack, ActiveSkillType.RequiresShield };
             var activeSkill = CreateActiveSkillDefinition("ShieldCharge", types,
-                new[] { Keyword.Attack, Keyword.AreaOfEffect });
+                new[] {Keyword.Attack, Keyword.AreaOfEffect}, weaponRestrictions: new[] {ItemClass.Shield});
             var stats = new[] { new UntranslatedStat("is_area_damage", 1), };
             var level = CreateLevelDefinition(stats: stats);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("ShieldCharge", activeSkill, levels),
-                new Skill("ShieldCharge", 1, 0, ItemSlot.Belt, 0, null));
+                CreateSkillFromItem("ShieldCharge", 1));
         }
 
         #endregion
@@ -446,7 +453,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 ("OffHand.ItemTags", offHandTags.EncodeAsDouble()));
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var actual = GetValueForIdentity(result.Modifiers, "SkillUses.MainHand")
                 .Calculate(valueCalculationContext);
@@ -469,7 +476,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 ("OffHand.ItemTags", Tags.Weapon.EncodeAsDouble()));
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var actual = GetValueForIdentity(result.Modifiers, "SkillUses.MainHand")
                 .Calculate(valueCalculationContext);
@@ -487,7 +494,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition();
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("DualStrike", activeSkill, levels),
-                new Skill("DualStrike", 1, 0, ItemSlot.Belt, 0, null));
+                CreateSkillFromItem("DualStrike", 1));
         }
 
         #endregion
@@ -500,7 +507,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (definition, skill) = CreateCausticArrowDefinition();
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             Assert.IsFalse(AnyModifierHasIdentity(modifiers, "MainSkillPart.Damage.Attack.Has.AreaOfEffect"));
@@ -513,7 +520,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (definition, skill) = CreateCausticArrowDefinition();
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             var expectedIdentity =
@@ -536,7 +543,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition(stats: stats);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("PoisonArrow", activeSkill, levels),
-                new Skill("PoisonArrow", 1, 0, ItemSlot.Belt, 0, null));
+                CreateSkillFromItem("PoisonArrow", 1));
         }
 
         #endregion
@@ -550,7 +557,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var valueCalculationContext = MockValueCalculationContextForMainSkill(skill);
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var actual = GetValueForIdentity(result.Modifiers, "SkillHitDamageSource")
                 .Calculate(valueCalculationContext);
@@ -564,7 +571,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var valueCalculationContext = MockValueCalculationContextForMainSkill(skill);
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifier = result.Modifiers.First(m => m.Stats.First().Identity == "Cooldown");
             Assert.AreEqual(Form.BaseSet, modifier.Form);
@@ -583,7 +590,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition(cooldown: 4000, stats: stats);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("AbyssalCry", activeSkill, levels),
-                new Skill("AbyssalCry", 1, 0, ItemSlot.Belt, 0, null));
+                CreateSkillFromItem("AbyssalCry", 1));
         }
 
         #endregion
@@ -596,7 +603,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (definition, skill) = CreateDoubleStrikeDefinition();
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             Assert.IsTrue(AnyModifierHasIdentity(result.Modifiers, "SkillNumberOfHitsPerCast"));
         }
@@ -611,7 +618,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition(stats: stats);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("DoubleStrike", activeSkill, levels),
-                new Skill("DoubleStrike", 1, 0, ItemSlot.Belt, 0, null));
+                CreateSkillFromItem("DoubleStrike", 1));
         }
 
         #endregion
@@ -624,7 +631,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (definition, skill) = CreateCleaveDefinition();
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             Assert.IsTrue(AnyModifierHasIdentity(result.Modifiers, "SkillDoubleHitsWhenDualWielding"));
         }
@@ -639,7 +646,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition(stats: stats);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("Cleave", activeSkill, levels),
-                new Skill("Cleave", 1, 0, ItemSlot.Belt, 0, null));
+                CreateSkillFromItem("Cleave", 1));
         }
 
         #endregion
@@ -652,9 +659,9 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (definition, skill) = CreateClarityDefinition();
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
-            var modifier = GetFirstModifierWithIdentity(result.Modifiers, "Belt.0.Cost");
+            var modifier = GetFirstModifierWithIdentity(result.Modifiers, "Belt.0.0.Cost");
             var actualValue = modifier.Value.Calculate(null!);
             Assert.AreEqual(new NodeValue(10), actualValue);
         }
@@ -665,12 +672,13 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (definition, skill) = CreateClarityDefinition();
             var sut = CreateSut(definition);
             var context = MockValueCalculationContextForActiveSkill(skill,
-                ($"Belt.0.Type.{ActiveSkillType.ManaCostIsReservation}", 1),
-                ("Belt.0.Cost", 20));
+                ($"Belt.0.0.Type.{ActiveSkillType.ManaCostIsReservation}", 1),
+                ("Clarity.Cost", 20));
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
-            var modifier = GetFirstModifierWithIdentity(result.Modifiers, "Clarity.Reservation");
+            var modifier = GetModifiersWithIdentity(result.Modifiers, "Clarity.Reservation")
+                .First(m => m.Form == Form.BaseSet);
             var actualValue = modifier.Value.Calculate(context);
             Assert.AreEqual(new NodeValue(20), actualValue);
         }
@@ -683,11 +691,11 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (definition, skill) = CreateClarityDefinition();
             var sut = CreateSut(definition);
             var context = MockValueCalculationContextForActiveSkill(skill,
-                ($"Belt.0.Type.{ActiveSkillType.ManaCostIsReservation}", 1),
+                ($"Belt.0.0.Type.{ActiveSkillType.ManaCostIsReservation}", 1),
                 ("Clarity.Reservation", 20),
                 ("Clarity.ReservationPool", (double) pool));
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifier = GetFirstModifierWithIdentity(result.Modifiers, pool + ".Reservation");
             Assert.AreEqual(new NodeValue(20), modifier.Value.Calculate(context));
@@ -701,11 +709,11 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (definition, skill) = CreateClarityDefinition();
             var sut = CreateSut(definition);
             var context = MockValueCalculationContextForInactiveSkill(skill,
-                ($"Belt.0.Type.{ActiveSkillType.ManaCostIsReservation}", 1),
+                ($"Belt.0.0.Type.{ActiveSkillType.ManaCostIsReservation}", 1),
                 ("Clarity.Reservation", 20),
                 ("Clarity.ReservationPool", (double) Pool.Mana));
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifier = GetFirstModifierWithIdentity(result.Modifiers, "Clarity.Reservation");
             Assert.IsNull(modifier.Value.Calculate(context));
@@ -719,7 +727,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (definition, skill) = CreateClarityDefinition();
             var sut = CreateSut(definition);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifier = GetFirstModifierWithIdentity(result.Modifiers, "Clarity.ActiveSkillItemSlot");
             Assert.AreEqual(new NodeValue((double) skill.ItemSlot), modifier.Value.Calculate(null!));
@@ -764,7 +772,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 ("Clarity.BuffSourceIs(Character)", Entity.Character, 1),
                 ("Clarity.BuffSourceIs(Character)", Entity.Minion, 1));
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = GetModifiersWithIdentity(result.Modifiers, "Mana.Regen").ToList();
             var actualValues = modifiers.Select(m => m.Value).Calculate(context).ToList();
@@ -802,7 +810,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 p.Parse(EmptyParserParameter(source)) == EmptyParseResult);
             var sut = CreateSut(definition, CreateParser);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             Assert.IsTrue(AnyModifierHasIdentity(result.Modifiers, "Mana.Regen"));
 
@@ -831,7 +839,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var sut = CreateSut(definition);
             var context = MockValueCalculationContext(skill, false, isActiveSkill);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             var activeModifier = GetFirstModifierWithIdentity(modifiers, "Clarity.Active");
@@ -851,12 +859,12 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var buffStats = new[]
             {
                 new BuffStat(new UntranslatedStat("base_mana_regeneration_rate_per_minute", 240),
-                    new[] { Entity.Character, Entity.Minion }),
+                    _ => new[] { Entity.Character, Entity.Minion }),
             };
             var level = CreateLevelDefinition(manaCost: 10, buffStats: buffStats);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("Clarity", activeSkill, levels),
-                new Skill("Clarity", 1, 0, ItemSlot.Belt, 0, null));
+                CreateSkillFromGem("Clarity", 1));
         }
 
         #endregion
@@ -869,13 +877,13 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (definition, skill) = CreateHatredDefinition();
             var sut = CreateSut(definition);
             var context = MockValueCalculationContextForActiveSkill(skill,
-                ($"Belt.0.Type.{ActiveSkillType.ManaCostIsReservation}", 1),
-                ($"Belt.0.Type.{ActiveSkillType.ManaCostIsPercentage}", 1),
+                ($"Belt.0.0.Type.{ActiveSkillType.ManaCostIsReservation}", 1),
+                ($"Belt.0.0.Type.{ActiveSkillType.ManaCostIsPercentage}", 1),
                 ("Hatred.Reservation", 60),
                 ("Hatred.ReservationPool", (double) Pool.Mana),
                 ("Mana", 200));
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifier = GetFirstModifierWithIdentity(result.Modifiers, "Mana.Reservation");
             Assert.AreEqual(new NodeValue(120), modifier.Value.Calculate(context));
@@ -889,7 +897,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition(manaCost: 50);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("Hatred", activeSkill, levels),
-                new Skill("Hatred", 1, 0, ItemSlot.Belt, 0, null));
+                CreateSkillFromGem("Hatred", 1));
         }
 
         #endregion
@@ -924,7 +932,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var context = MockValueCalculationContextForMainSkill(skill,
                 ("MainSkillPart", skillPart));
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             var actualCastRate = GetValueForIdentity(modifiers, "CastRate.Attack.MainHand.Skill").Calculate(context);
@@ -948,7 +956,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var sut = CreateSut(definition);
             var context = MockValueCalculationContextForMainSkill(skill);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             var actual = GetValueForIdentity(modifiers, "MainSkillPart.Maximum").Calculate(context);
@@ -962,7 +970,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var sut = CreateSut(definition);
             var context = MockValueCalculationContextForMainSkill(skill);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             var actual = GetValueForIdentity(modifiers, "CastRate.Attack.MainHand.Skill").Calculate(context);
@@ -987,7 +995,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 additionalStatsPerPart: additionalStatsPerPart);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("ChargedAttack", activeSkill, levels),
-                new Skill("ChargedAttack", 1, 0, ItemSlot.Belt, 0, null));
+                CreateSkillFromItem("ChargedAttack", 1));
         }
 
         #endregion
@@ -1004,7 +1012,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var context = MockValueCalculationContextForMainSkill(skill,
                 ("MainSkillPart", skillPart));
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             var fireConversionIdentity =
@@ -1035,7 +1043,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var context = MockValueCalculationContextForMainSkill(skill,
                 ("MainSkillPart", skillPart));
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             var actualHasAttack = GetValuesForIdentity(modifiers, "MainSkillPart.Has.Attack").Calculate(context);
@@ -1088,7 +1096,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition(additionalStatsPerPart: additionalStatsPerPart);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("WildStrike", activeSkill, levels),
-                new Skill("WildStrike", 1, 0, ItemSlot.Belt, 0, null));
+                CreateSkillFromItem("WildStrike", 1));
         }
 
         #endregion
@@ -1105,7 +1113,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var context = MockValueCalculationContextForMainSkill(skill,
                 ("MainSkillPart", skillPart));
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             var actual = GetValuesForIdentity(modifiers, "SkillHitDamageSource").Calculate(context).ToList();
@@ -1131,7 +1139,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition(additionalStatsPerPart: additionalStatsPerPart);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("InfernalBlow", activeSkill, levels),
-                new Skill("InfernalBlow", 1, 0, ItemSlot.Belt, 0, null));
+                CreateSkillFromItem("InfernalBlow", 1));
         }
 
         #endregion
@@ -1167,7 +1175,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var context = MockValueCalculationContextForMainSkill(skill,
                 ("MainSkillPart", skillPart));
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var modifiers = result.Modifiers;
             var actual = GetValueForIdentity(modifiers, "s1").Calculate(context);
@@ -1189,7 +1197,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition(stats: stats, additionalStatsPerPart: additionalStatsPerPart);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("IceSpear", activeSkill, levels),
-                new Skill("IceSpear", 1, 0, ItemSlot.Belt, 0, null));
+                CreateSkillFromItem("IceSpear", 1));
         }
 
         #endregion
@@ -1203,7 +1211,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var sut = CreateSut(definition);
             var context = MockValueCalculationContextForMainSkill(skill);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var actual = GetValueForIdentity(result.Modifiers, "HitRate").Calculate(context);
             Assert.AreEqual((NodeValue?) 1000 / 600D, actual);
@@ -1219,7 +1227,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition(stats: stats);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("BladeVortex", activeSkill, levels),
-                new Skill("BladeVortex", 1, 0, ItemSlot.Belt, 0, null));
+                CreateSkillFromItem("BladeVortex", 1));
         }
 
         #endregion
@@ -1241,7 +1249,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var sut = CreateSut(definition, statParser);
             var context = MockValueCalculationContextForActiveSkill(skill);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var actual = GetValueForIdentity(result.Modifiers, "Cold.Damage.Attack.MainHand.Skill").Calculate(context);
             Assert.AreEqual((NodeValue?) 15, actual);
@@ -1266,7 +1274,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var sut = CreateSut(definition, statParser);
             var context = MockValueCalculationContextForActiveSkill(skill);
 
-            var result = sut.Parse(skill);
+            var result = Parse(sut, skill);
 
             var actual = GetValueForIdentity(result.Modifiers, "Cold.Damage.Spell.Skill").Calculate(context);
             Assert.AreEqual(expected, actual);
@@ -1280,22 +1288,222 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var buffStats = new[]
             {
                 new BuffStat(new UntranslatedStat("spell_minimum_added_cold_damage", 38),
-                    new[] { Entity.Character }),
+                    _ => new[] { Entity.Character }),
                 new BuffStat(new UntranslatedStat("spell_maximum_added_cold_damage", 56),
-                    new[] { Entity.Character }),
+                    _ => new[] { Entity.Character }),
             };
             var qualityBuffStats = new[]
             {
                 new BuffStat(new UntranslatedStat("herald_of_ice_cold_damage_+%", 750),
-                    new[] { Entity.Character }),
+                    _ => new[] { Entity.Character }),
             };
             var level = CreateLevelDefinition(manaCost: 10, buffStats: buffStats, qualityBuffStats: qualityBuffStats);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("HeraldOfIce", activeSkill, levels),
-                new Skill("HeraldOfIce", 1, 20, ItemSlot.Belt, 0, null));
+                CreateSkillFromItem("HeraldOfIce", 1, 20));
         }
 
         #endregion
+
+        #region Cold Snap
+
+        [Test]
+        public void ColdSnapCanBypassCooldown()
+        {
+            var (definition, skill) = CreateColdSnapDefinition();
+            var source = new ModifierSource.Local.Skill("ColdSnap", "Cold Snap");
+            var statParser = Mock.Of<IParser<UntranslatedStatParserParameter>>(p =>
+                p.Parse(EmptyParserParameter(source)) == EmptyParseResult);
+            var sut = CreateSut(definition, statParser);
+            var context = MockValueCalculationContextForMainSkill(skill);
+
+            var result = Parse(sut, skill);
+
+            var modifiers = result.Modifiers;
+            var actual = GetValueForIdentity(modifiers, "CanBypassSkillCooldown").Calculate(context);
+            Assert.AreEqual((NodeValue?) true, actual);
+        }
+
+        private static (SkillDefinition, Skill) CreateColdSnapDefinition()
+        {
+            var activeSkill = CreateActiveSkillDefinition("Cold Snap",
+                new[] { "spell" }, new[] { Keyword.Spell });
+            var stats = new UntranslatedStat[0];
+            var level = CreateLevelDefinition(stats: stats, canBypassCooldown: true);
+            var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
+            return (CreateActive("ColdSnap", activeSkill, levels),
+                CreateSkillFromItem("ColdSnap", 1));
+        }
+
+        #endregion
+
+        #region Flammability
+
+        [Test]
+        public void FlammabilityAddsToActiveCurses()
+        {
+            var (definition, skill) = CreateFlammabilityDefinition();
+            var statParser = Mock.Of<IParser<UntranslatedStatParserParameter>>(p =>
+                p.Parse(It.IsAny<UntranslatedStatParserParameter>()) == EmptyParseResult);
+            var sut = CreateSut(definition, statParser);
+            var context = MockValueCalculationContextForActiveSkill(skill);
+
+            var result = Parse(sut, skill);
+
+            var modifiers = result.Modifiers;
+            var actual = GetValueForIdentity(modifiers, "ActiveCurses").Calculate(context);
+            Assert.AreEqual((NodeValue?) definition.NumericId, actual);
+        }
+
+        [Test]
+        public void FlammabilityIsNotAppliedIfCurseLimitIsExceeded()
+        {
+            var (definition, skill) = CreateFlammabilityDefinition();
+            var statParser = Mock.Of<IParser<UntranslatedStatParserParameter>>(p =>
+                p.Parse(It.IsAny<UntranslatedStatParserParameter>()) == EmptyParseResult);
+            var sut = CreateSut(definition, statParser);
+            var context = MockValueCalculationContextForCurse(skill, 1, false, 11, 12);
+
+            var result = Parse(sut, skill);
+
+            var actual = GetValueForIdentity(result.Modifiers, "Flammability.Active").Calculate(context);
+            Assert.AreEqual((NodeValue?) false, actual);
+        }
+
+        [TestCase(2, 11, 12)]
+        [TestCase(1, 12, 11)]
+        public void FlammabilityIsNotAppliedIfCurseLimitIsNotExceeded(int curseLimit, int activeCurse1, int activeCurse2)
+        {
+            var (definition, skill) = CreateFlammabilityDefinition();
+            var statParser = Mock.Of<IParser<UntranslatedStatParserParameter>>(p =>
+                p.Parse(It.IsAny<UntranslatedStatParserParameter>()) == EmptyParseResult);
+            var sut = CreateSut(definition, statParser);
+            var context = MockValueCalculationContextForCurse(skill, curseLimit, false, activeCurse1, activeCurse2);
+
+            var result = Parse(sut, skill);
+
+            var actual = GetValueForIdentity(result.Modifiers, "Flammability.Active").Calculate(context);
+            Assert.AreEqual((NodeValue?) true, actual);
+        }
+
+        [Test]
+        public void FlammabilityIsAppliedIfCurseLimitIsExceededAndIgnored()
+        {
+            var (definition, skill) = CreateFlammabilityDefinition();
+            var statParser = Mock.Of<IParser<UntranslatedStatParserParameter>>(p =>
+                p.Parse(It.IsAny<UntranslatedStatParserParameter>()) == EmptyParseResult);
+            var sut = CreateSut(definition, statParser);
+            var context = MockValueCalculationContextForCurse(skill, 1, true, 11, 12);
+
+            var result = Parse(sut, skill);
+
+            var actual = GetValueForIdentity(result.Modifiers, "Flammability.Active").Calculate(context);
+            Assert.AreEqual((NodeValue?) true, actual);
+        }
+
+        private static (SkillDefinition, Skill) CreateFlammabilityDefinition()
+        {
+            var activeSkill = CreateActiveSkillDefinition("Flammability",
+                new[] { "spell" }, new[] { Keyword.Spell, Keyword.Curse }, true);
+            var buffStats = new[]
+            {
+                new BuffStat(new UntranslatedStat("base_fire_damage_resistance_%", -10), _ => new[] {Entity.Enemy}),
+            };
+            var level = CreateLevelDefinition(buffStats: buffStats);
+            var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
+            return (SkillDefinition.CreateActive("Flammability", 12, "", null, new string[0], null, activeSkill, levels),
+                CreateSkillFromItem("Flammability", 1));
+        }
+
+        private static IValueCalculationContext MockValueCalculationContextForCurse(
+            Skill skill, int curseLimit, bool ignoresCurseLimit, params int[] activeCurses)
+        {
+            var context = MockValueCalculationContextForActiveSkill(skill,
+                ("CurseLimit", curseLimit),
+                ($"{skill.Id}.IgnoresCurseLimit", ignoresCurseLimit ? (double?) 1 : null));
+            var contextMock = Mock.Get(context);
+            (IStat, PathDefinition) path = (new Stat("ActiveCurses"), PathDefinition.MainPath);
+            contextMock.Setup(c => c.GetValues(Form.BaseAdd, new[] {path}))
+                .Returns(activeCurses.Select(i => (NodeValue?) i).ToList());
+            return context;
+        }
+
+        #endregion
+
+        #region Bodyswap
+
+        [Test]
+        public void BodyswapSetsSpellDamageBasedOnLife()
+        {
+            var (definition, skill) = CreateBodyswapDefinition();
+            var valueCalculationContext = MockValueCalculationContextForMainSkill(skill,
+                ("Life", 100));
+            var sut = CreateSut(definition);
+
+            var result = Parse(sut, skill);
+
+            var modifiers = result.Modifiers;
+            var actual = GetValueForIdentity(modifiers, "Fire.Damage.Spell.Skill").Calculate(valueCalculationContext);
+            Assert.AreEqual(new NodeValue(8, 13), actual);
+        }
+
+        private static (SkillDefinition, Skill) CreateBodyswapDefinition()
+        {
+            var activeSkill = CreateActiveSkillDefinition("Bodyswap");
+            var stats = new[]
+            {
+                new UntranslatedStat("spell_minimum_base_fire_damage", 5),
+                new UntranslatedStat("spell_maximum_base_fire_damage", 10),
+                new UntranslatedStat("spell_base_fire_damage_%_maximum_life", 3),
+            };
+            var level = CreateLevelDefinition(stats: stats);
+            var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
+            return (CreateActive("CorpseWarp", activeSkill, levels),
+                CreateSkillFromGem("CorpseWarp", 1, 10));
+        }
+
+        #endregion
+
+        #region Righteous Fire
+
+        [Test]
+        public void RighteousFireSetsDamageOverTimeBasedOnPools()
+        {
+            var (definition, skill) = CreateRighteousFireDefinition();
+            var valueCalculationContext = MockValueCalculationContextForMainSkill(skill,
+                ("Life", 100),
+                ("EnergyShield", 200));
+            var sut = CreateSut(definition);
+
+            var result = Parse(sut, skill);
+
+            var modifiers = result.Modifiers;
+            var actual = GetValueForIdentity(modifiers, "Fire.Damage.OverTime.Skill").Calculate(valueCalculationContext);
+            Assert.AreEqual(new NodeValue(8), actual);
+        }
+
+        private static (SkillDefinition, Skill) CreateRighteousFireDefinition()
+        {
+            var activeSkill = CreateActiveSkillDefinition("Righteous Fire");
+            var stats = new[]
+            {
+                new UntranslatedStat("base_righteous_fire_%_of_max_life_to_deal_to_nearby_per_minute", 60),
+                new UntranslatedStat("base_righteous_fire_%_of_max_energy_shield_to_deal_to_nearby_per_minute", 120),
+                new UntranslatedStat("base_fire_damage_to_deal_per_minute", 180),
+            };
+            var level = CreateLevelDefinition(stats: stats);
+            var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
+            return (CreateActive("RighteousFire", activeSkill, levels),
+                CreateSkillFromGem("RighteousFire", 1, 10));
+        }
+
+        #endregion
+
+        private static Skill CreateSkillFromGem(string skillId, int level, int quality = 0, bool isEnabled = true) =>
+            Skill.FromGem(new Gem(skillId, level, quality, ItemSlot.Belt, 0, 0, isEnabled), isEnabled);
+
+        private static Skill CreateSkillFromItem(string skillId, int level, int quality = 0) =>
+            Skill.FromItem(skillId, level, quality, ItemSlot.Belt, 0, true);
 
         private static ActiveSkillParser CreateSut(SkillDefinition skillDefinition)
         {
@@ -1325,5 +1533,8 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var actual = actualValues.Select(v => v.IsTrue()).ToArray();
             Assert.AreEqual(expected, actual);
         }
+
+        private static ParseResult Parse(IParser<ActiveSkillParserParameter> sut, Skill activeSkill) =>
+            sut.Parse(activeSkill, Entity.Character, new SkillModification(0, 0));
     }
 }

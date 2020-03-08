@@ -50,6 +50,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                 new DamageMechanics(_builderFactories, modifierBuilder),
                 new GameStateDependentMods(_builderFactories, modifierBuilder),
                 new AdditionalSkillStats(_builderFactories, modifierBuilder),
+                new SkillBaseRadii(_builderFactories, modifierBuilder),
             };
     }
 }

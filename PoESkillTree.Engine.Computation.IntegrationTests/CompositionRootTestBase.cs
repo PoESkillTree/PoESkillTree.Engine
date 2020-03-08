@@ -2,6 +2,8 @@
 using System.Threading.Tasks;
 using PoESkillTree.Engine.Computation.Common.Builders;
 using PoESkillTree.Engine.Computation.Common.Data;
+using PoESkillTree.Engine.Computation.Core;
+using PoESkillTree.Engine.Computation.Core.Nodes;
 using PoESkillTree.Engine.Computation.Data.Steps;
 using PoESkillTree.Engine.Computation.Parsing;
 using PoESkillTree.Engine.GameModel;
@@ -21,13 +23,13 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
             new Lazy<Task<IParsingData<ParsingStep>>>(
                 () => Data.ParsingData.CreateAsync(LazyGameData.Value, LazyBuilderFactories.Value));
 
-        private static readonly Lazy<Task<IParser>> LazyParser = new Lazy<Task<IParser>>(
+        private static readonly Lazy<Task<Parser<ParsingStep>>> LazyParser = new Lazy<Task<Parser<ParsingStep>>>(
             () => Parser<ParsingStep>.CreateAsync(LazyGameData.Value, LazyBuilderFactories.Value,
-                LazyParsingData.Value));
+                LazyParsingData.Value, new SimpleValueCalculationContext(Calculator.Create().NodeRepository)));
 
         protected static GameData GameData => LazyGameData.Value;
         protected static Task<IBuilderFactories> BuilderFactoriesTask => LazyBuilderFactories.Value;
         protected static Task<IParsingData<ParsingStep>> ParsingDataTask => LazyParsingData.Value;
-        protected static Task<IParser> ParserTask => LazyParser.Value;
+        protected static Task<Parser<ParsingStep>> ParserTask => LazyParser.Value;
     }
 }

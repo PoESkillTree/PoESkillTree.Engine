@@ -17,6 +17,8 @@ namespace PoESkillTree.Engine.Computation.Parsing.PassiveTreeParsers
     /// </summary>
     public class PassiveNodeParser : IParser<ushort>
     {
+        private const Entity ModifierSourceEntity = Entity.Character;
+
         private readonly PassiveTreeDefinition _passiveTreeDefinition;
         private readonly IBuilderFactories _builderFactories;
         private readonly ICoreParser _coreParser;
@@ -41,11 +43,11 @@ namespace PoESkillTree.Engine.Computation.Parsing.PassiveTreeParsers
             {
                 var result = ModifierLocalityTester.AffectsPassiveNodeProperty(modifier)
                     ? Parse(modifier + " (AsPassiveNodeBaseProperty)", globalSource)
-                    : Parse(modifier, globalSource).ApplyMultiplier(effectiveness.Build);
+                    : Parse(modifier, globalSource).ApplyMultiplier(effectiveness.Build, ModifierSourceEntity);
                 results.Add(result);
             }
             
-            var modifiers = new ModifierCollection(_builderFactories, localSource);
+            var modifiers = new ModifierCollection(_builderFactories, localSource, ModifierSourceEntity);
             modifiers.AddGlobal(isAllocatedStat, Form.BaseSet, false);
             modifiers.AddGlobal(skillPointSpentStat, Form.BaseSet, false);
             modifiers.AddGlobal(effectivenessStat, Form.BaseSet, isAllocatedStat.Value);
@@ -55,12 +57,12 @@ namespace PoESkillTree.Engine.Computation.Parsing.PassiveTreeParsers
                 var passivePointStat = nodeDefinition.IsAscendancyNode
                     ? _builderFactories.StatBuilders.AscendancyPassivePoints
                     : _builderFactories.StatBuilders.PassivePoints;
-                modifiers.AddGlobal(passivePointStat, Form.BaseAdd, 1, skillPointSpentStat.IsSet);
+                modifiers.AddGlobal(passivePointStat, Form.BaseAdd, 1, skillPointSpentStat.IsTrue);
             }
             if (nodeDefinition.PassivePointsGranted > 0)
             {
                 modifiers.AddGlobal(_builderFactories.StatBuilders.PassivePoints.Maximum,
-                    Form.BaseAdd, nodeDefinition.PassivePointsGranted, isAllocatedStat.IsSet);
+                    Form.BaseAdd, nodeDefinition.PassivePointsGranted, isAllocatedStat.IsTrue);
             }
 
             var attributes = _builderFactories.StatBuilders.Attribute;
@@ -80,6 +82,6 @@ namespace PoESkillTree.Engine.Computation.Parsing.PassiveTreeParsers
         }
 
         private ParseResult Parse(string modifierLine, ModifierSource modifierSource)
-            => _coreParser.Parse(modifierLine, modifierSource, Entity.Character);
+            => _coreParser.Parse(modifierLine, modifierSource, ModifierSourceEntity);
     }
 }

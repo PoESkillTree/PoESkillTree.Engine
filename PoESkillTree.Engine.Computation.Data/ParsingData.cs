@@ -37,14 +37,14 @@ namespace PoESkillTree.Engine.Computation.Data
         private ParsingData(
             IBuilderFactories builderFactories,
             SkillDefinitions skills, PassiveTreeDefinition passives,
-            CharacterBaseStats characterBaseStats, MonsterBaseStats monsterBaseStats)
+            CharacterBaseStats characterBaseStats, MonsterBaseStats monsterBaseStats, GemTags gemTags)
         {
             _builderFactories = builderFactories;
 
             _statMatchers = new Lazy<IReadOnlyList<IStatMatchers>>(
                 () => CreateStatMatchers(ModifierBuilder.Empty, passives.Nodes));
             _referencedMatchers = new Lazy<IReadOnlyList<IReferencedMatchers>>(
-                () => CreateReferencedMatchers(skills.Skills));
+                () => CreateReferencedMatchers(skills.Skills, gemTags));
             _givenStats = new Lazy<IReadOnlyList<IGivenStats>>(
                 () => new GivenStatsCollection(builderFactories, characterBaseStats, monsterBaseStats));
             _statMatchersSelector = new Lazy<StatMatchersSelector>(
@@ -58,12 +58,14 @@ namespace PoESkillTree.Engine.Computation.Data
             var passivesTask = gameData.PassiveTree;
             var characterTask = gameData.CharacterBaseStats;
             var monsterTask = gameData.MonsterBaseStats;
+            var gemTagsTask = gameData.GemTags;
             return new ParsingData(
                 await builderFactoriesTask.ConfigureAwait(false),
                 await skillsTask.ConfigureAwait(false),
                 await passivesTask.ConfigureAwait(false),
                 await characterTask.ConfigureAwait(false),
-                await monsterTask.ConfigureAwait(false));
+                await monsterTask.ConfigureAwait(false),
+                await gemTagsTask.ConfigureAwait(false));
         }
 
         public IReadOnlyList<IStatMatchers> StatMatchers => _statMatchers.Value;
@@ -96,7 +98,8 @@ namespace PoESkillTree.Engine.Computation.Data
                 new ActionConditionMatchers(_builderFactories, modifierBuilder),
             };
 
-        private IReadOnlyList<IReferencedMatchers> CreateReferencedMatchers(IReadOnlyList<SkillDefinition> skills) =>
+        private IReadOnlyList<IReferencedMatchers> CreateReferencedMatchers(
+            IReadOnlyList<SkillDefinition> skills, GemTags gemTags) =>
             new IReferencedMatchers[]
             {
                 new ActionMatchers(_builderFactories.ActionBuilders, _builderFactories.EffectBuilders),
@@ -106,6 +109,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 new BuffMatchers(_builderFactories.BuffBuilders),
                 new KeywordMatchers(_builderFactories.KeywordBuilders),
                 new SkillMatchers(skills, _builderFactories.SkillBuilders.FromId),
+                new GemTagMatchers(gemTags, _builderFactories.GemTagBuilders),
             };
     }
 }

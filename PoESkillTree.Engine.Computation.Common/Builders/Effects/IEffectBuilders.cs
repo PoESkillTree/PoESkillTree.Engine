@@ -1,3 +1,5 @@
+using PoESkillTree.Engine.Computation.Common.Builders.Stats;
+
 namespace PoESkillTree.Engine.Computation.Common.Builders.Effects
 {
     /// <summary>
@@ -24,5 +26,11 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Effects
         /// Gets a factory for ground effects.
         /// </summary>
         IGroundEffectBuilders Ground { get; }
+
+        /// <summary>
+        /// Modifier to the expiration of all effects on Self.
+        /// actual duration = duration / ExpirationModifier
+        /// </summary>
+        IStatBuilder ExpirationModifier { get; }
     }
 }

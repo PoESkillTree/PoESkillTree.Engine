@@ -7,9 +7,6 @@ using PoESkillTree.Engine.Computation.Common.Builders.Entities;
 using PoESkillTree.Engine.Computation.Common.Builders.Resolving;
 using PoESkillTree.Engine.Computation.Common.Builders.Stats;
 using PoESkillTree.Engine.Computation.Common.Parsing;
-#if NETSTANDARD2_0
-using static MoreLinq.Extensions.ToHashSetExtension;
-#endif
 
 namespace PoESkillTree.Engine.Computation.Builders.Stats
 {

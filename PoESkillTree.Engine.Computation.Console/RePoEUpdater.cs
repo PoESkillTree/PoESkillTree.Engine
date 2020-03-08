@@ -15,7 +15,7 @@ namespace PoESkillTree.Engine.Computation.Console
         private static readonly string[] Files =
         {
             "mods", "crafting_bench_options", "default_monster_stats", "characters",
-            "gems", "gem_tooltips", "base_items"
+            "gems", "gem_tags", "gem_tooltips", "base_items"
         };
 
         private readonly HttpClient _httpClient;

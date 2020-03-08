@@ -26,6 +26,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
             _statFactory = statFactory;
             Fortify = Create("Fortify");
             Maim = Create("Maim");
+            Hinder = Create("Hinder");
             Intimidate = Create("Intimidate");
             Taunt = Create("Taunt");
             Blind = Create("Blind");
@@ -39,6 +40,9 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
             Impale = new ImpaleBuffBuilder(statFactory);
             Infusion = Create("Infusion");
             Snare = Create("Snare");
+            Rampage = Create("Rampage");
+            Withered = Create("Withered");
+            Elusive = Create("Elusive");
             Conflux = new ConfluxBuffBuilders(statFactory);
             GenericMine = Create("Mine");
             CurseLimit = StatBuilderUtils.FromIdentity(statFactory, "CurseLimit", typeof(uint));
@@ -47,6 +51,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
             {
                 new BuffBuilderWithKeywords(Fortify),
                 new BuffBuilderWithKeywords(Maim),
+                new BuffBuilderWithKeywords(Hinder),
                 new BuffBuilderWithKeywords(Intimidate),
                 new BuffBuilderWithKeywords(Taunt),
                 new BuffBuilderWithKeywords(Blind),
@@ -60,6 +65,9 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
                 new BuffBuilderWithKeywords(Impale),
                 new BuffBuilderWithKeywords(Infusion),
                 new BuffBuilderWithKeywords(Snare),
+                new BuffBuilderWithKeywords(Rampage),
+                new BuffBuilderWithKeywords(Withered),
+                new BuffBuilderWithKeywords(Elusive),
                 new BuffBuilderWithKeywords(Conflux.Chilling),
                 new BuffBuilderWithKeywords(Conflux.Elemental),
                 new BuffBuilderWithKeywords(Conflux.Igniting),
@@ -82,6 +90,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
 
         public IBuffBuilder Fortify { get; }
         public IBuffBuilder Maim { get; }
+        public IBuffBuilder Hinder { get; }
         public IBuffBuilder Intimidate { get; }
         public IBuffBuilder Taunt { get; }
         public IBuffBuilder Blind { get; }
@@ -95,6 +104,9 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
         public IImpaleBuffBuilder Impale { get; }
         public IBuffBuilder Infusion { get; }
         public IBuffBuilder Snare { get; }
+        public IBuffBuilder Rampage { get; }
+        public IBuffBuilder Withered { get; }
+        public IBuffBuilder Elusive { get; }
         public IBuffBuilder GenericMine { get; }
         public IConfluxBuffBuilders Conflux { get; }
 

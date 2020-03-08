@@ -33,7 +33,7 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
             var enemyEvasionStat =
                 Build(_builderFactories.StatBuilders.Evasion.For(_builderFactories.EntityBuilders.Enemy)).Single();
             var enemyEvasion = calculator.NodeRepository.GetNode(enemyEvasionStat).Value.Single();
-            return 1.15 * Accuracy / (Accuracy + Math.Pow(enemyEvasion / 4.0, 0.8));
+            return Math.Floor(100 * 1.15 * Accuracy / (Accuracy + Math.Pow(enemyEvasion / 4.0, 0.8))) / 100;
         }
 
         private static double DamageReductionFromArmour(ICalculator calculator, double additionalDamageMultiplier = 1)
@@ -273,7 +273,7 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
                 .For(_builderFactories.EntityBuilders.Enemy)).Single();
             var enemyLife = nodes.GetNode(enemyLifeStat).Value.Single();
             var damage = BasePhysicalDamage * EffectiveDamageMultiplierWithNonCritsIncludingArmour(calculator) * ChanceToHit(calculator);
-            var expected = 200 * damage / (enemyLife * 0.125);
+            var expected = Math.Floor(200 * damage / (enemyLife * 0.125));
             var actual = nodes
                 .GetNode(Build(_builderFactories.EffectBuilders.Stun.Chance.With(AttackDamageHand.MainHand)).Single())
                 .Value.Single();

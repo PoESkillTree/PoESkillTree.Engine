@@ -1,4 +1,5 @@
 ﻿using PoESkillTree.Engine.GameModel;
+using PoESkillTree.Engine.GameModel.Skills;
 using PoESkillTree.Engine.Utils;
 
 namespace PoESkillTree.Engine.Computation.Common
@@ -77,6 +78,15 @@ namespace PoESkillTree.Engine.Computation.Common
 
             protected override object ToTuple() => (GetType().Name, SourceNode, TargetNode);
         }
+
+        public sealed class ChangeInvalidatesSkillParse : ExplicitRegistrationType
+        {
+            public ChangeInvalidatesSkillParse(Skill skill) => Skill = skill;
+
+            public Skill Skill { get; }
+
+            protected override object ToTuple() => (GetType().Name, Skill);
+        }
     }
 
     public static class ExplicitRegistrationTypes
@@ -100,5 +110,8 @@ namespace PoESkillTree.Engine.Computation.Common
         public static ExplicitRegistrationType.PassiveTreeConnection PassiveTreeConnection(
             ushort sourceNode, ushort targetNode)
             => new ExplicitRegistrationType.PassiveTreeConnection(sourceNode, targetNode);
+
+        public static ExplicitRegistrationType.ChangeInvalidatesSkillParse ChangeInvalidatesSkillParse(Skill skill) =>
+            new ExplicitRegistrationType.ChangeInvalidatesSkillParse(skill);
     }
 }

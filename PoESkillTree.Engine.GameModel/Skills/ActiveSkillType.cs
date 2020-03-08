@@ -29,7 +29,6 @@
         public const string Mine = "mine";
         public const string Vaal = "vaal";
         public const string Aura = "aura";
-        public const string TriggerAttack = "trigger_attack";
         public const string Chaos = "chaos";
         public const string Golem = "golem";
         public const string Herald = "herald";
@@ -40,5 +39,6 @@
         public const string Not = "boolean_not";
         public const string Guard = "guard";
         public const string Ballista = "ballista";
+        public const string Triggered = "triggered";
     }
 }

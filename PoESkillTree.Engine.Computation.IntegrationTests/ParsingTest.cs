@@ -12,6 +12,7 @@ using PoESkillTree.Engine.Computation.Common.Builders.Values;
 using PoESkillTree.Engine.Computation.Data.GivenStats;
 using PoESkillTree.Engine.Computation.Parsing;
 using PoESkillTree.Engine.GameModel;
+using PoESkillTree.Engine.GameModel.Items;
 using PoESkillTree.Engine.Utils.Extensions;
 using static PoESkillTree.Engine.Computation.IntegrationTests.ParsingTestUtils;
 
@@ -33,9 +34,9 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
         }
 
         [Test, TestCaseSource(nameof(ReadParseableStatLines))]
-        public void Parses(string statLine)
+        public void Parses(string statLine, ModifierSource modifierSource)
         {
-            var actual = Parse(statLine);
+            var actual = Parse(statLine, modifierSource);
 
             AssertIsParsedSuccessfully(actual);
         }
@@ -43,19 +44,23 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
         [Test, TestCaseSource(nameof(ReadNotParseableStatLines))]
         public void DoesNotParse(string statLine)
         {
-            var actual = Parse(statLine);
+            var actual = Parse(statLine, new ModifierSource.Global(new ModifierSource.Local.Item(ItemSlot.Belt)));
 
             AssertIsParsedUnsuccessfully(actual);
         }
 
-        private static IEnumerable<string> ReadParseableStatLines()
+        private static IEnumerable<object[]> ReadParseableStatLines()
         {
+            ModifierSource passiveNodeSource = new ModifierSource.Global(new ModifierSource.Local.PassiveNode(0));
+            ModifierSource itemSource = new ModifierSource.Global(new ModifierSource.Local.Item(ItemSlot.Belt));
+            ModifierSource givenSource = new ModifierSource.Global(new ModifierSource.Local.Given());
             var unparsedGivenStats = new GivenStatsCollection(null!, null!, null!).SelectMany(s => s.GivenStatLines);
-            return ReadDataLines("SkillTreeStatLines")
-                .Concat(ReadDataLines("ItemAffixes"))
-                .Concat(ReadDataLines("ParseableStatLines"))
-                .Concat(unparsedGivenStats)
-                .Where(s => !NotParseableStatLines.Value.Contains(s.ToLowerInvariant()));
+            return ReadDataLines("SkillTreeStatLines").Select(s => (s, passiveNodeSource))
+                .Concat(ReadDataLines("ItemAffixes").Select(s => (s, itemSource)))
+                .Concat(ReadDataLines("ParseableStatLines").Select(s => (s, passiveNodeSource)))
+                .Concat(unparsedGivenStats.Select(s => (s, givenSource)))
+                .Where(t => !NotParseableStatLines.Value.Contains(t.s.ToLowerInvariant()))
+                .Select(t => new object[] {t.s, t.Item2});
         }
 
         private static IEnumerable<string> ReadNotParseableStatLines() => ParsingTestUtils.ReadNotParseableStatLines();
@@ -101,13 +106,13 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
                         .Before(_f.StatBuilders.Pool.From(Pool.Life)),
                     _f.FormBuilders.BaseAdd,
                     _f.ValueBuilders.Create(50),
-                    _f.EquipmentBuilders.Equipment.Count(e => e.Corrupted.IsSet) >= 5),
+                    _f.EquipmentBuilders.Equipment.Count(e => e.Corrupted.IsTrue) >= 5),
                 CreateModifier(
                     _f.DamageTypeBuilders.Physical.DamageTakenFrom(_f.StatBuilders.Pool.From(Pool.EnergyShield))
                         .Before(_f.StatBuilders.Pool.From(Pool.Life)),
                     _f.FormBuilders.BaseSubtract,
                     _f.ValueBuilders.Create(50),
-                    _f.EquipmentBuilders.Equipment.Count(e => e.Corrupted.IsSet) >= 5)
+                    _f.EquipmentBuilders.Equipment.Count(e => e.Corrupted.IsTrue) >= 5)
             }.Flatten();
             var actual = Parse(
                     "With 5 Corrupted Items Equipped: 50% of Chaos Damage does not bypass Energy Shield, and 50% of Physical Damage bypasses Energy Shield")
@@ -162,7 +167,7 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
                     damageType.Damage.Taken,
                     _f.FormBuilders.PercentReduce,
                     _f.ValueBuilders.Create(8),
-                    _f.ActionBuilders.HitWith(damageType).By(_f.EntityBuilders.Enemy).Recently);
+                    _f.ActionBuilders.HitWith(damageType).By(_f.EntityBuilders.OpponentsOfSelf).Recently);
         }
 
         [Test]
@@ -202,7 +207,8 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
             return CreateModifier(statBuilder.WithCondition(conditionBuilder), formBuilder, valueBuilder);
         }
 
-        private ParseResult Parse(string stat)
-            => _parser.ParseRawModifier(stat, new ModifierSource.Global(), Entity.Character);
+        private ParseResult Parse(string stat) => Parse(stat, new ModifierSource.Global());
+
+        private ParseResult Parse(string stat, ModifierSource modifierSource) => _parser.ParseRawModifier(stat, modifierSource, Entity.Character);
     }
 }

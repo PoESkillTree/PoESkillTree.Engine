@@ -1,8 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-#if NETSTANDARD2_0
-using static MoreLinq.Extensions.ToHashSetExtension;
-#endif
 
 namespace PoESkillTree.Engine.GameModel.Skills
 {
@@ -21,9 +18,9 @@ namespace PoESkillTree.Engine.GameModel.Skills
             var supports = supportSkills.Where(s => activeSkill.ItemSlot == s.ItemSlot)
                 .OrderBy(s => s.SocketIndex).ToList();
 
-            if (activeSkill.GemGroup is int group)
+            if (activeSkill.Gem is Gem gem)
             {
-                supports = supports.Where(s => !s.GemGroup.HasValue || s.GemGroup == group).ToList();
+                supports = supports.Where(s => s.Gem is null || s.Gem.Group == gem.Group).ToList();
             }
             else
             {

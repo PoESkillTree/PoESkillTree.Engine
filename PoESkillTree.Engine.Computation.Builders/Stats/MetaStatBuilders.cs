@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using EnumsNET;
 using PoESkillTree.Engine.Computation.Builders.Values;
 using PoESkillTree.Engine.Computation.Common;
@@ -10,6 +11,7 @@ using PoESkillTree.Engine.Computation.Common.Builders.Values;
 using PoESkillTree.Engine.GameModel;
 using PoESkillTree.Engine.GameModel.Items;
 using PoESkillTree.Engine.GameModel.Skills;
+using PoESkillTree.Engine.Utils.Extensions;
 
 namespace PoESkillTree.Engine.Computation.Builders.Stats
 {
@@ -39,8 +41,15 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
             }
         }
 
-        public IStatBuilder EffectiveRegen(Pool pool) => FromIdentity($"{pool}.EffectiveRegen", typeof(int));
-        public IStatBuilder EffectiveRecharge(Pool pool) => FromIdentity($"{pool}.EffectiveRecharge", typeof(int));
+        public IStatBuilder EffectiveRegen(Pool pool) => FromIdentity($"{pool}.EffectiveRegen", typeof(double));
+
+        public IStatBuilder EffectiveDegeneration(Pool pool, DamageType damageType) =>
+            FromIdentity($"{pool}.EffectiveDegeneration.{damageType}", typeof(double));
+
+        public IStatBuilder EffectiveDegeneration(Pool pool) => FromIdentity($"{pool}.EffectiveDegeneration", typeof(double));
+        public IStatBuilder NetRegen(Pool pool) => FromIdentity($"{pool}.NetRegen", typeof(double));
+
+        public IStatBuilder EffectiveRecharge(Pool pool) => FromIdentity($"{pool}.EffectiveRecharge", typeof(double));
         public IStatBuilder RechargeStartDelay(Pool pool) => FromIdentity($"{pool}.RechargeStartDelay", typeof(double));
 
         public IStatBuilder EffectiveLeechRate(Pool pool) => FromIdentity($"{pool}.Leech.EffectiveRate", typeof(uint));
@@ -61,10 +70,10 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         public IDamageRelatedStatBuilder EnemyResistanceFromArmourAgainstCrits => DamageRelatedFromIdentity(typeof(double)).WithHits;
 
         public IDamageRelatedStatBuilder EnemyResistanceAgainstNonCrits(DamageType damageType)
-            => DamageRelatedFromIdentity($"{damageType}.EnemyResistance.NonCrits", typeof(int)).WithHits;
+            => DamageRelatedFromIdentity($"{damageType}.EnemyResistance.NonCrits", typeof(double)).WithHits;
 
         public IDamageRelatedStatBuilder EnemyResistanceAgainstCrits(DamageType damageType)
-            => DamageRelatedFromIdentity($"{damageType}.EnemyResistance.Crits", typeof(int)).WithHits;
+            => DamageRelatedFromIdentity($"{damageType}.EnemyResistance.Crits", typeof(double)).WithHits;
 
         public IDamageRelatedStatBuilder EffectiveDamageMultiplierWithNonCrits(DamageType damageType)
             => DamageRelatedFromIdentity($"{damageType}.EffectiveDamageMultiplier.NonCrits", typeof(double));
@@ -74,16 +83,16 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
                 .WithHitsAndAilments;
 
         public IDamageRelatedStatBuilder DamageWithNonCrits(DamageType damageType)
-            => DamageRelatedFromIdentity($"{damageType}.Damage.NonCrits", typeof(int));
+            => DamageRelatedFromIdentity($"{damageType}.Damage.NonCrits", typeof(double));
 
         public IDamageRelatedStatBuilder DamageWithCrits(DamageType damageType)
-            => DamageRelatedFromIdentity($"{damageType}.Damage.Crits", typeof(int));
+            => DamageRelatedFromIdentity($"{damageType}.Damage.Crits", typeof(double));
 
         public IDamageRelatedStatBuilder DamageWithNonCrits()
-            => DamageRelatedFromIdentity("Damage.NonCrits", typeof(int));
+            => DamageRelatedFromIdentity("Damage.NonCrits", typeof(double));
 
         public IDamageRelatedStatBuilder DamageWithCrits()
-            => DamageRelatedFromIdentity("Damage.Crits", typeof(int));
+            => DamageRelatedFromIdentity("Damage.Crits", typeof(double));
 
         public IDamageRelatedStatBuilder AverageDamagePerHit
             => DamageRelatedFromIdentity(typeof(double)).WithHits;
@@ -142,13 +151,13 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
 
 
         public IStatBuilder ResistanceAgainstHits(DamageType damageType)
-            => FromIdentity($"{damageType}.ResistanceAgainstHits", typeof(int));
+            => FromIdentity($"{damageType}.ResistanceAgainstHits", typeof(double));
 
         public IStatBuilder MitigationAgainstHits(DamageType damageType)
-            => FromIdentity($"{damageType}.MitigationAgainstHits", typeof(int));
+            => FromIdentity($"{damageType}.MitigationAgainstHits", typeof(double));
 
         public IStatBuilder MitigationAgainstDoTs(DamageType damageType)
-            => FromIdentity($"{damageType}.MitigationAgainstDoTs", typeof(int));
+            => FromIdentity($"{damageType}.MitigationAgainstDoTs", typeof(double));
 
         public IStatBuilder ChanceToAvoidMeleeAttacks => FromIdentity(typeof(uint));
         public IStatBuilder ChanceToAvoidProjectileAttacks => FromIdentity(typeof(uint));
@@ -162,6 +171,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         public IStatBuilder SkillHitDamageSource => FromIdentity(typeof(DamageSource));
         public IStatBuilder SkillUsesHand(AttackDamageHand hand) => FromIdentity($"SkillUses.{hand}", typeof(bool));
         public IStatBuilder SkillDoubleHitsWhenDualWielding => FromIdentity(typeof(bool));
+        public IStatBuilder SkillDpsWithHitsCalculationMode => FromIdentity("DPS.Hit.CalculationMode", typeof(DpsCalculationMode));
 
         public IStatBuilder MainSkillId => FromFactory(StatFactory.MainSkillId);
 
@@ -186,17 +196,46 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         public IStatBuilder ActiveSkillSocketIndex(string skillId)
             => FromFactory(e => StatFactory.ActiveSkillSocketIndex(e, skillId));
 
-        public IStatBuilder MainSkillItemSlot => FromIdentity(typeof(ItemSlot));
+        public IStatBuilder MainSkillItemSlot => FromStatFactory(StatFactory.MainSkillItemSlot);
         public IStatBuilder MainSkillSocketIndex => FromIdentity(typeof(uint));
+        public IStatBuilder MainSkillSkillIndex => FromIdentity(typeof(uint));
 
-        public IStatBuilder SkillBaseCost(ItemSlot itemSlot, int socketIndex)
-            => FromIdentity($"{itemSlot.GetName()}.{socketIndex}.Cost", typeof(uint));
+        public IStatBuilder SkillBaseCost(ItemSlot itemSlot, int socketIndex, int skillIndex)
+            => FromIdentity($"{itemSlot.GetName()}.{socketIndex}.{skillIndex}.Cost", typeof(uint));
 
-        public IStatBuilder SkillHasType(ItemSlot itemSlot, int socketIndex, string activeSkillType)
-            => FromIdentity($"{itemSlot.GetName()}.{socketIndex}.Type.{activeSkillType}", typeof(bool));
+        public IStatBuilder SkillHasType(ItemSlot itemSlot, int socketIndex, int skillIndex, string activeSkillType)
+            => FromIdentity($"{itemSlot.GetName()}.{socketIndex}.{skillIndex}.Type.{activeSkillType}", typeof(bool));
+
+        public IStatBuilder ActiveCurses => FromIdentity(typeof(int));
+
+        public ValueBuilder ActiveCurseIndex(int numericSkillId) => new ValueBuilder(new ValueBuilderImpl(
+            ps => BuildActiveCurseIndex(ps, numericSkillId),
+            _ => ps => BuildActiveCurseIndex(ps, numericSkillId)));
+
+        private IValue BuildActiveCurseIndex(BuildParameters ps, int numericSkillId)
+        {
+            var activeCursesStat = ActiveCurses.Build(ps).SelectMany(r => r.Stats).Single();
+            return new FunctionalValue(c => CalculateActiveCurseIndex(c, activeCursesStat, numericSkillId),
+                $"CalculateActiveCurseIndex({activeCursesStat}, {numericSkillId})");
+        }
+
+        private static NodeValue? CalculateActiveCurseIndex(IValueCalculationContext context, IStat activeCurses, int numericSkillId)
+        {
+            var i = 0;
+            foreach (var activeCurseId in context.GetValues(Form.BaseAdd, activeCurses).WhereNotNull())
+            {
+                if (activeCurseId == (NodeValue?) numericSkillId)
+                    return (NodeValue?) i;
+                i++;
+            }
+
+            return null;
+        }
 
         public IStatBuilder DamageBaseAddEffectiveness => FromFactory(StatFactory.DamageBaseAddEffectiveness);
         public IStatBuilder DamageBaseSetEffectiveness => FromFactory(StatFactory.DamageBaseSetEffectiveness);
+
+        public IStatBuilder CanBypassSkillCooldown => FromIdentity(typeof(bool));
 
         public IStatBuilder SelectedBandit => FromIdentity(typeof(Bandit));
 

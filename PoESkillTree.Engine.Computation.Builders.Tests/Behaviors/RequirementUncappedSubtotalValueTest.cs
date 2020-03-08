@@ -4,6 +4,7 @@ using NUnit.Framework;
 using PoESkillTree.Engine.Computation.Builders.Stats;
 using PoESkillTree.Engine.Computation.Common;
 using PoESkillTree.Engine.GameModel.Items;
+using PoESkillTree.Engine.GameModel.Skills;
 
 namespace PoESkillTree.Engine.Computation.Builders.Behaviors
 {
@@ -17,7 +18,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Behaviors
             var expected = (NodeValue?) values.Max();
             var transformedStat = new Stat("transformed");
             var paths = values
-                .Select((_, i) => new PathDefinition(new ModifierSource.Local.Gem(ItemSlot.Helm, i, "")))
+                .Select((_, i) => new PathDefinition(new ModifierSource.Local.Gem(new Gem("", 1, 1, ItemSlot.Helm, i, 0, true))))
                 .ToList();
             var contextMock = new Mock<IValueCalculationContext>();
             contextMock.Setup(c => c.GetPaths(transformedStat)).Returns(paths);

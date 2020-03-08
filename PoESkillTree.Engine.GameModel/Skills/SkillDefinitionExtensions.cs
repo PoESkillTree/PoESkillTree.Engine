@@ -13,11 +13,9 @@ namespace PoESkillTree.Engine.GameModel.Skills
     /// </summary>
     public class SkillDefinitionExtensions
     {
-        private static readonly Entity[] AuraEntities = { Entity.Character, Entity.Minion, Entity.Totem };
-
         private readonly SkillDefinitionExtension _emptyExtension =
             new SkillDefinitionExtension(new SkillPartDefinitionExtension(),
-                new Dictionary<string, IReadOnlyList<Entity>>(), new string[0]);
+                new Dictionary<string, Func<Entity, IEnumerable<Entity>>>(), new string[0]);
 
         private readonly IReadOnlyDictionary<string, SkillDefinitionExtension> _extensions;
 
@@ -70,11 +68,11 @@ namespace PoESkillTree.Engine.GameModel.Skills
                         .AndThen(ReplaceStat("mana_granted_when_killed", "base_mana_gained_on_enemy_death"))
                         .AndThen(ReplaceStat("enemy_additional_critical_strike_chance_against_self",
                             "additional_critical_strike_chance_permyriad"))),
-                Buff(("base_self_critical_strike_multiplier_-%", new[] { Entity.Enemy }),
-                    ("additional_critical_strike_chance_permyriad", AuraEntities),
-                    ("add_power_charge_on_kill_%_chance", AuraEntities),
-                    ("base_life_gained_on_enemy_death", AuraEntities),
-                    ("base_mana_gained_on_enemy_death", AuraEntities))
+                Buff(("base_self_critical_strike_multiplier_-%", Opponents),
+                    ("additional_critical_strike_chance_permyriad", SelfAndAllies),
+                    ("add_power_charge_on_kill_%_chance", SelfAndAllies),
+                    ("base_life_gained_on_enemy_death", SelfAndAllies),
+                    ("base_mana_gained_on_enemy_death", SelfAndAllies))
             },
             {
                 "BearTrap",
@@ -116,6 +114,14 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 ("All Explosions", new SkillPartDefinitionExtension())
             },
             {
+                "Blight",
+                EnemyBuff("base_movement_velocity_+%")
+            },
+            {
+                "VaalBlight",
+                EnemyBuff("base_movement_velocity_+%")
+            },
+            {
                 "BloodRage",
                 SelfBuff("life_leech_from_physical_attack_damage_permyriad",
                     "base_physical_damage_%_of_maximum_life_to_deal_per_minute",
@@ -138,8 +144,8 @@ namespace PoESkillTree.Engine.GameModel.Skills
             },
             {
                 "BloodstainedBanner", // War Banner
-                Buff(("physical_damage_taken_+%", new[] { Entity.Enemy }),
-                    ("accuracy_rating_+%", AuraEntities)),
+                Buff(("physical_damage_taken_+%", Opponents),
+                    ("accuracy_rating_+%", SelfAndAllies)),
                 Passive("aura_effect_+%", "banner_buff_effect_+%_per_stage")
             },
             {
@@ -175,29 +181,33 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 new SkillPartDefinitionExtension(
                     ReplaceStat("base_immune_to_freeze", "base_avoid_freeze_%", 100)
                         .AndThen(ReplaceStat("base_immune_to_chill", "base_avoid_chill_%", 100))),
-                Buff(("cold_damage_taken_+%", AuraEntities),
-                    ("base_avoid_freeze_%", AuraEntities),
-                    ("base_avoid_chill_%", AuraEntities),
-                    ("hits_ignore_my_cold_resistance", new[] { Entity.Enemy })),
+                Buff(("cold_damage_taken_+%", SelfAndAllies),
+                    ("base_avoid_freeze_%", SelfAndAllies),
+                    ("base_avoid_chill_%", SelfAndAllies),
+                    ("hits_ignore_my_cold_resistance", Opponents)),
                 Passive("aura_effect_+%")
             },
             {
                 "ColdResistAura", // Purity of Ice
                 Aura("base_cold_damage_resistance_%", "base_maximum_cold_damage_resistance_%")
             },
-            { "ColdSnap", SkillDotIsAreaDamageExtension },
+            {
+                "ColdSnap",
+                new SkillPartDefinitionExtension(RemoveStat("base_skill_show_average_damage_instead_of_dps"),
+                    AddStat("skill_dot_is_area_damage", 1))
+            },
+            { "VaalColdSnap", SkillDotIsAreaDamageExtension },
             {
                 "Conductivity",
                 new SkillPartDefinitionExtension(
                     ReplaceStat("base_self_shock_duration_-%", "shock_duration_+%", v => -v)
                         .AndThen(ReplaceStat("chance_to_be_shocked_%", "base_chance_to_shock_%"))),
-                Buff(("base_lightning_damage_resistance_%", new[] { Entity.Enemy }),
-                    ("shock_duration_+%", AuraEntities),
-                    ("base_chance_to_shock_%", AuraEntities))
+                Buff(("base_lightning_damage_resistance_%", Opponents),
+                    ("shock_duration_+%", SelfAndAllies),
+                    ("base_chance_to_shock_%", SelfAndAllies))
             },
             { "ConduitSigil", BrandExtension }, // Storm Brand
-            { "Convocation", Buff(Entity.Minion, "life_regeneration_rate_per_minute_%") },
-            { "VaalColdSnap", SkillDotIsAreaDamageExtension },
+            { "Convocation", Buff(Minions, "life_regeneration_rate_per_minute_%") },
             { "CorpseEruption", CorpseExplodingSpellParts }, // Cremation
             {
                 "DamageOverTimeAura", // Malevolence
@@ -215,16 +225,20 @@ namespace PoESkillTree.Engine.GameModel.Skills
                             "hit_ailment_damage_+%_final")))),
                 ("Cast on Skeleton", new SkillPartDefinitionExtension())
             },
+            {
+                "DarkRitual", // Bane
+                new SkillPartDefinitionExtension(RemoveStat("display_linked_curse_effect_+%"))
+            },
             { "Desecrate", SkillDotIsAreaDamageExtension },
             {
                 "Despair",
                 new SkillPartDefinitionExtension(
                     ReplaceStat("minimum_added_chaos_damage_taken", "global_minimum_added_chaos_damage")
                         .AndThen(ReplaceStat("maximum_added_chaos_damage_taken", "global_maximum_added_chaos_damage"))),
-                Buff(("degen_effect_+%", new[] { Entity.Enemy }),
-                    ("base_chaos_damage_resistance_%", new[] { Entity.Enemy }),
-                    ("global_minimum_added_chaos_damage", AuraEntities),
-                    ("global_maximum_added_chaos_damage", AuraEntities))
+                Buff(("degen_effect_+%", Opponents),
+                    ("base_chaos_damage_resistance_%", Opponents),
+                    ("global_minimum_added_chaos_damage", SelfAndAllies),
+                    ("global_maximum_added_chaos_damage", SelfAndAllies))
             },
             {
                 "Determination",
@@ -301,9 +315,9 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 "FireImpurity", // Vaal Impurity of Fire
                 new SkillPartDefinitionExtension(
                     ReplaceStat("base_immune_to_ignite", "base_avoid_ignite_%", 100)),
-                Buff(("fire_damage_taken_+%", AuraEntities),
-                    ("base_avoid_ignite_%", AuraEntities),
-                    ("hits_ignore_my_fire_resistance", new[] { Entity.Enemy })),
+                Buff(("fire_damage_taken_+%", SelfAndAllies),
+                    ("base_avoid_ignite_%", SelfAndAllies),
+                    ("hits_ignore_my_fire_resistance", Opponents)),
                 Passive("aura_effect_+%")
             },
             {
@@ -318,9 +332,9 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 new SkillPartDefinitionExtension(
                     ReplaceStat("base_self_ignite_duration_-%", "ignite_duration_+%", v => -v)
                         .AndThen(ReplaceStat("chance_to_be_ignited_%", "base_chance_to_ignite_%"))),
-                Buff(("base_fire_damage_resistance_%", new[] { Entity.Enemy }),
-                    ("ignite_duration_+%", AuraEntities),
-                    ("base_chance_to_ignite_%", AuraEntities))
+                Buff(("base_fire_damage_resistance_%", Opponents),
+                    ("ignite_duration_+%", SelfAndAllies),
+                    ("base_chance_to_ignite_%", SelfAndAllies))
             },
             { "FlickerStrike", RemoveShowAverageDamageExtension },
             {
@@ -328,9 +342,9 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 new SkillPartDefinitionExtension(
                     ReplaceStat("base_self_freeze_duration_-%", "freeze_duration_+%", v => -v)
                         .AndThen(ReplaceStat("chance_to_be_frozen_%", "base_chance_to_freeze_%"))),
-                Buff(("base_cold_damage_resistance_%", new[] { Entity.Enemy }),
-                    ("freeze_duration_+%", AuraEntities),
-                    ("base_chance_to_freeze_%", AuraEntities))
+                Buff(("base_cold_damage_resistance_%", Opponents),
+                    ("freeze_duration_+%", SelfAndAllies),
+                    ("base_chance_to_freeze_%", SelfAndAllies))
             },
             { "FrostBlades", SecondaryProjectileMeleeAttackParts },
             {
@@ -447,9 +461,9 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 "LightningImpurity", // Vaal Impurity of Lightning
                 new SkillPartDefinitionExtension(
                     ReplaceStat("base_immune_to_shock", "base_avoid_shock_%", 100)),
-                Buff(("lightning_damage_taken_+%", AuraEntities),
-                    ("base_avoid_shock_%", AuraEntities),
-                    ("hits_ignore_my_lightning_resistance", new[] { Entity.Enemy })),
+                Buff(("lightning_damage_taken_+%", SelfAndAllies),
+                    ("base_avoid_shock_%", SelfAndAllies),
+                    ("hits_ignore_my_lightning_resistance", Opponents)),
                 Passive("aura_effect_+%")
             },
             {
@@ -475,6 +489,11 @@ namespace PoESkillTree.Engine.GameModel.Skills
                     removedKeywords: new[] { Keyword.Melee }))
             },
             {
+                "NewShieldCharge", // Shield Charge
+                ("Unspecified Charge Distance", new SkillPartDefinitionExtension()),
+                ("Maximum Charge Distance", new SkillPartDefinitionExtension())
+            },
+            {
                 "OrbOfStorms",
                 new SkillPartDefinitionExtension(ReplaceStat("orb_of_storms_base_bolt_frequency_ms", "hit_rate_ms"))
             },
@@ -493,9 +512,9 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 new SkillPartDefinitionExtension(
                     ReplaceStat("projectiles_always_pierce_you", "always_pierce")
                         .AndThen(ReplaceStat("chance_to_be_knocked_back_%", "base_global_chance_to_knockback_%"))),
-                Buff(("projectile_damage_taken_+%", new[] { Entity.Enemy }),
-                    ("always_pierce", AuraEntities),
-                    ("base_global_chance_to_knockback_%", AuraEntities))
+                Buff(("projectile_damage_taken_+%", Opponents),
+                    ("always_pierce", SelfAndAllies),
+                    ("base_global_chance_to_knockback_%", SelfAndAllies))
             },
             {
                 "PoachersMark",
@@ -505,11 +524,11 @@ namespace PoESkillTree.Engine.GameModel.Skills
                         .AndThen(ReplaceStat("mana_granted_when_hit_by_attacks", "mana_gain_per_target"))
                         .AndThen(ReplaceStat("chance_to_grant_frenzy_charge_on_death_%",
                             "add_frenzy_charge_on_kill_%_chance"))),
-                Buff(("monster_slain_flask_charges_granted_+%", new[] { Entity.Enemy }),
-                    ("evasion_rating_+%", new[] { Entity.Enemy }),
-                    ("life_gain_per_target", AuraEntities),
-                    ("mana_gain_per_target", AuraEntities),
-                    ("add_frenzy_charge_on_kill_%_chance", AuraEntities))
+                Buff(("monster_slain_flask_charges_granted_+%", Opponents),
+                    ("evasion_rating_+%", Opponents),
+                    ("life_gain_per_target", SelfAndAllies),
+                    ("mana_gain_per_target", SelfAndAllies),
+                    ("add_frenzy_charge_on_kill_%_chance", SelfAndAllies))
             },
             { "PoisonArrow", SkillDotIsAreaDamageExtension }, // Caustic Arrow
             {
@@ -517,18 +536,18 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 new SkillPartDefinitionExtension(
                     ReplaceStat("newpunishment_attack_speed_+%", "attack_speed_+%")
                         .AndThen(ReplaceStat("newpunishment_melee_damage_+%_final", "melee_damage_+%_final"))),
-                Buff(("attack_speed_+%", new[] {Entity.Character}),
-                    ("melee_damage_+%_final", new[] {Entity.Character}),
-                    ("base_additional_physical_damage_reduction_%", new[] {Entity.Enemy}))
+                Buff(("attack_speed_+%", Self),
+                    ("melee_damage_+%_final", Self),
+                    ("base_additional_physical_damage_reduction_%", Opponents))
             },
             {
                 "PuresteelBanner", // Dread Banner
                 new SkillPartDefinitionExtension(
                     RemoveStat("puresteel_banner_fortify_effect_+%_per_stage"),
                     ReplaceStat("puresteel_banner_accuracy_rating_+%_final", "accuracy_rating_+%_final")),
-                Buff(("accuracy_rating_+%_final", new[] { Entity.Enemy }),
-                    ("attacks_impale_on_hit_%_chance", AuraEntities),
-                    ("impale_debuff_effect_+%", AuraEntities)),
+                Buff(("accuracy_rating_+%_final", Opponents),
+                    ("attacks_impale_on_hit_%_chance", SelfAndAllies),
+                    ("impale_debuff_effect_+%", SelfAndAllies)),
                 Passive("aura_effect_+%", "banner_buff_effect_+%_per_stage")
             },
             { "Purity", Aura("base_resist_all_elements_%") }, // Purity of Elements
@@ -584,6 +603,10 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 ("Projectile", new SkillPartDefinitionExtension()),
                 ("Cone", new SkillPartDefinitionExtension(
                     AddStat("is_area_damage", 1)))
+            },
+            {
+                "Slither", // Withering Step
+                SelfBuff("phase_through_objects"), Passive("elusive_effect_+%")
             },
             {
                 "Smite",
@@ -686,10 +709,10 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 new SkillPartDefinitionExtension(
                     ReplaceStat("receive_bleeding_chance_%_when_hit_by_attack", "bleed_on_hit_with_attacks_%")
                         .AndThen(ReplaceStat("chance_to_be_maimed_when_hit_%", "maim_on_hit_%"))),
-                Buff(("base_physical_damage_over_time_taken_+%", new[] { Entity.Enemy }),
-                    ("physical_damage_taken_+%", new[] { Entity.Enemy }),
-                    ("bleed_on_hit_with_attacks_%", AuraEntities),
-                    ("maim_on_hit_%", AuraEntities))
+                Buff(("base_physical_damage_over_time_taken_+%", Opponents),
+                    ("physical_damage_taken_+%", Opponents),
+                    ("bleed_on_hit_with_attacks_%", SelfAndAllies),
+                    ("maim_on_hit_%", SelfAndAllies))
             },
             {
                 "WarlordsMark",
@@ -700,11 +723,11 @@ namespace PoESkillTree.Engine.GameModel.Skills
                             "base_mana_leech_from_attack_damage_permyriad"))
                         .AndThen(ReplaceStat("chance_to_grant_endurance_charge_on_death_%",
                             "endurance_charge_on_kill_%"))),
-                Buff(("chance_to_be_stunned_%", new[] { Entity.Enemy }),
-                    ("base_stun_recovery_+%", new[] { Entity.Enemy }),
-                    ("base_life_leech_from_attack_damage_permyriad", AuraEntities),
-                    ("base_mana_leech_from_attack_damage_permyriad", AuraEntities),
-                    ("endurance_charge_on_kill_%", AuraEntities))
+                Buff(("chance_to_be_stunned_%", Opponents),
+                    ("base_stun_recovery_+%", Opponents),
+                    ("base_life_leech_from_attack_damage_permyriad", SelfAndAllies),
+                    ("base_mana_leech_from_attack_damage_permyriad", SelfAndAllies),
+                    ("endurance_charge_on_kill_%", SelfAndAllies))
             },
             {
                 "WildStrike",
@@ -732,7 +755,11 @@ namespace PoESkillTree.Engine.GameModel.Skills
                         ("cast_rate_is_melee", 1)),
                     removedKeywords: new[] { Keyword.Melee }))
             },
-            { "Wither", new SkillPartDefinitionExtension(RemoveStat("chaos_damage_taken_+%")) },
+            {
+                "Wither",
+                new SkillPartDefinitionExtension(RemoveStat("chaos_damage_taken_+%")),
+                EnemyBuff("base_movement_velocity_+%")
+            },
             {
                 "Wrath",
                 new SkillPartDefinitionExtension(
@@ -775,6 +802,8 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 "SupportCastWhileChannellingPlus",
                 new SkillPartDefinitionExtension(ReplaceStat("cast_while_channelling_time_ms", "hit_rate_ms"))
             },
+            { "SupportChanceToIgnite", Passive("ignites_apply_fire_resistance_+") },
+            { "SupportDarkRitual", Passive("apply_linked_curses_with_dark_ritual") },
             {
                 "SupportGemFrenzyPowerOnTrapTrigger", // Charged Traps
                 new SkillPartDefinitionExtension(
@@ -783,10 +812,15 @@ namespace PoESkillTree.Engine.GameModel.Skills
             },
             { "SupportGenerosity", Passive("aura_cannot_affect_self", "non_curse_aura_effect_+%") },
             { "SupportGenerosityPlus", Passive("aura_cannot_affect_self", "non_curse_aura_effect_+%") },
+            { "SupportMaim", Passive("support_maimed_enemies_physical_damage_taken_+%") },
             {
                 "SupportOnslaughtOnSlayingShockedEnemy", // Innervate
                 Passive("support_innervate_minimum_added_lightning_damage",
                     "support_innervate_maximum_added_lightning_damage")
+            },
+            {
+                "SupportPuncturingWeapon", // Nightblade Support
+                Passive("elusive_effect_+%")
             },
             {
                 "SupportRangedAttackTotem", // Ballista Totem Support
@@ -922,26 +956,27 @@ namespace PoESkillTree.Engine.GameModel.Skills
                     poolDamagePerMinute));
         }
 
-        private static IReadOnlyDictionary<string, IReadOnlyList<Entity>> SelfBuff(params string[] statIds)
-            => Buff(Entity.Character, statIds);
+        private static IReadOnlyDictionary<string, Func<Entity, IEnumerable<Entity>>> SelfBuff(params string[] statIds)
+            => Buff(Self, statIds);
 
-        private static IReadOnlyDictionary<string, IReadOnlyList<Entity>> EnemyBuff(params string[] statIds)
-            => Buff(Entity.Enemy, statIds);
+        private static IReadOnlyDictionary<string, Func<Entity, IEnumerable<Entity>>> EnemyBuff(params string[] statIds)
+            => Buff(Opponents, statIds);
 
-        private static IReadOnlyDictionary<string, IReadOnlyList<Entity>> Aura(params string[] statIds)
-            => Buff(AuraEntities, statIds);
+        private static IReadOnlyDictionary<string, Func<Entity, IEnumerable<Entity>>> Aura(params string[] statIds)
+            => Buff(SelfAndAllies, statIds);
 
-        private static IReadOnlyDictionary<string, IReadOnlyList<Entity>> Buff(
-            Entity affectedEntity, params string[] statIds)
-            => Buff(new[] { affectedEntity }, statIds);
-
-        private static IReadOnlyDictionary<string, IReadOnlyList<Entity>> Buff(
-            IReadOnlyList<Entity> affectedEntities, params string[] statIds)
+        private static IReadOnlyDictionary<string, Func<Entity, IEnumerable<Entity>>> Buff(
+            Func<Entity, IEnumerable<Entity>> affectedEntities, params string[] statIds)
             => Buff(statIds.Select(s => (s, affectedEntities)).ToArray());
 
-        private static IReadOnlyDictionary<string, IReadOnlyList<Entity>> Buff(
-            params (string statId, IReadOnlyList<Entity> affectedEntities)[] stats)
+        private static IReadOnlyDictionary<string, Func<Entity, IEnumerable<Entity>>> Buff(
+            params (string statId, Func<Entity, IEnumerable<Entity>> affectedEntities)[] stats)
             => stats.ToDictionary(t => t.statId, t => t.affectedEntities);
+
+        private static IEnumerable<Entity> Opponents(Entity entity) => entity.Opponents();
+        private static IEnumerable<Entity> SelfAndAllies(Entity entity) => entity.SelfAndAllies();
+        private static IEnumerable<Entity> Self(Entity entity) => new[] {entity};
+        private static IEnumerable<Entity> Minions(Entity entity) => entity.Minions();
 
         private static IEnumerable<string> Passive(params string[] statIds)
             => statIds;

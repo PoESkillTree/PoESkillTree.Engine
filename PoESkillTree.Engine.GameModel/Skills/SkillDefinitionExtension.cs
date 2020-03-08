@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using PoESkillTree.Engine.Utils;
-#if NETSTANDARD2_0
-using static MoreLinq.Extensions.ToHashSetExtension;
-#endif
 
 namespace PoESkillTree.Engine.GameModel.Skills
 {
@@ -16,7 +13,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
     public class SkillDefinitionExtension
     {
         public SkillDefinitionExtension(
-            SkillPartDefinitionExtension commonExtension, IReadOnlyDictionary<string, IReadOnlyList<Entity>> buffStats,
+            SkillPartDefinitionExtension commonExtension, IReadOnlyDictionary<string, Func<Entity, IEnumerable<Entity>>> buffStats,
             IEnumerable<string> passiveStats, params (string name, SkillPartDefinitionExtension extension)[] parts)
         {
             CommonExtension = commonExtension;
@@ -53,7 +50,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
         /// Stat ids of the skill's modifiers that are provided as part of the skill's buff, together with the Entities
         /// affected by the modifier
         /// </summary>
-        public IReadOnlyDictionary<string, IReadOnlyList<Entity>> BuffStats { get; }
+        public IReadOnlyDictionary<string, Func<Entity, IEnumerable<Entity>>> BuffStats { get; }
 
         /// <summary>
         /// Stat ids of the skill's modifiers that are enabled even when the skill is not the main skill

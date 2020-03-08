@@ -11,10 +11,10 @@ namespace PoESkillTree.Engine.Computation.Core.Nodes
     public class ValueNode : ICalculationNode, IDisposable
     {
         private readonly IValue _value;
-        private ValueCalculationContext _previousContext;
-        private ValueCalculationContext _currentContext;
+        private TrackingValueCalculationContext _previousContext;
+        private TrackingValueCalculationContext _currentContext;
 
-        public ValueNode(ValueCalculationContext context1, ValueCalculationContext context2, IValue value)
+        public ValueNode(TrackingValueCalculationContext context1, TrackingValueCalculationContext context2, IValue value)
         {
             _value = value;
             _previousContext = context1;

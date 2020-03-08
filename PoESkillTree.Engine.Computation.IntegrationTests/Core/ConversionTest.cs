@@ -60,11 +60,11 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests.Core
         {
             _sut.NewBatchUpdate()
                 .AddModifier(_bar, Form.BaseAdd, 3)
-                .AddModifier(new[] {_barFooConversion, _barConversion, _barSkillConversion}, Form.BaseAdd, 100.0 / 3)
+                .AddModifier(new[] {_barFooConversion, _barConversion, _barSkillConversion}, Form.BaseAdd, 25)
                 .DoUpdate();
 
-            Assert.AreEqual(new NodeValue(1), GetValue(_foo));
-            Assert.AreEqual(new NodeValue(2), GetValue(_bar));
+            Assert.AreEqual(new NodeValue(0.75), GetValue(_foo));
+            Assert.AreEqual(new NodeValue(2.25), GetValue(_bar));
         }
 
         [Test]

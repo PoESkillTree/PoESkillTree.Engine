@@ -22,7 +22,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
         protected override GivenStatCollection CreateCollection()
             => new GivenStatCollection(ModifierBuilder, ValueFactory)
             {
-                { PercentIncrease, Ground.Consecrated.AddStat(CriticalStrike.Chance.For(Entity.OpponentOfSelf)), 100 },
+                { PercentIncrease, Ground.Consecrated.AddStat(CriticalStrike.Chance.For(OpponentsOfSelf)), 100 },
                 // Level based
                 { BaseSet, Stat.Level, ValueFactory.Minimum(Stat.Level.For(Entity.Character).Value, 84) },
                 { BaseSet, Life, LevelBased(l => MonsterBaseStats.EnemyLife(l), "EnemyLife") },
@@ -33,6 +33,12 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                     LevelBased(l => MonsterBaseStats.PhysicalDamage(l), "PhysicalDamage") * 1.5
                 },
                 { BaseSet, Stat.Armour, LevelBased(l => MonsterBaseStats.Armour(l), "Armour") },
+                // buff configuration
+                { TotalOverride, Buff.Maim.On(Self), 1, Condition.Unique("Maim.ExplicitlyActive") },
+                { TotalOverride, Buff.Hinder.On(Self), 1, Condition.Unique("Hinder.ExplicitlyActive") },
+                { TotalOverride, Buff.Blind.On(Self), 1, Condition.Unique("Blind.ExplicitlyActive") },
+                { TotalOverride, Buff.Intimidate.On(Self), 1, Condition.Unique("Intimidate.ExplicitlyActive") },
+                { TotalOverride, Buff.CoveredInAsh.On(Self), 1, Condition.Unique("CoveredInAsh.ExplicitlyActive") },
             };
     }
 }

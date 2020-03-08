@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using PoESkillTree.Engine.Computation.Common;
 using PoESkillTree.Engine.Computation.Parsing.ItemParsers;
-using PoESkillTree.Engine.GameModel;
 
 namespace PoESkillTree.Engine.Computation.Parsing.JewelParsers
 {
@@ -14,7 +13,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.JewelParsers
 
         public ParseResult Parse(ItemParserParameter parameter)
         {
-            var (item, slot) = parameter;
+            var (item, slot, entity) = parameter;
             if (!item.IsEnabled)
                 return ParseResult.Empty;
 
@@ -24,7 +23,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.JewelParsers
             var results = new List<ParseResult>(item.Modifiers.Count);
             foreach (var modifier in item.Modifiers)
             {
-                results.Add(_coreParser.Parse(modifier, globalSource, Entity.Character));
+                results.Add(_coreParser.Parse(modifier, globalSource, entity));
             }
             return ParseResult.Aggregate(results);
         }

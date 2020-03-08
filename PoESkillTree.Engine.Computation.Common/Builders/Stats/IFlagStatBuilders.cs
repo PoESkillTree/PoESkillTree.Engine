@@ -23,5 +23,6 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
         IConditionBuilder IsBannerPlanted { get; }
         IConditionBuilder InBloodStance { get; }
         IConditionBuilder InSandStance { get; }
+        IConditionBuilder BypassSkillCooldown { get; }
     }
 }

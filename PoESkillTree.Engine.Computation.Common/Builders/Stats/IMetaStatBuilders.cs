@@ -17,8 +17,13 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
     public interface IMetaStatBuilders
     {
         IStatBuilder EffectiveRegen(Pool pool);
+        IStatBuilder EffectiveDegeneration(Pool pool, DamageType damageType);
+        IStatBuilder EffectiveDegeneration(Pool pool);
+        IStatBuilder NetRegen(Pool pool);
+
         IStatBuilder EffectiveRecharge(Pool pool);
         IStatBuilder RechargeStartDelay(Pool pool);
+
         IStatBuilder EffectiveLeechRate(Pool pool);
         IStatBuilder AbsoluteLeechRate(Pool pool);
         IStatBuilder AbsoluteLeechRateLimit(Pool pool);
@@ -83,6 +88,7 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
         IStatBuilder SkillHitDamageSource { get; }
         IStatBuilder SkillUsesHand(AttackDamageHand hand);
         IStatBuilder SkillDoubleHitsWhenDualWielding { get; }
+        IStatBuilder SkillDpsWithHitsCalculationMode { get; }
 
         IStatBuilder MainSkillId { get; }
         IStatBuilder MainSkillHasKeyword(Keyword keyword);
@@ -96,12 +102,18 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
 
         IStatBuilder MainSkillItemSlot { get; }
         IStatBuilder MainSkillSocketIndex { get; }
+        IStatBuilder MainSkillSkillIndex { get; }
 
-        IStatBuilder SkillBaseCost(ItemSlot itemSlot, int socketIndex);
-        IStatBuilder SkillHasType(ItemSlot itemSlot, int socketIndex, string activeSkillType);
+        IStatBuilder SkillBaseCost(ItemSlot itemSlot, int socketIndex, int skillIndex);
+        IStatBuilder SkillHasType(ItemSlot itemSlot, int socketIndex, int skillIndex, string activeSkillType);
+
+        IStatBuilder ActiveCurses { get; }
+        ValueBuilder ActiveCurseIndex(int numericSkillId);
 
         IStatBuilder DamageBaseAddEffectiveness { get; }
         IStatBuilder DamageBaseSetEffectiveness { get; }
+
+        IStatBuilder CanBypassSkillCooldown { get; }
 
         IStatBuilder SelectedBandit { get; }
         IStatBuilder SelectedQuestPart { get; }
@@ -120,6 +132,7 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
 
         public static IConditionBuilder IsMainSkill(this IMetaStatBuilders @this, Skill skill)
             => @this.MainSkillItemSlot.Value.Eq((double) skill.ItemSlot)
-                .And(@this.MainSkillSocketIndex.Value.Eq(skill.SocketIndex));
+                .And(@this.MainSkillSocketIndex.Value.Eq(skill.SocketIndex))
+                .And(@this.MainSkillSkillIndex.Value.Eq(skill.SkillIndex));
     }
 }

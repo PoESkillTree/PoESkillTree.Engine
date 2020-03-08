@@ -32,11 +32,11 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
         public PartialSkillParseResult Parse(Skill mainSkill, Skill parsedSkill, SkillPreParseResult preParseResult)
         {
-            var modifiers = new ModifierCollection(_builderFactories, preParseResult.LocalSource);
+            var modifiers = new ModifierCollection(_builderFactories, preParseResult.LocalSource, preParseResult.ModifierSourceEntity);
 
             foreach (var type in _selectTypes(preParseResult.SkillDefinition))
             {
-                modifiers.AddGlobal(MetaStats.SkillHasType(mainSkill.ItemSlot, mainSkill.SocketIndex, type),
+                modifiers.AddGlobal(MetaStats.SkillHasType(mainSkill.ItemSlot, mainSkill.SocketIndex, mainSkill.SkillIndex, type),
                     Form.TotalOverride, 1);
             }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using EnumsNET;
 using PoESkillTree.Engine.Computation.Common.Builders;
 using PoESkillTree.Engine.Computation.Common.Builders.Damage;
 using PoESkillTree.Engine.Computation.Common.Builders.Modifiers;
@@ -8,6 +9,7 @@ using PoESkillTree.Engine.Computation.Common.Builders.Stats;
 using PoESkillTree.Engine.Computation.Common.Builders.Values;
 using PoESkillTree.Engine.Computation.Data.Collections;
 using PoESkillTree.Engine.GameModel;
+using PoESkillTree.Engine.Utils.Extensions;
 
 namespace PoESkillTree.Engine.Computation.Data.GivenStats
 {
@@ -82,8 +84,21 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                     p => MetaStats.RegenTargetPoolValue(p) * Stat.Pool.From(p).Regen.Percent.Value.AsPercentage
                 },
                 { TotalOverride, MetaStats.EffectiveRegen, p => p.Regen.Value * p.RecoveryRate.Value },
+                {
+                    TotalOverride, MetaStats.EffectiveDegeneration,
+                    p => Enums.GetValues<DamageType>().Except(DamageType.RandomElement)
+                        .Select(dt => MetaStats.EffectiveDegeneration(p, dt).Value)
+                        .Aggregate((v1, v2) => v1 + v2)
+                },
+                { TotalOverride, MetaStats.NetRegen, p => MetaStats.EffectiveRegen(p).Value - MetaStats.EffectiveDegeneration(p).Value },
                 { TotalOverride, MetaStats.EffectiveRecharge, p => p.Recharge.Value * p.RecoveryRate.Value },
                 { TotalOverride, MetaStats.RechargeStartDelay, p => 2 / p.Recharge.Start.Value },
+                {
+                    TotalOverride, MetaStats.EffectiveDegeneration,
+                    (p, dt) => p.Degeneration(DamageTypeBuilders.From(dt)).Value * MetaStats.MitigationAgainstDoTs(dt).Value
+                },
+                // ailments
+                { PercentMore, a => Ailment.From(a).Duration, a => 100 / Effect.ExpirationModifier.For(Enemy).Value - 100 },
                 // stun (see https://pathofexile.gamepedia.com/Stun)
                 {
                     TotalOverride, MetaStats.StunAvoidanceWhileCasting,

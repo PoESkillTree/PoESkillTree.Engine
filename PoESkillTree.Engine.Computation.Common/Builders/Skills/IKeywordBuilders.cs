@@ -52,6 +52,7 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Skills
 
         IKeywordBuilder Brand { get; }
         IKeywordBuilder Banner { get; }
+        IKeywordBuilder Triggered { get; }
 
         IKeywordBuilder From(Keyword keyword);
     }

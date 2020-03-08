@@ -8,10 +8,6 @@ using Newtonsoft.Json.Linq;
 using PoESkillTree.Engine.GameModel.Items;
 using PoESkillTree.Engine.Utils.Extensions;
 
-#if NETSTANDARD2_0
-using static MoreLinq.Extensions.ToHashSetExtension;
-#endif
-
 namespace PoESkillTree.Engine.GameModel.Skills
 {
     /// <summary>
@@ -53,9 +49,10 @@ namespace PoESkillTree.Engine.GameModel.Skills
         {
             var castTime = gemJson.Value<int>("cast_time");
             var statTranslationFile = gemJson.Value<string>("stat_translation_file");
+            var secondarySkillId = gemJson.Value<string?>("secondary_granted_effect");
 
             var baseItemJson = gemJson["base_item"]!;
-            ISet<string> gemTags;
+            HashSet<string> gemTags;
             SkillBaseItemDefinition? baseItemDefinition;
             if (baseItemJson.Type == JTokenType.Null)
             {
@@ -95,7 +92,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 var activeSkillDefinition = new ActiveSkillDefinition(
                     displayName, castTime, activeSkillTypes, minionActiveSkillTypes, keywords,
                     GetKeywordsPerPart(keywords), providesBuff, totemLifeMultiplier, weaponRestrictions);
-                return SkillDefinition.CreateActive(skillId, numericId, statTranslationFile,
+                return SkillDefinition.CreateActive(skillId, numericId, statTranslationFile, secondarySkillId,
                     _definitionExtension.PartNames, baseItemDefinition, activeSkillDefinition, levels);
             }
             else
@@ -109,13 +106,13 @@ namespace PoESkillTree.Engine.GameModel.Skills
                     supportSkillJson["allowed_types"]!.Values<string>().ToList(),
                     supportSkillJson["excluded_types"]!.Values<string>().ToList(),
                     addedActiveSkillTypes, addedKeywords);
-                return SkillDefinition.CreateSupport(skillId, numericId, statTranslationFile,
+                return SkillDefinition.CreateSupport(skillId, numericId, statTranslationFile, secondarySkillId,
                     _definitionExtension.PartNames, baseItemDefinition, supportSkillDefinition, levels);
             }
         }
 
         private IReadOnlyList<Keyword> GetKeywords(
-            string displayName, ISet<string> activeSkillTypes, ISet<string> gemTags)
+            string displayName, IReadOnlyCollection<string> activeSkillTypes, IReadOnlyCollection<string> gemTags)
         {
             var keywords = Enums.GetValues<Keyword>()
                 .Where(k => k.IsOnSkill(displayName, activeSkillTypes, gemTags));
@@ -161,6 +158,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 Value<int?>("mana_multiplier") / 100D,
                 Value<int?>("mana_reservation_override"),
                 Value<int?>("cooldown"),
+                Value<string>("cooldown_bypass_type") != null,
                 Value<int>("required_level"),
                 NestedValue<int>("stat_requirements", "dex"),
                 NestedValue<int>("stat_requirements", "int"),

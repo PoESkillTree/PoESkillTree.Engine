@@ -16,6 +16,7 @@ using PoESkillTree.Engine.Computation.Common.Builders.Stats;
 using PoESkillTree.Engine.Computation.Common.Builders.Values;
 using PoESkillTree.Engine.GameModel;
 using PoESkillTree.Engine.Utils;
+using PoESkillTree.Engine.Utils.Extensions;
 
 namespace PoESkillTree.Engine.Computation.Builders.Buffs
 {
@@ -46,6 +47,8 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
             => FromIdentity("StackCount", typeof(uint),
                 ExplicitRegistrationTypes.UserSpecifiedValue(double.PositiveInfinity));
 
+        public IStatBuilder IgnoresCurseLimit => FromIdentity("IgnoresCurseLimit", typeof(bool));
+
         public override IStatBuilder On(IEntityBuilder target) =>
             base.On(target)
                 .CombineWith(new StatBuilder(StatFactory, FromStatFactory(BuildBuffActiveStat)))
@@ -61,7 +64,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
         private IConditionBuilder IsFromSource(IEntityBuilder source, IEntityBuilder target)
         {
             var core = FromStatFactory(BuildStats);
-            return new StatBuilder(StatFactory, core).For(target).IsSet;
+            return new StatBuilder(StatFactory, core).For(target).IsTrue;
 
             IEnumerable<IStat> BuildStats(BuildParameters parameters, Entity t, string identity)
                 => source.Build(parameters.ModifierSourceEntity)
@@ -90,6 +93,9 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
         private IValue BuildAddStatMultiplier(
             string identity, IReadOnlyCollection<Entity> possibleSources, Entity target)
         {
+            if (possibleSources.IsEmpty())
+                return new Constant(1);
+
             var buffActiveValue = new StatValue(BuildBuffActiveStat(target, identity));
             var buffSourceValues = possibleSources.ToDictionary(Funcs.Identity,
                 e => new StatValue(BuildBuffSourceStat(e, target, identity)));

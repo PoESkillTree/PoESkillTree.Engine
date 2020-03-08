@@ -31,6 +31,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.Referencing
         public IPoolStatBuilder AsPoolStat => As<IPoolStatBuilder>();
         public IBuffBuilder AsBuff => As<IBuffBuilder>();
         public ISkillBuilder AsSkill => As<ISkillBuilder>();
+        public IGemTagBuilder AsGemTag => As<IGemTagBuilder>();
 
         public ResolvedReferenceConverter(object referencedBuilder)
         {

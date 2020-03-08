@@ -90,7 +90,10 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         }
 
         public IConditionBuilder IsSet =>
-            ValueConditionBuilder.Create(Value, v => v.IsTrue(), v => v + ".IsSet");
+            ValueConditionBuilder.Create(Value, v => v.HasValue, v => v + ".IsSet");
+
+        public IConditionBuilder IsTrue =>
+            ValueConditionBuilder.Create(Value, v => v.IsTrue(), v => v + ".IsTrue");
 
         public IStatBuilder ConvertTo(IStatBuilder stat) =>
             WithUntyped(new ConversionStatBuilder(StatFactory.ConvertTo,

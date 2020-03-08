@@ -15,7 +15,8 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         };
 
         public Stat(string identity, Entity entity = default, Type? dataType = null,
-            ExplicitRegistrationType? explicitRegistrationType = null, IReadOnlyList<Behavior>? behaviors = null)
+            ExplicitRegistrationType? explicitRegistrationType = null, IReadOnlyList<Behavior>? behaviors = null,
+            Func<NodeValue?, NodeValue?>? rounding = null)
         {
             if (!IsDataTypeValid(dataType))
                 throw new ArgumentException($"Stats only support double, int, bool or enum data types, {dataType} given",
@@ -27,6 +28,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
             DataType = dataType ?? typeof(double);
             _hasRange = NumericTypes.Contains(DataType);
             Behaviors = behaviors ?? new Behavior[0];
+            _rounding = rounding;
         }
 
         private static bool IsDataTypeValid(Type? dataType)
@@ -45,7 +47,20 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         private IStat? MinOrMax([CallerMemberName] string identitySuffix = "") =>
             _hasRange ? new Stat(Identity + "." + identitySuffix, Entity, DataType) : null;
 
+        private readonly Func<NodeValue?, NodeValue?>? _rounding;
+
+        public NodeValue? Round(NodeValue? value)
+        {
+            if (_rounding != null)
+                return _rounding(value);
+            else if (!NumericTypes.Contains(DataType) || DataType == typeof(double))
+                return value;
+            else
+                return RoundingBehaviors.Floor(value);
+        }
+
         private string? _stringRepresentation;
+
         public override string ToString()
             => _stringRepresentation ??= Entity.GetName() + "." + Identity;
 

@@ -43,34 +43,34 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 {
                     "(gain )?for # seconds when you ({ActionMatchers}) a rare or unique enemy",
-                    And(Enemy.IsRareOrUnique, Reference.AsAction.InPastXSeconds(Value))
+                    And(OpponentsOfSelf.IsRareOrUnique, Reference.AsAction.InPastXSeconds(Value))
                 },
                 {
                     "(gain )?for # seconds when you ({ActionMatchers}) a unique enemy",
-                    And(Enemy.IsUnique, Reference.AsAction.InPastXSeconds(Value))
+                    And(OpponentsOfSelf.IsUnique, Reference.AsAction.InPastXSeconds(Value))
                 },
                 {
                     "(gain )?for # seconds when you ({ActionMatchers}) an enemy",
                     Reference.AsAction.InPastXSeconds(Value)
                 },
                 { "when you ({ActionMatchers}) an enemy, for # seconds", Reference.AsAction.InPastXSeconds(Value) },
-                { "for # seconds when ({ActionMatchers})", Reference.AsAction.By(Enemy).InPastXSeconds(Value) },
+                { "for # seconds when ({ActionMatchers})", Reference.AsAction.By(MainOpponentOfSelf).InPastXSeconds(Value) },
                 {
                     "on ({ActionMatchers}) a rare or unique enemy, lasting # seconds",
-                    And(Enemy.IsRareOrUnique, Reference.AsAction.InPastXSeconds(Value))
+                    And(OpponentsOfSelf.IsRareOrUnique, Reference.AsAction.InPastXSeconds(Value))
                 },
                 // - kill
                 {
                     "if you've killed a maimed enemy recently",
-                    And(Kill.Recently, Buff.Maim.IsOn(Enemy))
+                    And(Kill.Recently, Buff.Maim.IsOn(MainOpponentOfSelf))
                 },
                 {
                     "if you've killed a bleeding enemy recently",
-                    And(Kill.Recently, Ailment.Bleed.IsOn(Enemy))
+                    And(Kill.Recently, Ailment.Bleed.IsOn(MainOpponentOfSelf))
                 },
                 {
                     "if you've killed a cursed enemy recently",
-                    And(Kill.Recently, Buffs(targets: Enemy).With(Keyword.Curse).Any())
+                    And(Kill.Recently, Buffs(targets: OpponentsOfSelf).With(Keyword.Curse).Any())
                 },
                 {
                     "if you or your totems have killed recently",
@@ -82,26 +82,26 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 // - hit
                 { "if you('ve| have) hit them recently", Hit.Recently },
-                { "if you('ve| have) been hit recently", Hit.By(Enemy).Recently },
-                { "if you haven't been hit recently", Not(Hit.By(Enemy).Recently) },
-                { "if you were damaged by a hit recently", Hit.By(Enemy).Recently },
-                { "if you've taken no damage from hits recently", Not(Hit.By(Enemy).Recently) },
-                { "if you weren't damaged by a hit recently", Not(Hit.By(Enemy).Recently) },
+                { "if you('ve| have) been hit recently", Hit.By(MainOpponentOfSelf).Recently },
+                { "if you haven't been hit recently", Not(Hit.By(MainOpponentOfSelf).Recently) },
+                { "if you were damaged by a hit recently", Hit.By(MainOpponentOfSelf).Recently },
+                { "if you've taken no damage from hits recently", Not(Hit.By(MainOpponentOfSelf).Recently) },
+                { "if you weren't damaged by a hit recently", Not(Hit.By(MainOpponentOfSelf).Recently) },
                 {
                     "if you've hit a cursed enemy recently",
-                    And(Hit.Recently, Buffs(targets: Enemy).With(Keyword.Curse).Any())
+                    And(Hit.Recently, Buffs(targets: OpponentsOfSelf).With(Keyword.Curse).Any())
                 },
                 // - critical strike
                 { "if you've crit in the past # seconds", CriticalStrike.InPastXSeconds(Value) },
                 { "if you've dealt a crit in the past # seconds", CriticalStrike.InPastXSeconds(Value) },
                 // - block
-                { "if you've blocked damage from a unique enemy recently", And(Block.Recently, Enemy.IsUnique) },
+                { "if you've blocked damage from a unique enemy recently", And(Block.Recently, OpponentsOfSelf.IsUnique) },
                 {
                     "if you've blocked damage from a unique enemy in the past # seconds",
-                    And(Block.InPastXSeconds(Value), Enemy.IsUnique)
+                    And(Block.InPastXSeconds(Value), OpponentsOfSelf.IsUnique)
                 },
                 // - other
-                { "if you've taken a savage hit recently", Action.SavageHit.By(Enemy).Recently },
+                { "if you've taken a savage hit recently", Action.SavageHit.By(MainOpponentOfSelf).Recently },
                 { "if you've shattered an enemy recently", Action.Shatter.Recently },
                 { "if you've spent # total mana recently", Action.SpendMana(Value).Recently },
                 {
@@ -200,7 +200,7 @@ namespace PoESkillTree.Engine.Computation.Data
                     "from equipped shield",
                     And(Condition.BaseValueComesFrom(ItemSlot.OffHand), OffHand.Has(Tags.Shield))
                 },
-                { "with # corrupted items equipped", Equipment.Count(e => e.Corrupted.IsSet) >= Value },
+                { "with # corrupted items equipped", Equipment.Count(e => e.Corrupted.IsTrue) >= Value },
                 // stats
                 // - pool
                 { "(when|while) on low ({PoolStatMatchers})", Reference.AsPoolStat.IsLow },
@@ -233,34 +233,35 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "while there is at least one nearby ally", Ally.CountNearby >= 1 },
                 { "while there are at least five nearby allies", Ally.CountNearby >= 5 },
                 // - on enemy
-                { "(against enemies )?that are on low life", Life.For(Enemy).IsLow },
-                { "against enemies on low life", Life.For(Enemy).IsLow },
-                { "(against enemies )?that are on full life", Life.For(Enemy).IsFull },
-                { "against enemies on full life", Life.For(Enemy).IsFull },
-                { "against rare and unique enemies", Enemy.IsRareOrUnique },
-                { "against unique enemies", Enemy.IsUnique },
-                { "if rare or unique", Enemy.IsRareOrUnique },
-                { "if normal or magic", Not(Enemy.IsRareOrUnique) },
-                { "while there is only one nearby enemy", Enemy.CountNearby.Eq(1) },
-                { "if there are at least # nearby enemies", Enemy.CountNearby >= Value },
-                { "at close range", Enemy.IsNearby },
-                { "to enemies that are near you", Enemy.IsNearby },
-                { "while there is at most one rare or unique enemy nearby", Enemy.CountRareOrUniqueNearby <= 1 },
-                { "while a rare or unique enemy is nearby", Enemy.CountRareOrUniqueNearby >= 1 },
-                { "while there are at least two rare or unique enemies nearby", Enemy.CountRareOrUniqueNearby >= 2 },
+                { "(against enemies )?that are on low life", Life.For(MainOpponentOfSelf).IsLow },
+                { "against enemies on low life", Life.For(MainOpponentOfSelf).IsLow },
+                { "(against enemies )?that are on full life", Life.For(MainOpponentOfSelf).IsFull },
+                { "against enemies on full life", Life.For(MainOpponentOfSelf).IsFull },
+                { "against rare and unique enemies", OpponentsOfSelf.IsRareOrUnique },
+                { "against unique enemies", OpponentsOfSelf.IsUnique },
+                { "if rare or unique", Self.IsRareOrUnique },
+                { "if normal or magic", Not(Self.IsRareOrUnique) },
+                { "while there is only one nearby enemy", OpponentsOfSelf.CountNearby.Eq(1) },
+                { "if there are at least # nearby enemies", OpponentsOfSelf.CountNearby >= Value },
+                { "at close range", OpponentsOfSelf.IsNearby },
+                { "to enemies that are near you", OpponentsOfSelf.IsNearby },
+                { "while there is at most one rare or unique enemy nearby", OpponentsOfSelf.CountRareOrUniqueNearby <= 1 },
+                { "while a rare or unique enemy is nearby", OpponentsOfSelf.CountRareOrUniqueNearby >= 1 },
+                { "while there are at least two rare or unique enemies nearby", OpponentsOfSelf.CountRareOrUniqueNearby >= 2 },
                 // buffs
                 { "while you have ({BuffMatchers})", Reference.AsBuff.IsOn(Self) },
                 { "while affected by ({SkillMatchers})", Reference.AsSkill.Buff.IsOn(Self) },
                 { "while affected by a ({KeywordMatchers}) skill buff", Buffs(Self).With(Reference.AsKeyword).Any() },
                 { "during onslaught", Buff.Onslaught.IsOn(Self) },
                 { "while phasing", Buff.Phasing.IsOn(Self) },
+                { "while elusive", Buff.Elusive.IsOn(Self) },
                 { "if you've ({BuffMatchers}) an enemy recently,?", Reference.AsBuff.InflictionAction.Recently },
-                { "enemies you taunt( deal)?", And(For(Enemy), Buff.Taunt.IsOn(Self, Enemy)) },
-                { "enemies ({BuffMatchers}) by you", And(For(Enemy), Reference.AsBuff.IsOn(Self, Enemy)) },
-                { "enemies you curse( have)?", And(For(Enemy), Buffs(Self, Enemy).With(Keyword.Curse).Any()) },
-                { "({BuffMatchers}) enemies", And(For(Enemy), Reference.AsBuff.IsOn(Self, Enemy)) },
-                { "(against|from) blinded enemies", Buff.Blind.IsOn(Enemy) },
-                { "from taunted enemies", Buff.Taunt.IsOn(Enemy) },
+                { "enemies you taunt( deal)?", And(For(MainOpponentOfSelf), Buff.Taunt.IsOn(Self, MainOpponentOfSelf)) },
+                { "enemies ({BuffMatchers}) by you", And(For(MainOpponentOfSelf), Reference.AsBuff.IsOn(Self, MainOpponentOfSelf)) },
+                { "enemies you curse( have)?", And(For(MainOpponentOfSelf), Buffs(Self, MainOpponentOfSelf).With(Keyword.Curse).Any()) },
+                { "({BuffMatchers}) enemies", And(For(MainOpponentOfSelf), Reference.AsBuff.IsOn(Self, MainOpponentOfSelf)) },
+                { "(against|from) blinded enemies", Buff.Blind.IsOn(MainOpponentOfSelf) },
+                { "from taunted enemies", Buff.Taunt.IsOn(MainOpponentOfSelf) },
                 {
                     "you and allies affected by (your aura skills|auras from your skills) (have|deal)",
                     Or(For(Self), And(For(Ally), Buffs(targets: Ally).With(Keyword.Aura).Any()))
@@ -271,25 +272,25 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 // ailments
                 { "while( you are)? ({AilmentMatchers})", Reference.AsAilment.IsOn(Self) },
-                { "(against|from) ({AilmentMatchers}) enemies", Reference.AsAilment.IsOn(Enemy) },
+                { "(against|from) ({AilmentMatchers}) enemies", Reference.AsAilment.IsOn(MainOpponentOfSelf) },
                 {
                     "(against|from) ({AilmentMatchers}) or ({AilmentMatchers}) enemies",
-                    Or(References[0].AsAilment.IsOn(Enemy), References[1].AsAilment.IsOn(Enemy))
+                    Or(References[0].AsAilment.IsOn(MainOpponentOfSelf), References[1].AsAilment.IsOn(MainOpponentOfSelf))
                 },
                 {
                     "against frozen, shocked or ignited enemies",
-                    Or(Ailment.Freeze.IsOn(Enemy), Ailment.Shock.IsOn(Enemy), Ailment.Ignite.IsOn(Enemy))
+                    Or(Ailment.Freeze.IsOn(MainOpponentOfSelf), Ailment.Shock.IsOn(MainOpponentOfSelf), Ailment.Ignite.IsOn(MainOpponentOfSelf))
                 },
-                { "which are ({AilmentMatchers})", Reference.AsAilment.IsOn(Enemy) },
+                { "which are ({AilmentMatchers})", Reference.AsAilment.IsOn(MainOpponentOfSelf) },
                 {
                     "against enemies( that are)? affected by elemental ailments",
-                    Ailment.Elemental.Any(a => a.IsOn(Enemy))
+                    Ailment.Elemental.Any(a => a.IsOn(MainOpponentOfSelf))
                 },
                 {
                     "against enemies( that are)? affected by no elemental ailments",
-                    Not(Ailment.Elemental.Any(a => a.IsOn(Enemy)))
+                    Not(Ailment.Elemental.Any(a => a.IsOn(MainOpponentOfSelf)))
                 },
-                { "enemies chilled by supported skills( have)?", Ailment.Chill.IsOn(Enemy) },
+                { "enemies chilled by supported skills( have)?", Ailment.Chill.IsOn(MainOpponentOfSelf) },
                 // ground effects
                 { "while on consecrated ground", Ground.Consecrated.IsOn(Self) },
                 // skills
@@ -301,12 +302,14 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "spell skills have", With(Keyword.Spell) },
                 { "(with|of|for) ({KeywordMatchers}) skills", With(Reference.AsKeyword) },
                 { "(supported )?({KeywordMatchers}) skills (have|deal)", With(Reference.AsKeyword) },
+                { "(supported )?({KeywordMatchers}) spells (have|deal)", And(With(Reference.AsKeyword), With(Keyword.Spell)) },
                 {
                     "({KeywordMatchers}) ({KeywordMatchers}) skills (have|deal)",
                     And(With(References[0].AsKeyword), With(References[1].AsKeyword))
                 },
                 { "caused by melee hits", Condition.WithPart(Keyword.Melee) },
                 { "with melee damage", Condition.WithPart(Keyword.Melee) },
+                { "if triggered", Condition.WithPart(Keyword.Triggered) },
                 // - by damage type
                 { "with elemental skills", ElementalDamageTypes.Select(With).Aggregate((l, r) => l.Or(r)) },
                 { "with ({DamageTypeMatchers}) skills", With(Reference.AsDamageType) },
@@ -341,6 +344,15 @@ namespace PoESkillTree.Engine.Computation.Data
                     "(beams?|final wave|shockwaves?|cone|aftershock|explosion) (has a|deals?|will have)",
                     Stat.MainSkillPart.Value.Eq(1)
                 },
+                { "if consuming a corpse", Stat.MainSkillPart.Value.Eq(1) }, // Bodyswap
+                { "if using your life", Stat.MainSkillPart.Value.Eq(0) }, // Dark Pact
+                { "shard", Stat.MainSkillPart.Value.Eq(1) }, // Spectral Shield Throw
+                { "at maximum charge distance", Stat.MainSkillPart.Value.Eq(1) }, // Shield Charge
+                // - socketed
+                { "socketed gems", Condition.MainSkillHasModifierSourceItemSlot },
+                { "socketed gems (deal|have)", Condition.MainSkillHasModifierSourceItemSlot },
+                { "socketed attacks have", And(Condition.With(DamageSource.Attack), Condition.MainSkillHasModifierSourceItemSlot) },
+                { "socketed spells have", And(Condition.With(DamageSource.Spell), Condition.MainSkillHasModifierSourceItemSlot) },
                 // - other
                 { "to enemies they're attached to", Flag.IsBrandAttachedToEnemy },
                 { "to branded enemy", Flag.IsBrandAttachedToEnemy },
@@ -355,7 +367,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 {
                     "enemies maimed by this skill",
                     And(Condition.ModifierSourceIs(new ModifierSource.Local.Skill("BloodSandArmour")),
-                        Buff.Maim.IsOn(Enemy), Flag.InBloodStance, For(Enemy))
+                        Buff.Maim.IsOn(MainOpponentOfSelf), Flag.InBloodStance, For(MainOpponentOfSelf))
                 },
                 // traps and mines
                 { "with traps", With(Keyword.Trap) },
@@ -408,22 +420,21 @@ namespace PoESkillTree.Engine.Computation.Data
                     >= Value
                 },
                 // passive tree
-                { "marauder:", PassiveTree.ConnectsToClass(CharacterClass.Marauder).IsSet },
-                { "duelist:", PassiveTree.ConnectsToClass(CharacterClass.Duelist).IsSet },
-                { "ranger:", PassiveTree.ConnectsToClass(CharacterClass.Ranger).IsSet },
-                { "shadow:", PassiveTree.ConnectsToClass(CharacterClass.Shadow).IsSet },
-                { "witch:", PassiveTree.ConnectsToClass(CharacterClass.Witch).IsSet },
-                { "templar:", PassiveTree.ConnectsToClass(CharacterClass.Templar).IsSet },
-                { "scion:", PassiveTree.ConnectsToClass(CharacterClass.Scion).IsSet },
+                { "marauder:", PassiveTree.ConnectsToClass(CharacterClass.Marauder).IsTrue },
+                { "duelist:", PassiveTree.ConnectsToClass(CharacterClass.Duelist).IsTrue },
+                { "ranger:", PassiveTree.ConnectsToClass(CharacterClass.Ranger).IsTrue },
+                { "shadow:", PassiveTree.ConnectsToClass(CharacterClass.Shadow).IsTrue },
+                { "witch:", PassiveTree.ConnectsToClass(CharacterClass.Witch).IsTrue },
+                { "templar:", PassiveTree.ConnectsToClass(CharacterClass.Templar).IsTrue },
+                { "scion:", PassiveTree.ConnectsToClass(CharacterClass.Scion).IsTrue },
                 // stance
                 { "(while )?in blood stance", Flag.InBloodStance },
                 { "(while )?in sand stance", Flag.InSandStance },
                 // enemy
-                { "enemies have", For(Enemy) },
-                { "to normal or magic enemies", And(For(Enemy), Not(Enemy.IsRareOrUnique)) },
-                { "to rare enemies", And(For(Enemy), Not(Enemy.IsRare)) },
-                { "to unique enemies", And(For(Enemy), Not(Enemy.IsUnique)) },
-                { "to unique enemies", And(For(Enemy), Not(Enemy.IsUnique)) },
+                { "enemies have", For(OpponentsOfSelf) },
+                { "to normal or magic enemies", And(For(OpponentsOfSelf), Not(OpponentsOfSelf.IsRareOrUnique)) },
+                { "to rare enemies", And(For(OpponentsOfSelf), Not(OpponentsOfSelf.IsRare)) },
+                { "to unique enemies", And(For(OpponentsOfSelf), Not(OpponentsOfSelf.IsUnique)) },
                 // other
                 { "nearby allies( have| deal)?", For(Ally) },
                 { "against targets they pierce", Projectile.PierceCount.Value >= 1 },
@@ -431,7 +442,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "while moving", Flag.AlwaysMoving },
                 // unique
                 {
-                    "against burning enemies", Or(Ailment.Ignite.IsOn(Enemy), Condition.Unique("Is the Enemy Burning?"))
+                    "against burning enemies", Or(Ailment.Ignite.IsOn(MainOpponentOfSelf), Condition.Unique("Is the Enemy Burning?"))
                 },
                 { "while leeching", Condition.Unique("Leech.IsActive") },
                 {

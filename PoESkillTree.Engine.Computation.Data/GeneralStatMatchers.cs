@@ -134,12 +134,14 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "(global )?critical strike multiplier", CriticalStrike.Multiplier },
                 { "(global )?critical strike chance", CriticalStrike.Chance },
                 { "attack critical strike chance", CriticalStrike.Chance.With(DamageSource.Attack) },
+                { "spell critical strike chance", CriticalStrike.Chance.With(DamageSource.Spell) },
                 {
                     "({KeywordMatchers}) critical strike multiplier",
                     CriticalStrike.Multiplier.With(Reference.AsKeyword)
                 },
                 { "({KeywordMatchers}) critical strike chance", CriticalStrike.Chance.With(Reference.AsKeyword) },
                 { "projectiles have critical strike chance", CriticalStrike.Chance.With(Keyword.Projectile) },
+                { "you take extra damage from critical strikes", CriticalStrike.ExtraDamageTaken },
                 // - projectiles
                 { "projectile speed", Projectile.Speed },
                 { "arrow speed", Projectile.Speed, And(With(Keyword.Attack), MainHand.Has(Tags.Bow)) },
@@ -222,7 +224,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "chance to block attack damage", Block.AttackChance },
                 { "chance to block spell damage", Block.SpellChance },
                 { "chance to block spell and attack damage", Block.SpellChance, Block.AttackChance },
-                { "enemy block chance", ApplyOnce(Block.SpellChance, Block.AttackChance).For(Enemy) },
+                { "enemy block chance", ApplyOnce(Block.SpellChance, Block.AttackChance).For(OpponentsOfSelf) },
                 { "maximum chance to block attack damage", Block.AttackChance.Maximum },
                 // - other
                 { "chance to dodge attacks", Stat.Dodge.AttackChance },
@@ -231,7 +233,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "chance to dodge attack and spell hits", Stat.Dodge.AttackChance, Stat.Dodge.SpellChance },
                 {
                     "enemies have chance to dodge hits",
-                    ApplyOnce(Stat.Dodge.AttackChance, Stat.Dodge.SpellChance).For(Enemy)
+                    ApplyOnce(Stat.Dodge.AttackChance, Stat.Dodge.SpellChance).For(OpponentsOfSelf)
                 },
                 { "chance to evade( attacks)?", Evasion.Chance },
                 { "chance to evade projectile attacks", Evasion.ChanceAgainstProjectileAttacks },
@@ -321,7 +323,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "({SkillMatchers}) has mana reservation", Reference.AsSkill.Reservation },
                 { "skill effect duration", Stat.Duration },
                 { "skill duration", Stat.Duration },
-                { "buff duration", Stat.Duration },
+                { "(de)?buff duration", Stat.Duration },
                 { "warcry duration", Stat.Duration, With(Keyword.Warcry) },
                 { "curse duration", Stat.Duration, With(Keyword.Curse) },
                 { "({SkillMatchers}) duration", Stat.Duration, With(Reference.AsSkill) },
@@ -358,6 +360,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "({BuffMatchers}) effect", Reference.AsBuff.Effect },
                 { "effect of ({BuffMatchers})", Reference.AsBuff.Effect },
                 { "effect of ({BuffMatchers}) on you", Reference.AsBuff.EffectOn(Self) },
+                { "effect of ({BuffMatchers}) from this skill", Reference.AsBuff.Effect },
                 { "({SkillMatchers}) has buff effect", Reference.AsSkill.Buff.Effect },
                 { "effect of buffs granted by your golems", Buffs(Entity.Minion).With(Keyword.Golem).Effect },
                 {
@@ -385,10 +388,11 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "non-curse auras from supported skills have effect", Skills.ModifierSourceSkill.Buff.Effect },
                 { "effect of curse against players", Skills.ModifierSourceSkill.Buff.EffectOn(Entity.Character) },
                 // - chance
-                { "chance to (gain|grant) ({BuffMatchers})", Reference.AsBuff.Chance },
+                { "chance to (gain|grant|inflict) ({BuffMatchers})", Reference.AsBuff.Chance },
                 { "chance to ({BuffMatchers})( enemies)?", Reference.AsBuff.Chance },
                 { "chance for attacks to maim", Buff.Maim.Chance.With(DamageSource.Attack) },
-                { "chance to cover rare or unique enemies in ash", Buff.CoveredInAsh.Chance, Enemy.IsRareOrUnique },
+                { "chance to hinder enemies on hit with spells", Buff.Maim.Chance.With(DamageSource.Spell) },
+                { "chance to cover rare or unique enemies in ash", Buff.CoveredInAsh.Chance, OpponentsOfSelf.IsRareOrUnique },
                 { "chance to create consecrated ground", Ground.Consecrated.Chance },
                 // - duration
                 { "({BuffMatchers}) duration", Reference.AsBuff.Duration },
@@ -421,7 +425,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "block and stun recovery", Effect.Stun.Recovery, Block.Recovery },
                 { "block recovery", Block.Recovery },
                 { "stun threshold", Effect.Stun.Threshold },
-                { "enemy stun threshold", Effect.Stun.Threshold.For(Enemy) },
+                { "enemy stun threshold", Effect.Stun.Threshold.For(OpponentsOfSelf) },
                 { "stun duration( on enemies)?", Effect.Stun.Duration },
                 { "stun duration (?<inner>with .*) on enemies", Effect.Stun.Duration, "${inner}" },
                 {
@@ -472,8 +476,20 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "melee range", Stat.Range.With(Keyword.Melee) },
                 { "melee weapon range", Stat.Range.With(Keyword.Melee), MainHand.HasItem },
                 { "weapon range", Stat.Range },
+                // gem level
+                { "level of all ({GemTagMatchers}) skill gems", Gem.AdditionalActiveLevels(Reference.AsGemTag) },
+                { "level of all ({GemTagMatchers}) spell skill gems", Gem.AdditionalActiveSpellLevels(Reference.AsGemTag) },
+                { "level of socketed gems", Gem.AdditionalLevelsForModifierSourceItemSlot() },
+                { "level of socketed active skill gems", Gem.AdditionalActiveLevelsForModifierSourceItemSlot() },
+                { "level of socketed ({GemTagMatchers}) gems", Gem.AdditionalLevelsForModifierSourceItemSlot(Reference.AsGemTag) },
+                {
+                    "level of socketed ({GemTagMatchers}) or ({GemTagMatchers}) gems",
+                    Gem.AdditionalLevelsForModifierSourceItemSlot(References[0].AsGemTag),
+                    Gem.AdditionalLevelsForModifierSourceItemSlot(References[1].AsGemTag)
+                },
+                { "quality of socketed gems", Gem.AdditionalQualityForModifierSourceItemSlot },
+                { "quality of socketed support gems", Gem.AdditionalSupportQualityForModifierSourceItemSlot },
                 // other
-                { "rampage stacks", Stat.RampageStacks },
                 { "reflected damage taken", AnyDamageType.ReflectedDamageTaken },
                 { "reflected elemental damage taken", Elemental.ReflectedDamageTaken },
                 { "reflected physical damage taken", Physical.ReflectedDamageTaken },

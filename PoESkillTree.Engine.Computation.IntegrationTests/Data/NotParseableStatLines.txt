@@ -144,8 +144,6 @@ Projectiles are fired in a Nova (Hidden)
 Shields break after 1508 total Damage is prevented
 80% reduced Visibility to Enemies
 50% reduced Visibility to Enemies
-50% increased Stun Threshold reduction on enemies at Maximum charge distance
-200% more Damage with Hits at Maximum Charge Distance
 Beams Split towards 4 additional targets
 Strikes every 1 second
 Releases 5 waves
@@ -268,6 +266,15 @@ Returning Projectiles deal 75% less Damage
 Projectiles from Supported Skills Fork an additional Time
 Supported Curse Skills have 10% chance to apply to Hexproof Enemies
 Supported Curse Skills have 24% chance to apply to Hexproof Enemies
+Chill Enemy for 0.5 seconds when Hit, reducing their Action Speed by 30%
+Uses your Life if no Skeletons in range
+Supported Skills grant Combat Rush on Hit Combat Rush lasts 2 seconds or until you use a Travel Skill
+Combat Rush grants 24% more Attack and Cast Speed to Travel Skills that are not Supported by Close Combat
+Removes existing Elusive before granting a new Elusive Buff when used
+Inflicts 6 Withered Debuffs the first time each Enemy enters the Area
+Traps are thrown randomly around you
+Supported Skills will Trigger Shockwave on Melee Hit
+This Gem gains 100% increased Experience
 // passive skills: =====================================================================================================
 10% Chance for Traps to Trigger an additional time
 Share Endurance, Frenzy and Power Charges with nearby party members

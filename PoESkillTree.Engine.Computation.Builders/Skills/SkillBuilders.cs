@@ -36,21 +36,12 @@ namespace PoESkillTree.Engine.Computation.Builders.Skills
         public ISkillBuilder ModifierSourceSkill
             => new SkillBuilder(_statFactory, CoreBuilder.Create(BuildModifierSourceSkill));
 
-        private SkillDefinition BuildModifierSourceSkill(BuildParameters parameters)
-        {
-            ModifierSource? modifierSource = parameters.ModifierSource;
-            if (modifierSource is ModifierSource.Global global)
-                modifierSource = global.LocalSource;
-
-            switch (modifierSource)
+        private SkillDefinition BuildModifierSourceSkill(BuildParameters parameters) =>
+            parameters.ModifierSource.GetLocalSource() switch
             {
-                case ModifierSource.Local.Skill skillSource:
-                    return _skills.GetSkillById(skillSource.SkillId);
-                case ModifierSource.Local.Gem gemSource:
-                    return _skills.GetSkillById(gemSource.SkillId);
-                default:
-                    throw new ParseException($"ModifierSource must be a skill, {parameters.ModifierSource} given");
-            }
-        }
+                ModifierSource.Local.Skill skillSource => _skills.GetSkillById(skillSource.SkillId),
+                ModifierSource.Local.Gem gemSource => _skills.GetSkillById(gemSource.SourceGem.SkillId),
+                _ => throw new ParseException($"ModifierSource must be a skill, {parameters.ModifierSource} given")
+            };
     }
 }

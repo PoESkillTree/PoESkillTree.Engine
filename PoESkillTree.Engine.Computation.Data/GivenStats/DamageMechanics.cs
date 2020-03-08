@@ -39,8 +39,29 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                 {
                     TotalOverride, MetaStats.SkillDpsWithHits,
                     MetaStats.AverageHitDamage.Value *
-                    ValueFactory.If(Stat.HitRate.IsSet).Then(Stat.HitRate.Value)
+                    ValueFactory.If(MetaStats.SkillDpsWithHitsCalculationMode.Value.Eq((double) DpsCalculationMode.HitRateBased))
+                        .Then(Stat.HitRate.Value)
+                        .ElseIf(MetaStats.SkillDpsWithHitsCalculationMode.Value.Eq((double) DpsCalculationMode.CooldownBased))
+                        .Then(1000 / Stat.Cooldown.Value * Stat.SkillNumberOfHitsPerCast.Value)
+                        .ElseIf(MetaStats.SkillDpsWithHitsCalculationMode.Value.Eq((double) DpsCalculationMode.AverageCast))
+                        .Then(Stat.SkillNumberOfHitsPerCast.Value)
                         .Else(MetaStats.CastRate.Value * Stat.SkillNumberOfHitsPerCast.Value)
+                },
+                {
+                    BaseSet, MetaStats.SkillDpsWithHitsCalculationMode,
+                    ValueFactory.If(Stat.HitRate.IsSet)
+                        .Then((double) DpsCalculationMode.HitRateBased)
+                        .ElseIf(And(Stat.Cooldown.Value > 0, Not(MetaStats.CanBypassSkillCooldown.IsTrue.And(Flag.BypassSkillCooldown))))
+                        .Then((double) DpsCalculationMode.CooldownBased)
+                        .ElseIf(And(MetaStats.SkillHitDamageSource.Value.Eq((double) DamageSource.Spell),
+                            Stat.BaseCastTime.With(DamageSource.Spell).Value <= 0))
+                        .Then((double) DpsCalculationMode.AverageCast)
+                        .ElseIf(And(MetaStats.SkillHitDamageSource.Value.Eq((double) DamageSource.Secondary),
+                            Stat.BaseCastTime.With(DamageSource.Secondary).Value <= 0))
+                        .Then((double) DpsCalculationMode.AverageCast)
+                        .ElseIf(MetaStats.MainSkillHasKeyword(GameModel.Skills.Keyword.Triggered).IsTrue)
+                        .Then((double) DpsCalculationMode.AverageCast)
+                        .Else((double) DpsCalculationMode.CastRateBased)
                 },
                 // - average damage
                 {
@@ -112,7 +133,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                     _ => CriticalStrike.Multiplier.WithHits,
                     (_, resistance, damageTaken, damageMulti, impaleMulti, critMulti) =>
                         ((1 - resistance.Value.AsPercentage) + impaleMulti.Value) * damageTaken.Value * damageMulti.Value.AsPercentage
-                        * critMulti.Value.AsPercentage
+                        * EffectiveCriticalStrikeMultiplier(critMulti)
                 },
                 // - enemy resistance against crit/non-crit hits per source and type
                 {
@@ -149,7 +170,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                     CriticalStrike.Multiplier.WithHits,
                     (damage, multi, critMulti) =>
                         PhysicalDamageReductionFromArmour(Armour.For(Enemy).Value,
-                            damage.Value * multi.Value.AsPercentage * critMulti.Value.AsPercentage)
+                            damage.Value * multi.Value.AsPercentage * EffectiveCriticalStrikeMultiplier(critMulti))
                 },
 
                 // skill damage over time
@@ -305,7 +326,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                     TotalOverride, MetaStats.AilmentChanceWithCrits,
                     ailment => Ailment.From(ailment).Chance,
                     (ailment, ailmentChance) => ValueFactory
-                        .If(Ailment.From(ailment).CriticalStrikesAlwaysInflict.IsSet).Then(100)
+                        .If(Ailment.From(ailment).CriticalStrikesAlwaysInflict.IsTrue).Then(100)
                         .Else(ailmentChance.Value)
                 },
                 // - AilmentEffectiveInstances
@@ -352,7 +373,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                     (damage, multi) =>
                         DamageTypeBuilders.From(DamageType.Physical).Resistance.For(Enemy).Value
                         + PhysicalDamageReductionFromArmour(Armour.For(Enemy).Value,
-                            MetaStats.ImpaleRecordedDamage.Value * damage.Value * multi.Value)
+                            MetaStats.ImpaleRecordedDamage.Value * damage.Value * multi.Value.AsPercentage)
                         - Buff.Impale.Penetration.Value
                 },
                 {
@@ -363,7 +384,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                     (damage, multi, critMulti) =>
                         DamageTypeBuilders.From(DamageType.Physical).Resistance.For(Enemy).Value
                         + PhysicalDamageReductionFromArmour(Armour.For(Enemy).Value,
-                            MetaStats.ImpaleRecordedDamage.Value * damage.Value * multi.Value * critMulti.Value)
+                            MetaStats.ImpaleRecordedDamage.Value * damage.Value * multi.Value.AsPercentage * EffectiveCriticalStrikeMultiplier(critMulti))
                         - Buff.Impale.Penetration.Value
                 },
                 { TotalOverride, MetaStats.EnemyResistanceAgainstNonCritImpales.Minimum, 0 },
@@ -382,7 +403,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                 {
                     PercentMore, Damage.WithSkills(DamageSource.Attack).With(Keyword.Projectile),
                     30 * ValueFactory.LinearScale(Projectile.TravelDistance, (35, 0), (70, 1)),
-                    Flag.FarShot.IsSet
+                    Flag.FarShot.IsTrue
                 },
                 // repeats
                 { BaseSet, Stat.SkillRepeats, 0 },
@@ -413,7 +434,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             {
                 resistance += resistanceFromArmour.Value;
             }
-            return ValueFactory.If(ignoreResistance.IsSet).Then(0)
+            return ValueFactory.If(ignoreResistance.IsTrue).Then(0)
                 .Else(resistance);
         }
 
@@ -426,6 +447,15 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
 
         private IDamageRelatedStatBuilder DamageMultiplierWithNonCrits(DamageType damageType)
             => DamageTypeBuilders.From(damageType).DamageMultiplierWithNonCrits;
+
+        private IValueBuilder EffectiveCriticalStrikeMultiplier(IStatBuilder critMultiStat)
+        {
+            var critMulti = critMultiStat.Value.AsPercentage;
+            return ValueFactory.If(critMulti > 1)
+                .Then(1 + (critMulti - 1) * CriticalStrike.ExtraDamageTaken.For(Enemy).Value)
+                .Else(critMulti);
+        }
+
 
         private IReadOnlyList<IIntermediateModifier> CollectionToList(DataDrivenMechanicCollection collection)
         {
@@ -481,7 +511,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                 foreach (var damageType in Enums.GetValues<DamageType>())
                 {
                     collection.Add(TotalOverride, MetaStats.Damage(damageType).With(ailmentBuilder), 0,
-                        ailmentBuilder.Source(DamageTypeBuilders.From(damageType)).IsSet.Not);
+                        ailmentBuilder.Source(DamageTypeBuilders.From(damageType)).IsTrue.Not);
                 }
             }
         }
@@ -530,7 +560,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
         private ValueBuilder CalculateLuckyCriticalStrikeChance(IStatBuilder critChance)
         {
             var critValue = critChance.Value.AsPercentage;
-            return ValueFactory.If(Flag.CriticalStrikeChanceIsLucky.IsSet)
+            return ValueFactory.If(Flag.CriticalStrikeChanceIsLucky.IsTrue)
                 .Then(1 - (1 - critValue) * (1 - critValue))
                 .Else(critValue);
         }
@@ -606,7 +636,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             var usesOh = SkillUsesHandAsMultiplier(AttackDamageHand.OffHand);
             var sumOfHands = statToCombine.With(AttackDamageHand.MainHand).Value * usesMh +
                              statToCombine.With(AttackDamageHand.OffHand).Value * usesOh;
-            return ValueFactory.If(MetaStats.SkillDoubleHitsWhenDualWielding.IsSet)
+            return ValueFactory.If(MetaStats.SkillDoubleHitsWhenDualWielding.IsTrue)
                 .Then(sumOfHands)
                 .Else(sumOfHands / (usesMh + usesOh));
         }
@@ -616,6 +646,6 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             => (left * leftWeight + right * rightWeight) / (leftWeight + rightWeight);
 
         private ValueBuilder SkillUsesHandAsMultiplier(AttackDamageHand hand)
-            => ValueFactory.If(MetaStats.SkillUsesHand(hand).IsSet).Then(1).Else(0);
+            => ValueFactory.If(MetaStats.SkillUsesHand(hand).IsTrue).Then(1).Else(0);
     }
 }

@@ -19,6 +19,7 @@ namespace PoESkillTree.Engine.GameModel
         private readonly AsyncLazy<StatTranslators> _statTranslators;
         private readonly AsyncLazy<CharacterBaseStats> _characterBaseStats;
         private readonly AsyncLazy<MonsterBaseStats> _monsterBaseStats;
+        private readonly AsyncLazy<GemTags> _gemTags;
 
         /// <param name="passiveNodeDefinitions">The passive skill tree definition</param>
         /// <param name="runOnThreadPool">If true, all tasks are run on the thread pool instead of on the calling
@@ -41,6 +42,7 @@ namespace PoESkillTree.Engine.GameModel
             _characterBaseStats = new AsyncLazy<CharacterBaseStats>(
                 GameModel.CharacterBaseStats.CreateAsync, asyncLazyFlags);
             _monsterBaseStats = new AsyncLazy<MonsterBaseStats>(GameModel.MonsterBaseStats.CreateAsync, asyncLazyFlags);
+            _gemTags = new AsyncLazy<GemTags>(GameModel.Skills.GemTags.CreateAsync, asyncLazyFlags);
         }
 
         public Task<PassiveTreeDefinition> PassiveTree => _passiveTree.Task;
@@ -50,6 +52,7 @@ namespace PoESkillTree.Engine.GameModel
         public Task<StatTranslators> StatTranslators => _statTranslators.Task;
         public Task<CharacterBaseStats> CharacterBaseStats => _characterBaseStats.Task;
         public Task<MonsterBaseStats> MonsterBaseStats => _monsterBaseStats.Task;
+        public Task<GemTags> GemTags => _gemTags.Task;
 
         public void StartAllTasks()
         {
@@ -59,6 +62,7 @@ namespace PoESkillTree.Engine.GameModel
             _statTranslators.Start();
             _characterBaseStats.Start();
             _monsterBaseStats.Start();
+            _gemTags.Start();
         }
     }
 }

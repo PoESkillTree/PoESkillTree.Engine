@@ -24,7 +24,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
         public ParseResult Parse(SupportSkillParserParameter parameter)
         {
-            var (active, support) = parameter;
+            var (active, support, _, supportModification) = parameter;
             if (!active.IsEnabled || !support.IsEnabled)
                 return ParseResult.Empty;
 
@@ -32,7 +32,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var parsedStats = new List<UntranslatedStat>();
 
             var preParser = new SkillPreParser(_skillDefinitions, _builderFactories.MetaStatBuilders);
-            var preParseResult = preParser.ParseSupport(active, support);
+            var preParseResult = preParser.ParseSupport(parameter);
 
             foreach (var partialParser in CreatePartialParsers())
             {
@@ -42,7 +42,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             }
 
             var translatingParser = new TranslatingSkillParser(_builderFactories, _statParserFactory);
-            return translatingParser.Parse(support, preParseResult,
+            return translatingParser.Parse(support, supportModification, preParseResult,
                 new PartialSkillParseResult(modifiers, parsedStats));
         }
 
@@ -53,29 +53,30 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 SkillKeywordParser.CreateSupport(_builderFactories),
                 SkillTypeParser.CreateSupport(_builderFactories),
                 new SupportSkillLevelParser(_builderFactories),
-                new GemRequirementParser(_builderFactories),
                 new SkillStatParser(_builderFactories),
             };
     }
 
     public static class SupportSkillParserExtensions
     {
-        public static ParseResult Parse(
-            this IParser<SupportSkillParserParameter> @this, Skill activeSkill, Skill supportSkill)
-            => @this.Parse(new SupportSkillParserParameter(activeSkill, supportSkill));
+        public static ParseResult Parse(this IParser<SupportSkillParserParameter> @this,
+            Skill activeSkill, Skill supportSkill, Entity entity, SkillModification supportModification) =>
+            @this.Parse(new SupportSkillParserParameter(activeSkill, supportSkill, entity, supportModification));
     }
 
     public class SupportSkillParserParameter : ValueObject
     {
-        public SupportSkillParserParameter(Skill activeSkill, Skill supportSkill)
-            => (ActiveSkill, SupportSkill) = (activeSkill, supportSkill);
+        public SupportSkillParserParameter(Skill activeSkill, Skill supportSkill, Entity entity, SkillModification supportModification)
+            => (ActiveSkill, SupportSkill, Entity, SupportModification) = (activeSkill, supportSkill, entity, supportModification);
 
-        public void Deconstruct(out Skill activeSkill, out Skill supportSkill)
-            => (activeSkill, supportSkill) = (ActiveSkill, SupportSkill);
+        public void Deconstruct(out Skill activeSkill, out Skill supportSkill, out Entity entity, out SkillModification supportModification)
+            => (activeSkill, supportSkill, entity, supportModification) = (ActiveSkill, SupportSkill, Entity, SupportModification);
 
         public Skill ActiveSkill { get; }
         public Skill SupportSkill { get; }
+        public Entity Entity { get; }
+        public SkillModification SupportModification { get; }
 
-        protected override object ToTuple() => (ActiveSkill, SupportSkill);
+        protected override object ToTuple() => (ActiveSkill, SupportSkill, Entity, SupportModification);
     }
 }

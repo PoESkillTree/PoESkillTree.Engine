@@ -33,9 +33,6 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
 
         public IReadOnlyList<string> GivenStatLines { get; } = new[]
         {
-            // Rampage
-            "1% increased Movement Speed per 10 Rampage Stacks",
-            "2% increased Damage per 10 Rampage Stacks",
             // other
             "100% of non-chaos damage is taken from energy shield before life",
         };
@@ -68,6 +65,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             // crit
             { BaseSet, CriticalStrike.Chance.Maximum, 100 },
             { BaseSet, CriticalStrike.Chance.Minimum, 0 },
+            { BaseSet, CriticalStrike.ExtraDamageTaken, 1 },
             // projectiles
             { BaseSet, Projectile.Count, 1 },
             // evasion
@@ -94,8 +92,6 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             { BaseSet, Charge.Endurance.Duration, 10 },
             { BaseSet, Charge.Frenzy.Duration, 10 },
             { BaseSet, Charge.Power.Duration, 10 },
-            // Rampage
-            { BaseSet, Stat.RampageStacks.Maximum, 1000 },
             // leech
             { BaseSet, Life.Leech.RateLimit, 20 },
             { BaseSet, Mana.Leech.RateLimit, 20 },
@@ -142,6 +138,8 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             { BaseSet, Ailment.Poison.Duration, 2 },
             { PercentLess, Damage.With(Ailment.Poison), 80 },
             // buffs
+            { BaseSet, Effect.ExpirationModifier, 1 },
+            { TotalOverride, Effect.ExpirationModifier.Minimum, 0.25 },
             { BaseSet, Buff.CurseLimit, 1 },
             { BaseSet, Buffs(Self).Effect, 1 },
             { BaseSet, Buff.Fortify.Duration, 4 },
@@ -150,7 +148,10 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             { BaseSet, Buff.ArcaneSurge.Duration, 4 },
             { TotalOverride, Buff.Maim.Chance.With(DamageSource.Spell), 0 },
             { TotalOverride, Buff.Maim.Chance.With(DamageSource.Secondary), 0 },
+            { TotalOverride, Buff.Hinder.Chance.With(DamageSource.Attack), 0 },
             { BaseSet, Buff.Impale.StackCount.Maximum, 5 },
+            { BaseSet, Buff.Rampage.StackCount.Maximum, 1000 },
+            { BaseSet, Buff.Withered.StackCount.Maximum, 15 },
             // stun
             { BaseSet, Effect.Stun.Threshold, 1 },
             { BaseSet, Effect.Stun.Recovery, 1 },

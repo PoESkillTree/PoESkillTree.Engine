@@ -26,6 +26,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Skills
         public IKeywordBuilder Bow { get; } = From(Keyword.Bow);
         public IKeywordBuilder Brand { get; } = From(Keyword.Brand);
         public IKeywordBuilder Banner { get; } = From(Keyword.Banner);
+        public IKeywordBuilder Triggered { get; } = From(Keyword.Triggered);
         IKeywordBuilder IKeywordBuilders.From(Keyword keyword) => From(keyword);
 
         private static IKeywordBuilder From(Keyword keyword) => new KeywordBuilder(keyword);

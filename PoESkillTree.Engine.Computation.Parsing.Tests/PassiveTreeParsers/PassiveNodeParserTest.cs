@@ -163,7 +163,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.PassiveTreeParsers
         private static Modifier CreateConditionalModifier(
             PassiveNodeDefinition nodeDefinition, string stat, Form form, double value, string conditionStatSuffix)
             => CreateModifier(stat, form, new FunctionalValue(null!,
-                    $"Character.{nodeDefinition.Id}.{conditionStatSuffix}.Value(Total, Global).IsSet ? {value} : null"),
+                    $"Character.{nodeDefinition.Id}.{conditionStatSuffix}.Value(Total, Global).IsTrue ? {value} : null"),
                 CreateGlobalSource(nodeDefinition));
 
         private static Modifier CreateEffectivenessMultipliedModifier(

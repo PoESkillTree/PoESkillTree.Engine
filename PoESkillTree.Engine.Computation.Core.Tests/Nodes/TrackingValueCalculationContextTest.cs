@@ -8,7 +8,7 @@ using static PoESkillTree.Engine.Computation.Core.NodeHelper;
 namespace PoESkillTree.Engine.Computation.Core.Nodes
 {
     [TestFixture]
-    public class ValueCalculationContextTest
+    public class TrackingValueCalculationContextTest
     {
         [Test]
         public void SutIsValueCalculationContext()
@@ -196,8 +196,8 @@ namespace PoESkillTree.Engine.Computation.Core.Nodes
         }
 
 
-        private static ValueCalculationContext CreateSut(INodeRepository? nodeRepository = null) =>
-            new ValueCalculationContext(nodeRepository!, null!);
+        private static TrackingValueCalculationContext CreateSut(INodeRepository? nodeRepository = null) =>
+            new TrackingValueCalculationContext(nodeRepository!, null!);
 
         private static INodeCollection<Modifier> MockNodeCollection(params ICalculationNode[] nodes)
         {

@@ -54,7 +54,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Skills
 
         public IStatBuilder Reservation =>
             new StatBuilder(_statFactory, new CoreStatBuilderFromCoreBuilder<IEnumerable<Keyword>>(_coreBuilder,
-                (_, e, ks) => SelectSkillStats(ks, e, typeof(uint))));
+                (_, e, ks) => SelectSkillStats(ks, s => _statFactory.SkillReservation(e, s.Id))));
 
         public IStatBuilder ReservationPool =>
             new StatBuilder(_statFactory, new CoreStatBuilderFromCoreBuilder<IEnumerable<Keyword>>(_coreBuilder,
@@ -62,13 +62,16 @@ namespace PoESkillTree.Engine.Computation.Builders.Skills
 
         private IEnumerable<IStat> SelectSkillStats(
             IEnumerable<Keyword> keywords, Entity entity, Type dataType,
-            [CallerMemberName] string identitySuffix = "")
+            [CallerMemberName] string identitySuffix = "") =>
+            SelectSkillStats(keywords, s => _statFactory.FromIdentity(s.Id + " . " + identitySuffix, entity, dataType));
+
+        private IEnumerable<IStat> SelectSkillStats(
+            IEnumerable<Keyword> keywords, Func<SkillDefinition, IStat> statFactory)
         {
             var keywordList = keywords.ToList();
-            return from skill in _skills
-                   where !skill.IsSupport && skill.ActiveSkill.Keywords.ContainsAll(keywordList)
-                   let identity = skill.Id + " . " + identitySuffix
-                   select _statFactory.FromIdentity(identity, entity, dataType);
+            return _skills
+                .Where(s => !s.IsSupport && s.ActiveSkill.Keywords.ContainsAll(keywordList))
+                .Select(statFactory);
         }
 
         private static string KeywordsToString(IEnumerable<Keyword> keywords) =>

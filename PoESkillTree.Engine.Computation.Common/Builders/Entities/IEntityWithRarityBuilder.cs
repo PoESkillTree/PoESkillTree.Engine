@@ -1,20 +1,9 @@
-using PoESkillTree.Engine.Computation.Common.Builders.Conditions;
-using PoESkillTree.Engine.Computation.Common.Builders.Values;
+﻿using PoESkillTree.Engine.Computation.Common.Builders.Conditions;
 
 namespace PoESkillTree.Engine.Computation.Common.Builders.Entities
 {
-    /// <summary>
-    /// Represents enemy entities.
-    /// </summary>
-    public interface IEnemyBuilder : ICountableEntityBuilder
+    public interface IEntityWithRarityBuilder : IEntityBuilder
     {
-        /// <summary>
-        /// Gets a condition that is satisfied if this enemy is near Self.
-        /// </summary>
-        IConditionBuilder IsNearby { get; }
-
-        ValueBuilder CountRareOrUniqueNearby { get; }
-
         /// <summary>
         /// Gets a condition that is satisfied if this enemy is Rare. 
         /// </summary>
@@ -29,7 +18,5 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Entities
         /// Gets a condition that is satisfied if this enemy is Rare or Unique.
         /// </summary>
         IConditionBuilder IsRareOrUnique { get; }
-
-        IConditionBuilder IsMoving { get; }
     }
 }

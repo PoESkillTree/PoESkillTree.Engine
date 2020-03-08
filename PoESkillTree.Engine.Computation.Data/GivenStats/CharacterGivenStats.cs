@@ -66,9 +66,6 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             "1% increased Evasion Rating per 5 Dexterity Evasion Bonus ceiled",
             "+1 to Mana per 2 Intelligence ceiled",
             "1% increased maximum Energy Shield per 5 Intelligence ceiled",
-            // Rampage
-            "Minions deal 2% increased Damage per 10 Rampage Stacks",
-            "Minions gain 1% increased Movement Speed per 10 Rampage Stacks",
         };
 
         public IReadOnlyList<IIntermediateModifier> GivenModifiers => _lazyGivenStats.Value;
@@ -138,10 +135,8 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             { TotalOverride, Buff.Fortify.On(Self), 1, Condition.Unique("Fortify.ExplicitlyActive") },
             { TotalOverride, Buff.Tailwind.On(Self), 1, Condition.Unique("Tailwind.ExplicitlyActive") },
             { TotalOverride, Buff.Infusion.On(Self), 1, Condition.Unique("Infusion.ExplicitlyActive") },
-            { TotalOverride, Buff.Maim.On(Enemy), 1, Condition.Unique("Maim.ExplicitlyActiveOnEnemy") },
-            { TotalOverride, Buff.Blind.On(Enemy), 1, Condition.Unique("Blind.ExplicitlyActiveOnEnemy") },
-            { TotalOverride, Buff.Intimidate.On(Enemy), 1, Condition.Unique("Intimidate.ExplicitlyActiveOnEnemy") },
-            { TotalOverride, Buff.CoveredInAsh.On(Enemy), 1, Condition.Unique("CoveredInAsh.ExplicitlyActiveOnEnemy") },
+            { TotalOverride, Buff.Elusive.On(Self), 1, Condition.Unique("Elusive.ExplicitlyActive") },
+            { PercentReduce, Buff.Elusive.Effect, 20 * Stat.UniqueAmount("Elusive.SecondsOfDecay", 2.5) },
             // character class connections
             {
                 TotalOverride, PassiveTree.ConnectsToClass(CharacterClass.Scion), 1,

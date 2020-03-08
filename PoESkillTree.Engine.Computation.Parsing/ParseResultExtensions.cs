@@ -12,7 +12,7 @@ namespace PoESkillTree.Engine.Computation.Parsing
         /// Applies a condition to the values of all modifiers
         /// </summary>
         public static ParseResult ApplyCondition(this ParseResult @this,
-            Func<BuildParameters, ConditionBuilderResult> buildCondition, Entity modifierSourceEntity = Entity.Character)
+            Func<BuildParameters, ConditionBuilderResult> buildCondition, Entity modifierSourceEntity)
         {
             return @this.ApplyToModifiers(ApplyMultiplier);
 
@@ -37,7 +37,7 @@ namespace PoESkillTree.Engine.Computation.Parsing
         /// Applies a multiplier to the values of all modifiers
         /// </summary>
         public static ParseResult ApplyMultiplier(this ParseResult @this,
-            Func<BuildParameters, IValue> buildMultiplier, Entity modifierSourceEntity = Entity.Character)
+            Func<BuildParameters, IValue> buildMultiplier, Entity modifierSourceEntity)
             => @this.ApplyConditionalMultiplier(buildMultiplier, _ => true, modifierSourceEntity);
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace PoESkillTree.Engine.Computation.Parsing
         /// </summary>
         public static ParseResult ApplyConditionalMultiplier(this ParseResult @this,
             Func<BuildParameters, IValue> buildMultiplier, Predicate<Modifier> predicate,
-            Entity modifierSourceEntity = Entity.Character)
+            Entity modifierSourceEntity)
         {
             return @this.ApplyToModifiers(ApplyMultiplier);
 
