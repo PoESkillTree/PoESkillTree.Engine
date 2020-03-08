@@ -12,9 +12,6 @@ using PoESkillTree.Engine.Utils.Extensions;
 using static MoreLinq.Extensions.IndexExtension;
 using static MoreLinq.Extensions.PartitionExtension;
 using static MoreLinq.Extensions.ToLookupExtension;
-#if NETSTANDARD2_0
-using static MoreLinq.Extensions.ToHashSetExtension;
-#endif
 
 namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 {

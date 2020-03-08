@@ -9,9 +9,6 @@ using PoESkillTree.Engine.Computation.Common.Builders.Stats;
 using PoESkillTree.Engine.Computation.Common.Builders.Values;
 using PoESkillTree.Engine.GameModel;
 using PoESkillTree.Engine.GameModel.Skills;
-#if NETSTANDARD2_0
-using PoESkillTree.Engine.Utils.Extensions;
-#endif
 
 namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 {

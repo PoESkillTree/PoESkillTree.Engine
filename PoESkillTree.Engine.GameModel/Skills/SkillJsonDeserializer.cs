@@ -8,10 +8,6 @@ using Newtonsoft.Json.Linq;
 using PoESkillTree.Engine.GameModel.Items;
 using PoESkillTree.Engine.Utils.Extensions;
 
-#if NETSTANDARD2_0
-using static MoreLinq.Extensions.ToHashSetExtension;
-#endif
-
 namespace PoESkillTree.Engine.GameModel.Skills
 {
     /// <summary>
