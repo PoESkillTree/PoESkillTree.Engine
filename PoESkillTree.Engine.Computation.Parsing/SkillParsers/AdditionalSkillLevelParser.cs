@@ -13,14 +13,17 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         private readonly IGemStatBuilders _gemStatBuilders;
         private readonly IGemTagBuilders _gemTagBuilders;
         private readonly IValueBuilders _valueBuilders;
+        private readonly IMetaStatBuilders _metaStatBuilders;
 
         public AdditionalSkillLevelParser(
-            SkillDefinitions skillDefinitions, IGemStatBuilders gemStatBuilders, IGemTagBuilders gemTagBuilders, IValueBuilders valueBuilders)
+            SkillDefinitions skillDefinitions, IGemStatBuilders gemStatBuilders, IGemTagBuilders gemTagBuilders, IValueBuilders valueBuilders,
+            IMetaStatBuilders metaStatBuilders)
             : base(skillDefinitions)
         {
             _gemStatBuilders = gemStatBuilders;
             _gemTagBuilders = gemTagBuilders;
             _valueBuilders = valueBuilders;
+            _metaStatBuilders = metaStatBuilders;
         }
 
         protected override IReadOnlyDictionary<Skill, ValueBuilder> Parse(Skill activeSkill, IReadOnlyList<Skill> supportingSkills)
@@ -86,8 +89,10 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var valueBuilder = new ValueBuilder(_valueBuilders.Create(0));
             foreach (var (supportingSkill, supportValueBuilder) in supportingSkills)
             {
-                valueBuilder += supportValueBuilder.Select(d => SelectActiveAdditionalLevels(supportingSkill, (int) d),
-                    v => $"SelectActiveAdditionalLevels({supportingSkill.Id}, {supportingSkill.Level}, {v})");
+                valueBuilder += _valueBuilders.If(_metaStatBuilders.SkillIsEnabled(supportingSkill).IsTrue)
+                    .Then(supportValueBuilder.Select(d => SelectActiveAdditionalLevels(supportingSkill, (int) d),
+                        v => $"SelectActiveAdditionalLevels({supportingSkill.Id}, {supportingSkill.Level}, {v})"))
+                    .Else(0);
             }
 
             return valueBuilder;

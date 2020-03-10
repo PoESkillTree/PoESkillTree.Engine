@@ -11,12 +11,15 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
     {
         private readonly IGemStatBuilders _gemStatBuilders;
         private readonly IValueBuilders _valueBuilders;
+        private readonly IMetaStatBuilders _metaStatBuilders;
 
-        public AdditionalSkillQualityParser(SkillDefinitions skillDefinitions, IGemStatBuilders gemStatBuilders, IValueBuilders valueBuilders)
+        public AdditionalSkillQualityParser(
+            SkillDefinitions skillDefinitions, IGemStatBuilders gemStatBuilders, IValueBuilders valueBuilders, IMetaStatBuilders metaStatBuilders)
             : base(skillDefinitions)
         {
             _gemStatBuilders = gemStatBuilders;
             _valueBuilders = valueBuilders;
+            _metaStatBuilders = metaStatBuilders;
         }
 
         protected override IReadOnlyDictionary<Skill, ValueBuilder> Parse(Skill activeSkill, IReadOnlyList<Skill> supportingSkills)
@@ -45,8 +48,10 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             foreach (var supportingSkill in supportingSkills)
             {
                 var supportValueBuilder = _gemStatBuilders.AdditionalLevels(supportingSkill).Value;
-                valueBuilder += supportValueBuilder.Select(d => SelectActiveAdditionalQuality(supportingSkill, (int) d),
-                    v => $"SelectActiveAdditionalQuality({supportingSkill.Id}, {supportingSkill.Level}, {v})");
+                valueBuilder += _valueBuilders.If(_metaStatBuilders.SkillIsEnabled(supportingSkill).IsTrue)
+                    .Then(supportValueBuilder.Select(d => SelectActiveAdditionalQuality(supportingSkill, (int) d),
+                        v => $"SelectActiveAdditionalQuality({supportingSkill.Id}, {supportingSkill.Level}, {v})"))
+                    .Else(0);;
             }
 
             return valueBuilder;

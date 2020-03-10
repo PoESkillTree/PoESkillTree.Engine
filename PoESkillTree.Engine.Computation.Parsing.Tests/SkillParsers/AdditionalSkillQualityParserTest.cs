@@ -108,6 +108,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 {1, CreateLevelDefinition(stats: new[] {new UntranslatedStat("supported_active_skill_gem_quality_%", 6),})}
             };
             var context = MockValueCalculationContextForActiveSkill(active,
+                ($"Belt.{support.SocketIndex}.0.IsEnabled", 1),
                 ($"Skill.AdditionalLevels.Belt.{support.SocketIndex}.0", 0));
             var sut = CreateSut(levelDefinitions);
 
@@ -126,6 +127,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 {1, CreateLevelDefinition(stats: new[] {new UntranslatedStat("some_stat", 5),})}
             };
             var context = MockValueCalculationContextForActiveSkill(active,
+                ($"Belt.{support.SocketIndex}.0.IsEnabled", 1),
                 ($"Skill.AdditionalLevels.Belt.{support.SocketIndex}.0", 0));
             var sut = CreateSut(levelDefinitions);
 
@@ -147,12 +149,32 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 {4, CreateLevelDefinition(stats: new[] {new UntranslatedStat("supported_active_skill_gem_quality_%", 4),})},
             };
             var context = MockValueCalculationContextForActiveSkill(active,
+                ($"Belt.{support.SocketIndex}.0.IsEnabled", 1),
                 ($"Skill.AdditionalLevels.Belt.{support.SocketIndex}.0", 2));
             var sut = CreateSut(levelDefinitions);
 
             var (_, _, modifiers) = sut.Parse(active, new[] {support}, default);
 
             GetValueForIdentity(modifiers, StatIdentity(active)).Calculate(context).Should().BeEquivalentTo(new NodeValue(3));
+        }
+
+        [Test]
+        public void GivenActiveSkillAffectedByDisabledSupportAddingQuality_WhenParsing_ThenValueIsNotIncreased()
+        {
+            var active = CreateSkillFromGem("a");
+            var support = CreateSkillFromGem("s1");
+            var levelDefinitions = new Dictionary<int, SkillLevelDefinition>
+            {
+                {1, CreateLevelDefinition(stats: new[] {new UntranslatedStat("supported_active_skill_gem_quality_%", 6),})}
+            };
+            var context = MockValueCalculationContextForActiveSkill(active,
+                ($"Belt.{support.SocketIndex}.0.IsEnabled", null),
+                ($"Skill.AdditionalLevels.Belt.{support.SocketIndex}.0", 0));
+            var sut = CreateSut(levelDefinitions);
+
+            var (_, _, modifiers) = sut.Parse(active, new[] {support}, default);
+
+            GetValueForIdentity(modifiers, StatIdentity(active)).Calculate(context).Should().BeEquivalentTo(new NodeValue(0));
         }
 
         private static Skill CreateSkillFromGem(string id) =>
@@ -170,9 +192,11 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                     new SkillBaseItemDefinition("s1", "s1", ReleaseState.Released, Array.Empty<string>()),
                     CreateSupportSkillDefinition(), supportLevelDefinitions),
             });
+            var statFactory = new StatFactory();
             return new AdditionalSkillQualityParser(skillDefinitions,
-                new GemStatBuilders(new StatFactory()),
-                new ValueBuilders());
+                new GemStatBuilders(statFactory),
+                new ValueBuilders(),
+                new MetaStatBuilders(statFactory));
         }
 
         private static string StatIdentity(Skill skill) =>
