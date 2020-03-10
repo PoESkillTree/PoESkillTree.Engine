@@ -29,7 +29,7 @@ namespace PoESkillTree.Engine.Computation.Parsing
         private readonly IParser<SkillsParserParameter> _skillsParser;
         private readonly IParser<ActiveSkillParserParameter> _activeSkillParser;
         private readonly IParser<SupportSkillParserParameter> _supportSkillParser;
-        private readonly IParser<GemParserParameter> _gemParser;
+        private readonly IParser<GemsParserParameter> _gemsParser;
 
         private readonly StatTranslators _statTranslators;
         private readonly IEnumerable<IGivenStats> _givenStats;
@@ -77,7 +77,7 @@ namespace PoESkillTree.Engine.Computation.Parsing
                 Caching(new SupportSkillParser(skills, builderFactories, GetOrAddUntranslatedStatParser));
             var skillModificationParser = new SkillModificationParser(skills, builderFactories, valueCalculationContext);
             _skillsParser = new SkillsParser(skills, _activeSkillParser, _supportSkillParser, skillModificationParser);
-            _gemParser = new GemParser(skills, builderFactories);
+            _gemsParser = new GemsParser(new GemParser(skills, builderFactories));
         }
 
         private IParser<UntranslatedStatParserParameter> GetOrAddUntranslatedStatParser(
@@ -120,8 +120,11 @@ namespace PoESkillTree.Engine.Computation.Parsing
         public ParseResult ParseSkills(IReadOnlyList<Skill> skills, Entity entity = Entity.Character)
             => _skillsParser.Parse(skills, entity);
 
-        public ParseResult ParseGem(Gem gem, out IReadOnlyList<Skill> skills, Entity entity = Entity.Character) =>
-            _gemParser.Parse(gem, entity, out skills);
+        public (ParseResult result, IReadOnlyList<Skill> skills) ParseGems(IReadOnlyList<Gem> gems, Entity entity = Entity.Character)
+        {
+            var result = _gemsParser.Parse(gems, entity, out var skills);
+            return (result, skills);
+        }
 
         public ParseResult ParseActiveSkill(ActiveSkillParserParameter parameter) =>
             _activeSkillParser.Parse(parameter);
