@@ -36,8 +36,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
             foreach (var type in _selectTypes(preParseResult.SkillDefinition))
             {
-                modifiers.AddGlobal(MetaStats.SkillHasType(mainSkill.ItemSlot, mainSkill.SocketIndex, mainSkill.SkillIndex, type),
-                    Form.TotalOverride, 1);
+                modifiers.AddGlobal(MetaStats.SkillHasType(mainSkill, type), Form.TotalOverride, 1);
             }
 
             return new PartialSkillParseResult(modifiers.Modifiers, new UntranslatedStat[0]);

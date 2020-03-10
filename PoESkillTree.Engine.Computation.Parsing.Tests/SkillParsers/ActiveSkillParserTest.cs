@@ -94,8 +94,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         [TestCase(4, ExpectedResult = 40)]
         public int? FrenzyIsParsedUsingItsActualSkillLevel(int additionalLevels)
         {
-            var (definition, skill) = CreateFrenzyDefinition(true,
-                (1, 10), (4, 40), (2, 20));
+            var (definition, skill) = CreateFrenzyDefinition((1, 10), (4, 40), (2, 20));
             var valueCalculationContext = MockValueCalculationContextForMainSkill(skill);
             var sut = CreateSut(definition);
 
@@ -129,9 +128,9 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         }
 
         [Test]
-        public void ParseReturnsEmptyResultForDisabledSkill()
+        public void ParseReturnsEmptyResultForDisabledGem()
         {
-            var (definition, skill) = CreateFrenzyDefinition(false);
+            var (definition, skill) = CreateFrenzyDefinition(gemIsEnabled: false);
             var sut = CreateSut(definition);
 
             var result = Parse(sut, skill);
@@ -139,10 +138,37 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             Assert.IsEmpty(result.Modifiers);
         }
 
-        private static (SkillDefinition, Skill) CreateFrenzyDefinition(bool isEnabled = true) =>
-            CreateFrenzyDefinition(isEnabled, (1, 10));
+        [Test]
+        public void ParseReturnsOnlyIsEnabledStatForDisabledSkill()
+        {
+            var (definition, skill) = CreateFrenzyDefinition(skillIsEnabled: false);
+            var sut = CreateSut(definition);
 
-        private static (SkillDefinition, Skill) CreateFrenzyDefinition(bool isEnabled, params (int level, int manaCost)[] levels)
+            var result = Parse(sut, skill);
+
+            Assert.IsEmpty(result.Modifiers);
+        }
+
+        [Test]
+        public void ParseReturnsIsEnabledStatForEnabledSkill()
+        {
+            var (definition, skill) = CreateFrenzyDefinition();
+            var sut = CreateSut(definition);
+            var context = MockValueCalculationContextForInactiveSkill(skill);
+
+            var (_, _, modifiers) = Parse(sut, skill);
+
+            Assert.IsTrue(AnyModifierHasIdentity(modifiers, "Belt.0.0.IsEnabled"));
+            Assert.AreEqual((NodeValue?) true, GetValueForIdentity(modifiers, "Belt.0.0.IsEnabled").Calculate(context));
+        }
+
+        private static (SkillDefinition, Skill) CreateFrenzyDefinition(bool gemIsEnabled = true, bool skillIsEnabled = true) =>
+            CreateFrenzyDefinition(gemIsEnabled, skillIsEnabled, (1, 10));
+
+        private static (SkillDefinition, Skill) CreateFrenzyDefinition(params (int level, int manaCost)[] levels) =>
+            CreateFrenzyDefinition(true, true, levels);
+
+        private static (SkillDefinition, Skill) CreateFrenzyDefinition(bool gemIsEnabled, bool skillIsEnabled, params (int level, int manaCost)[] levels)
         {
             var activeSkill = CreateActiveSkillDefinition("Frenzy", new[] { "attack" },
                 new[] { Keyword.Melee, Keyword.Projectile });
@@ -150,7 +176,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 .Select(t => (t.level, CreateLevelDefinition(manaCost: t.manaCost)))
                 .ToDictionary();
             return (CreateActive("Frenzy", activeSkill, levelDefinitions),
-                CreateSkillFromGem("Frenzy", 1, 0, isEnabled));
+                CreateSkillFromGem("Frenzy", 1, 0, gemIsEnabled, skillIsEnabled));
         }
 
         #endregion
@@ -1499,8 +1525,8 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
         #endregion
 
-        private static Skill CreateSkillFromGem(string skillId, int level, int quality = 0, bool isEnabled = true) =>
-            Skill.FromGem(new Gem(skillId, level, quality, ItemSlot.Belt, 0, 0, isEnabled), isEnabled);
+        private static Skill CreateSkillFromGem(string skillId, int level, int quality = 0, bool gemIsEnabled = true, bool skillIsEnabled = true) =>
+            Skill.FromGem(new Gem(skillId, level, quality, ItemSlot.Belt, 0, 0, gemIsEnabled), skillIsEnabled);
 
         private static Skill CreateSkillFromItem(string skillId, int level, int quality = 0) =>
             Skill.FromItem(skillId, level, quality, ItemSlot.Belt, 0, true);

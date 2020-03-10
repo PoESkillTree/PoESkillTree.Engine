@@ -26,7 +26,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         {
             var (skill, _, skillModification) = parameter;
 
-            if (!skill.IsEnabled)
+            if (!skill.IsEnabled || (skill.Gem != null && !skill.Gem.IsEnabled))
                 return ParseResult.Empty;
 
             var modifiers = new List<Modifier>();

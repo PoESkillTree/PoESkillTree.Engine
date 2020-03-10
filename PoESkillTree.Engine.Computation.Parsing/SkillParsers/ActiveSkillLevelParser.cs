@@ -52,7 +52,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             }
             if (level.ManaCost is int cost)
             {
-                var baseCostStat = MetaStats.SkillBaseCost(parsedSkill.ItemSlot, parsedSkill.SocketIndex, parsedSkill.SkillIndex);
+                var baseCostStat = MetaStats.SkillBaseCost(parsedSkill);
                 var costStat = _builderFactories.SkillBuilders.FromId(_preParseResult.SkillDefinition.Id).Cost;
                 _modifiers.AddGlobal(baseCostStat, Form.BaseSet, cost);
                 _modifiers.AddGlobal(costStat, Form.BaseSet, baseCostStat.Value, _preParseResult.IsActiveSkill);
@@ -77,11 +77,9 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
         private void ParseReservation(Skill skill, IStatBuilder costStat)
         {
-            var isReservation = MetaStats
-                .SkillHasType(skill.ItemSlot, skill.SocketIndex, skill.SkillIndex, ActiveSkillType.ManaCostIsReservation).IsTrue;
+            var isReservation = MetaStats.SkillHasType(skill, ActiveSkillType.ManaCostIsReservation).IsTrue;
             var isReservationAndActive = isReservation.And(_preParseResult!.IsActiveSkill);
-            var isPercentage = MetaStats
-                .SkillHasType(skill.ItemSlot, skill.SocketIndex, skill.SkillIndex, ActiveSkillType.ManaCostIsPercentage).IsTrue;
+            var isPercentage = MetaStats.SkillHasType(skill, ActiveSkillType.ManaCostIsPercentage).IsTrue;
             var skillBuilder = _builderFactories.SkillBuilders.FromId(_preParseResult.SkillDefinition.Id);
 
             _modifiers!.AddGlobal(skillBuilder.Reservation, Form.BaseSet, costStat.Value, isReservationAndActive);

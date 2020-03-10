@@ -9,7 +9,6 @@ using PoESkillTree.Engine.Computation.Common.Builders.Effects;
 using PoESkillTree.Engine.Computation.Common.Builders.Stats;
 using PoESkillTree.Engine.Computation.Common.Builders.Values;
 using PoESkillTree.Engine.GameModel;
-using PoESkillTree.Engine.GameModel.Items;
 using PoESkillTree.Engine.GameModel.Skills;
 using PoESkillTree.Engine.Utils.Extensions;
 
@@ -200,11 +199,14 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         public IStatBuilder MainSkillSocketIndex => FromIdentity(typeof(int));
         public IStatBuilder MainSkillSkillIndex => FromIdentity(typeof(uint));
 
-        public IStatBuilder SkillBaseCost(ItemSlot itemSlot, int socketIndex, int skillIndex)
-            => FromIdentity($"{itemSlot.GetName()}.{socketIndex}.{skillIndex}.Cost", typeof(uint));
+        public IStatBuilder SkillBaseCost(Skill skill)
+            => FromIdentity($"{skill.ItemSlot.GetName()}.{skill.SocketIndex}.{skill.SkillIndex}.Cost", typeof(uint));
 
-        public IStatBuilder SkillHasType(ItemSlot itemSlot, int socketIndex, int skillIndex, string activeSkillType)
-            => FromIdentity($"{itemSlot.GetName()}.{socketIndex}.{skillIndex}.Type.{activeSkillType}", typeof(bool));
+        public IStatBuilder SkillHasType(Skill skill, string activeSkillType)
+            => FromIdentity($"{skill.ItemSlot.GetName()}.{skill.SocketIndex}.{skill.SkillIndex}.Type.{activeSkillType}", typeof(bool));
+
+        public IStatBuilder SkillIsEnabled(Skill skill)
+            => FromIdentity($"{skill.ItemSlot.GetName()}.{skill.SocketIndex}.{skill.SkillIndex}.IsEnabled", typeof(bool));
 
         public IStatBuilder ActiveCurses => FromIdentity(typeof(int));
 
