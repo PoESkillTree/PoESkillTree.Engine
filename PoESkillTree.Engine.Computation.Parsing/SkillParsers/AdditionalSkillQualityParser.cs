@@ -9,7 +9,7 @@ using PoESkillTree.Engine.GameModel.Skills;
 
 namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 {
-    public class AdditionalSkillQualityParser : AdditionalSkillStatParser
+    public class AdditionalSkillQualityParser : AdditionalSkillStatParserBase
     {
         private readonly IGemStatBuilders _gemStatBuilders;
         private readonly IValueBuilders _valueBuilders;
