@@ -14,7 +14,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 (id, level, quality, itemSlot, socketIndex, skillIndex, gem, isEnabled);
         }
 
-        public static readonly Skill Default = new Skill("PlayerMelee", 1, 0, ItemSlot.Unequipable, -1, 0, null, true);
+        public static readonly Skill Default = FromItem("PlayerMelee", 1, 0, ItemSlot.Unequipable, 0, true);
 
         public static Skill FromGem(Gem gem, bool isEnabled) =>
             new Skill(gem.SkillId, gem.Level, gem.Quality, gem.ItemSlot, gem.SocketIndex, 0, gem, isEnabled);
@@ -43,6 +43,15 @@ namespace PoESkillTree.Engine.GameModel.Skills
         public Gem? Gem { get; }
 
         public bool IsEnabled { get; }
+
+        public Skill WithLevel(int level) =>
+            new Skill(Id, level, Quality, ItemSlot, SocketIndex, SkillIndex, Gem, IsEnabled);
+
+        public Skill WithQuality(int quality) =>
+            new Skill(Id, Level, quality, ItemSlot, SocketIndex, SkillIndex, Gem, IsEnabled);
+
+        public Skill WithIsEnabled(bool isEnabled) =>
+            new Skill(Id, Level, Quality, ItemSlot, SocketIndex, SkillIndex, Gem, isEnabled);
 
         protected override object ToTuple()
             => (Id, Level, Quality, ItemSlot, SocketIndex, SkillIndex, Gem, IsEnabled);
