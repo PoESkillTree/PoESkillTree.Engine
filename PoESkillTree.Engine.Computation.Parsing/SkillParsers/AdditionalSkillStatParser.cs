@@ -1,56 +1,51 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using PoESkillTree.Engine.Computation.Common;
 using PoESkillTree.Engine.Computation.Common.Builders;
-using PoESkillTree.Engine.Computation.Common.Builders.Values;
 using PoESkillTree.Engine.GameModel;
 using PoESkillTree.Engine.GameModel.Skills;
+using PoESkillTree.Engine.Utils;
 
 namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 {
-    public abstract class AdditionalSkillStatParser
+    public class AdditionalSkillStatParser : IParser<AdditionalSkillStatParserParameter>
     {
-        private readonly SkillDefinitions _skillDefinitions;
+        private readonly IReadOnlyList<IParser<AdditionalSkillStatParserParameter>> _parsers;
 
-        protected AdditionalSkillStatParser(SkillDefinitions skillDefinitions)
+        public AdditionalSkillStatParser(SkillDefinitions skillDefinitions, IBuilderFactories builderFactories)
         {
-            _skillDefinitions = skillDefinitions;
-        }
-
-        protected IReadOnlyDictionary<Skill, IValue> Build(IReadOnlyDictionary<Skill, ValueBuilder> valueBuilders, Entity modifierSourceEntity) =>
-            valueBuilders.ToDictionary(p => p.Key, p => Build(p.Key, p.Value, modifierSourceEntity));
-
-        private IValue Build(Skill skill, IValueBuilder valueBuilder, Entity modifierSourceEntity)
-        {
-            var gem = skill.Gem;
-            if (gem is null)
-                return new Constant(0);
-
-            var displayName = GetSkillDefinition(gem.SkillId).DisplayName;
-            var gemModifierSource = new ModifierSource.Local.Gem(gem, displayName);
-            var buildParameters = new BuildParameters(new ModifierSource.Global(gemModifierSource), modifierSourceEntity, default);
-            return valueBuilder.Build(buildParameters);
-        }
-
-        protected IReadOnlyList<UntranslatedStat> GetLevelStats(Skill skill, int additionalLevels)
-        {
-            var definition = GetSkillDefinition(skill.Id);
-            var level = skill.Level + additionalLevels;
-
-            if (definition.Levels.TryGetValue(level, out var levelDefinition))
+            _parsers = new IParser<AdditionalSkillStatParserParameter>[]
             {
-                return levelDefinition.Stats;
-            }
-            else
-            {
-                return definition.Levels
-                    .OrderBy(p => p.Key)
-                    .LastOrDefault(p => p.Key <= level)
-                    .Value?.Stats ?? Array.Empty<UntranslatedStat>();
-            }
+                new AdditionalSkillLevelParser(skillDefinitions, builderFactories.StatBuilders.Gem, builderFactories.GemTagBuilders,
+                    builderFactories.ValueBuilders, builderFactories.MetaStatBuilders),
+                new AdditionalSkillLevelMaximumParser(skillDefinitions, builderFactories.StatBuilders.Gem, builderFactories.ValueBuilders),
+                new AdditionalSkillQualityParser(skillDefinitions, builderFactories.StatBuilders.Gem,
+                    builderFactories.ValueBuilders, builderFactories.MetaStatBuilders),
+            };
         }
 
-        protected SkillDefinition GetSkillDefinition(string skillId) => _skillDefinitions.GetSkillById(skillId);
+        public ParseResult Parse(AdditionalSkillStatParserParameter parameter) =>
+            ParseResult.Aggregate(_parsers.Select(p => p.Parse(parameter)));
+    }
+
+    public static class AdditionalSkillStatParserExtensions
+    {
+        public static ParseResult Parse(this IParser<AdditionalSkillStatParserParameter> @this,
+            Skill activeSkill, IReadOnlyList<Skill> supportingSkills, Entity entity) =>
+            @this.Parse(new AdditionalSkillStatParserParameter(activeSkill, supportingSkills, entity));
+    }
+
+    public class AdditionalSkillStatParserParameter : ValueObject
+    {
+        public AdditionalSkillStatParserParameter(Skill activeSkill, IReadOnlyList<Skill> supportingSkills, Entity entity)
+            => (ActiveSkill, SupportingSkills, Entity) = (activeSkill, supportingSkills, entity);
+
+        public void Deconstruct(out Skill activeSkill, out IReadOnlyList<Skill> supportingSkills, out Entity entity)
+            => (activeSkill, supportingSkills, entity) = (ActiveSkill, SupportingSkills, Entity);
+
+        public Skill ActiveSkill { get; }
+        public IReadOnlyList<Skill> SupportingSkills { get; }
+        public Entity Entity { get; }
+
+        protected override object ToTuple() => (ActiveSkill, WithSequenceEquality(SupportingSkills), Entity);
     }
 }

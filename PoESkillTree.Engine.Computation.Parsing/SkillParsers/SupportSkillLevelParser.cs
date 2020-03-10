@@ -32,8 +32,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
             if (level.ManaCostOverride is int manaCostOverride)
             {
-                modifiers.AddGlobal(MetaStats.SkillBaseCost(mainSkill.ItemSlot, mainSkill.SocketIndex, mainSkill.SkillIndex),
-                    Form.TotalOverride, manaCostOverride);
+                modifiers.AddGlobal(MetaStats.SkillBaseCost(mainSkill), Form.TotalOverride, manaCostOverride);
             }
 
             if (level.Cooldown is int cooldown && preParseResult.MainSkillDefinition.Levels[mainSkill.Level].Cooldown is null)

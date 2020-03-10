@@ -24,9 +24,9 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
         public ParseResult Parse(ActiveSkillParserParameter parameter)
         {
-            var (skill, _, skillModification) = parameter;
+            var (skill, _) = parameter;
 
-            if (!skill.IsEnabled)
+            if (!skill.IsEnabled || (skill.Gem != null && !skill.Gem.IsEnabled))
                 return ParseResult.Empty;
 
             var modifiers = new List<Modifier>();
@@ -43,7 +43,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             }
 
             var translatingParser = new TranslatingSkillParser(_builderFactories, _statParserFactory);
-            return translatingParser.Parse(skill, skillModification, preParseResult, new PartialSkillParseResult(modifiers, parsedStats));
+            return translatingParser.Parse(skill, preParseResult, new PartialSkillParseResult(modifiers, parsedStats));
         }
 
         private IPartialSkillParser[] CreatePartialParsers()
@@ -60,22 +60,21 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
     public static class ActiveSkillParserExtensions
     {
         public static ParseResult Parse(this IParser<ActiveSkillParserParameter> @this,
-            Skill activeSkill, Entity entity, SkillModification modification) =>
-            @this.Parse(new ActiveSkillParserParameter(activeSkill, entity, modification));
+            Skill activeSkill, Entity entity) =>
+            @this.Parse(new ActiveSkillParserParameter(activeSkill, entity));
     }
 
     public class ActiveSkillParserParameter : ValueObject
     {
-        public ActiveSkillParserParameter(Skill activeSkill, Entity entity, SkillModification modification)
-            => (ActiveSkill, Entity, Modification) = (activeSkill, entity, modification);
+        public ActiveSkillParserParameter(Skill activeSkill, Entity entity)
+            => (ActiveSkill, Entity) = (activeSkill, entity);
 
-        public void Deconstruct(out Skill activeSkill, out Entity entity, out SkillModification modification)
-            => (activeSkill, entity, modification) = (ActiveSkill, Entity, Modification);
+        public void Deconstruct(out Skill activeSkill, out Entity entity)
+            => (activeSkill, entity) = (ActiveSkill, Entity);
 
         public Skill ActiveSkill { get; }
         public Entity Entity { get; }
-        public SkillModification Modification { get; }
 
-        protected override object ToTuple() => (ActiveSkill, Entity, Modification);
+        protected override object ToTuple() => (ActiveSkill, Entity);
     }
 }

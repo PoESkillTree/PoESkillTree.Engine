@@ -39,7 +39,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 (builderFactories, statParserFactory);
 
         public ParseResult Parse(
-            Skill skill, SkillModification skillModification, SkillPreParseResult preParseResult, PartialSkillParseResult partialResult)
+            Skill skill, SkillPreParseResult preParseResult, PartialSkillParseResult partialResult)
         {
             _preParseResult = preParseResult;
             _parsedStats = partialResult.ParsedStats.ToHashSet();
@@ -47,7 +47,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var isMainSkill = preParseResult.IsMainSkill;
             var isActiveSkill = _builderFactories.MetaStatBuilders.IsActiveSkill(skill);
             var level = preParseResult.LevelDefinition;
-            var quality = skill.Quality + skillModification.AdditionalQuality;
+            var quality = skill.Quality;
             var qualityStats = level.QualityStats.Select(s => ApplyQuality(s, quality));
             var (keystoneStats, levelStats) = level.Stats.Partition(s => KeystoneStatRegex.IsMatch(s.StatId));
             var parseResults = new List<ParseResult>(4 + level.AdditionalStatsPerPart.Count + 4)

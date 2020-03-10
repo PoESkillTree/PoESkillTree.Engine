@@ -66,6 +66,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 Form.BaseSet, (double) mainSkill.ItemSlot);
             _parsedModifiers.AddGlobal(MetaStats.ActiveSkillSocketIndex(mainSkill.Id),
                 Form.BaseSet, mainSkill.SocketIndex);
+            _parsedModifiers.AddGlobal(MetaStats.SkillIsEnabled(mainSkill), Form.TotalOverride, true);
 
             if (activeSkill.ProvidesBuff)
             {

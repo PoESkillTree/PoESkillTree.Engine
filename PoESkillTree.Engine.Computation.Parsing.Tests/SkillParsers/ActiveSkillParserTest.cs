@@ -88,24 +88,6 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             Assert.AreEqual(new NodeValue(20), actual);
         }
 
-        [TestCase(0, ExpectedResult = 10)]
-        [TestCase(2, ExpectedResult = 20)]
-        [TestCase(3, ExpectedResult = 40)]
-        [TestCase(4, ExpectedResult = 40)]
-        public int? FrenzyIsParsedUsingItsActualSkillLevel(int additionalLevels)
-        {
-            var (definition, skill) = CreateFrenzyDefinition(true,
-                (1, 10), (4, 40), (2, 20));
-            var valueCalculationContext = MockValueCalculationContextForMainSkill(skill);
-            var sut = CreateSut(definition);
-
-            var result = sut.Parse(skill, Entity.Character, new SkillModification(additionalLevels, 0));
-
-            var actual = GetValueForIdentity(result.Modifiers, "Belt.0.0.Cost")
-                .Calculate(valueCalculationContext);
-            return (int?) actual.SingleOrNull();
-        }
-
         [TestCase(true)]
         [TestCase(false)]
         public void FrenzyAddsToSkillInstances(bool isActiveSkill)
@@ -129,9 +111,9 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         }
 
         [Test]
-        public void ParseReturnsEmptyResultForDisabledSkill()
+        public void ParseReturnsEmptyResultForDisabledGem()
         {
-            var (definition, skill) = CreateFrenzyDefinition(false);
+            var (definition, skill) = CreateFrenzyDefinition(gemIsEnabled: false);
             var sut = CreateSut(definition);
 
             var result = Parse(sut, skill);
@@ -139,10 +121,37 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             Assert.IsEmpty(result.Modifiers);
         }
 
-        private static (SkillDefinition, Skill) CreateFrenzyDefinition(bool isEnabled = true) =>
-            CreateFrenzyDefinition(isEnabled, (1, 10));
+        [Test]
+        public void ParseReturnsOnlyIsEnabledStatForDisabledSkill()
+        {
+            var (definition, skill) = CreateFrenzyDefinition(skillIsEnabled: false);
+            var sut = CreateSut(definition);
 
-        private static (SkillDefinition, Skill) CreateFrenzyDefinition(bool isEnabled, params (int level, int manaCost)[] levels)
+            var result = Parse(sut, skill);
+
+            Assert.IsEmpty(result.Modifiers);
+        }
+
+        [Test]
+        public void ParseReturnsIsEnabledStatForEnabledSkill()
+        {
+            var (definition, skill) = CreateFrenzyDefinition();
+            var sut = CreateSut(definition);
+            var context = MockValueCalculationContextForInactiveSkill(skill);
+
+            var (_, _, modifiers) = Parse(sut, skill);
+
+            Assert.IsTrue(AnyModifierHasIdentity(modifiers, "Belt.0.0.IsEnabled"));
+            Assert.AreEqual((NodeValue?) true, GetValueForIdentity(modifiers, "Belt.0.0.IsEnabled").Calculate(context));
+        }
+
+        private static (SkillDefinition, Skill) CreateFrenzyDefinition(bool gemIsEnabled = true, bool skillIsEnabled = true) =>
+            CreateFrenzyDefinition(gemIsEnabled, skillIsEnabled, (1, 10));
+
+        private static (SkillDefinition, Skill) CreateFrenzyDefinition(params (int level, int manaCost)[] levels) =>
+            CreateFrenzyDefinition(true, true, levels);
+
+        private static (SkillDefinition, Skill) CreateFrenzyDefinition(bool gemIsEnabled, bool skillIsEnabled, params (int level, int manaCost)[] levels)
         {
             var activeSkill = CreateActiveSkillDefinition("Frenzy", new[] { "attack" },
                 new[] { Keyword.Melee, Keyword.Projectile });
@@ -150,7 +159,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 .Select(t => (t.level, CreateLevelDefinition(manaCost: t.manaCost)))
                 .ToDictionary();
             return (CreateActive("Frenzy", activeSkill, levelDefinitions),
-                CreateSkillFromGem("Frenzy", 1, 0, isEnabled));
+                CreateSkillFromGem("Frenzy", 1, 0, gemIsEnabled, skillIsEnabled));
         }
 
         #endregion
@@ -249,9 +258,8 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             Assert.IsFalse(AnyModifierHasIdentity(modifiers, "Fire.Damage.Spell.Ignite"));
         }
 
-        [TestCase(0)]
-        [TestCase(10)]
-        public void FlameTotemStatsAreParsedCorrectly(int additionalQuality)
+        [Test]
+        public void FlameTotemStatsAreParsedCorrectly()
         {
             var (definition, skill) = CreateFlameTotemDefinition();
             var source = new ModifierSource.Local.Skill("FlameTotem", "Flame Totem");
@@ -264,7 +272,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             {
                 new UntranslatedStatParserParameter(source, new[]
                 {
-                    new UntranslatedStat("totem_life_+%", 10 + additionalQuality),
+                    new UntranslatedStat("totem_life_+%", 10),
                 }),
                 new UntranslatedStatParserParameter(source, new[]
                 {
@@ -277,7 +285,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 p.Parse(EmptyParserParameter(source)) == EmptyParseResult);
             var sut = CreateSut(definition, statParser);
 
-            var result = sut.Parse(skill, Entity.Character, new SkillModification(0, additionalQuality));
+            var result = sut.Parse(skill, Entity.Character);
 
             var modifiers = result.Modifiers;
             Assert.IsTrue(AnyModifierHasIdentity(modifiers, "s1"));
@@ -1499,8 +1507,8 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
         #endregion
 
-        private static Skill CreateSkillFromGem(string skillId, int level, int quality = 0, bool isEnabled = true) =>
-            Skill.FromGem(new Gem(skillId, level, quality, ItemSlot.Belt, 0, 0, isEnabled), isEnabled);
+        private static Skill CreateSkillFromGem(string skillId, int level, int quality = 0, bool gemIsEnabled = true, bool skillIsEnabled = true) =>
+            Skill.FromGem(new Gem(skillId, level, quality, ItemSlot.Belt, 0, 0, gemIsEnabled), skillIsEnabled);
 
         private static Skill CreateSkillFromItem(string skillId, int level, int quality = 0) =>
             Skill.FromItem(skillId, level, quality, ItemSlot.Belt, 0, true);
@@ -1535,6 +1543,6 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         }
 
         private static ParseResult Parse(IParser<ActiveSkillParserParameter> sut, Skill activeSkill) =>
-            sut.Parse(activeSkill, Entity.Character, new SkillModification(0, 0));
+            sut.Parse(activeSkill, Entity.Character);
     }
 }
