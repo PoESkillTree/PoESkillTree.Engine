@@ -52,13 +52,13 @@ namespace PoESkillTree.Engine.GameModel.Skills
     public class SkillBaseItemDefinition
     {
         public SkillBaseItemDefinition(
-            string displayName, string metadataId, ReleaseState releaseState, IEnumerable<string> gemTags)
+            string displayName, string metadataId, ReleaseState releaseState, IReadOnlyCollection<string> gemTags)
             => (DisplayName, MetadataId, ReleaseState, GemTags) = (displayName, metadataId, releaseState, gemTags);
 
         public string DisplayName { get; }
         public string MetadataId { get; }
         public ReleaseState ReleaseState { get; }
-        public IEnumerable<string> GemTags { get; }
+        public IReadOnlyCollection<string> GemTags { get; }
     }
 
     public class ActiveSkillDefinition

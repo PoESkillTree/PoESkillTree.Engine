@@ -31,10 +31,13 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             yield return Skill.FromGem(gem, true);
             if (skillDefinition.SecondarySkillId is string secondarySkillId)
             {
-                var isEnabled = !skillDefinition.BaseItem?.GemTags.Contains("vaal") ?? true;
+                var isEnabled = EnableSecondarySkill(skillDefinition.BaseItem?.GemTags);
                 yield return Skill.SecondaryFromGem(secondarySkillId, gem, isEnabled);
             }
         }
+
+        private static bool EnableSecondarySkill(IReadOnlyCollection<string>? gemTags) =>
+            gemTags is null || !(gemTags.Contains("vaal") && gemTags.Contains("aura"));
 
         private ParseResult ParseRequirements(Gem gem, Entity modifierSourceEntity, SkillDefinition skillDefinition)
         {

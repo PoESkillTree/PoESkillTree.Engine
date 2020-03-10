@@ -95,7 +95,26 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         }
 
         private static (SkillDefinition, Gem) CreateVaalGraceDefinition() =>
-            CreateDefinition("VaalGrace", "Grace", gemTags: new[] {"vaal"});
+            CreateDefinition("VaalGrace", "Grace", gemTags: new[] {"vaal", "aura"});
+
+        [Test]
+        public void VaalArcHasTwoEnabledSkills()
+        {
+            var (definition, gem) = CreateVaalArcDefinition();
+            IReadOnlyList<Skill> expected = new[]
+            {
+                Skill.FromGem(gem, true),
+                Skill.SecondaryFromGem("Arc", gem, true),
+            };
+            var sut = CreateSut(definition);
+
+            sut.Parse(gem, Entity.Character, out var actual);
+
+            actual.Should().BeEquivalentTo(expected);
+        }
+
+        private static (SkillDefinition, Gem) CreateVaalArcDefinition() =>
+            CreateDefinition("VaalArc", "Arc", gemTags: new[] {"vaal"});
 
         private static (SkillDefinition, Gem) CreateDefinition(
             string skillId, string? secondarySkillId = null, string[]? gemTags = null,
