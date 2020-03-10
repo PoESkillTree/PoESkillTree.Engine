@@ -24,7 +24,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
         public ParseResult Parse(SupportSkillParserParameter parameter)
         {
-            var (active, support, _, supportModification) = parameter;
+            var (active, support, _) = parameter;
             if (!active.IsEnabled || !support.IsEnabled ||
                 (active.Gem != null && !active.Gem.IsEnabled) || (support.Gem != null && !support.Gem.IsEnabled))
                 return ParseResult.Empty;
@@ -43,8 +43,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             }
 
             var translatingParser = new TranslatingSkillParser(_builderFactories, _statParserFactory);
-            return translatingParser.Parse(support, supportModification, preParseResult,
-                new PartialSkillParseResult(modifiers, parsedStats));
+            return translatingParser.Parse(support, preParseResult, new PartialSkillParseResult(modifiers, parsedStats));
         }
 
         private IPartialSkillParser[] CreatePartialParsers()
@@ -61,23 +60,22 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
     public static class SupportSkillParserExtensions
     {
         public static ParseResult Parse(this IParser<SupportSkillParserParameter> @this,
-            Skill activeSkill, Skill supportSkill, Entity entity, SkillModification supportModification) =>
-            @this.Parse(new SupportSkillParserParameter(activeSkill, supportSkill, entity, supportModification));
+            Skill activeSkill, Skill supportSkill, Entity entity) =>
+            @this.Parse(new SupportSkillParserParameter(activeSkill, supportSkill, entity));
     }
 
     public class SupportSkillParserParameter : ValueObject
     {
-        public SupportSkillParserParameter(Skill activeSkill, Skill supportSkill, Entity entity, SkillModification supportModification)
-            => (ActiveSkill, SupportSkill, Entity, SupportModification) = (activeSkill, supportSkill, entity, supportModification);
+        public SupportSkillParserParameter(Skill activeSkill, Skill supportSkill, Entity entity)
+            => (ActiveSkill, SupportSkill, Entity) = (activeSkill, supportSkill, entity);
 
-        public void Deconstruct(out Skill activeSkill, out Skill supportSkill, out Entity entity, out SkillModification supportModification)
-            => (activeSkill, supportSkill, entity, supportModification) = (ActiveSkill, SupportSkill, Entity, SupportModification);
+        public void Deconstruct(out Skill activeSkill, out Skill supportSkill, out Entity entity)
+            => (activeSkill, supportSkill, entity) = (ActiveSkill, SupportSkill, Entity);
 
         public Skill ActiveSkill { get; }
         public Skill SupportSkill { get; }
         public Entity Entity { get; }
-        public SkillModification SupportModification { get; }
 
-        protected override object ToTuple() => (ActiveSkill, SupportSkill, Entity, SupportModification);
+        protected override object ToTuple() => (ActiveSkill, SupportSkill, Entity);
     }
 }

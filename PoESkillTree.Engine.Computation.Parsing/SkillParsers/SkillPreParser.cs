@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using PoESkillTree.Engine.Computation.Common;
+﻿using PoESkillTree.Engine.Computation.Common;
 using PoESkillTree.Engine.Computation.Common.Builders.Stats;
 using PoESkillTree.Engine.GameModel;
 using PoESkillTree.Engine.GameModel.Skills;
@@ -19,24 +18,16 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             => (_skillDefinitions, _metaStatBuilders) = (skillDefinitions, metaStatBuilders);
 
         public SkillPreParseResult ParseActive(ActiveSkillParserParameter parameter)
-            => Parse(parameter.ActiveSkill, parameter.ActiveSkill, parameter.Entity, parameter.Modification);
+            => Parse(parameter.ActiveSkill, parameter.ActiveSkill, parameter.Entity);
 
         public SkillPreParseResult ParseSupport(SupportSkillParserParameter parameter)
-            => Parse(parameter.ActiveSkill, parameter.SupportSkill, parameter.Entity, parameter.SupportModification);
+            => Parse(parameter.ActiveSkill, parameter.SupportSkill, parameter.Entity);
 
-        private SkillPreParseResult Parse(Skill mainSkill, Skill parsedSkill, Entity entity, SkillModification parsedSkillModification)
+        private SkillPreParseResult Parse(Skill mainSkill, Skill parsedSkill, Entity entity)
         {
             var mainSkillDefinition = _skillDefinitions.GetSkillById(mainSkill.Id);
             var parsedSkillDefinition = _skillDefinitions.GetSkillById(parsedSkill.Id);
-
-            var actualLevel = parsedSkill.Level + parsedSkillModification.AdditionalLevels;
-            if (!parsedSkillDefinition.Levels.TryGetValue(actualLevel, out var parsedSkillLevel))
-            {
-                parsedSkillLevel = parsedSkillDefinition.Levels
-                    .OrderBy(p => p.Key)
-                    .Last(p => p.Key <= actualLevel)
-                    .Value;
-            }
+            var parsedSkillLevel = parsedSkillDefinition.Levels[parsedSkill.Level];
 
             var displayName = parsedSkillDefinition.DisplayName;
             var localSource = new ModifierSource.Local.Skill(mainSkill.Id, displayName);

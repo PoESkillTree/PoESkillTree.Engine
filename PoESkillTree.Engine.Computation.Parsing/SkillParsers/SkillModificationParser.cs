@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using MoreLinq;
 using PoESkillTree.Engine.Computation.Common;
 using PoESkillTree.Engine.Computation.Common.Builders;
 using PoESkillTree.Engine.Computation.Common.Builders.Stats;
@@ -26,22 +25,18 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             _qualityParser = new AdditionalSkillQualityParser(skillDefinitions, builderFactories.StatBuilders.Gem, builderFactories.ValueBuilders);
         }
 
-        public (ParseResult, IReadOnlyDictionary<Skill, SkillModification>) Parse(
+        public ParseResult Parse(
             Skill activeSkill, IReadOnlyList<Skill> supportingSkills, Entity modifierSourceEntity)
         {
             var levelValues = _levelParser.Parse(activeSkill, supportingSkills, modifierSourceEntity);
             var levels = levelValues.ToDictionary(p => p.Key, p => CalculateAdditionalStat(p.Value));
             var qualityValues = _qualityParser.Parse(activeSkill, levels, modifierSourceEntity);
-            var qualities = qualityValues.ToDictionary(p => p.Key, p => CalculateAdditionalStat(p.Value));
 
             var levelModifiers = levelValues.Select(p => CreateAdditionalLevelModifier(p.Key, p.Value, modifierSourceEntity));
             var qualityModifiers = qualityValues.Select(p => CreateAdditionalQualityModifier(p.Key, p.Value, modifierSourceEntity));
             var modifiers = levelModifiers.Concat(qualityModifiers).ToList();
 
-            var modifications = Enumerable.Prepend(supportingSkills, activeSkill)
-                .Select(s => (s, new SkillModification(levels[s], qualities[s])))
-                .ToDictionary();
-            return (ParseResult.Success(modifiers), modifications);
+            return ParseResult.Success(modifiers);
         }
 
         private Modifier CreateAdditionalLevelModifier(Skill skill, IValue value, Entity modifierSourceEntity) =>

@@ -72,6 +72,7 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
                         true),
                     ("Frenzy.ActiveSkillItemSlot", Form.BaseSet, (double) frenzy.ItemSlot, global, false),
                     ("Frenzy.ActiveSkillSocketIndex", Form.BaseSet, frenzy.SocketIndex, global, false),
+                    ("Boots.0.0.IsEnabled", Form.TotalOverride, 1, global, false),
                     ("Frenzy.Reservation", Form.Increase, null, global, false),
                     ("Frenzy.Instances", Form.BaseAdd, 1, global, false),
                     ("Skills[].Instances", Form.BaseAdd, 1, global, false),
@@ -140,7 +141,7 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
                     ("Range.Attack.OffHand.Skill", Form.BaseAdd, null, global, true),
                 }.Select(t => (t.stat, t.form, (NodeValue?) t.value, t.source, t.mainSkillOnly)).ToArray();
 
-            var actual = _parser.ParseActiveSkill(new ActiveSkillParserParameter(frenzy, Entity.Character, SkillModification));
+            var actual = _parser.ParseActiveSkill(new ActiveSkillParserParameter(frenzy, Entity.Character));
 
             AssertCorrectModifiers(valueCalculationContextMock, isMainSkillStat, expectedModifiers, actual);
         }
@@ -166,6 +167,7 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
                         Form.BaseSet, (double) support.ItemSlot, global, false),
                     ("SupportAddedColdDamage.ActiveSkillSocketIndex",
                         Form.BaseSet, support.SocketIndex, global, false),
+                    ("Boots.1.0.IsEnabled", Form.TotalOverride, 1, global, false),
                     ("Frenzy.Cost", Form.More, levelDefinition.ManaMultiplier * 100 - 100, global, false),
                     ("Cold.Damage.Attack.MainHand.Skill", Form.Increase,
                         levelDefinition.QualityStats[0].Value * 20 / 1000, global, true),
@@ -209,7 +211,7 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
                     ("Cold.Damage.Secondary.Skill", Form.BaseAdd, addedDamageValue, global, true))
                 .ToArray();
 
-            var actual = _parser.ParseSupportSkill(new SupportSkillParserParameter(frenzy, support, Entity.Character, SkillModification));
+            var actual = _parser.ParseSupportSkill(new SupportSkillParserParameter(frenzy, support, Entity.Character));
 
             AssertCorrectModifiers(valueCalculationContextMock, isMainSkillStat, expectedModifiers, actual);
         }
@@ -307,13 +309,13 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
                 var activeSkill = Skill.FromGem(activeGem, true);
                 var supportGem = new Gem(skillId, level, 20, default, 1, 0, true);
                 var supportSkill = Skill.FromGem(supportGem, true);
-                return _parser.ParseSupportSkill(new SupportSkillParserParameter(activeSkill, supportSkill, Entity.Character, SkillModification));
+                return _parser.ParseSupportSkill(new SupportSkillParserParameter(activeSkill, supportSkill, Entity.Character));
             }
             else
             {
                 var gem = new Gem(skillId, level, 20, default, 0, 0, true);
                 var skill = Skill.FromGem(gem, true);
-                return _parser.ParseActiveSkill(new ActiveSkillParserParameter(skill, Entity.Character, SkillModification));
+                return _parser.ParseActiveSkill(new ActiveSkillParserParameter(skill, Entity.Character));
             }
         }
 
@@ -322,7 +324,5 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
 
         private static IEnumerable<string> ReadNotParseableSkills()
             => ReadDataLines("NotParseableSkills");
-
-        private static readonly SkillModification SkillModification = new SkillModification(0, 0);
     }
 }

@@ -451,6 +451,6 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         }
 
         private static ParseResult Parse(IParser<SupportSkillParserParameter> sut, Skill activeSkill, Skill supportSkill) =>
-            sut.Parse(activeSkill, supportSkill, Entity.Character, new SkillModification(0, 0));
+            sut.Parse(activeSkill, supportSkill, Entity.Character);
     }
 }
