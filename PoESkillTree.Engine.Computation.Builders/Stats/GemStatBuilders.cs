@@ -43,8 +43,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
             Additional("Levels" + identityInfix, buildIdentitySuffix);
 
         public IStatBuilder AdditionalLevels(Skill skill) =>
-            FromIdentity($"Skill.AdditionalLevels.{skill.ItemSlot}.{skill.SocketIndex}.{skill.SkillIndex}", typeof(int),
-                ExplicitRegistrationTypes.ChangeInvalidatesSkillParse(skill));
+            FromIdentity($"Skill.AdditionalLevels.{skill.ItemSlot}.{skill.SocketIndex}.{skill.SkillIndex}", typeof(int));
 
 
         public IStatBuilder AdditionalQualityForModifierSourceItemSlot =>
@@ -54,8 +53,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
             Additional("Quality.SupportSkill", GetItemSlot);
 
         public IStatBuilder AdditionalQuality(Skill skill) =>
-            FromIdentity($"Skill.AdditionalQuality.{skill.ItemSlot}.{skill.SocketIndex}.{skill.SkillIndex}", typeof(int),
-                ExplicitRegistrationTypes.ChangeInvalidatesSkillParse(skill));
+            FromIdentity($"Skill.AdditionalQuality.{skill.ItemSlot}.{skill.SocketIndex}.{skill.SkillIndex}", typeof(int));
 
 
         public IStatBuilder IncreasedReservationForModifierSourceItemSlot =>
