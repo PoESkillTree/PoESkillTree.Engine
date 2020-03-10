@@ -16,18 +16,15 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         private readonly SupportabilityTester _supportabilityTester;
         private readonly IParser<ActiveSkillParserParameter> _activeSkillParser;
         private readonly IParser<SupportSkillParserParameter> _supportSkillParser;
-        private readonly SkillModificationParser _skillModificationParser;
 
         public SkillsParser(
             SkillDefinitions skillDefinitions,
-            IParser<ActiveSkillParserParameter> activeSkillParser, IParser<SupportSkillParserParameter> supportSkillParser,
-            SkillModificationParser skillModificationParser)
+            IParser<ActiveSkillParserParameter> activeSkillParser, IParser<SupportSkillParserParameter> supportSkillParser)
         {
             _skillDefinitions = skillDefinitions;
             _supportabilityTester = new SupportabilityTester(skillDefinitions);
             _activeSkillParser = activeSkillParser;
             _supportSkillParser = supportSkillParser;
-            _skillModificationParser = skillModificationParser;
         }
 
         public ParseResult Parse(SkillsParserParameter parameter)
@@ -42,8 +39,6 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             foreach (var activeSkill in activeSkills)
             {
                 var supportingSkills = _supportabilityTester.SelectSupportingSkills(activeSkill, supportSkills);
-                var additionalStatParseResult = _skillModificationParser.Parse(activeSkill, supportSkills, entity);
-                yield return additionalStatParseResult;
                 yield return _activeSkillParser.Parse(activeSkill, entity);
                 foreach (var supportingSkill in supportingSkills)
                 {

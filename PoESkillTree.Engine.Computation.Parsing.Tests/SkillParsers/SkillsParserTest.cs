@@ -2,12 +2,10 @@
 using System.Linq;
 using Moq;
 using NUnit.Framework;
-using PoESkillTree.Engine.Computation.Builders;
 using PoESkillTree.Engine.Computation.Builders.Stats;
 using PoESkillTree.Engine.Computation.Common;
 using PoESkillTree.Engine.GameModel;
 using PoESkillTree.Engine.GameModel.Items;
-using PoESkillTree.Engine.GameModel.PassiveTree;
 using PoESkillTree.Engine.GameModel.Skills;
 using static PoESkillTree.Engine.Computation.Common.Helper;
 using static PoESkillTree.Engine.Computation.Parsing.SkillParsers.SkillParserTestUtils;
@@ -91,9 +89,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             supportParser.Setup(p => p.Parse(It.IsAny<SupportSkillParserParameter>()))
                 .Returns((SupportSkillParserParameter p)
                     => CreateParseResultForSupport(p.ActiveSkill.Id, p.SupportSkill.Id));
-            var skillModificationParser = new AdditionalSkillStatParser(skillDefinitions,
-                new BuilderFactories(new PassiveTreeDefinition(new PassiveNodeDefinition[0]), skillDefinitions));
-            return new SkillsParser(skillDefinitions, activeParser.Object, supportParser.Object, skillModificationParser);
+            return new SkillsParser(skillDefinitions, activeParser.Object, supportParser.Object);
         }
 
         private static SkillDefinitions CreateSkillDefinitions()

@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using MoreLinq;
 using PoESkillTree.Engine.GameModel;
 using PoESkillTree.Engine.GameModel.Skills;
 
@@ -6,11 +8,19 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 {
     public class GemsParser : IParser<GemsParserParameter>
     {
+        private readonly SkillDefinitions _skillDefinitions;
+        private readonly SupportabilityTester _supportabilityTester;
         private readonly IParser<GemParserParameter> _gemParser;
+        private readonly IParser<AdditionalSkillStatParserParameter> _additionalSkillStatParser;
 
-        public GemsParser(IParser<GemParserParameter> gemParser)
+        public GemsParser(
+            SkillDefinitions skillDefinitions, IParser<GemParserParameter> gemParser,
+            IParser<AdditionalSkillStatParserParameter> additionalSkillStatParser)
         {
+            _skillDefinitions = skillDefinitions;
+            _supportabilityTester = new SupportabilityTester(skillDefinitions);
             _gemParser = gemParser;
+            _additionalSkillStatParser = additionalSkillStatParser;
         }
 
         public ParseResult Parse(GemsParserParameter parameter)
@@ -22,7 +32,19 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 results.Add(_gemParser.Parse(gem, entity, out var newSkills));
                 parameter.Skills.AddRange(newSkills);
             }
+            results.AddRange(ParseAdditionalSkillStats(parameter.Skills, entity));
             return ParseResult.Aggregate(results);
+        }
+
+        private IEnumerable<ParseResult> ParseAdditionalSkillStats(IReadOnlyList<Skill> skills, Entity entity)
+        {
+            var (supportSkills, activeSkills) = skills.Partition(s => _skillDefinitions.GetSkillById(s.Id).IsSupport);
+            supportSkills = supportSkills.ToList();
+            foreach (var activeSkill in activeSkills)
+            {
+                var supportingSkills = _supportabilityTester.SelectSupportingSkills(activeSkill, supportSkills).ToList();
+                yield return _additionalSkillStatParser.Parse(activeSkill, supportingSkills, entity);
+            }
         }
     }
 

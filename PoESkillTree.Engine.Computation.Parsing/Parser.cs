@@ -72,9 +72,9 @@ namespace PoESkillTree.Engine.Computation.Parsing
                 Caching(new ActiveSkillParser(skills, builderFactories, GetOrAddUntranslatedStatParser));
             _supportSkillParser =
                 Caching(new SupportSkillParser(skills, builderFactories, GetOrAddUntranslatedStatParser));
-            var skillModificationParser = new SkillModificationParser(skills, builderFactories);
-            _skillsParser = new SkillsParser(skills, _activeSkillParser, _supportSkillParser, skillModificationParser);
-            _gemsParser = new GemsParser(new GemParser(skills, builderFactories));
+            var skillModificationParser = new AdditionalSkillStatParser(skills, builderFactories);
+            _skillsParser = new SkillsParser(skills, _activeSkillParser, _supportSkillParser);
+            _gemsParser = new GemsParser(skills, new GemParser(skills, builderFactories), skillModificationParser);
         }
 
         private IParser<UntranslatedStatParserParameter> GetOrAddUntranslatedStatParser(
