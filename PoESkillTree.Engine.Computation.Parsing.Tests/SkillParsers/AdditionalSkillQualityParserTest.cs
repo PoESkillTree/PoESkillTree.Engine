@@ -22,7 +22,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var context = MockValueCalculationContextForActiveSkill(active);
             var sut = CreateSut();
 
-            var actual = sut.Parse(active, new Dictionary<Skill, int>(), default)
+            var actual = sut.Parse(active, Array.Empty<Skill>(), default)
                 [active].Calculate(context);
 
             actual.Should().BeEquivalentTo(new NodeValue(0));
@@ -36,7 +36,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var context = MockValueCalculationContextForActiveSkill(active);
             var sut = CreateSut();
 
-            var actual = sut.Parse(active, CreateSupportingSkillsWithAdditionalLevels(support), default);
+            var actual = sut.Parse(active, new[] {support}, default);
 
             actual[active].Calculate(context).Should().BeEquivalentTo(new NodeValue(0));
             actual[support].Calculate(context).Should().BeEquivalentTo(new NodeValue(0));
@@ -50,7 +50,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 ("Gem.AdditionalQuality.Belt", 3));
             var sut = CreateSut();
 
-            var actual = sut.Parse(active, new Dictionary<Skill, int>(), default)
+            var actual = sut.Parse(active, Array.Empty<Skill>(), default)
                 [active].Calculate(context);
 
             actual.Should().BeEquivalentTo(new NodeValue(3));
@@ -64,7 +64,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 ("Gem.AdditionalQuality.Belt", 2));
             var sut = CreateSut();
 
-            var actual = sut.Parse(active, new Dictionary<Skill, int>(), default)
+            var actual = sut.Parse(active, Array.Empty<Skill>(), default)
                 [active].Calculate(context);
 
             actual.Should().BeEquivalentTo(new NodeValue(0));
@@ -81,7 +81,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 (statId, statValue));
             var sut = CreateSut();
 
-            var actual = sut.Parse(active, CreateSupportingSkillsWithAdditionalLevels(support), default)
+            var actual = sut.Parse(active, new[] {support}, default)
                 [support].Calculate(context);
 
             actual.Should().BeEquivalentTo(new NodeValue(statValue));
@@ -96,7 +96,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 ("Gem.AdditionalQuality.Belt", 2));
             var sut = CreateSut();
 
-            var actual = sut.Parse(active, CreateSupportingSkillsWithAdditionalLevels(support), default)
+            var actual = sut.Parse(active, new[] {support}, default)
                 [support].Calculate(context);
 
             actual.Should().BeEquivalentTo(new NodeValue(0));
@@ -111,10 +111,11 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             {
                 {1, CreateLevelDefinition(stats: new[] {new UntranslatedStat("supported_active_skill_gem_quality_%", 6),})}
             };
-            var context = MockValueCalculationContextForActiveSkill(active);
+            var context = MockValueCalculationContextForActiveSkill(active,
+                ("Skill.AdditionalLevels.Belt.0.0", 0));
             var sut = CreateSut(levelDefinitions);
 
-            var actual = sut.Parse(active, CreateSupportingSkillsWithAdditionalLevels(support), default)
+            var actual = sut.Parse(active, new[] {support}, default)
                 [active].Calculate(context);
 
             actual.Should().BeEquivalentTo(new NodeValue(6));
@@ -129,10 +130,11 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             {
                 {1, CreateLevelDefinition(stats: new[] {new UntranslatedStat("some_stat", 5),})}
             };
-            var context = MockValueCalculationContextForActiveSkill(active);
+            var context = MockValueCalculationContextForActiveSkill(active,
+                ("Skill.AdditionalLevels.Belt.0.0", 0));
             var sut = CreateSut(levelDefinitions);
 
-            var actual = sut.Parse(active, CreateSupportingSkillsWithAdditionalLevels(support), default)
+            var actual = sut.Parse(active, new[] {support}, default)
                 [active].Calculate(context);
 
             actual.Should().BeEquivalentTo(new NodeValue(0));
@@ -150,10 +152,11 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 {3, CreateLevelDefinition(stats: new[] {new UntranslatedStat("supported_active_skill_gem_quality_%", 3),})},
                 {4, CreateLevelDefinition(stats: new[] {new UntranslatedStat("supported_active_skill_gem_quality_%", 4),})},
             };
-            var context = MockValueCalculationContextForActiveSkill(active);
+            var context = MockValueCalculationContextForActiveSkill(active,
+                ("Skill.AdditionalLevels.Belt.0.0", 2));
             var sut = CreateSut(levelDefinitions);
 
-            var actual = sut.Parse(active, CreateSupportingSkillsWithAdditionalLevels(support, 2), default)
+            var actual = sut.Parse(active, new[] {support}, default)
                 [active].Calculate(context);
 
             actual.Should().BeEquivalentTo(new NodeValue(3));
@@ -177,14 +180,6 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             return new AdditionalSkillQualityParser(skillDefinitions,
                 new GemStatBuilders(new StatFactory()),
                 new ValueBuilders());
-        }
-
-        private static IReadOnlyDictionary<Skill, int> CreateSupportingSkillsWithAdditionalLevels(Skill support, int additionalLevels = 0)
-        {
-            return new Dictionary<Skill, int>
-            {
-                {support, additionalLevels}
-            };
         }
     }
 }

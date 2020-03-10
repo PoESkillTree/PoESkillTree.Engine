@@ -11,15 +11,12 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
     public class SkillModificationParser
     {
         private readonly IBuilderFactories _builderFactories;
-        private readonly IValueCalculationContext _valueCalculationContext;
         private readonly AdditionalSkillLevelParser _levelParser;
         private readonly AdditionalSkillQualityParser _qualityParser;
 
-        public SkillModificationParser(
-            SkillDefinitions skillDefinitions, IBuilderFactories builderFactories, IValueCalculationContext valueCalculationContext)
+        public SkillModificationParser(SkillDefinitions skillDefinitions, IBuilderFactories builderFactories)
         {
             _builderFactories = builderFactories;
-            _valueCalculationContext = valueCalculationContext;
             _levelParser = new AdditionalSkillLevelParser(skillDefinitions, builderFactories.StatBuilders.Gem, builderFactories.GemTagBuilders,
                 builderFactories.ValueBuilders);
             _qualityParser = new AdditionalSkillQualityParser(skillDefinitions, builderFactories.StatBuilders.Gem, builderFactories.ValueBuilders);
@@ -29,8 +26,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             Skill activeSkill, IReadOnlyList<Skill> supportingSkills, Entity modifierSourceEntity)
         {
             var levelValues = _levelParser.Parse(activeSkill, supportingSkills, modifierSourceEntity);
-            var levels = levelValues.ToDictionary(p => p.Key, p => CalculateAdditionalStat(p.Value));
-            var qualityValues = _qualityParser.Parse(activeSkill, levels, modifierSourceEntity);
+            var qualityValues = _qualityParser.Parse(activeSkill, supportingSkills, modifierSourceEntity);
 
             var levelModifiers = levelValues.Select(p => CreateAdditionalLevelModifier(p.Key, p.Value, modifierSourceEntity));
             var qualityModifiers = qualityValues.Select(p => CreateAdditionalQualityModifier(p.Key, p.Value, modifierSourceEntity));
@@ -51,8 +47,5 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var modifierSource = new ModifierSource.Global(new ModifierSource.Local.Given());
             return new Modifier(stats, Form.TotalOverride, value, modifierSource);
         }
-
-        private int CalculateAdditionalStat(IValue value) =>
-            (int) (value.Calculate(_valueCalculationContext).SingleOrNull() ?? 0);
     }
 }

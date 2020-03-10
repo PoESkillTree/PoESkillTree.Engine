@@ -92,8 +92,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 .Returns((SupportSkillParserParameter p)
                     => CreateParseResultForSupport(p.ActiveSkill.Id, p.SupportSkill.Id));
             var skillModificationParser = new SkillModificationParser(skillDefinitions,
-                new BuilderFactories(new PassiveTreeDefinition(new PassiveNodeDefinition[0]), skillDefinitions),
-                Mock.Of<IValueCalculationContext>());
+                new BuilderFactories(new PassiveTreeDefinition(new PassiveNodeDefinition[0]), skillDefinitions));
             return new SkillsParser(skillDefinitions, activeParser.Object, supportParser.Object, skillModificationParser);
         }
 

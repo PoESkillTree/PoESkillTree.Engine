@@ -39,8 +39,7 @@ namespace PoESkillTree.Engine.Computation.Parsing
                 new ConcurrentDictionary<IReadOnlyList<string>, IParser<UntranslatedStatParserParameter>>();
 
         public static async Task<Parser<TStep>> CreateAsync(
-            GameData gameData, Task<IBuilderFactories> builderFactoriesTask, Task<IParsingData<TStep>> parsingDataTask,
-            IValueCalculationContext valueCalculationContext)
+            GameData gameData, Task<IBuilderFactories> builderFactoriesTask, Task<IParsingData<TStep>> parsingDataTask)
         {
             var passiveTreeTask = gameData.PassiveTree;
             var baseItemsTask = gameData.BaseItems;
@@ -52,14 +51,12 @@ namespace PoESkillTree.Engine.Computation.Parsing
                 await skillsTask.ConfigureAwait(false),
                 await statTranslatorsTask.ConfigureAwait(false),
                 await builderFactoriesTask.ConfigureAwait(false),
-                await parsingDataTask.ConfigureAwait(false),
-                valueCalculationContext);
+                await parsingDataTask.ConfigureAwait(false));
         }
 
         private Parser(
             PassiveTreeDefinition passiveTree, BaseItemDefinitions baseItems, SkillDefinitions skills,
-            StatTranslators statTranslators, IBuilderFactories builderFactories, IParsingData<TStep> parsingData,
-            IValueCalculationContext valueCalculationContext)
+            StatTranslators statTranslators, IBuilderFactories builderFactories, IParsingData<TStep> parsingData)
         {
             _statTranslators = statTranslators;
             _coreParser = new CoreParser<TStep>(parsingData, builderFactories);
@@ -75,7 +72,7 @@ namespace PoESkillTree.Engine.Computation.Parsing
                 Caching(new ActiveSkillParser(skills, builderFactories, GetOrAddUntranslatedStatParser));
             _supportSkillParser =
                 Caching(new SupportSkillParser(skills, builderFactories, GetOrAddUntranslatedStatParser));
-            var skillModificationParser = new SkillModificationParser(skills, builderFactories, valueCalculationContext);
+            var skillModificationParser = new SkillModificationParser(skills, builderFactories);
             _skillsParser = new SkillsParser(skills, _activeSkillParser, _supportSkillParser, skillModificationParser);
             _gemsParser = new GemsParser(new GemParser(skills, builderFactories));
         }

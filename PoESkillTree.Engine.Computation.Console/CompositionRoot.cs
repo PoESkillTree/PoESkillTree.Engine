@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using PoESkillTree.Engine.Computation.Common.Builders;
 using PoESkillTree.Engine.Computation.Core;
-using PoESkillTree.Engine.Computation.Core.Nodes;
 using PoESkillTree.Engine.Computation.Data;
 using PoESkillTree.Engine.Computation.Data.Steps;
 using PoESkillTree.Engine.Computation.Parsing;
@@ -27,8 +26,7 @@ namespace PoESkillTree.Engine.Computation.Console
                 () => Builders.BuilderFactories.CreateAsync(_gameData.Value));
             _parser = new Lazy<Task<IParser>>(
                 async () => await Parser<ParsingStep>.CreateAsync(_gameData.Value, _builderFactories.Value,
-                    ParsingData.CreateAsync(_gameData.Value, _builderFactories.Value),
-                    new SimpleValueCalculationContext(_calculator.Value.NodeRepository)).ConfigureAwait(false));
+                    ParsingData.CreateAsync(_gameData.Value, _builderFactories.Value)).ConfigureAwait(false));
         }
 
         public GameData GameData => _gameData.Value;
