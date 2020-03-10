@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using MoreLinq;
-using PoESkillTree.Engine.Computation.Common;
 using PoESkillTree.Engine.Computation.Common.Builders.Stats;
 using PoESkillTree.Engine.Computation.Common.Builders.Values;
-using PoESkillTree.Engine.GameModel;
 using PoESkillTree.Engine.GameModel.Skills;
 
 namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
@@ -21,12 +19,15 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             _valueBuilders = valueBuilders;
         }
 
-        public IReadOnlyDictionary<Skill, IValue> Parse(Skill activeSkill, IReadOnlyList<Skill> supportingSkills, Entity modifierSourceEntity)
+        protected override IReadOnlyDictionary<Skill, ValueBuilder> Parse(Skill activeSkill, IReadOnlyList<Skill> supportingSkills)
         {
             var dict = supportingSkills.Select(skill => (skill, ParseSupport())).ToDictionary();
             dict[activeSkill] = ParseActive(supportingSkills);
-            return Build(dict, modifierSourceEntity);
+            return dict;
         }
+
+        protected override IStatBuilder GetAdditionalStatBuilder(Skill skill) =>
+            _gemStatBuilders.AdditionalQuality(skill);
 
         private ValueBuilder ParseSupport() =>
             new ValueBuilder(_valueBuilders.Create(0))
