@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using PoESkillTree.Engine.Computation.Common.Builders;
 using PoESkillTree.Engine.GameModel;
 using PoESkillTree.Engine.GameModel.Skills;
@@ -8,27 +9,22 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 {
     public class AdditionalSkillStatParser : IParser<AdditionalSkillStatParserParameter>
     {
-        private readonly AdditionalSkillLevelParser _levelParser;
-        private readonly AdditionalSkillQualityParser _qualityParser;
+        private readonly IReadOnlyList<IParser<AdditionalSkillStatParserParameter>> _parsers;
 
         public AdditionalSkillStatParser(SkillDefinitions skillDefinitions, IBuilderFactories builderFactories)
         {
-            _levelParser = new AdditionalSkillLevelParser(skillDefinitions, builderFactories.StatBuilders.Gem, builderFactories.GemTagBuilders,
-                builderFactories.ValueBuilders, builderFactories.MetaStatBuilders);
-            _qualityParser = new AdditionalSkillQualityParser(skillDefinitions, builderFactories.StatBuilders.Gem,
-                builderFactories.ValueBuilders, builderFactories.MetaStatBuilders);
+            _parsers = new IParser<AdditionalSkillStatParserParameter>[]
+            {
+                new AdditionalSkillLevelParser(skillDefinitions, builderFactories.StatBuilders.Gem, builderFactories.GemTagBuilders,
+                    builderFactories.ValueBuilders, builderFactories.MetaStatBuilders),
+                new AdditionalSkillLevelMaximumParser(skillDefinitions, builderFactories.StatBuilders.Gem, builderFactories.ValueBuilders),
+                new AdditionalSkillQualityParser(skillDefinitions, builderFactories.StatBuilders.Gem,
+                    builderFactories.ValueBuilders, builderFactories.MetaStatBuilders),
+            };
         }
 
-        public ParseResult Parse(AdditionalSkillStatParserParameter parameter)
-        {
-            var (activeSkill, supportingSkills, modifierSourceEntity) = parameter;
-            var results = new[]
-            {
-                _levelParser.Parse(activeSkill, supportingSkills, modifierSourceEntity),
-                _qualityParser.Parse(activeSkill, supportingSkills, modifierSourceEntity),
-            };
-            return ParseResult.Aggregate(results);
-        }
+        public ParseResult Parse(AdditionalSkillStatParserParameter parameter) =>
+            ParseResult.Aggregate(_parsers.Select(p => p.Parse(parameter)));
     }
 
     public static class AdditionalSkillStatParserExtensions
