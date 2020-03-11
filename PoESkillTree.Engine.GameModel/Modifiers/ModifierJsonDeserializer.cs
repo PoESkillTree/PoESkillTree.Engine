@@ -32,7 +32,7 @@ namespace PoESkillTree.Engine.GameModel.Modifiers
                 DeserializeStats(modProperty.Value.Value<JArray>("stats")));
 
             T Value<T>(string key)
-                => modProperty.Value[key].ToObject<T>();
+                => modProperty.Value[key]!.ToObject<T>();
         }
 
         private static IReadOnlyList<CraftableStat> DeserializeStats(JArray array)

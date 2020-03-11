@@ -31,6 +31,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         IStat RegenTargetPool(Entity entity, Pool regenPool);
 
         IStat MainSkillId(Entity entity);
+        IStat MainSkillItemSlot(Entity entity);
         IStat MainSkillHasKeyword(Entity entity, Keyword keyword);
         IStat MainSkillPartHasKeyword(Entity entity, Keyword keyword);
         IStat MainSkillPartCastRateHasKeyword(Entity entity, Keyword keyword);
@@ -39,6 +40,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
 
         IStat ActiveSkillItemSlot(Entity entity, string skillId);
         IStat ActiveSkillSocketIndex(Entity entity, string skillId);
+        IStat SkillReservation(Entity entity, string skillId);
 
         IStat BuffEffect(Entity source, Entity target, string buffIdentity);        
         IStat BuffIsActive(Entity target, string buffIdentity);

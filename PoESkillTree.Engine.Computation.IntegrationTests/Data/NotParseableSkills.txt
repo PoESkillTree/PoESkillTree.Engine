@@ -1,35 +1,7 @@
 ﻿// These skills have stat lines that are not parsed successfully (yet)
-// - Require new stats or are otherwise not easy to support
-ArcticArmour
-AssassinsMark
-BloodRage
-CorrosiveShroud
-CorpseWarp
-DarkPact
-DarkRitual
-NewShieldCharge
-RighteousFire
-Slither
-SupportBlockReduction
-SupportChanceToIgnite
-SupportChaosAttacks
-SupportDecay
-SupportGemMirageArcher
-SupportMaim
-SupportPuncturingWeapon
-SupportRuthless
-SupportSlashingWeapon
-SupportSummonGhostOnKill
-ThrownShield
-VaalRighteousFire
-Wither
-// - Provides a secondary skill
-SupportBluntWeapon
-// - Gem affecting supports
-SupportAdditionalLevel
-SupportAdditionalQuality
-SupportAdditionalXP
 // - Item-inherent skills (not listed)
+// - Adds a new kind of damage
+SupportDecay
 // - Minion Skills
 AnimateArmour
 AnimateWeapon
@@ -48,11 +20,15 @@ SummonRelic
 SummonSkeletons
 SupportBurningMinions
 SupportMinionOffensiveStance
+SupportSummonGhostOnKill
 VaalSummonSkeletons
 // - Spectre/Monster Skills (not listed)
 // - Pointless to support
+CorrosiveShroud
 DevouringTotem
 IceSiphonTrap
 SigilRecall
 SupportAdditionalTrapMine
+SupportBlockReduction
 SupportChanceToFlee
+SupportGemMirageArcher

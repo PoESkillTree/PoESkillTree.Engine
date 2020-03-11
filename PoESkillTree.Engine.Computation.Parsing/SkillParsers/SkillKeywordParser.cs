@@ -11,10 +11,6 @@ using PoESkillTree.Engine.GameModel;
 using PoESkillTree.Engine.GameModel.Items;
 using PoESkillTree.Engine.GameModel.Skills;
 using static MoreLinq.Extensions.IndexExtension;
-#if NETSTANDARD2_0
-using PoESkillTree.Engine.Utils.Extensions;
-using static MoreLinq.Extensions.ToHashSetExtension;
-#endif
 
 namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 {
@@ -56,7 +52,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
         public PartialSkillParseResult Parse(Skill mainSkill, Skill parsedSkill, SkillPreParseResult preParseResult)
         {
-            _parsedModifiers = new ModifierCollection(_builderFactories, preParseResult.LocalSource);
+            _parsedModifiers = new ModifierCollection(_builderFactories, preParseResult.LocalSource, preParseResult.ModifierSourceEntity);
             _parsedStats = new HashSet<UntranslatedStat>();
             _preParseResult = preParseResult;
 

@@ -23,7 +23,7 @@ namespace PoESkillTree.Engine.Computation.Console
             var nodes = json.Value<JObject>("nodes");
             var statLines = nodes.PropertyValues()
                 .OrderBy(t => t.Value<int>("id")) // Order for more useful diffs
-                .SelectMany(t => t["sd"].Values<string>())
+                .SelectMany(t => t["sd"]!.Values<string>())
                 .Select(s => s.Replace("\n", " "));
 
             var path = baseTargetPath + "PoESkillTree.Engine.GameModel/Data/SkillTreeStatLines.txt";

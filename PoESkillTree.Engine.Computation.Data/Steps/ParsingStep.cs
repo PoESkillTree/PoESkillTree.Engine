@@ -18,7 +18,7 @@
         StatManipulator,
         ValueConversion,
         FormAndStat,
-        Keystone,
+        PassiveNode,
         Form,
         GeneralStat,
         DamageStat,

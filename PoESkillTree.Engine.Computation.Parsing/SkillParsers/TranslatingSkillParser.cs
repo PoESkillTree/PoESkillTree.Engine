@@ -12,9 +12,6 @@ using PoESkillTree.Engine.Utils.Extensions;
 using static MoreLinq.Extensions.IndexExtension;
 using static MoreLinq.Extensions.PartitionExtension;
 using static MoreLinq.Extensions.ToLookupExtension;
-#if NETSTANDARD2_0
-using static MoreLinq.Extensions.ToHashSetExtension;
-#endif
 
 namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 {
@@ -50,7 +47,8 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var isMainSkill = preParseResult.IsMainSkill;
             var isActiveSkill = _builderFactories.MetaStatBuilders.IsActiveSkill(skill);
             var level = preParseResult.LevelDefinition;
-            var qualityStats = level.QualityStats.Select(s => ApplyQuality(s, skill));
+            var quality = skill.Quality;
+            var qualityStats = level.QualityStats.Select(s => ApplyQuality(s, quality));
             var (keystoneStats, levelStats) = level.Stats.Partition(s => KeystoneStatRegex.IsMatch(s.StatId));
             var parseResults = new List<ParseResult>(4 + level.AdditionalStatsPerPart.Count + 4)
             {
@@ -58,7 +56,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 TranslateAndParse(qualityStats, isMainSkill),
                 TranslateAndParse(levelStats, isMainSkill),
                 // Keystones are translated into their names when using the main instead of skill translation files
-                TranslateAndParse(StatTranslationFileNames.Main, keystoneStats, isMainSkill),
+                TranslateAndParse(keystoneStats, isMainSkill, StatTranslationFileNames.Main),
             };
 
             foreach (var (partIndex, stats) in level.AdditionalStatsPerPart.Index())
@@ -68,12 +66,11 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 parseResults.Add(result);
             }
 
-            var qualityBuffStats =
-                level.QualityBuffStats.Select(s => new BuffStat(ApplyQuality(s.Stat, skill), s.AffectedEntities));
+            var qualityBuffStats = level.QualityBuffStats.Select(s => new BuffStat(ApplyQuality(s.Stat, quality), s.GetAffectedEntities));
             parseResults.Add(TranslateAndParseBuff(qualityBuffStats, isActiveSkill));
             parseResults.Add(TranslateAndParseBuff(level.BuffStats, isActiveSkill));
 
-            var qualityPassiveStats = level.QualityPassiveStats.Select(s => ApplyQuality(s, skill));
+            var qualityPassiveStats = level.QualityPassiveStats.Select(s => ApplyQuality(s, quality));
             parseResults.Add(TranslateAndParse(qualityPassiveStats, isActiveSkill));
             parseResults.Add(TranslateAndParse(level.PassiveStats, isActiveSkill));
 
@@ -83,50 +80,58 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         }
 
         private ParseResult TranslateAndParse(IEnumerable<UntranslatedStat> stats, IConditionBuilder condition)
-            => TranslateAndParse(_preParseResult!.SkillDefinition.StatTranslationFile, stats, condition);
+            => TranslateAndParse(stats, condition, _preParseResult!.SkillDefinition.StatTranslationFile, StatTranslationFileNames.Skill);
 
         private ParseResult TranslateAndParse(
-            string statTranslationFileName, IEnumerable<UntranslatedStat> stats, IConditionBuilder condition)
+            IEnumerable<UntranslatedStat> stats, IConditionBuilder condition, params string[] statTranslationFileNames)
         {
-            var result = TranslateAndParse(_preParseResult!.LocalSource, stats, Entity.Character,
-                statTranslationFileName);
-            return result.ApplyCondition(condition.Build);
+            var result = TranslateAndParse(stats, _preParseResult!.ModifierSourceEntity, statTranslationFileNames);
+            return result.ApplyCondition(condition.Build, _preParseResult.ModifierSourceEntity);
         }
 
         private ParseResult TranslateAndParseBuff(IEnumerable<BuffStat> buffStats, IConditionBuilder condition)
         {
+            var sourceEntity = _preParseResult!.ModifierSourceEntity;
             var results = new List<ParseResult>();
-            var buffBuilder = _builderFactories.SkillBuilders.FromId(_preParseResult!.SkillDefinition.Id).Buff;
+            var buffBuilder = _builderFactories.SkillBuilders.FromId(_preParseResult.SkillDefinition.Id).Buff;
             var statLookup = buffStats
-                .SelectMany(t => t.AffectedEntities.Select(e => (e, t.Stat)))
+                .SelectMany(t => t.GetAffectedEntities(sourceEntity).Select(e => (e, t.Stat)))
                 .ToLookup();
             foreach (var (affectedEntity, stats) in statLookup)
             {
-                var result = TranslateAndParse(_preParseResult.LocalSource, stats, affectedEntity,
-                    StatTranslationFileNames.Main, StatTranslationFileNames.Skill);
-                result = result.ApplyCondition(condition.Build);
+                var result = TranslateAndParse(stats, affectedEntity, StatTranslationFileNames.Main, StatTranslationFileNames.Skill);
+                result = result.ApplyCondition(condition.Build, sourceEntity);
 
                 var buildParameters = new BuildParameters(_preParseResult.GlobalSource, affectedEntity, default);
-                var multiplier = buffBuilder.BuildAddStatMultiplier(buildParameters, new[] { Entity.Character });
-                result = result.ApplyMultiplier(_ => multiplier);
+                var multiplier = buffBuilder.BuildAddStatMultiplier(buildParameters, new[] { sourceEntity });
+                result = result.ApplyMultiplier(_ => multiplier, sourceEntity);
                 results.Add(result);
             }
 
             return ParseResult.Aggregate(results);
         }
 
-        private ParseResult TranslateAndParse(
-            ModifierSource.Local.Skill localModifierSource,
-            IEnumerable<UntranslatedStat> stats,
+        private ParseResult TranslateAndParse(IEnumerable<UntranslatedStat> stats,
             Entity modifierSourceEntity,
             params string[] statTranslationFileNames)
         {
-            var unparsedStats = stats.Except(_parsedStats).ToList();
+            var unparsedStats = stats.Except(_parsedStats)
+                .Where(s => !SkillStatIds.SupportedSkillGemLevelRegex.IsMatch(s.StatId))
+                .Where(s => !SkillStatIds.SupportedSkillGemQualityRegex.IsMatch(s.StatId))
+                .ToList();
             var statParser = _statParserFactory(statTranslationFileNames);
-            return statParser.Parse(localModifierSource, modifierSourceEntity, unparsedStats);
+            return Parse(statParser, _preParseResult!.LocalSource, modifierSourceEntity, unparsedStats);
         }
 
-        private static UntranslatedStat ApplyQuality(UntranslatedStat qualityStat, Skill skill)
-            => new UntranslatedStat(qualityStat.StatId, qualityStat.Value * skill.Quality / 1000);
+        private static ParseResult Parse(IParser<UntranslatedStatParserParameter> parser,
+            ModifierSource.Local modifierSource, Entity modifierSourceEntity, IReadOnlyList<UntranslatedStat> stats)
+        {
+            if (stats.IsEmpty())
+                return ParseResult.Empty;
+            return parser.Parse(modifierSource, modifierSourceEntity, stats);
+        }
+
+        private static UntranslatedStat ApplyQuality(UntranslatedStat qualityStat, int quality)
+            => new UntranslatedStat(qualityStat.StatId, qualityStat.Value * quality / 1000);
     }
 }

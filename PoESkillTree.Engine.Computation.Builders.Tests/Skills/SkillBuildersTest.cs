@@ -27,7 +27,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Skills
         {
             yield return new ModifierSource.Local.Skill(SkillId, "");
             yield return new ModifierSource.Global(new ModifierSource.Local.Skill(SkillId, ""));
-            yield return new ModifierSource.Local.Gem(default, 0, SkillId, "");
+            yield return new ModifierSource.Local.Gem(new Gem(SkillId, 1, 0, default, 0, 0, true));
         }
 
         [TestCaseSource(nameof(FailureTestCases))]
@@ -56,7 +56,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Skills
             => new SkillBuilders(new StatFactory(), new SkillDefinitions(new[] { SkillDefinition }));
         
         private static readonly SkillDefinition SkillDefinition =
-            SkillDefinition.CreateActive(SkillId, 0, "", new string[0], null, null!,
+            SkillDefinition.CreateActive(SkillId, 0, "", null, new string[0], null, null!,
                 new Dictionary<int, SkillLevelDefinition>());
 
         private const string SkillId = "skill";

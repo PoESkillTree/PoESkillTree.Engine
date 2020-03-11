@@ -46,6 +46,11 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
         IConditionBuilder IsSet { get; }
 
         /// <summary>
+        /// Gets a condition that is satisfied if this stat's value is true.
+        /// </summary>
+        IConditionBuilder IsTrue { get; }
+
+        /// <summary>
         /// Returns a stat that represents the percentage of this stat's value that is converted to the given stat.
         /// </summary>
         IStatBuilder ConvertTo(IStatBuilder stat);

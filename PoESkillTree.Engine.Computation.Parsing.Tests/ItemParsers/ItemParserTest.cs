@@ -467,7 +467,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.ItemParsers
         {
             var item = new Item("metadataId", "itemName", quality, requiredLevel, frameType, isCorrupted,
                     mods, isEnabled);
-            return new ItemParserParameter(item, itemSlot);
+            return new ItemParserParameter(item, itemSlot, Entity.Character);
         }
 
         private static BaseItemDefinition CreateBaseItemDefinition(Item item, ItemClass itemClass, Tags tags = default,

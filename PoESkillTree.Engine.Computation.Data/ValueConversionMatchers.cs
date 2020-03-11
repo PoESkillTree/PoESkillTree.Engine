@@ -67,11 +67,24 @@ namespace PoESkillTree.Engine.Computation.Data
                         Reference.AsStat.ValueFor(NodeType.Base, new ModifierSource.Local.Item(ItemSlot.BodyArmour)),
                         divideBy: Value)
                 },
+                {
+                    "per # ({StatMatchers}) on shield",
+                    PerStat(
+                        Reference.AsStat.ValueFor(NodeType.Base, new ModifierSource.Local.Item(ItemSlot.OffHand)),
+                        divideBy: Value)
+                },
+                {
+                    "per # ({StatMatchers}) or ({StatMatchers}) on shield",
+                    PerStat(
+                        References[0].AsStat.ValueFor(NodeType.Base, new ModifierSource.Local.Item(ItemSlot.OffHand))
+                        + References[1].AsStat.ValueFor(NodeType.Base, new ModifierSource.Local.Item(ItemSlot.OffHand)),
+                        divideBy: Value)
+                },
                 { "per grand spectrum", PerStat(stat: Stat.GrandSpectrumJewelsSocketed) },
                 { "per level", PerStat(Stat.Level) },
-                { "per (stage|fuse charge)", PerStat(Stat.SkillStage) },
+                { "per (stage|fuse charge|explosive arrow on target)", PerStat(Stat.SkillStage) },
                 { "for each (stage|blade)", PerStat(Stat.SkillStage) },
-                { @"per stage, up to \+#", CappedMultiplier(Stat.SkillStage.Value, Value) },
+                { @"per (stage|explosive arrow on target), up to \+#", CappedMultiplier(Stat.SkillStage.Value, Value) },
                 { "per stage after the first", PerStatAfterFirst(Stat.SkillStage) },
                 {
                     "per ({ChargeTypeMatchers}) removed",
@@ -81,9 +94,9 @@ namespace PoESkillTree.Engine.Computation.Data
                     "when placed, (?<inner>.*) per stage",
                     Stat.BannerStage.Value, Flag.IsBannerPlanted, "${inner}"
                 },
-                { "per nearby enemy", Enemy.CountNearby },
-                { "per one hundred nearby enemies", Enemy.CountNearby / 100 },
-                { @"per nearby enemy, up to \+#%?", CappedMultiplier(Enemy.CountNearby, Value) },
+                { "per nearby enemy", OpponentsOfSelf.CountNearby },
+                { "per one hundred nearby enemies", OpponentsOfSelf.CountNearby / 100 },
+                { @"per nearby enemy, up to \+#%?", CappedMultiplier(OpponentsOfSelf.CountNearby, Value) },
                 {
                     "per # unreserved maximum mana, up to #%",
                     CappedMultiplier(((Mana.Value - Mana.Reservation.Value) / Values[0]).Floor(), Values[1])
@@ -96,26 +109,29 @@ namespace PoESkillTree.Engine.Computation.Data
                     "per # additional melee range",
                     PerStat(Stat.Range.With(AttackDamageHand.MainHand).ValueFor(NodeType.BaseAdd), Value)
                 },
+                { "per projectile", PerStat(Projectile.Count) },
+                { "per curse applied", PerStat(Stat.CursesLinkedToBane) },
                 // buffs
                 { "per buff on you", Buffs(targets: Self).Count() },
                 { "per curse on you", Buffs(targets: Self).With(Keyword.Curse).Count() },
-                { "per curse on enemy", Buffs(targets: Enemy).With(Keyword.Curse).Count() },
-                { "for each curse on that enemy,", Buffs(targets: Enemy).With(Keyword.Curse).Count() },
-                { "for each impale on enemy", Buff.Impale.StackCount.For(Enemy).Value },
+                { "per curse on enemy", Buffs(targets: OpponentsOfSelf).With(Keyword.Curse).Count() },
+                { "for each curse on that enemy,", Buffs(targets: OpponentsOfSelf).With(Keyword.Curse).Count() },
+                { "for each impale on enemy", Buff.Impale.StackCount.For(MainOpponentOfSelf).Value },
+                { "each ({BuffMatchers}) applies", Reference.AsBuff.StackCount.For(MainOpponentOfSelf).Value },
                 // ailments
-                { "for each poison on the enemy", Ailment.Poison.InstancesOn(Enemy).Value },
-                { "per poison on enemy", Ailment.Poison.InstancesOn(Enemy).Value },
+                { "for each poison on the enemy", Ailment.Poison.InstancesOn(MainOpponentOfSelf).Value },
+                { "per poison on enemy", Ailment.Poison.InstancesOn(MainOpponentOfSelf).Value },
                 { "per poison on you", Ailment.Poison.InstancesOn(Self).Value },
-                { "per poison(?= affecting enemies)", Ailment.Poison.InstancesOn(Enemy).Value },
+                { "per poison(?= affecting enemies)", Ailment.Poison.InstancesOn(MainOpponentOfSelf).Value },
                 {
                     @"per poison affecting enemy, up to \+#%",
-                    CappedMultiplier(Ailment.Poison.InstancesOn(Enemy).Value, Value)
+                    CappedMultiplier(Ailment.Poison.InstancesOn(MainOpponentOfSelf).Value, Value)
                 },
                 {
                     "for each poison on the enemy, up to #",
-                    CappedMultiplier(Ailment.Poison.InstancesOn(Enemy).Value, Value)
+                    CappedMultiplier(Ailment.Poison.InstancesOn(MainOpponentOfSelf).Value, Value)
                 },
-                { "per elemental ailment on the enemy", Ailment.Elemental.Count(b => b.IsOn(Enemy)) },
+                { "per elemental ailment on the enemy", Ailment.Elemental.Count(b => b.IsOn(MainOpponentOfSelf)) },
                 // skills
                 { "for each zombie you own", Skills.RaiseZombie.Instances.Value },
                 { "for each raised zombie", Skills.RaiseZombie.Instances.Value },
@@ -135,7 +151,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "for each trap", Traps.CombinedInstances.Value },
                 { "for each mine", Mines.CombinedInstances.Value },
                 { "for each trap and mine you have", Traps.CombinedInstances.Value + Mines.CombinedInstances.Value },
-                { "(per|for each) totem", Totems.CombinedInstances.Value },
+                { "(per|for each)( summoned)? totem", Totems.CombinedInstances.Value },
                 {
                     "each mine( from supported skills)? applies (?<inner>.*) to( hits against)? enemies near it, up to( a maximum of)? #%",
                     CappedMultiplier(MineAura(), Value),
@@ -154,6 +170,10 @@ namespace PoESkillTree.Engine.Computation.Data
                 {
                     "(per|for every) # ({AttributeStatMatchers}) (from|on) unallocated passives in radius",
                     PerStat(PassiveTree.UnallocatedInModifierSourceJewelRadius(Reference.AsStat), Value)
+                },
+                {
+                    "passive skills in radius also grant:",
+                    PassiveTree.AllocatedNodeInModifierSourceJewelRadiusCount
                 },
                 // unique
                 {
@@ -201,7 +221,7 @@ namespace PoESkillTree.Engine.Computation.Data
             }; // add
 
         private ValueBuilder MineAura()
-            => Mines.CombinedInstances.Value * Buff.GenericMine.EffectOn(Enemy).Value;
+            => Mines.CombinedInstances.Value * Buff.GenericMine.EffectOn(MainOpponentOfSelf).Value;
 
         private Func<ValueBuilder, ValueBuilder> CappedMultiplier(ValueBuilder multiplier, IValueBuilder maximum)
             => v => ValueFactory.Minimum(v * multiplier, maximum);

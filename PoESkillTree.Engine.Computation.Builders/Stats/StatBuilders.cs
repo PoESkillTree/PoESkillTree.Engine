@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using MoreLinq;
+using PoESkillTree.Engine.Computation.Builders.Values;
 using PoESkillTree.Engine.Computation.Common;
 using PoESkillTree.Engine.Computation.Common.Builders;
 using PoESkillTree.Engine.Computation.Common.Builders.Conditions;
@@ -56,7 +57,10 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         }
 
         public IStatBuilder AreaOfEffect => FromIdentity(typeof(int));
-        public IStatBuilder Radius => FromIdentity(typeof(uint));
+        public IStatBuilder Radius => PrimaryRadius.Concat(SecondaryRadius).Concat(TertiaryRadius);
+        public IStatBuilder PrimaryRadius => FromIdentity(typeof(uint));
+        public IStatBuilder SecondaryRadius => FromIdentity(typeof(uint));
+        public IStatBuilder TertiaryRadius => FromIdentity(typeof(uint));
 
         public IDamageRelatedStatBuilder Range
             => DamageRelatedFromIdentity(typeof(uint)).WithSkills(DamageSource.Attack);
@@ -65,6 +69,9 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         public IStatBuilder CooldownRecoverySpeed => FromIdentity(typeof(double));
         public IStatBuilder Duration => FromIdentity(typeof(double));
         public IStatBuilder SecondaryDuration => FromIdentity(typeof(double));
+        public IStatBuilder SkillNumberOfHitsPerCast => FromIdentity(typeof(uint));
+        public IStatBuilder SkillRepeats => FromIdentity(typeof(uint));
+        public IStatBuilder DamageMultiplierOverRepeatCycle => FromIdentity(typeof(int));
         public IStatBuilder SkillStage => FromIdentity(typeof(uint), UserSpecifiedValue(double.MaxValue));
         public IStatBuilder MainSkillPart => FromIdentity(typeof(uint));
 
@@ -79,14 +86,53 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         public IStatBuilder GrandSpectrumJewelsSocketed => FromIdentity(typeof(uint));
         public IStatBuilder AbyssalSockets => FromIdentity(typeof(uint));
 
-        public IStatBuilder RampageStacks => FromIdentity(typeof(uint));
         public IStatBuilder AttachedBrands => FromIdentity(typeof(uint));
         public IStatBuilder BannerStage => FromIdentity(typeof(uint));
 
+        public IStatBuilder RuthlessBlowPeriod => FromIdentity(typeof(double));
+
+        public ValueBuilder RuthlessBlowBonus
+        {
+            get
+            {
+                var applicationBuilder = FromIdentity(typeof(RuthlessBlowBonusCalculation), UserSpecifiedValue(0)).Value;
+                var periodBuilder = RuthlessBlowPeriod.Value;
+                return new ValueBuilder(new ValueBuilderImpl(Build, _ => Build));
+
+                IValue Build(BuildParameters ps)
+                {
+                    var application = applicationBuilder.Build(ps);
+                    var period = periodBuilder.Build(ps);
+                    return new FunctionalValue(c => Calculate(c, application, period),
+                        $"{application} switch {{ Never => 0, Average => {period}, Always => 1, _ => null }}");
+                }
+
+                static NodeValue? Calculate(IValueCalculationContext context, IValue application, IValue period)
+                {
+                    return (RuthlessBlowBonusCalculation?) application.Calculate(context).SingleOrNull() switch
+                    {
+                        RuthlessBlowBonusCalculation.Never => new NodeValue(0),
+                        RuthlessBlowBonusCalculation.Average => period.Calculate(context),
+                        RuthlessBlowBonusCalculation.Always => new NodeValue(1),
+                        _ => null
+                    };
+                }
+            }
+        }
+
+        private enum RuthlessBlowBonusCalculation
+        {
+            Never,
+            Average,
+            Always,
+        }
+
+        public IStatBuilder CursesLinkedToBane => FromIdentity(typeof(uint));
+
         public IStatBuilder DamageTakenGainedAsMana => FromIdentity(typeof(uint));
 
-        public ValueBuilder UniqueAmount(string name)
-            => FromIdentity(name, typeof(uint), UserSpecifiedValue(0)).Value;
+        public ValueBuilder UniqueAmount(string name, double defaultValue = 0)
+            => FromIdentity(name, typeof(uint), UserSpecifiedValue(defaultValue)).Value;
 
         public ValueBuilder UniqueEnum<T>(string name) where T : Enum
             => FromIdentity(name, typeof(T), UserSpecifiedValue(0)).Value;
@@ -114,6 +160,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         }
 
         public IStatBuilder Speed => FromIdentity("ThrowingSpeed", typeof(double));
+        public IStatBuilder BaseTime => FromIdentity("BaseThrowingTime", typeof(double));
         public IStatBuilder Duration => FromIdentity(typeof(double));
         public IStatBuilder TriggerAoE => FromIdentity(typeof(int));
     }
@@ -125,6 +172,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         }
 
         public IStatBuilder Speed => FromIdentity("ThrowingSpeed", typeof(double));
+        public IStatBuilder BaseTime => FromIdentity("BaseThrowingTime", typeof(double));
         public IStatBuilder Duration => FromIdentity(typeof(double));
         public IStatBuilder DetonationAoE => FromIdentity(typeof(int));
     }
@@ -136,6 +184,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         }
 
         public IStatBuilder Speed => FromIdentity("PlacementSpeed", typeof(double));
+        public IStatBuilder BaseTime => FromIdentity("BasePlacementTime", typeof(double));
         public IStatBuilder Duration => FromIdentity(typeof(double));
     }
 
@@ -225,16 +274,16 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         public IStatBuilder FarShot => FromIdentity(typeof(bool));
 
         public IConditionBuilder AlwaysMoving
-            => FromIdentity("Are you always moving?", typeof(bool), UserSpecifiedValue(false)).IsSet;
+            => FromIdentity("Are you always moving?", typeof(bool), UserSpecifiedValue(false)).IsTrue;
 
         public IConditionBuilder AlwaysStationary
-            => FromIdentity("Are you always stationary?", typeof(bool), UserSpecifiedValue(false)).IsSet;
+            => FromIdentity("Are you always stationary?", typeof(bool), UserSpecifiedValue(false)).IsTrue;
 
         public IConditionBuilder IsBrandAttachedToEnemy
-            => FromIdentity("Is your Brand attached to an enemy?", typeof(bool), UserSpecifiedValue(false)).IsSet;
+            => FromIdentity("Is your Brand attached to an enemy?", typeof(bool), UserSpecifiedValue(false)).IsTrue;
 
         public IConditionBuilder IsBannerPlanted
-            => FromIdentity("Is your Banner planted?", typeof(bool), UserSpecifiedValue(false)).IsSet;
+            => FromIdentity("Is your Banner planted?", typeof(bool), UserSpecifiedValue(false)).IsTrue;
 
         public IConditionBuilder InBloodStance => StanceValue.Eq((int) Stance.BloodStance);
         public IConditionBuilder InSandStance => StanceValue.Eq((int) Stance.SandStance);
@@ -248,6 +297,8 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
             BloodStance,
             SandStance,
         }
+
+        public IConditionBuilder BypassSkillCooldown => FromIdentity(typeof(bool), UserSpecifiedValue(false)).IsTrue;
 
         public IStatBuilder IncreasesToSourceApplyToTarget(IStatBuilder source, IStatBuilder target)
             => new StatBuilder(StatFactory,
@@ -288,14 +339,5 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
                 }
             }
         }
-    }
-
-    internal class GemStatBuilders : StatBuildersBase, IGemStatBuilders
-    {
-        public GemStatBuilders(IStatFactory statFactory) : base(statFactory)
-        {
-        }
-
-        public IStatBuilder IncreaseSupportLevel => FromIdentity("Level of socketed support gems", typeof(int));
     }
 }

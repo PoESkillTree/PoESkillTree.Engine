@@ -7,6 +7,8 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Effects
     /// </summary>
     public interface IStunEffectBuilder : IAvoidableEffectBuilder
     {
+        new IDamageRelatedStatBuilder Duration { get; }
+
         /// <summary>
         /// Gets a stat representing the stun threshold modifier.
         /// </summary>

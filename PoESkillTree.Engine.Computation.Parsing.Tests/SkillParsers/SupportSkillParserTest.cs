@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Moq;
 using NUnit.Framework;
 using PoESkillTree.Engine.Computation.Builders;
@@ -28,7 +29,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (supportDefinition, supportSkill) = CreateBlasphemyDefinition();
             var sut = CreateSut(activeDefinition, supportDefinition);
 
-            var result = sut.Parse(activeSkill, supportSkill);
+            var result = Parse(sut, activeSkill, supportSkill);
 
             Assert.IsTrue(AnyModifierHasIdentity(result.Modifiers, "MainSkill.Has.Aura"));
         }
@@ -40,9 +41,9 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (supportDefinition, supportSkill) = CreateBlasphemyDefinition();
             var sut = CreateSut(activeDefinition, supportDefinition);
 
-            var result = sut.Parse(activeSkill, supportSkill);
+            var result = Parse(sut, activeSkill, supportSkill);
 
-            var modifier = GetFirstModifierWithIdentity(result.Modifiers, "Belt.0.Cost");
+            var modifier = GetFirstModifierWithIdentity(result.Modifiers, "Belt.0.0.Cost");
             Assert.AreEqual(Form.TotalOverride, modifier.Form);
             Assert.AreEqual(new NodeValue(42), modifier.Value.Calculate(null!));
         }
@@ -54,10 +55,10 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (supportDefinition, supportSkill) = CreateBlasphemyDefinition();
             var sut = CreateSut(activeDefinition, supportDefinition);
 
-            var result = sut.Parse(activeSkill, supportSkill);
+            var result = Parse(sut, activeSkill, supportSkill);
 
             var modifier = GetFirstModifierWithIdentity(result.Modifiers,
-                $"Belt.0.Type.{ActiveSkillType.ManaCostIsReservation}");
+                $"Belt.0.0.Type.{ActiveSkillType.ManaCostIsReservation}");
             Assert.AreEqual(new NodeValue(1), modifier.Value.Calculate(null!));
         }
 
@@ -72,7 +73,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var sut = CreateSut(activeDefinition, supportDefinition);
             var context = MockValueCalculationContext(activeSkill, false, isActiveSkill);
 
-            var result = sut.Parse(activeSkill, supportSkill);
+            var result = Parse(sut, activeSkill, supportSkill);
 
             var actualItemSlot =
                 GetValueForIdentity(result.Modifiers, "Blasphemy.ActiveSkillItemSlot").Calculate(context);
@@ -102,7 +103,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 ("Blasphemy.ActiveSkillItemSlot", isActiveSkill ? (double?) supportSkill.ItemSlot : null),
                 ("Blasphemy.ActiveSkillSocketIndex", 1));
 
-            var result = sut.Parse(activeSkill, supportSkill);
+            var result = Parse(sut, activeSkill, supportSkill);
 
             var actual = GetValueForIdentity(result.Modifiers, "Blasphemy.EffectOn(Character)").Calculate(context);
             Assert.AreEqual(expected, actual);
@@ -118,7 +119,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var sut = CreateSut(activeDefinition, supportDefinition);
             var context = MockValueCalculationContext(activeSkill, false, isActiveSkill);
 
-            var result = sut.Parse(activeSkill, supportSkill);
+            var result = Parse(sut, activeSkill, supportSkill);
 
             var actual = GetValueForIdentity(result.Modifiers, "Skills[Aura].Instances").Calculate(context);
             Assert.AreEqual(expected, actual);
@@ -131,19 +132,43 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (supportDefinition, supportSkill) = CreateBlasphemyDefinition();
             var sut = CreateSut(activeDefinition, supportDefinition);
 
-            var result = sut.Parse(activeSkill, supportSkill);
+            var result = Parse(sut, activeSkill, supportSkill);
 
             Assert.False(AnyModifierHasIdentity(result.Modifiers, "Skills[Aura].Instances"));
         }
 
         [Test]
-        public void ParseReturnsEmptyResultForDisabledActiveSkill()
+        public void ParseReturnsEmptyResultForDisabledActiveGem()
         {
-            var (activeDefinition, activeSkill) = CreateClarityDefinition(false);
+            var (activeDefinition, activeSkill) = CreateClarityDefinition(gemIsEnabled: false);
             var (supportDefinition, supportSkill) = CreateBlasphemyDefinition();
             var sut = CreateSut(activeDefinition, supportDefinition);
 
-            var result = sut.Parse(activeSkill, supportSkill);
+            var result = Parse(sut, activeSkill, supportSkill);
+
+            Assert.IsEmpty(result.Modifiers);
+        }
+
+        [Test]
+        public void ParseReturnsEmptyResultForDisabledSupportGem()
+        {
+            var (activeDefinition, activeSkill) = CreateClarityDefinition();
+            var (supportDefinition, supportSkill) = CreateBlasphemyDefinition(gemIsEnabled: false);
+            var sut = CreateSut(activeDefinition, supportDefinition);
+
+            var result = Parse(sut, activeSkill, supportSkill);
+
+            Assert.IsEmpty(result.Modifiers);
+        }
+
+        [Test]
+        public void ParseReturnsEmptyResultForDisabledActiveSkill()
+        {
+            var (activeDefinition, activeSkill) = CreateClarityDefinition(skillIsEnabled: false);
+            var (supportDefinition, supportSkill) = CreateBlasphemyDefinition();
+            var sut = CreateSut(activeDefinition, supportDefinition);
+
+            var result = Parse(sut, activeSkill, supportSkill);
 
             Assert.IsEmpty(result.Modifiers);
         }
@@ -152,12 +177,26 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         public void ParseReturnsEmptyResultForDisabledSupportSkill()
         {
             var (activeDefinition, activeSkill) = CreateClarityDefinition();
-            var (supportDefinition, supportSkill) = CreateBlasphemyDefinition(false);
+            var (supportDefinition, supportSkill) = CreateBlasphemyDefinition(skillIsEnabled: false);
             var sut = CreateSut(activeDefinition, supportDefinition);
 
-            var result = sut.Parse(activeSkill, supportSkill);
+            var result = Parse(sut, activeSkill, supportSkill);
 
             Assert.IsEmpty(result.Modifiers);
+        }
+
+        [Test]
+        public void ParseReturnsIsEnabledStatForEnabledSupportSkill()
+        {
+            var (activeDefinition, activeSkill) = CreateClarityDefinition();
+            var (supportDefinition, supportSkill) = CreateBlasphemyDefinition();
+            var sut = CreateSut(activeDefinition, supportDefinition);
+            var context = MockValueCalculationContextForInactiveSkill(activeSkill);
+
+            var (_, _, modifiers) = Parse(sut, activeSkill, supportSkill);
+
+            Assert.IsTrue(AnyModifierHasIdentity(modifiers, "Belt.1.0.IsEnabled"));
+            Assert.AreEqual((NodeValue?) true, GetValueForIdentity(modifiers, "Belt.1.0.IsEnabled").Calculate(context));
         }
 
         private static (SkillDefinition, Skill) CreateEnfeebleDefinition()
@@ -167,20 +206,20 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition();
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("Enfeeble", activeSkill, levels),
-                new Skill("Enfeeble", 1, 0, ItemSlot.Belt, 0, null));
+                CreateSkillFromGem("Enfeeble", 1, 0, 0));
         }
 
-        private static (SkillDefinition, Skill) CreateClarityDefinition(bool isEnabled = true)
+        private static (SkillDefinition, Skill) CreateClarityDefinition(bool gemIsEnabled = true, bool skillIsEnabled = true)
         {
             var activeSkill = CreateActiveSkillDefinition("Clarity", new[] { "aura" }, new[] { Keyword.Aura },
                 providesBuff: true);
-            var level = CreateLevelDefinition();
+            var level = CreateLevelDefinition(cooldown: 1200);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateActive("Clarity", activeSkill, levels),
-                new Skill("Clarity", 1, 0, ItemSlot.Belt, 0, null, isEnabled));
+                CreateSkillFromGem("Clarity", 1, 0, 0, gemIsEnabled, skillIsEnabled));
         }
 
-        private static (SkillDefinition, Skill) CreateBlasphemyDefinition(bool isEnabled = true)
+        private static (SkillDefinition, Skill) CreateBlasphemyDefinition(bool gemIsEnabled = true, bool skillIsEnabled = true)
         {
             var supportSkill = CreateSupportSkillDefinition(
                 addedActiveSkillTypes: new[]
@@ -190,7 +229,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition(manaCostOverride: 42, qualityPassiveStats: qualityPassiveStats);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateSupport("Blasphemy", supportSkill, levels),
-                new Skill("Blasphemy", 1, 20, ItemSlot.Belt, 1, null, isEnabled));
+                CreateSkillFromGem("Blasphemy", 1, 20, 1, gemIsEnabled, skillIsEnabled));
         }
 
         #endregion
@@ -204,7 +243,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var (supportDefinition, supportSkill) = CreatePhysicalToLightningDefinition();
             var sut = CreateSut(activeDefinition, supportDefinition);
 
-            var result = sut.Parse(activeSkill, supportSkill);
+            var result = Parse(sut, activeSkill, supportSkill);
 
             var modifiers = result.Modifiers;
             var expectedIdentity =
@@ -223,7 +262,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition(stats: stats);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateSupport("SupportPhysicalToLightning", CreateSupportSkillDefinition(), levels),
-                new Skill("SupportPhysicalToLightning", 1, 0, ItemSlot.Belt, 1, null));
+                CreateSkillFromItem("SupportPhysicalToLightning", 1, 0, 1));
         }
 
         #endregion
@@ -240,7 +279,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var sut = CreateSut(activeDefinition, supportDefinition);
             var context = MockValueCalculationContext(activeSkill, false, isActive);
 
-            var result = sut.Parse(activeSkill, supportSkill);
+            var result = Parse(sut, activeSkill, supportSkill);
 
             var modifier = GetValueForIdentity(result.Modifiers, "Enfeeble.ReservationPool");
             Assert.AreEqual(expected, modifier.Calculate(context));
@@ -256,7 +295,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var sut = CreateSut(activeDefinition, supportDefinition);
             var context = MockValueCalculationContext(activeSkill, isMain, false);
 
-            var result = sut.Parse(activeSkill, supportSkill);
+            var result = Parse(sut, activeSkill, supportSkill);
 
             var modifier = GetValueForIdentity(result.Modifiers, "Mana.Cost.ConvertTo(Life.Cost)");
             Assert.AreEqual(expected, modifier.Calculate(context));
@@ -271,7 +310,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition(stats: stats);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateSupport("SupportBloodMagic", CreateSupportSkillDefinition(), levels),
-                new Skill("SupportBloodMagic", 1, 0, ItemSlot.Belt, 1, null));
+                CreateSkillFromItem("SupportBloodMagic", 1, 0, 1));
         }
 
         #endregion
@@ -295,7 +334,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 p.Parse(EmptyParserParameter(source)) == EmptyParseResult);
             var sut = CreateSut(activeDefinition, supportDefinition, GetStatParser);
 
-            var result = sut.Parse(activeSkill, supportSkill);
+            var result = Parse(sut, activeSkill, supportSkill);
 
             Assert.IsTrue(AnyModifierHasIdentity(result.Modifiers, "PointBlank"));
 
@@ -314,10 +353,80 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             var level = CreateLevelDefinition(stats: stats);
             var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
             return (CreateSupport("SupportPointBlank", CreateSupportSkillDefinition(), levels),
-                new Skill("SupportPointBlank", 1, 0, ItemSlot.Belt, 1, null));
+                CreateSkillFromItem("SupportPointBlank", 1, 0, 1));
         }
 
         #endregion
+
+        #region Cast on Critical Strike
+
+        [Test]
+        public void CastOnCritTriggeredSetsCooldown()
+        {
+            var (activeDefinition, activeSkill) = CreateEnfeebleDefinition();
+            var (supportDefinition, supportSkill) = CreateCastOnCritTriggeredDefinition();
+            var context = MockValueCalculationContextForMainSkill(activeSkill,
+                ("MainSkill.Has.Triggered", 1));
+            var sut = CreateSut(activeDefinition, supportDefinition);
+
+            var result = Parse(sut, activeSkill, supportSkill);
+
+            var actual = GetValueForIdentity(result.Modifiers, "Cooldown").Calculate(context);
+            Assert.AreEqual((NodeValue?) supportDefinition.Levels.Values.First().Cooldown, actual);
+        }
+
+        [Test]
+        public void CastOnCritDoesNotSetCooldown()
+        {
+            var (activeDefinition, activeSkill) = CreateEnfeebleDefinition();
+            var (supportDefinition, supportSkill) = CreateCastOnCritDefinition();
+            var context = MockValueCalculationContextForMainSkill(activeSkill);
+            var sut = CreateSut(activeDefinition, supportDefinition);
+
+            var result = Parse(sut, activeSkill, supportSkill);
+
+            var actual = GetValueForIdentity(result.Modifiers, "Cooldown").Calculate(context);
+            Assert.IsNull(actual);
+        }
+
+        [Test]
+        public void CastOnCritTriggeredDoesNotOverrideCooldown()
+        {
+            var (activeDefinition, activeSkill) = CreateClarityDefinition();
+            var (supportDefinition, supportSkill) = CreateCastOnCritTriggeredDefinition();
+            var context = MockValueCalculationContextForMainSkill(activeSkill,
+                ("MainSkill.Has.Triggered", 1));
+            var sut = CreateSut(activeDefinition, supportDefinition);
+
+            var result = Parse(sut, activeSkill, supportSkill);
+
+            Assert.IsEmpty(GetModifiersWithIdentity(result.Modifiers, "Cooldown"));
+        }
+
+        private static (SkillDefinition, Skill) CreateCastOnCritDefinition()
+        {
+            var level = CreateLevelDefinition(cooldown: 1);
+            var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
+            return (CreateSupport("SupportCastOnCrit", CreateSupportSkillDefinition(), levels),
+                CreateSkillFromItem("SupportCastOnCrit", 1, 0, 1));
+        }
+
+        private static (SkillDefinition, Skill) CreateCastOnCritTriggeredDefinition()
+        {
+            var level = CreateLevelDefinition(cooldown: 1);
+            var levels = new Dictionary<int, SkillLevelDefinition> { { 1, level } };
+            return (CreateSupport("SupportCastOnCritTriggered", CreateSupportSkillDefinition(), levels),
+                CreateSkillFromItem("SupportCastOnCritTriggered", 1, 0, 1));
+        }
+
+        #endregion
+
+        private static Skill CreateSkillFromGem(
+            string skillId, int level, int quality, int socketIndex, bool gemIsEnabled = true, bool skillIsEnabled = true) =>
+            Skill.FromGem(new Gem(skillId, level, quality, ItemSlot.Belt, socketIndex, 0, gemIsEnabled), skillIsEnabled);
+
+        private static Skill CreateSkillFromItem(string skillId, int level, int quality, int skillIndex, bool isEnabled = true) =>
+            Skill.FromItem(skillId, level, quality, ItemSlot.Belt, skillIndex, isEnabled);
 
         private static SupportSkillParser CreateSut(SkillDefinition activeSkillDefinition, SkillDefinition supportSkillDefinition)
         {
@@ -340,5 +449,8 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 new BuilderFactories(new PassiveTreeDefinition(new PassiveNodeDefinition[0]), skillDefinitions);
             return new SupportSkillParser(skillDefinitions, builderFactories, statParserFactory);
         }
+
+        private static ParseResult Parse(IParser<SupportSkillParserParameter> sut, Skill activeSkill, Skill supportSkill) =>
+            sut.Parse(activeSkill, supportSkill, Entity.Character);
     }
 }

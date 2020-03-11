@@ -50,7 +50,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.JewelParsers
         {
             var item = new Item("metadataId", "itemName", 0, 0, default,
                 false, mods, isEnabled);
-            return new ItemParserParameter(item, itemSlot);
+            return new ItemParserParameter(item, itemSlot, Entity.Character);
         }
 
         private static ModifierSource.Global CreateGlobalSource(ItemParserParameter parserParam)

@@ -21,21 +21,24 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         public PartialSkillParseResult Parse(Skill mainSkill, Skill parsedSkill, SkillPreParseResult preParseResult)
         {
             var level = preParseResult.LevelDefinition;
-            var modifiers = new ModifierCollection(_builderFactories, preParseResult.LocalSource);
+            var modifiers = new ModifierCollection(_builderFactories, preParseResult.LocalSource, preParseResult.ModifierSourceEntity);
 
             if (level.ManaMultiplier is double multiplier)
             {
                 var moreMultiplier = multiplier * 100 - 100;
-                modifiers.AddGlobal(_builderFactories.StatBuilders.Pool.From(Pool.Mana).Cost,
-                    Form.More, moreMultiplier, preParseResult.IsMainSkill);
-                modifiers.AddGlobal(_builderFactories.SkillBuilders.FromId(mainSkill.Id).Reservation,
+                modifiers.AddGlobal(_builderFactories.SkillBuilders.FromId(mainSkill.Id).Cost,
                     Form.More, moreMultiplier, preParseResult.IsActiveSkill);
             }
 
             if (level.ManaCostOverride is int manaCostOverride)
             {
-                modifiers.AddGlobal(MetaStats.SkillBaseCost(mainSkill.ItemSlot, mainSkill.SocketIndex),
-                    Form.TotalOverride, manaCostOverride);
+                modifiers.AddGlobal(MetaStats.SkillBaseCost(mainSkill), Form.TotalOverride, manaCostOverride);
+            }
+
+            if (level.Cooldown is int cooldown && preParseResult.MainSkillDefinition.Levels[mainSkill.Level].Cooldown is null)
+            {
+                modifiers.AddGlobal(_builderFactories.StatBuilders.Cooldown, Form.BaseSet, cooldown,
+                    preParseResult.IsMainSkill.And(MetaStats.MainSkillHasKeyword(Keyword.Triggered).IsTrue));
             }
 
             return new PartialSkillParseResult(modifiers.Modifiers, new UntranslatedStat[0]);

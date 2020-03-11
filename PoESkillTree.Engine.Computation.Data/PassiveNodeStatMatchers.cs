@@ -10,14 +10,14 @@ using PoESkillTree.Engine.GameModel.PassiveTree;
 namespace PoESkillTree.Engine.Computation.Data
 {
     /// <summary>
-    /// <see cref="IStatMatchers"/> implementation that matches keystones by their name.
+    /// <see cref="IStatMatchers"/> implementation that matches passive nodes (keystones and notables) by their name.
     /// </summary>
-    public class KeystoneStatMatchers : StatMatchersBase
+    public class PassiveNodeStatMatchers : StatMatchersBase
     {
         private readonly IModifierBuilder _modifierBuilder;
         private readonly IReadOnlyList<PassiveNodeDefinition> _passives;
 
-        public KeystoneStatMatchers(
+        public PassiveNodeStatMatchers(
             IBuilderFactories builderFactories, IModifierBuilder modifierBuilder,
             IReadOnlyList<PassiveNodeDefinition> passives)
             : base(builderFactories)
@@ -26,10 +26,11 @@ namespace PoESkillTree.Engine.Computation.Data
         protected override IReadOnlyList<MatcherData> CreateCollection()
         {
             var collection = new FormAndStatMatcherCollection(_modifierBuilder, ValueFactory);
-            foreach (var keystone in _passives.Where(d => d.Type == PassiveNodeType.Keystone))
+            foreach (var node in _passives.Where(d => d.Type == PassiveNodeType.Keystone || d.Type == PassiveNodeType.Notable))
             {
-                collection.Add($"(you have )?{keystone.Name.ToLowerInvariant()}",
-                    TotalOverride, 1, PassiveTree.NodeSkilled(keystone.Id));
+                var prefix = node.Type == PassiveNodeType.Keystone ? "(allocates |you have )?" : "allocates ";
+                collection.Add($"{prefix}{node.Name.ToLowerInvariant()}",
+                    TotalOverride, 1, PassiveTree.NodeAllocated(node.Id));
             }
             return collection;
         }

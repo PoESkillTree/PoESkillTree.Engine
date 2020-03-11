@@ -9,10 +9,13 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
     /// </summary>
     public interface IPassiveTreeBuilders
     {
-        IStatBuilder NodeSkilled(ushort nodeId);
+        IStatBuilder NodeAllocated(ushort nodeId);
         IStatBuilder NodeEffectiveness(ushort nodeId);
+        IStatBuilder NodeSkillPointSpent(ushort nodeId);
 
         IStatBuilder ConnectsToClass(CharacterClass characterClass);
+
+        ValueBuilder AllocatedNodeInModifierSourceJewelRadiusCount { get; }
 
         ValueBuilder TotalInModifierSourceJewelRadius(IStatBuilder stat);
         ValueBuilder AllocatedInModifierSourceJewelRadius(IStatBuilder stat);

@@ -6,6 +6,7 @@ using PoESkillTree.Engine.Computation.Common.Builders;
 using PoESkillTree.Engine.Computation.Common.Builders.Damage;
 using PoESkillTree.Engine.Computation.Common.Builders.Modifiers;
 using PoESkillTree.Engine.Computation.Common.Builders.Stats;
+using PoESkillTree.Engine.Computation.Common.Builders.Values;
 using PoESkillTree.Engine.Computation.Common.Data;
 using PoESkillTree.Engine.Computation.Data.Base;
 using PoESkillTree.Engine.Computation.Data.Collections;
@@ -39,7 +40,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             // ailments
             { Ailment.Freeze, PercentLess, Stat.ActionSpeed, 100 },
             // buffs
-            { Buff.Fortify, PercentReduce, Damage.Taken.WithHits, 20 },
+            { Buff.Fortify, PercentLess, Damage.Taken.WithHits, 20 },
             { Buff.Maim, PercentReduce, Stat.MovementSpeed, 30 },
             { Buff.Intimidate, PercentIncrease, Damage.Taken, 10 },
             { Buff.Onslaught, PercentIncrease, Stat.CastRate, 20 },
@@ -60,6 +61,14 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             { Buff.Conflux.Elemental, BaseSet, Ailment.Ignite.Source(AnyDamageType), 1 },
             { Buff.Conflux.Elemental, BaseSet, Ailment.Shock.Source(AnyDamageType), 1 },
             { Buff.Conflux.Elemental, BaseSet, Ailment.Chill.Source(AnyDamageType), 1 },
+            { Buff.Rampage, PercentIncrease, Stat.MovementSpeed, (Buff.Rampage.StackCount.Value / 10).Floor() },
+            { Buff.Rampage, PercentIncrease, Damage, (2 * Buff.Rampage.StackCount.Value / 10).Floor() },
+            { Buff.Rampage, PercentIncrease, Stat.MovementSpeed.For(Entity.Minion), (Buff.Rampage.StackCount.Value / 10).Floor() },
+            { Buff.Rampage, PercentIncrease, Damage.For(Entity.Minion), (2 * Buff.Rampage.StackCount.Value / 10).Floor() },
+            { Buff.Withered, PercentIncrease, Chaos.Damage.Taken, 6 * Buff.Withered.StackCount.Value },
+            { Buff.Elusive, BaseAdd, Stat.Dodge.AttackChance, 20 },
+            { Buff.Elusive, BaseAdd, Stat.Dodge.SpellChance, 20 },
+            { Buff.Elusive, PercentIncrease, Stat.MovementSpeed, 40 },
         };
     }
 }

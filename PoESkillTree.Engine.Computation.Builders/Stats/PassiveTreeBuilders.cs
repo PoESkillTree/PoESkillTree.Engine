@@ -23,14 +23,22 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
             _tree = tree;
         }
 
-        public IStatBuilder NodeSkilled(ushort nodeId)
-            => FromIdentity($"{nodeId}.Skilled", typeof(bool));
+        public IStatBuilder NodeAllocated(ushort nodeId)
+            => FromIdentity($"{nodeId}.Allocated", typeof(bool));
 
         public IStatBuilder NodeEffectiveness(ushort nodeId)
             => FromIdentity($"{nodeId}.Effectiveness", typeof(bool));
 
+        public IStatBuilder NodeSkillPointSpent(ushort nodeId)
+            => FromIdentity($"{nodeId}.SkillPointSpent", typeof(bool));
+
         public IStatBuilder ConnectsToClass(CharacterClass characterClass)
             => FromIdentity($"{characterClass}.TreeConnectedTo", typeof(bool));
+
+        public ValueBuilder AllocatedNodeInModifierSourceJewelRadiusCount =>
+            new ValueBuilder(new ValueBuilderImpl(
+                ps => BuildInModifierSourceJewelRadiusValue(ps, _ => new ValueBuilder(new ValueBuilderImpl(1)), v => v),
+                c => AllocatedNodeInModifierSourceJewelRadiusCount));
 
         public ValueBuilder TotalInModifierSourceJewelRadius(IStatBuilder stat)
             => new ValueBuilder(new ValueBuilderImpl(
@@ -49,16 +57,19 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
                 c => UnallocatedInModifierSourceJewelRadius(stat.Resolve(c))));
 
         private IValue BuildInModifierSourceJewelRadiusValue(
-            BuildParameters parameters, IStatBuilder stat, Func<IValue, IValue> condition)
+            BuildParameters parameters, IStatBuilder stat, Func<IValue, IValue> condition) =>
+            BuildInModifierSourceJewelRadiusValue(parameters, d => stat.AsPassiveNodePropertyFor(d.Id).Value, condition);
+
+        private IValue BuildInModifierSourceJewelRadiusValue(
+            BuildParameters parameters, Func<PassiveNodeDefinition, ValueBuilder> value, Func<IValue, IValue> condition)
         {
             return GetNodesInRadius(parameters)
                 .Select(GetValue)
-                .Aggregate((l, r) => l + r)
+                .Aggregate(new ValueBuilder(new ValueBuilderImpl(0)), (l, r) => l + r)
                 .Build(parameters);
 
             ValueBuilder GetValue(PassiveNodeDefinition d)
-                => stat.AsPassiveNodePropertyFor(d.Id).Value
-                    .If(condition(NodeSkilled(d.Id).Value.Build(parameters)));
+                => value(d).If(condition(NodeAllocated(d.Id).Value.Build(parameters)));
         }
 
         public IStatBuilder MultipliedAttributeForNodesInModifierSourceJewelRadius(
@@ -80,7 +91,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
 
             IStatBuilder GetStatBuilder(PassiveNodeDefinition node)
                 => onlyIfSkilled
-                    ? NodeEffectiveness(node.Id).WithCondition(NodeSkilled(node.Id).IsSet)
+                    ? NodeEffectiveness(node.Id).WithCondition(NodeAllocated(node.Id).IsTrue)
                     : NodeEffectiveness(node.Id);
         }
 

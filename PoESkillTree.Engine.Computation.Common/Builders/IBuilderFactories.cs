@@ -47,6 +47,8 @@ namespace PoESkillTree.Engine.Computation.Common.Builders
 
         ISkillBuilders SkillBuilders { get; }
 
+        IGemTagBuilders GemTagBuilders { get; }
+
         IStatBuilders StatBuilders { get; }
 
         IValueBuilders ValueBuilders { get; }

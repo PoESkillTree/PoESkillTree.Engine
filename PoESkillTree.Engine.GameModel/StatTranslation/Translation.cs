@@ -63,7 +63,7 @@ namespace PoESkillTree.Engine.GameModel.StatTranslation
             foreach (var entry in _jsonTranslation.English)
             {
                 bool match = entry.Condition
-                    .EquiZip(values, (c, v) => c == null || (c.Min <= v && v <= c.Max))
+                    .EquiZip(values, (c, v) => c == null || Evaluate(c, v))
                     .All();
                 if (match)
                 {
@@ -74,6 +74,12 @@ namespace PoESkillTree.Engine.GameModel.StatTranslation
                 }
             }
             return null;
+        }
+
+        private static bool Evaluate(JsonCondition condition, int value)
+        {
+            var result = condition.Min <= value && value <= condition.Max;
+            return condition.IsNegated ? !result : result;
         }
 
         private string FormatEntry(JsonTranslationEntry entry, IReadOnlyList<int> values)

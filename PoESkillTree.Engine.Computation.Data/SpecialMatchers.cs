@@ -40,10 +40,6 @@ namespace PoESkillTree.Engine.Computation.Data
             new FormAndStatMatcherCollection(_modifierBuilder, ValueFactory)
             {
                 {
-                    @"\+# to level of socketed support gems",
-                    BaseAdd, Value, Gem.IncreaseSupportLevel
-                },
-                {
                     "ignore all movement penalties from armour",
                     TotalOverride, 0,
                     Stat.MovementSpeed.AsItemPropertyForSlot(ItemSlot.BodyArmour),
@@ -97,6 +93,11 @@ namespace PoESkillTree.Engine.Computation.Data
                     Flag.IncreasesToSourceApplyToTarget(Stat.Mine.Duration, Skills.ModifierSourceSkill.Buff.Duration)
                 },
                 {
+                    "increases and reductions to arrow speed also apply to this skill's area of effect",
+                    TotalOverride, 1,
+                    Flag.IncreasesToSourceApplyToTarget(Projectile.Speed, Stat.AreaOfEffect)
+                },
+                {
                     "({StatMatchers}) is doubled",
                     PercentMore, 100, Reference.AsStat
                 },
@@ -108,6 +109,43 @@ namespace PoESkillTree.Engine.Computation.Data
                 {
                     "maximum # stages",
                     BaseSet, Value, Stat.SkillStage.Maximum
+                },
+                {
+                    "supported skills can only be used with bows",
+                    TotalOverride, 0, Damage, Not(MainHand.Has(ItemClass.Bow))
+                },
+                {
+                    "supported skills can only be used with bows and wands",
+                    TotalOverride, 0, Damage, Not(Or(MainHand.Has(ItemClass.Bow), MainHand.Has(ItemClass.Wand)))
+                },
+                {
+                    "supported skills can only be used with axes and swords",
+                    TotalOverride, 0, Damage, Not(Or(MainHand.Has(Tags.Sword), MainHand.Has(Tags.Axe)))
+                },
+                {
+                    "supported skills can only be used with claws and daggers",
+                    TotalOverride, 0, Damage, Not(Or(MainHand.Has(Tags.Claw), MainHand.Has(Tags.Dagger)))
+                },
+                {
+                    "supported skills can only be used with maces, sceptres and staves",
+                    TotalOverride, 0, Damage, Not(Or(MainHand.Has(Tags.Mace), MainHand.Has(Tags.Sceptre), MainHand.Has(Tags.Staff)))
+                },
+                {
+                    "mines hinder enemies near them for 2 seconds when they land",
+                    TotalOverride, 1, Buff.Hinder.On(OpponentsOfSelf), Condition.Unique("Did a Mine Land near the Enemy in the past 2 seconds?")
+                },
+                // Socketed gem modifiers
+                {
+                    "socketed movement skills have no mana cost",
+                    TotalOverride, 0, Mana.Cost, And(Condition.MainSkillHasModifierSourceItemSlot, With(Keyword.Movement))
+                },
+                {
+                    "socketed gems have #% reduced mana reservation",
+                    BaseAdd, -Value, Gem.IncreasedReservationForModifierSourceItemSlot
+                },
+                {
+                    "socketed non-curse aura gems have #% increased aura effect",
+                    BaseAdd, Value, Gem.IncreasedNonCurseAuraEffectForModifierSourceItemSlot
                 },
                 // Jewels
                 {
@@ -200,6 +238,23 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 // skills
                 {
+                    // Bane
+                    "this curse is applied by bane",
+                    BaseAdd, 1, Stat.CursesLinkedToBane
+                },
+                {
+                    // Burning Arrow
+                    "if this skill ignites an enemy, it also inflicts a burning debuff debuff deals fire damage per second equal to #% of ignite damage per second",
+                    PercentMore, Value * Skills.ModifierSourceSkill.Buff.StackCount.For(MainOpponentOfSelf).Value, Damage.With(Ailment.Ignite)
+                },
+                {
+                    // Dark Pact
+                    "sacrifices #% of skeleton's life to deal that much chaos damage",
+                    BaseAdd,
+                    Value.AsPercentage * ValueFactory.If(Stat.MainSkillPart.Value.Eq(0)).Then(Life.Value).Else(Life.For(Entity.Minion).Value),
+                    Chaos.Damage.WithSkills(DamageSource.Spell)
+                },
+                {
                     // Dread Banner, War Banner
                     @"\+# second to base placed banner duration per stage",
                     BaseAdd, Value * Stat.BannerStage.Value, Stat.Duration
@@ -229,7 +284,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 {
                     // Freeze Mine
                     "enemies lose #% cold resistance while frozen",
-                    BaseSubtract, Value, Cold.Resistance.For(Enemy), Ailment.Freeze.IsOn(Enemy)
+                    BaseSubtract, Value, Cold.Resistance.For(MainOpponentOfSelf), Ailment.Freeze.IsOn(MainOpponentOfSelf)
                 },
                 {
                     // Infernal Blow
@@ -241,12 +296,12 @@ namespace PoESkillTree.Engine.Computation.Data
                 {
                     // Scorching Ray
                     "burning debuff can have a maximum of # stages",
-                    TotalOverride, Value, Skills.ModifierSourceSkill.Buff.StackCount.Maximum.For(Enemy)
+                    TotalOverride, Value, Skills.ModifierSourceSkill.Buff.StackCount.Maximum.For(OpponentsOfSelf)
                 },
                 {
                     "additional debuff stages add #% of damage",
                     PercentMore,
-                    ValueBuilderUtils.PerStatAfterFirst(Skills.ModifierSourceSkill.Buff.StackCount.For(Enemy))(Value),
+                    ValueBuilderUtils.PerStatAfterFirst(Skills.ModifierSourceSkill.Buff.StackCount.For(MainOpponentOfSelf))(Value),
                     Damage
                 },
                 {
@@ -260,6 +315,11 @@ namespace PoESkillTree.Engine.Computation.Data
                     PercentReduce, Value,
                     ApplyOnce(Stat.Duration, Stat.SecondaryDuration,
                         Ailment.Ignite.Duration, Ailment.Bleed.Duration, Ailment.Poison.Duration)
+                },
+                {
+                    // Temporal Chains
+                    "effects expire #% slower",
+                    PercentReduce, Value, Effect.ExpirationModifier
                 },
                 {
                     // Vaal Ground Slam
@@ -277,9 +337,27 @@ namespace PoESkillTree.Engine.Computation.Data
                     TotalOverride, 100, Buff.Maim.Chance.WithHits
                 },
                 {
+                    // Vaal Righteous Fire
+                    "sacrifices #% of your total energy shield and life deals #% of sacrificed energy shield and life as fire damage per second",
+                    BaseSet, Values[0].AsPercentage * Values[1].AsPercentage * (Life.Value + EnergyShield.Value),
+                    Fire.Damage.WithSkills(DamageSource.OverTime)
+                },
+                {
                     // Viper Strike
                     "each weapon hits separately if dual wielding, dealing #% less damage",
                     PercentLess, Value, Damage, OffHand.Has(Tags.Weapon)
+                },
+                {
+                    // Wave of Conviction
+                    "exposure applies #% to elemental resistance matching highest damage taken",
+                    (BaseSet, Value, Buff.Temporary(Lightning.Exposure, WaveOfConvictionExposureType.Lightning).For(OpponentsOfSelf)),
+                    (BaseSet, Value, Buff.Temporary(Cold.Exposure, WaveOfConvictionExposureType.Cold).For(OpponentsOfSelf)),
+                    (BaseSet, Value, Buff.Temporary(Fire.Exposure, WaveOfConvictionExposureType.Fire).For(OpponentsOfSelf))
+                },
+                {
+                    // Wild Strike
+                    "beams chain # times",
+                    BaseAdd, Value, Projectile.ChainCount, Stat.MainSkillPart.Value.Eq(5)
                 },
                 {
                     // Winter Orb
@@ -307,6 +385,10 @@ namespace PoESkillTree.Engine.Computation.Data
                     TotalOverride, 1, Projectile.Fork
                 },
                 {
+                    "projectiles from supported skills fork",
+                    TotalOverride, 1, Projectile.Fork
+                },
+                {
                     // Iron Will Support
                     "strength's damage bonus applies to spell damage as well for supported skills",
                     PercentIncrease,
@@ -320,9 +402,33 @@ namespace PoESkillTree.Engine.Computation.Data
                     Reference.AsDamageType.Resistance.For(Entity.Totem)
                 },
                 {
-                    // Multistrike Support
-                    "(first|second) repeat of supported skills deals #% more damage",
-                    PercentMore, Value / 3, Damage
+                    // (Awakened) Multistrike Support
+                    "(first|second|third) repeat of supported skills deals #% more damage",
+                    BaseAdd, Value, Stat.DamageMultiplierOverRepeatCycle
+                },
+                {
+                    // Ruthless Support
+                    "every third attack with supported melee attacks deals a ruthless blow",
+                    TotalOverride, 1/3D, Stat.RuthlessBlowPeriod
+                },
+                {
+                    "ruthless blows with supported skills deal #% more melee damage",
+                    PercentMore, Value * Stat.RuthlessBlowBonus, Damage.With(Keyword.Melee)
+                },
+                {
+                    "ruthless blows with supported skills deal #% more damage with bleeding caused by melee hits",
+                    PercentMore, Value * Stat.RuthlessBlowBonus, Damage.With(Ailment.Bleed), Condition.WithPart(Keyword.Melee)
+                },
+                {
+                    "ruthless blows with supported skills have a base stun duration of # seconds",
+                    PercentMore,
+                    (Value / Effect.Stun.Duration.With(DamageSource.Spell).ValueFor(NodeType.BaseSet)) * Stat.RuthlessBlowBonus,
+                    Effect.Stun.Duration
+                },
+                {
+                    // Awakened Spell Echo Support
+                    "final repeat of supported skills has #% chance to deal double damage",
+                    BaseAdd, Value / Stat.SkillRepeats.Value, Damage.ChanceToDouble
                 },
                 {
                     // Unleash Support
@@ -384,7 +490,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 {
                     // Runebinder
                     "you can have an additional brand attached to an enemy",
-                    BaseAdd, 1, Stat.AttachedBrands.For(Enemy).Maximum
+                    BaseAdd, 1, Stat.AttachedBrands.For(OpponentsOfSelf).Maximum
                 },
                 {
                     // Blood Magic
@@ -405,7 +511,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 // - Crimson Dance
                 {
                     "your bleeding does not deal extra damage while the enemy is moving",
-                    PercentLess, 50, Damage.With(Ailment.Bleed), Enemy.IsMoving
+                    PercentLess, 50, Damage.With(Ailment.Bleed), OpponentsOfSelf.IsMoving
                 },
                 {
                     "you can inflict bleeding on an enemy up to 8 times",
@@ -413,10 +519,6 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 // Ascendancies
                 // - Juggernaut
-                {
-                    "action speed cannot be modified to below base value",
-                    TotalOverride, 1, Stat.ActionSpeed.Minimum
-                },
                 {
                     "movement speed cannot be modified to below base value",
                     TotalOverride, 1, Stat.MovementSpeed.Minimum
@@ -470,8 +572,8 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "your curses can apply to hexproof enemies", TotalOverride, 1, Flag.IgnoreHexproof },
                 {
                     "enemies you curse have malediction",
-                    (PercentReduce, 10, Buff.Buff(Damage, Enemy), Buffs(Self, Enemy).With(Keyword.Curse).Any()),
-                    (PercentIncrease, 10, Buff.Buff(Damage.Taken, Enemy), Buffs(Self, Enemy).With(Keyword.Curse).Any())
+                    (PercentReduce, 10, Buff.Buff(Damage, OpponentsOfSelf), Buffs(Self, OpponentsOfSelf).With(Keyword.Curse).Any()),
+                    (PercentIncrease, 10, Buff.Buff(Damage.Taken, OpponentsOfSelf), Buffs(Self, OpponentsOfSelf).With(Keyword.Curse).Any())
                 },
                 // - Elementalist
                 {
@@ -524,7 +626,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 // - Gladiator
                 {
                     "attacks maim on hit against bleeding enemies",
-                    TotalOverride, 100, Buff.Maim.Chance.With(Keyword.Attack), Ailment.Bleed.IsOn(Enemy)
+                    TotalOverride, 100, Buff.Maim.Chance.With(Keyword.Attack), Ailment.Bleed.IsOn(MainOpponentOfSelf)
                 },
                 {
                     "your counterattacks deal double damage",
@@ -538,12 +640,12 @@ namespace PoESkillTree.Engine.Computation.Data
                 // - Champion
                 {
                     "your hits permanently intimidate enemies that are on full life",
-                    TotalOverride, 1, Buff.Intimidate.On(Enemy),
+                    TotalOverride, 1, Buff.Intimidate.On(OpponentsOfSelf),
                     Action.Unique("On Hit against a full life Enemy").On
                 },
                 {
                     "enemies taunted by you cannot evade attacks",
-                    TotalOverride, 0, Evasion.For(Enemy), Buff.Taunt.IsOn(Self, Enemy)
+                    TotalOverride, 0, Evasion.For(MainOpponentOfSelf), Buff.Taunt.IsOn(Self, MainOpponentOfSelf)
                 },
                 {
                     "gain adrenaline for # seconds when you reach low life if you do not have adrenaline",
@@ -555,7 +657,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 {
                     "impales you inflict last # additional hits",
-                    BaseAdd, Value, Buff.Impale.StackCount.For(Enemy).Maximum
+                    BaseAdd, Value, Buff.Impale.StackCount.For(OpponentsOfSelf).Maximum
                 },
                 {
                     "banner skills reserve no mana",
@@ -573,11 +675,6 @@ namespace PoESkillTree.Engine.Computation.Data
                     TotalOverride, Value, CriticalStrike.BaseChance.WithSkills(DamageSource.Attack), MainHand.HasItem
                 },
                 {
-                    "deal up to #% more melee damage to enemies, based on proximity",
-                    PercentMore, Stat.UniqueAmount("#% more Melee Damage from Slayer's Impact"),
-                    Damage.With(Keyword.Melee)
-                },
-                {
                     "your maximum endurance charges is equal to your maximum frenzy charges",
                     TotalOverride, Charge.Frenzy.Amount.Maximum.Value, Charge.Endurance.Amount.Maximum
                 },
@@ -593,7 +690,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 // - Hierophant
                 {
                     "enemies take #% increased damage for each of your brands attached to them",
-                    PercentIncrease, Value * Stat.AttachedBrands.For(Enemy).Maximum.Value, Damage.Taken.For(Enemy)
+                    PercentIncrease, Value * Stat.AttachedBrands.For(MainOpponentOfSelf).Maximum.Value, Damage.Taken.For(MainOpponentOfSelf)
                 },
                 // - Guardian
                 {
@@ -621,7 +718,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 {
                     "minions intimidate enemies for # seconds on hit",
-                    TotalOverride, 1, Buff.Intimidate.On(Enemy), Action.Hit.By(Entity.Minion).Recently
+                    TotalOverride, 1, Buff.Intimidate.On(OpponentsOfSelf), Action.Hit.By(Entity.Minion).Recently
                 },
                 {
                     "every # seconds, regenerate #% of life over one second",
@@ -631,7 +728,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 {
                     // Ascendant
                     "your critical strikes with attacks maim enemies",
-                    TotalOverride, 1, Buff.Maim.On(Enemy),
+                    TotalOverride, 1, Buff.Maim.On(OpponentsOfSelf),
                     And(Condition.WithPart(Keyword.Attack), CriticalStrike.On)
                 },
                 // - Trickster
@@ -641,7 +738,7 @@ namespace PoESkillTree.Engine.Computation.Data
                     BaseAdd, Values[0] * Values[1] / 100, Chaos.Invert.Damage.WithHits.GainAs(Chaos.Damage.WithHits)
                 },
                 // - Saboteur
-                { "nearby enemies are blinded", TotalOverride, 1, Buff.Blind.On(Enemy), Enemy.IsNearby },
+                { "nearby enemies are blinded", TotalOverride, 1, Buff.Blind.On(OpponentsOfSelf), OpponentsOfSelf.IsNearby },
                 // - Ascendant (generic)
                 {
                     "can allocate passives from the marauder's starting point",
@@ -705,9 +802,9 @@ namespace PoESkillTree.Engine.Computation.Data
                 IConditionBuilder EnemyHitBy(IDamageTypeBuilder damageType) =>
                     Action.HitWith(damageType).InPastXSeconds(ValueFactory.Create(5));
 
-                yield return (BaseAdd, Values[0], type.Resistance.For(Enemy), EnemyHitBy(type));
+                yield return (BaseAdd, Values[0], type.Resistance.For(OpponentsOfSelf), EnemyHitBy(type));
                 var otherTypes = ElementalDamageTypes.Except(type);
-                yield return (BaseSubtract, Values[1], type.Resistance.For(Enemy),
+                yield return (BaseSubtract, Values[1], type.Resistance.For(OpponentsOfSelf),
                     And(Not(EnemyHitBy(type)), otherTypes.Select(EnemyHitBy).ToArray()));
             }
         }
@@ -740,7 +837,7 @@ namespace PoESkillTree.Engine.Computation.Data
         {
             foreach (var type in ElementalDamageTypes)
             {
-                yield return (PercentIncrease, Value, type.Damage, Action.HitWith(type).By(Enemy).Recently);
+                yield return (PercentIncrease, Value, type.Damage, Action.HitWith(type).By(OpponentsOfSelf).Recently);
             }
         }
 
@@ -749,7 +846,7 @@ namespace PoESkillTree.Engine.Computation.Data
         {
             foreach (var type in ElementalDamageTypes)
             {
-                yield return (PercentReduce, Value, type.Damage.Taken, Action.HitWith(type).By(Enemy).Recently);
+                yield return (PercentReduce, Value, type.Damage.Taken, Action.HitWith(type).By(OpponentsOfSelf).Recently);
             }
         }
 
@@ -758,6 +855,14 @@ namespace PoESkillTree.Engine.Computation.Data
             None,
             AreaOfEffect,
             ElementalDamage
+        }
+
+        private enum WaveOfConvictionExposureType
+        {
+            None,
+            Lightning,
+            Cold,
+            Fire,
         }
     }
 }

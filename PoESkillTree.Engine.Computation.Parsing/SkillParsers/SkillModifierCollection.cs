@@ -13,7 +13,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
         public SkillModifierCollection(
             IBuilderFactories builderFactories, IConditionBuilder isMainSkill, ModifierSource.Local localModifierSource,
-            Entity modifierSourceEntity = Entity.Character)
+            Entity modifierSourceEntity)
             : base(builderFactories, localModifierSource, modifierSourceEntity)
             => _isMainSkill = isMainSkill;
 

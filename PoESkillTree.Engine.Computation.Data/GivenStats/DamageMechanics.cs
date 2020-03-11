@@ -4,52 +4,64 @@ using System.Linq;
 using EnumsNET;
 using PoESkillTree.Engine.Computation.Common;
 using PoESkillTree.Engine.Computation.Common.Builders;
-using PoESkillTree.Engine.Computation.Common.Builders.Conditions;
 using PoESkillTree.Engine.Computation.Common.Builders.Damage;
 using PoESkillTree.Engine.Computation.Common.Builders.Effects;
 using PoESkillTree.Engine.Computation.Common.Builders.Forms;
 using PoESkillTree.Engine.Computation.Common.Builders.Modifiers;
 using PoESkillTree.Engine.Computation.Common.Builders.Stats;
 using PoESkillTree.Engine.Computation.Common.Builders.Values;
-using PoESkillTree.Engine.Computation.Common.Data;
-using PoESkillTree.Engine.Computation.Data.Base;
 using PoESkillTree.Engine.Computation.Data.Collections;
 using PoESkillTree.Engine.GameModel;
 using PoESkillTree.Engine.Utils.Extensions;
 
 namespace PoESkillTree.Engine.Computation.Data.GivenStats
 {
-    public class DataDrivenMechanics : UsesConditionBuilders, IGivenStats
+    public class DamageMechanics : DataDrivenMechanicsBase
     {
-        private readonly IModifierBuilder _modifierBuilder;
         private readonly Lazy<IReadOnlyList<IIntermediateModifier>> _lazyGivenStats;
 
-        public DataDrivenMechanics(IBuilderFactories builderFactories, IModifierBuilder modifierBuilder)
-            : base(builderFactories)
+        public DamageMechanics(IBuilderFactories builderFactories, IModifierBuilder modifierBuilder)
+            : base(builderFactories, modifierBuilder)
         {
-            _modifierBuilder = modifierBuilder;
             _lazyGivenStats = new Lazy<IReadOnlyList<IIntermediateModifier>>(
                 () => CollectionToList(CreateCollection()));
         }
 
-        private IMetaStatBuilders MetaStats => BuilderFactories.MetaStatBuilders;
+        public override IReadOnlyList<Entity> AffectedEntities { get; } = new[] {GameModel.Entity.Character};
 
-        public IReadOnlyList<Entity> AffectedEntities { get; } = Enums.GetValues<Entity>().ToList();
-
-        public IReadOnlyList<string> GivenStatLines { get; } = new string[0];
-
-        public IReadOnlyList<IIntermediateModifier> GivenModifiers => _lazyGivenStats.Value;
+        public override IReadOnlyList<IIntermediateModifier> GivenModifiers => _lazyGivenStats.Value;
 
         private DataDrivenMechanicCollection CreateCollection()
-            => new DataDrivenMechanicCollection(_modifierBuilder, BuilderFactories)
+            => new DataDrivenMechanicCollection(ModifierBuilder, BuilderFactories)
             {
                 // skill hit damage
                 // - DPS
                 {
                     TotalOverride, MetaStats.SkillDpsWithHits,
                     MetaStats.AverageHitDamage.Value *
-                    ValueFactory.If(Stat.HitRate.IsSet).Then(Stat.HitRate.Value)
-                        .Else(MetaStats.CastRate.Value * MetaStats.SkillNumberOfHitsPerCast.Value)
+                    ValueFactory.If(MetaStats.SkillDpsWithHitsCalculationMode.Value.Eq((double) DpsCalculationMode.HitRateBased))
+                        .Then(Stat.HitRate.Value)
+                        .ElseIf(MetaStats.SkillDpsWithHitsCalculationMode.Value.Eq((double) DpsCalculationMode.CooldownBased))
+                        .Then(1000 / Stat.Cooldown.Value * Stat.SkillNumberOfHitsPerCast.Value)
+                        .ElseIf(MetaStats.SkillDpsWithHitsCalculationMode.Value.Eq((double) DpsCalculationMode.AverageCast))
+                        .Then(Stat.SkillNumberOfHitsPerCast.Value)
+                        .Else(MetaStats.CastRate.Value * Stat.SkillNumberOfHitsPerCast.Value)
+                },
+                {
+                    BaseSet, MetaStats.SkillDpsWithHitsCalculationMode,
+                    ValueFactory.If(Stat.HitRate.IsSet)
+                        .Then((double) DpsCalculationMode.HitRateBased)
+                        .ElseIf(And(Stat.Cooldown.Value > 0, Not(MetaStats.CanBypassSkillCooldown.IsTrue.And(Flag.BypassSkillCooldown))))
+                        .Then((double) DpsCalculationMode.CooldownBased)
+                        .ElseIf(And(MetaStats.SkillHitDamageSource.Value.Eq((double) DamageSource.Spell),
+                            Stat.BaseCastTime.With(DamageSource.Spell).Value <= 0))
+                        .Then((double) DpsCalculationMode.AverageCast)
+                        .ElseIf(And(MetaStats.SkillHitDamageSource.Value.Eq((double) DamageSource.Secondary),
+                            Stat.BaseCastTime.With(DamageSource.Secondary).Value <= 0))
+                        .Then((double) DpsCalculationMode.AverageCast)
+                        .ElseIf(MetaStats.MainSkillHasKeyword(GameModel.Skills.Keyword.Triggered).IsTrue)
+                        .Then((double) DpsCalculationMode.AverageCast)
+                        .Else((double) DpsCalculationMode.CastRateBased)
                 },
                 // - average damage
                 {
@@ -108,35 +120,57 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                     dt => MetaStats.EnemyResistanceAgainstNonCrits(dt),
                     dt => DamageTaken(dt).WithHits.For(Enemy),
                     dt => DamageMultiplierWithNonCrits(dt).WithHits,
-                    (_, resistance, damageTaken, damageMulti)
-                        => DamageTakenMultiplier(resistance, damageTaken) * damageMulti.Value.AsPercentage
+                    _ => MetaStats.EffectiveImpaleDamageMultiplierAgainstNonCrits,
+                    (dt, resistance, damageTaken, damageMulti, impaleMulti) =>
+                        ((1 - resistance.Value.AsPercentage) + impaleMulti.Value) * damageTaken.Value * damageMulti.Value.AsPercentage
                 },
                 {
                     BaseSet, dt => MetaStats.EffectiveDamageMultiplierWithCrits(dt).WithHits,
                     dt => MetaStats.EnemyResistanceAgainstCrits(dt),
                     dt => DamageTaken(dt).WithHits.For(Enemy),
                     dt => DamageMultiplierWithCrits(dt).WithHits,
+                    _ => MetaStats.EffectiveImpaleDamageMultiplierAgainstNonCrits,
                     _ => CriticalStrike.Multiplier.WithHits,
-                    (_, resistance, damageTaken, damageMulti, critMulti)
-                        => DamageTakenMultiplier(resistance, damageTaken) * damageMulti.Value.AsPercentage
-                                                                          * critMulti.Value.AsPercentage
+                    (_, resistance, damageTaken, damageMulti, impaleMulti, critMulti) =>
+                        ((1 - resistance.Value.AsPercentage) + impaleMulti.Value) * damageTaken.Value * damageMulti.Value.AsPercentage
+                        * EffectiveCriticalStrikeMultiplier(critMulti)
                 },
                 // - enemy resistance against crit/non-crit hits per source and type
                 {
-                    TotalOverride, dt => MetaStats.EnemyResistanceAgainstNonCrits(dt),
+                    BaseSet, dt => MetaStats.EnemyResistanceAgainstNonCrits(dt),
                     dt => DamageTypeBuilders.From(dt).IgnoreResistanceWithNonCrits,
                     dt => DamageTypeBuilders.From(dt).PenetrationWithNonCrits,
-                    (dt, ignoreResistance, penetration)
-                        => ValueFactory.If(ignoreResistance.IsSet).Then(0)
-                            .Else(DamageTypeBuilders.From(dt).Resistance.For(Enemy).Value - penetration.Value)
+                    _ => MetaStats.EnemyResistanceFromArmourAgainstNonCrits,
+                    EnemyResistanceAgainstHits
                 },
+                { TotalOverride, MetaStats.EnemyResistanceAgainstNonCrits(DamageType.Physical).Minimum, 0 },
+                { TotalOverride, MetaStats.EnemyResistanceAgainstNonCrits(DamageType.Physical).Maximum, 100 },
                 {
-                    TotalOverride, dt => MetaStats.EnemyResistanceAgainstCrits(dt),
+                    BaseSet, dt => MetaStats.EnemyResistanceAgainstCrits(dt),
                     dt => DamageTypeBuilders.From(dt).IgnoreResistanceWithCrits,
                     dt => DamageTypeBuilders.From(dt).PenetrationWithCrits,
-                    (dt, ignoreResistance, penetration)
-                        => ValueFactory.If(ignoreResistance.Value.Eq(1)).Then(0)
-                            .Else(DamageTypeBuilders.From(dt).Resistance.For(Enemy).Value - penetration.Value)
+                    _ => MetaStats.EnemyResistanceFromArmourAgainstCrits,
+                    EnemyResistanceAgainstHits
+                },
+                { TotalOverride, MetaStats.EnemyResistanceAgainstCrits(DamageType.Physical).Minimum, 0 },
+                { TotalOverride, MetaStats.EnemyResistanceAgainstCrits(DamageType.Physical).Maximum, 100 },
+                // - enemy resistance from armour against crit/non-crit hits per source (physical damage only)
+                {
+                    TotalOverride, MetaStats.EnemyResistanceFromArmourAgainstNonCrits,
+                    Physical.Damage.WithHits,
+                    DamageMultiplierWithNonCrits(DamageType.Physical).WithHits,
+                    (damage, multi) =>
+                        PhysicalDamageReductionFromArmour(Armour.For(Enemy).Value,
+                            damage.Value * multi.Value.AsPercentage)
+                },
+                {
+                    TotalOverride, MetaStats.EnemyResistanceFromArmourAgainstCrits,
+                    Physical.Damage.WithHits,
+                    DamageMultiplierWithCrits(DamageType.Physical).WithHits,
+                    CriticalStrike.Multiplier.WithHits,
+                    (damage, multi, critMulti) =>
+                        PhysicalDamageReductionFromArmour(Armour.For(Enemy).Value,
+                            damage.Value * multi.Value.AsPercentage * EffectiveCriticalStrikeMultiplier(critMulti))
                 },
 
                 // skill damage over time
@@ -228,47 +262,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                 },
                 { BaseAdd, MetaStats.CastRate, Stat.AdditionalCastRate.Value },
                 { TotalOverride, MetaStats.CastTime, MetaStats.CastRate.Value.Invert },
-                { PercentMore, Stat.MovementSpeed, ActionSpeedValueForPercentMore },
-                {
-                    PercentMore, Stat.CastRate, ActionSpeedValueForPercentMore,
-                    Not(Or(With(Keyword.Totem), With(Keyword.Trap), With(Keyword.Mine)))
-                },
-                { PercentMore, Stat.Totem.Speed, ActionSpeedValueForPercentMore },
-                { PercentMore, Stat.Trap.Speed, ActionSpeedValueForPercentMore },
-                { PercentMore, Stat.Mine.Speed, ActionSpeedValueForPercentMore },
-                // resistances/damage reduction
-                { BaseSet, MetaStats.ResistanceAgainstHits(DamageType.Physical), Physical.Resistance.Value },
-                {
-                    BaseAdd, MetaStats.ResistanceAgainstHits(DamageType.Physical),
-                    100 * Armour.Value /
-                    (Armour.Value + 10 * Physical.Damage.WithSkills.With(AttackDamageHand.MainHand).For(Enemy).Value)
-                },
-                { BaseSet, MetaStats.ResistanceAgainstHits(DamageType.Physical).Maximum, 90 },
-                { TotalOverride, MetaStats.ResistanceAgainstHits(DamageType.Lightning), Lightning.Resistance.Value },
-                { TotalOverride, MetaStats.ResistanceAgainstHits(DamageType.Cold), Cold.Resistance.Value },
-                { TotalOverride, MetaStats.ResistanceAgainstHits(DamageType.Fire), Fire.Resistance.Value },
-                { TotalOverride, MetaStats.ResistanceAgainstHits(DamageType.Chaos), Chaos.Resistance.Value },
-                {
-                    BaseAdd, dt => DamageTypeBuilders.From(dt).Resistance,
-                    dt => DamageTypeBuilders.From(dt).Exposure.Value
-                },
-                // damage mitigation (1 - (1 - resistance / 100) * damage taken)
-                {
-                    TotalOverride, MetaStats.MitigationAgainstHits,
-                    dt => 1 - DamageTakenMultiplier(MetaStats.ResistanceAgainstHits(dt),
-                              DamageTaken(dt).WithSkills(DamageSource.Secondary))
-                },
-                {
-                    TotalOverride, MetaStats.MitigationAgainstDoTs,
-                    dt => 1 - DamageTakenMultiplier(DamageTypeBuilders.From(dt).Resistance,
-                              DamageTaken(dt).WithSkills(DamageSource.OverTime))
-                },
-                // chance to hit/evade
-                {
-                    BaseSet, Evasion.Chance,
-                    100 - ChanceToHitValue(Stat.Accuracy.With(AttackDamageHand.MainHand).For(Enemy), Evasion,
-                        Buff.Blind.IsOn(Enemy))
-                },
+                // chance to hit
                 {
                     BaseSet, Stat.ChanceToHit.With(AttackDamageHand.MainHand),
                     ChanceToHitValue(Stat.Accuracy.With(AttackDamageHand.MainHand), Evasion.For(Enemy),
@@ -278,21 +272,6 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                     BaseSet, Stat.ChanceToHit.With(AttackDamageHand.OffHand),
                     ChanceToHitValue(Stat.Accuracy.With(AttackDamageHand.OffHand), Evasion.For(Enemy),
                         Buff.Blind.IsOn(Self))
-                },
-                // chance to avoid
-                {
-                    TotalOverride, MetaStats.ChanceToAvoidMeleeAttacks,
-                    100 - 100 * (FailureProbability(Evasion.ChanceAgainstMeleeAttacks) *
-                                 FailureProbability(Stat.Dodge.AttackChance) * FailureProbability(Block.AttackChance))
-                },
-                {
-                    TotalOverride, MetaStats.ChanceToAvoidProjectileAttacks,
-                    100 - 100 * (FailureProbability(Evasion.ChanceAgainstProjectileAttacks) *
-                                 FailureProbability(Stat.Dodge.AttackChance) * FailureProbability(Block.AttackChance))
-                },
-                {
-                    TotalOverride, MetaStats.ChanceToAvoidSpells,
-                    100 - 100 * (FailureProbability(Stat.Dodge.SpellChance) * FailureProbability(Block.SpellChance))
                 },
                 // crit
                 {
@@ -313,14 +292,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                     TotalOverride, MetaStats.EffectiveCritChance.With(DamageSource.Secondary),
                     CalculateLuckyCriticalStrikeChance(CriticalStrike.Chance.With(DamageSource.Secondary))
                 },
-                // pools
-                {
-                    BaseAdd, p => Stat.Pool.From(p).Regen,
-                    p => MetaStats.RegenTargetPoolValue(p) * Stat.Pool.From(p).Regen.Percent.Value.AsPercentage
-                },
-                { TotalOverride, MetaStats.EffectiveRegen, p => p.Regen.Value * p.RecoveryRate.Value },
-                { TotalOverride, MetaStats.EffectiveRecharge, p => p.Recharge.Value * p.RecoveryRate.Value },
-                { TotalOverride, MetaStats.RechargeStartDelay, p => 2 / p.Recharge.Start.Value },
+                // leech
                 { TotalOverride, MetaStats.EffectiveLeechRate, p => p.Leech.Rate.Value * p.RecoveryRate.Value },
                 {
                     TotalOverride, MetaStats.AbsoluteLeechRate,
@@ -333,26 +305,9 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                 {
                     TotalOverride, MetaStats.TimeToReachLeechRateLimit,
                     p => p.Leech.RateLimit.Value / p.Leech.Rate.Value /
-                         (MetaStats.CastRate.Value * MetaStats.SkillNumberOfHitsPerCast.Value)
+                         (MetaStats.CastRate.Value * Stat.SkillNumberOfHitsPerCast.Value)
                 },
-                // flasks
-                { PercentMore, Flask.LifeRecovery, Flask.Effect.Value * 100 },
-                { PercentMore, Flask.ManaRecovery, Flask.Effect.Value * 100 },
-                { PercentMore, Flask.LifeRecovery, Flask.LifeRecoverySpeed.Value * 100 },
-                { PercentMore, Flask.ManaRecovery, Flask.ManaRecoverySpeed.Value * 100 },
                 // ailments
-                {
-                    TotalOverride, MetaStats.AilmentDealtDamageType(Common.Builders.Effects.Ailment.Ignite),
-                    (int) DamageType.Fire
-                },
-                {
-                    TotalOverride, MetaStats.AilmentDealtDamageType(Common.Builders.Effects.Ailment.Bleed),
-                    (int) DamageType.Physical
-                },
-                {
-                    TotalOverride, MetaStats.AilmentDealtDamageType(Common.Builders.Effects.Ailment.Poison),
-                    (int) DamageType.Chaos
-                },
                 {
                     TotalOverride, MetaStats.AilmentCombinedEffectiveChance,
                     ailment => CombineSource(MetaStats.AilmentEffectiveChance(ailment), CombineHandsByAverage)
@@ -371,23 +326,9 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                     TotalOverride, MetaStats.AilmentChanceWithCrits,
                     ailment => Ailment.From(ailment).Chance,
                     (ailment, ailmentChance) => ValueFactory
-                        .If(Ailment.From(ailment).CriticalStrikesAlwaysInflict.IsSet).Then(100)
+                        .If(Ailment.From(ailment).CriticalStrikesAlwaysInflict.IsTrue).Then(100)
                         .Else(ailmentChance.Value)
                 },
-                { TotalOverride, Ailment.Chill.On(Self), 1, Ailment.Freeze.IsOn(Self) },
-                {
-                    PercentIncrease, Ailment.Shock.AddStat(Damage.Taken), MetaStats.IncreasedDamageTakenFromShocks.Value
-                },
-                { TotalOverride, MetaStats.IncreasedDamageTakenFromShocks.Maximum, 50 },
-                { TotalOverride, MetaStats.IncreasedDamageTakenFromShocks.Minimum, 1 },
-                {
-                    PercentReduce, Ailment.Chill.AddStat(Stat.ActionSpeed),
-                    MetaStats.ReducedActionSpeedFromChill.Value
-                },
-                { TotalOverride, MetaStats.ReducedActionSpeedFromChill.Maximum, 30 },
-                { TotalOverride, MetaStats.ReducedActionSpeedFromChill.Minimum, 1 },
-                { BaseSet, a => Ailment.From(a).TickRateModifier, a => ValueFactory.Create(1) },
-                { PercentMore, a => Ailment.From(a).Duration, a => 100 / Ailment.From(a).TickRateModifier.Value },
                 // - AilmentEffectiveInstances
                 {
                     TotalOverride, MetaStats.AilmentEffectiveInstances(Common.Builders.Effects.Ailment.Ignite),
@@ -400,57 +341,79 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                 {
                     TotalOverride, MetaStats.AilmentEffectiveInstances(Common.Builders.Effects.Ailment.Poison),
                     Ailment.Poison.Duration.Value * MetaStats.CastRate.Value *
-                    MetaStats.SkillNumberOfHitsPerCast.Value *
+                    Stat.SkillNumberOfHitsPerCast.Value *
                     CombineSource(MetaStats.AilmentEffectiveChance(Common.Builders.Effects.Ailment.Poison),
                         CombineHandsForAilmentEffectiveInstances(Common.Builders.Effects.Ailment.Poison))
                 },
-                // buffs
+                // Impale
                 {
-                    PercentMore,
-                    MetaStats.EffectiveDamageMultiplierWithNonCrits(DamageType.Physical).WithSkills,
+                    TotalOverride, MetaStats.EffectiveImpaleDamageMultiplierAgainstNonCrits,
+                    MetaStats.ImpaleDamageMultiplier,
+                    MetaStats.EnemyResistanceAgainstNonCritImpales,
+                    (multi, resistance) => multi.Value * (1 - resistance.Value.AsPercentage)
+                },
+                {
+                    TotalOverride, MetaStats.EffectiveImpaleDamageMultiplierAgainstCrits,
+                    MetaStats.ImpaleDamageMultiplier,
+                    MetaStats.EnemyResistanceAgainstCritImpales,
+                    (multi, resistance) => multi.Value * (1 - resistance.Value.AsPercentage)
+                },
+                {
+                    TotalOverride, MetaStats.ImpaleDamageMultiplier,
                     Buff.Impale.Chance,
                     chance => ValueFactory.If(Buff.Impale.IsOn(Self, Enemy))
-                        .Then(10 * Buff.Impale.EffectOn(Enemy).Value * Buff.Impale.StackCount.For(Enemy).Value
+                        .Then(MetaStats.ImpaleRecordedDamage.Value * Buff.Impale.StackCount.For(Enemy).Value
                               * chance.WithCondition(Hit.On).Value.AsPercentage)
                         .Else(0)
                 },
                 {
-                    PercentMore,
-                    MetaStats.EffectiveDamageMultiplierWithCrits(DamageType.Physical).WithSkills,
-                    Buff.Impale.Chance,
-                    chance => ValueFactory.If(Buff.Impale.IsOn(Self, Enemy))
-                        .Then(10 * Buff.Impale.EffectOn(Enemy).Value * Buff.Impale.StackCount.For(Enemy).Value
-                              * chance.WithCondition(Hit.On).Value.AsPercentage)
-                        .Else(0)
+                    BaseSet, MetaStats.EnemyResistanceAgainstNonCritImpales,
+                    Physical.Damage.WithHits,
+                    DamageMultiplierWithNonCrits(DamageType.Physical).WithHits,
+                    (damage, multi) =>
+                        DamageTypeBuilders.From(DamageType.Physical).Resistance.For(Enemy).Value
+                        + PhysicalDamageReductionFromArmour(Armour.For(Enemy).Value,
+                            MetaStats.ImpaleRecordedDamage.Value * damage.Value * multi.Value.AsPercentage)
+                        - Buff.Impale.Penetration.Value
                 },
+                {
+                    BaseSet, MetaStats.EnemyResistanceAgainstCritImpales,
+                    Physical.Damage.WithHits,
+                    DamageMultiplierWithCrits(DamageType.Physical).WithHits,
+                    CriticalStrike.Multiplier.WithHits,
+                    (damage, multi, critMulti) =>
+                        DamageTypeBuilders.From(DamageType.Physical).Resistance.For(Enemy).Value
+                        + PhysicalDamageReductionFromArmour(Armour.For(Enemy).Value,
+                            MetaStats.ImpaleRecordedDamage.Value * damage.Value * multi.Value.AsPercentage * EffectiveCriticalStrikeMultiplier(critMulti))
+                        - Buff.Impale.Penetration.Value
+                },
+                { TotalOverride, MetaStats.EnemyResistanceAgainstNonCritImpales.Minimum, 0 },
+                { TotalOverride, MetaStats.EnemyResistanceAgainstNonCritImpales.Maximum, 100 },
+                { TotalOverride, MetaStats.ImpaleRecordedDamage, 0.1 * Buff.Impale.EffectOn(Enemy).Value },
                 { TotalOverride, Buff.Impale.Chance.WithCondition(Hit.On).Maximum, 100 },
                 // stun (see https://pathofexile.gamepedia.com/Stun)
                 { PercentMore, Effect.Stun.Duration, 100 / Effect.Stun.Recovery.For(Enemy).Value - 100 },
-                {
-                    TotalOverride, MetaStats.EffectiveStunThreshold,
-                    Effect.Stun.Threshold, EffectiveStunThresholdValue
-                },
                 {
                     BaseSet, Effect.Stun.Chance,
                     MetaStats.AverageDamage.WithHits, MetaStats.EffectiveStunThreshold.For(Enemy),
                     (damage, threshold)
                         => 200 * damage.Value / (Life.For(Enemy).ValueFor(NodeType.Subtotal) * threshold.Value)
                 },
-                {
-                    TotalOverride, MetaStats.StunAvoidanceWhileCasting,
-                    1 -
-                    (1 - Effect.Stun.Avoidance.Value) * (1 - Effect.Stun.ChanceToAvoidInterruptionWhileCasting.Value)
-                },
                 // flags
                 {
                     PercentMore, Damage.WithSkills(DamageSource.Attack).With(Keyword.Projectile),
                     30 * ValueFactory.LinearScale(Projectile.TravelDistance, (35, 0), (70, 1)),
-                    Flag.FarShot.IsSet
+                    Flag.FarShot.IsTrue
+                },
+                // repeats
+                { BaseSet, Stat.SkillRepeats, 0 },
+                {
+                    PercentMore, Damage,
+                    ValueFactory.If(Stat.SkillRepeats.Value.Eq(0)).Then(0)
+                        .Else(Stat.DamageMultiplierOverRepeatCycle.Value.AsPercentage / Stat.SkillRepeats.Value)
                 },
                 // other
-                { PercentMore, Stat.Radius, Stat.AreaOfEffect.Value.Select(Math.Sqrt, v => $"Sqrt({v})") },
-                { PercentMore, Stat.Cooldown, 100 - 100 * Stat.CooldownRecoverySpeed.Value.Invert },
-                { BaseSet, MetaStats.SkillNumberOfHitsPerCast, 1 },
+                { BaseSet, Stat.SkillNumberOfHitsPerCast, 1 },
                 { BaseSet, Stat.MainSkillPart, 0 },
             };
 
@@ -463,15 +426,21 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                 critDamage.Value.Average, critChance.Value * critAilmentChance.Value.AsPercentage);
         }
 
+        private ValueBuilder EnemyResistanceAgainstHits(
+            DamageType dt, IStatBuilder ignoreResistance, IStatBuilder penetration, IStatBuilder resistanceFromArmour)
+        {
+            var resistance = DamageTypeBuilders.From(dt).Resistance.For(Enemy).Value - penetration.Value;
+            if (dt == DamageType.Physical)
+            {
+                resistance += resistanceFromArmour.Value;
+            }
+            return ValueFactory.If(ignoreResistance.IsTrue).Then(0)
+                .Else(resistance);
+        }
+
         private ValueBuilder EnemyDamageTakenMultiplier(DamageType resistanceType, IStatBuilder damageTaken)
             => DamageTakenMultiplier(DamageTypeBuilders.From(resistanceType).Resistance.For(Enemy),
                 damageTaken.For(Enemy));
-
-        private static ValueBuilder DamageTakenMultiplier(IStatBuilder resistance, IStatBuilder damageTaken)
-            => (1 - resistance.Value.AsPercentage) * damageTaken.Value;
-
-        private IDamageRelatedStatBuilder DamageTaken(DamageType damageType)
-            => DamageTypeBuilders.From(damageType).Damage.Taken;
 
         private IDamageRelatedStatBuilder DamageMultiplierWithCrits(DamageType damageType)
             => DamageTypeBuilders.From(damageType).DamageMultiplierWithCrits;
@@ -479,30 +448,14 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
         private IDamageRelatedStatBuilder DamageMultiplierWithNonCrits(DamageType damageType)
             => DamageTypeBuilders.From(damageType).DamageMultiplierWithNonCrits;
 
-        private ValueBuilder ActionSpeedValueForPercentMore => (Stat.ActionSpeed.Value - 1) * 100;
-
-        private ValueBuilder ChanceToHitValue(
-            IStatBuilder accuracyStat, IStatBuilder evasionStat, IConditionBuilder isBlinded)
+        private IValueBuilder EffectiveCriticalStrikeMultiplier(IStatBuilder critMultiStat)
         {
-            var accuracy = accuracyStat.Value;
-            var evasion = evasionStat.Value;
-            var blindMultiplier = ValueFactory.If(isBlinded).Then(0.5).Else(1);
-            return 100 * blindMultiplier * 1.15 * accuracy /
-                   (accuracy + (evasion / 4).Select(d => Math.Pow(d, 0.8), v => $"{v}^0.8"));
+            var critMulti = critMultiStat.Value.AsPercentage;
+            return ValueFactory.If(critMulti > 1)
+                .Then(1 + (critMulti - 1) * CriticalStrike.ExtraDamageTaken.For(Enemy).Value)
+                .Else(critMulti);
         }
 
-        private static ValueBuilder FailureProbability(IStatBuilder percentageChanceStat)
-            => 1 - percentageChanceStat.Value.AsPercentage;
-
-        private IValueBuilder EffectiveStunThresholdValue(IStatBuilder stunThresholdStat)
-        {
-            // If stun threshold is less than 25%, it is scaled up.
-            // See https://pathofexile.gamepedia.com/Stun#Stun_threshold
-            var stunThreshold = stunThresholdStat.Value;
-            return ValueFactory
-                .If(stunThreshold >= 0.25).Then(stunThreshold)
-                .Else(0.25 - 0.25 * (0.25 - stunThreshold) / (0.5 - stunThreshold));
-        }
 
         private IReadOnlyList<IIntermediateModifier> CollectionToList(DataDrivenMechanicCollection collection)
         {
@@ -558,7 +511,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                 foreach (var damageType in Enums.GetValues<DamageType>())
                 {
                     collection.Add(TotalOverride, MetaStats.Damage(damageType).With(ailmentBuilder), 0,
-                        ailmentBuilder.Source(DamageTypeBuilders.From(damageType)).IsSet.Not);
+                        ailmentBuilder.Source(DamageTypeBuilders.From(damageType)).IsTrue.Not);
                 }
             }
         }
@@ -607,7 +560,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
         private ValueBuilder CalculateLuckyCriticalStrikeChance(IStatBuilder critChance)
         {
             var critValue = critChance.Value.AsPercentage;
-            return ValueFactory.If(Flag.CriticalStrikeChanceIsLucky.IsSet)
+            return ValueFactory.If(Flag.CriticalStrikeChanceIsLucky.IsTrue)
                 .Then(1 - (1 - critValue) * (1 - critValue))
                 .Else(critValue);
         }
@@ -683,7 +636,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             var usesOh = SkillUsesHandAsMultiplier(AttackDamageHand.OffHand);
             var sumOfHands = statToCombine.With(AttackDamageHand.MainHand).Value * usesMh +
                              statToCombine.With(AttackDamageHand.OffHand).Value * usesOh;
-            return ValueFactory.If(MetaStats.SkillDoubleHitsWhenDualWielding.IsSet)
+            return ValueFactory.If(MetaStats.SkillDoubleHitsWhenDualWielding.IsTrue)
                 .Then(sumOfHands)
                 .Else(sumOfHands / (usesMh + usesOh));
         }
@@ -693,6 +646,6 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             => (left * leftWeight + right * rightWeight) / (leftWeight + rightWeight);
 
         private ValueBuilder SkillUsesHandAsMultiplier(AttackDamageHand hand)
-            => ValueFactory.If(MetaStats.SkillUsesHand(hand).IsSet).Then(1).Else(0);
+            => ValueFactory.If(MetaStats.SkillUsesHand(hand).IsTrue).Then(1).Else(0);
     }
 }

@@ -25,7 +25,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
         public PartialSkillParseResult Parse(Skill mainSkill, Skill parsedSkill, SkillPreParseResult preParseResult)
         {
-            _parsedModifiers = new ModifierCollection(_builderFactories, preParseResult.LocalSource);
+            _parsedModifiers = new ModifierCollection(_builderFactories, preParseResult.LocalSource, preParseResult.ModifierSourceEntity);
             _preParseResult = preParseResult;
             var isActiveSkill = preParseResult.IsActiveSkill;
 
@@ -33,6 +33,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 Form.BaseSet, (double) parsedSkill.ItemSlot, isActiveSkill);
             _parsedModifiers.AddGlobal(MetaStats.ActiveSkillSocketIndex(parsedSkill.Id),
                 Form.BaseSet, parsedSkill.SocketIndex, isActiveSkill);
+            _parsedModifiers.AddGlobal(MetaStats.SkillIsEnabled(parsedSkill), Form.TotalOverride, true);
             AddInstanceModifiers();
 
             var result = new PartialSkillParseResult(_parsedModifiers.Modifiers, new UntranslatedStat[0]);

@@ -13,11 +13,11 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
     {
         public static SkillDefinition CreateActive(
             string id, ActiveSkillDefinition activeSkill, IReadOnlyDictionary<int, SkillLevelDefinition> levels)
-            => SkillDefinition.CreateActive(id, 0, "", new[] { "" }, null, activeSkill, levels);
+            => SkillDefinition.CreateActive(id, 0, "", null, new[] { "" }, null, activeSkill, levels);
 
         public static SkillDefinition CreateSupport(
             string id, SupportSkillDefinition supportSkill, IReadOnlyDictionary<int, SkillLevelDefinition> levels)
-            => SkillDefinition.CreateSupport(id, 0, "", new[] { "" }, null, supportSkill, levels);
+            => SkillDefinition.CreateSupport(id, 0, "", null, new[] { "" }, null, supportSkill, levels);
 
         public static ActiveSkillDefinition CreateActiveSkillDefinition(
             string displayName, IEnumerable<string> activeSkillTypes, IReadOnlyList<Keyword> keywords,
@@ -28,7 +28,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         public static SkillLevelDefinition CreateLevelDefinition(
             double? damageEffectiveness = null, double? damageMultiplier = null, double? criticalStrikeChance = null,
             int? attackSpeedMultiplier = null,
-            int? manaCost = null, double? manaMultiplier = null, int? manaCostOverride = null, int? cooldown = null,
+            int? manaCost = null, double? manaMultiplier = null, int? manaCostOverride = null, int? cooldown = null, bool canBypassCooldown = false,
             int requiredLevel = 0, int requiredDexterity = 0, int requiredIntelligence = 0, int requiredStrength = 0,
             IReadOnlyList<UntranslatedStat>? qualityStats = null, IReadOnlyList<UntranslatedStat>? stats = null,
             IReadOnlyList<IReadOnlyList<UntranslatedStat>>? additionalStatsPerPart = null,
@@ -38,7 +38,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             SkillTooltipDefinition? tooltip = null)
             => new SkillLevelDefinition(damageEffectiveness, damageMultiplier, criticalStrikeChance,
                 attackSpeedMultiplier, manaCost,
-                manaMultiplier, manaCostOverride, cooldown, requiredLevel, requiredDexterity, requiredIntelligence,
+                manaMultiplier, manaCostOverride, cooldown, canBypassCooldown, requiredLevel, requiredDexterity, requiredIntelligence,
                 requiredStrength, qualityStats ?? new UntranslatedStat[0], stats ?? new UntranslatedStat[0],
                 additionalStatsPerPart ?? new[] { new UntranslatedStat[0]}, qualityBuffStats ?? new BuffStat[0],
                 buffStats ?? new BuffStat[0], qualityPassiveStats ?? new UntranslatedStat[0],
@@ -89,13 +89,16 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             params (string stat, Entity entity, double? value)[] nodeValues)
         {
             var contextMock = new Mock<IValueCalculationContext>();
-            var mainSkillItemSlotStat = new Stat("MainSkillItemSlot");
+            var mainSkillItemSlotStat = new Stat("MainSkill.ItemSlot");
             var mainSkillItemSlot = isMainSkill ? skill.ItemSlot : ItemSlot.Unequipable;
             contextMock.Setup(c => c.GetValue(mainSkillItemSlotStat, NodeType.Total, PathDefinition.MainPath))
                 .Returns((NodeValue?) (double) mainSkillItemSlot);
             var mainSkillSocketIndexStat = new Stat("MainSkillSocketIndex");
             contextMock.Setup(c => c.GetValue(mainSkillSocketIndexStat, NodeType.Total, PathDefinition.MainPath))
                 .Returns((NodeValue?) skill.SocketIndex);
+            var mainSkillSkillIndexStat = new Stat("MainSkillSkillIndex");
+            contextMock.Setup(c => c.GetValue(mainSkillSkillIndexStat, NodeType.Total, PathDefinition.MainPath))
+                .Returns((NodeValue?) skill.SkillIndex);
             var activeSkillItemSlotStat = new Stat($"{skill.Id}.ActiveSkillItemSlot");
             var activeSkillItemSlot = isActiveSkill ? skill.ItemSlot : ItemSlot.Unequipable;
             contextMock.Setup(c => c.GetValue(activeSkillItemSlotStat, NodeType.Total, PathDefinition.MainPath))

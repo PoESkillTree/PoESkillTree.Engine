@@ -15,6 +15,6 @@ namespace PoESkillTree.Engine.Computation.Core.Nodes
         }
 
         public NodeValue? Calculate(IValueCalculationContext context) =>
-            context.GetValue(_stat, NodeType.TotalOverride) ?? context.GetValue(_stat, NodeType.Subtotal);
+            _stat.Round(context.GetValue(_stat, NodeType.TotalOverride) ?? context.GetValue(_stat, NodeType.Subtotal));
     }
 }

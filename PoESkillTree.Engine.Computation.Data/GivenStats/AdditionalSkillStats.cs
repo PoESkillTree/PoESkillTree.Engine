@@ -39,19 +39,23 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
 
         private GivenStatCollection CreateCollection() => new GivenStatCollection(_modifierBuilder, ValueFactory)
         {
+            { TotalOverride, Skills.FromId("ArcticArmour").Buff.EffectOn(Self), 0, Flag.AlwaysStationary.Not },
+
             {
-                TotalOverride, MetaStats.SkillNumberOfHitsPerCast, Projectile.Count.Value,
-                IsMainSkill("Barrage", 1)
+                TotalOverride, Stat.SkillNumberOfHitsPerCast, Projectile.Count.Value,
+                IsMainSkill("BlastRain", 1)
             },
 
             {
-                TotalOverride, Buff.Blind.On(Enemy), 1,
+                TotalOverride, Buff.Blind.On(Enemy), true,
                 And(Skills.FromId("BloodSandArmour").Buff.IsOn(Enemy), Flag.InSandStance)
             },
             {
-                TotalOverride, Buff.Maim.On(Enemy), 1,
+                TotalOverride, Buff.Maim.On(Enemy), true,
                 And(Skills.FromId("BloodSandArmour").Buff.IsOn(Enemy), Flag.InBloodStance)
             },
+
+            { TotalOverride, Skills.FromId("BurningArrow").Buff.StackCount.For(Enemy).Maximum, 5 },
 
             { TotalOverride, Skills[Keyword.Banner].Reservation, 0, Flag.IsBannerPlanted },
 
@@ -83,25 +87,12 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             },
 
             {
-                TotalOverride, MetaStats.SkillNumberOfHitsPerCast, Projectile.Count.Value,
+                TotalOverride, Stat.SkillNumberOfHitsPerCast, Projectile.Count.Value,
                 IsMainSkill("IceSpear", 1)
             },
             {
-                TotalOverride, MetaStats.SkillNumberOfHitsPerCast, Projectile.Count.Value,
+                TotalOverride, Stat.SkillNumberOfHitsPerCast, Projectile.Count.Value,
                 IsMainSkill("IceSpear", 3)
-            },
-
-            {
-                BaseSet, Buff.Temporary(Lightning.Exposure, WaveOfConvictionExposureType.Lightning).For(Enemy), -25,
-                SkillIsActive("Purge")
-            },
-            {
-                BaseSet, Buff.Temporary(Cold.Exposure, WaveOfConvictionExposureType.Cold).For(Enemy), -25,
-                SkillIsActive("Purge")
-            },
-            {
-                BaseSet, Buff.Temporary(Fire.Exposure, WaveOfConvictionExposureType.Fire).For(Enemy), -25,
-                SkillIsActive("Purge")
             },
 
             {
@@ -112,13 +103,25 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             },
 
             {
-                TotalOverride, MetaStats.SkillNumberOfHitsPerCast, Projectile.Count.Value,
+                TotalOverride, Stat.SkillNumberOfHitsPerCast, Projectile.Count.Value,
                 IsMainSkill("ShatteringSteel", 2)
             },
+
+            { TotalOverride, Skills.FromId("Slither").Buff.AddStatForSource(Buff.Elusive.On(Self), Self), true },
 
             { TotalOverride, Buff.ArcaneSurge.On(Self), 1, SkillIsActive("SupportArcaneSurge") },
 
             { TotalOverride, Buff.Innervation.On(Self), 1, SkillIsActive("SupportOnslaughtOnSlayingShockedEnemy") },
+
+            {
+                // The reduction to ExpirationModifier is already built into Temporal Chains' duration.
+                // Calculate the duration without it so it can be applied again, but while being affected by Curse Effect modifiers.
+                // Without Curse Effect, ExpirationModifier will be 0.6, which is a 1 / 0.6 multiplier to Duration.
+                // 40 PercentLess is a 0.6 modifier, negating that.
+                PercentLess, Skills.FromId("TemporalChains").Buff.Duration, 40
+            },
+
+            { TotalOverride, Buff.Withered.On(Enemy), 1, SkillIsActive("Wither") },
         };
 
         private IConditionBuilder IsMainSkill(string skillId, int skillPart)
@@ -128,14 +131,6 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             => MetaStats.MainSkillId.Value.Eq(Skills.FromId(skillId).SkillId);
 
         private IConditionBuilder SkillIsActive(string skillId)
-            => MetaStats.ActiveSkillItemSlot(skillId).IsSet;
-
-        private enum WaveOfConvictionExposureType
-        {
-            None,
-            Lightning,
-            Cold,
-            Fire,
-        }
+            => MetaStats.ActiveSkillItemSlot(skillId).IsTrue;
     }
 }

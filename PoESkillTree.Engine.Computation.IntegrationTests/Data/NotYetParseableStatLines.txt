@@ -1,10 +1,13 @@
 ﻿// TODO not handled yet
+// Unclear mechanics
+// - Explosive Arrow: does this apply to all damage that's not the additional explosion damage? All damage? BaseSet only?
+Explosion deals 50% of Base Damage
 // Requires not yet implemented stats
 // - Stat that modifies Mana.Cost(Total). Could be done via behavior.
 Channelling Skills have -3 to Total Mana Cost
+Channelling Skills have -1 to Total Mana Cost
+Non-Channelling Skills have -7 to Total Mana Cost
 -7 to Total Mana Cost of Skills
-// - Triggered
-35% less Damage if Triggered
 // - Lucky/Unlucky for chances
 Chance to Block Spell Damage is Unlucky
 // - Item quality as a property stat
@@ -14,13 +17,6 @@ Skills supported by Unleash have +1 to maximum number of Seals
 // - losing charges
 Lose all Inspiration Charges after Spending a total of 800 Mana with Supported Skills
 // Requires new buffs
-// - Hinder
-Hindered Enemies take 20% increased Chaos Damage
-Nearby Hindered Enemies deal 15% reduced Damage over Time
-4% chance to Hinder Enemies on Hit with Spells, with 30% reduced Movement Speed
-Minions have 4% chance to Hinder Enemies on Hit with Spells, with 30% reduced Movement Speed
-With at least 40 Intelligence in Radius, Blight has 50% increased Hinder Duration
-Mines Hinder Enemies near them for 2 seconds when they Land, reducing Movement Speed by 40%
 // - Withered
 Every second, inflict Withered on nearby Enemies for 15 seconds
 With at least 40 Intelligence in Radius, Blight inflicts Withered for 2 seconds
@@ -32,55 +28,15 @@ Transfiguration of Mind
 Transfiguration of Soul
 // - Unnerve
 Nearby Allies Unnerve Enemies for 4 seconds on Hit
-// - Elusive
-10% chance to gain Elusive on Kill
-20% increased Attack and Cast Speed while Elusive
-25% increased Elusive Effect
-50% chance to gain Elusive on Critical Strike
-8% reduced Damage taken while Elusive
-You take no Extra Damage from Critical Strikes while Elusive
+// More calculations for non-damaging ailments (shock, chill, freeze)
+Chills Enemies as though dealing 195% more Damage
+Shocks Enemies as though dealing 195% more Damage
 // Requires distinguishing flask types
 10% reduced Flask Charges used from Mana Flasks
 Mana Flasks gain 1 Charge every 3 seconds
 You have Fortify during Effect of any Life Flask
 Remove a Curse when you use a Mana Flask
 Remove a random Elemental Ailment when you use a Mana Flask
-// Socketed gem modifiers
-+2 to Level of Socketed Gems
-+1 to Level of Socketed Active Skill Gems
-+1 to Level of Socketed AoE Gems
-+2 to Level of Socketed Aura Gems
-+1 to Level of Socketed Bow Gems
-+1 to Level of Socketed Chaos Gems
-+1 to Level of Socketed Cold Gems
-+2 to Level of Socketed Curse Gems
-+1 to Level of Socketed Fire Gems
-+1 to Level of Socketed Gems
-+1 to Level of Socketed Lightning Gems
-+1 to Level of Socketed Melee Gems
-+1 to Level of Socketed Minion Gems
-+1 to Level of Socketed Projectile Gems
-+1 to Level of Socketed Spell Gems
-+2 to Level of Socketed Trap Gems
-Socketed Attacks have +1% to Critical Strike Chance
-Socketed Attacks have +30% to Critical Strike Multiplier
-Socketed Gems Chain 1 additional times
-Socketed Gems deal 175 to 225 additional Fire Damage
-Socketed Gems deal 30% more Damage over Time
-Socketed Gems deal 30% more Elemental Damage
-Socketed Gems gain 50% of Physical Damage as extra Lightning Damage
-Socketed Gems have 50% chance to Ignite
-Socketed Gems have 20% more Attack and Cast Speed
-Socketed Gems have 10% reduced Mana Reservation
-Socketed Gems have +3.5% Critical Strike Chance
-Socketed Movement Skills have no Mana Cost
-Socketed Non-Curse Aura Gems have 20% increased Aura Effect
-Socketed Spells have +1% to Critical Strike Chance
-Socketed Spells have +30% to Critical Strike Multiplier
-+5% to Quality of Socketed Gems
-+4% to Quality of Socketed Support Gems
-// Equipped gem modifiers
-+2 to Level of all Minion Skill Gems
 // Item-inherent skills
 Curse Enemies with Level 10 Flammability on Hit
 Curse Enemies with Level 8 Assassin's Mark on Hit
@@ -180,6 +136,8 @@ Socketed Gems are Supported by Level 16 Trap And Mine Damage
 Socketed Gems are Supported by Level 18 Unbound Ailments
 Socketed Gems are Supported by Level 16 Vicious Projectiles
 Socketed Gems are Supported by Level 16 Volley
+Socketed Gems are Supported by Level 16 Inspiration
+Socketed Gems are Supported by Level 18 Blastchain Mine
 Trigger a Socketed Spell when you Use a Skill
 Trigger Socketed Spells when you Focus
 Triggers Level 20 Spectral Spirits when Equipped
@@ -219,5 +177,7 @@ Single-target Melee attacks deal Splash Damage to surrounding targets
 50% less Damage to surrounding targets
 Supported Skills deal Splash Damage to surrounding targets
 Supported Skills deal 26% less Damage to surrounding targets
+Supported Skills deal 33% less Damage to surrounding targets
 Supported Skills deal 41% less Damage to surrounding targets
 Supported Skills have 57% more Melee Splash Area of Effect
+Supported Skills have 97% more Melee Splash Area of Effect

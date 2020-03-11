@@ -23,6 +23,7 @@ namespace PoESkillTree.Engine.Computation.Data
             {
                 { "fortify", Buff.Fortify },
                 { "maim(ed)?", Buff.Maim },
+                { "hinder(ed)?", Buff.Hinder },
                 { "intimidate", Buff.Intimidate },
                 { "taunt(ed)?", Buff.Taunt },
                 { "blind", Buff.Blind },
@@ -34,6 +35,10 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "innervation", Buff.Innervation },
                 { "impaled?", Buff.Impale },
                 { "infusion", Buff.Infusion },
+                { "snares?", Buff.Snare },
+                { "ensnared", Buff.Snare },
+                { "withered", Buff.Withered },
+                { "elusive", Buff.Elusive },
             }; // Add
     }
 }

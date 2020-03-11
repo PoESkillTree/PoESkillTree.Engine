@@ -11,6 +11,8 @@ namespace PoESkillTree.Engine.Computation.Parsing.JewelParsers
 {
     public class JewelInSkillTreeParser : IParser<JewelInSkillTreeParserParameter>
     {
+        private const Entity ModifierSourceEntity = Entity.Character;
+
         private readonly PassiveTreeDefinition _tree;
         private readonly ITransformationJewelParser _transformationParser;
         private readonly ICoreParser _coreParser;
@@ -47,7 +49,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.JewelParsers
             string modifier, ModifierSource modifierSource, IEnumerable<PassiveNodeDefinition> nodesInRadius)
             => _transformationParser.IsTransformationJewelModifier(modifier)
                 ? ParseTransformationModifier(modifier, modifierSource, nodesInRadius)
-                : _coreParser.Parse(modifier, modifierSource, Entity.Character);
+                : _coreParser.Parse(modifier, modifierSource, ModifierSourceEntity);
 
         private ParseResult ParseTransformationModifier(string modifier, ModifierSource modifierSource,
             IEnumerable<PassiveNodeDefinition> nodesInRadius)
@@ -56,8 +58,8 @@ namespace PoESkillTree.Engine.Computation.Parsing.JewelParsers
             var results = new List<ParseResult>(transformedNodeModifiers.Count);
             foreach (var transformedModifier in transformedNodeModifiers)
             {
-                var parseResult = _coreParser.Parse(transformedModifier.Modifier, modifierSource, Entity.Character)
-                    .ApplyMultiplier(transformedModifier.ValueMultiplier.Build);
+                var parseResult = _coreParser.Parse(transformedModifier.Modifier, modifierSource, ModifierSourceEntity)
+                    .ApplyMultiplier(transformedModifier.ValueMultiplier.Build, ModifierSourceEntity);
                 results.Add(parseResult);
             }
             return ParseResult.Aggregate(results);

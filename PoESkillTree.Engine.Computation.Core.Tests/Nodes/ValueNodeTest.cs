@@ -159,8 +159,8 @@ namespace PoESkillTree.Engine.Computation.Core.Nodes
         }
 
         private static ValueNode CreateSut(INodeRepository? nodeRepository = null, IValue? value = null)
-            => new ValueNode(new ValueCalculationContext(nodeRepository!, null!),
-                new ValueCalculationContext(nodeRepository!, null!), value!);
+            => new ValueNode(new TrackingValueCalculationContext(nodeRepository!, null!),
+                new TrackingValueCalculationContext(nodeRepository!, null!), value!);
 
         private static readonly CollectionChangeEventArgs RefreshEventArgs =
             new CollectionChangeEventArgs(CollectionChangeAction.Refresh, null);

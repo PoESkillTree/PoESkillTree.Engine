@@ -27,8 +27,8 @@ namespace PoESkillTree.Engine.Computation.Core
             if (NodeRepository is null)
                 throw new InvalidOperationException($"{nameof(NodeRepository)} has to be set before calling {nameof(Create)}");
 
-            var coreNode = new ValueNode(new ValueCalculationContext(NodeRepository, path),
-                new ValueCalculationContext(NodeRepository, path), value);
+            var coreNode = new ValueNode(new TrackingValueCalculationContext(NodeRepository, path),
+                new TrackingValueCalculationContext(NodeRepository, path), value);
             var cachingNode = new CachingNode(coreNode, new CycleGuard(), _eventBuffer);
             var cachingNodeAdapter = new CachingNodeAdapter(cachingNode);
             return new DisposableNodeViewProvider(cachingNodeAdapter, cachingNode, coreNode);

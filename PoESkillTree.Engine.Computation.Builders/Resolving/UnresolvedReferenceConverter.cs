@@ -115,6 +115,9 @@ namespace PoESkillTree.Engine.Computation.Builders.Resolving
             }
         }
 
+        public IGemTagBuilder AsGemTag =>
+            new UnresolvedGemTagBuilder($"{this}.AsGemTag", context => _resolver(context).AsGemTag);
+
         public override string ToString() => _description;
     }
 }

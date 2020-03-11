@@ -79,6 +79,13 @@ namespace PoESkillTree.Engine.Computation.Common
         /// </summary>
         public string? SourceName { get; }
 
+        public Local? GetLocalSource() =>
+            this switch
+            {
+                Local local => local,
+                Global global => global.LocalSource,
+                _ => null
+            };
 
         /// <summary>
         /// This modifier is global. Includes mods from the tree, given mods and most mods on items and skills.
@@ -213,18 +220,16 @@ namespace PoESkillTree.Engine.Computation.Common
             /// </summary>
             public sealed class Gem : Local
             {
-                public Gem(ItemSlot slot, int socketIndex, string skillId, string? displayName)
-                    : base(new Gem(slot, socketIndex, skillId), displayName)
-                    => (Slot, SocketIndex, SkillId) = (slot, socketIndex, skillId);
+                public Gem(GameModel.Skills.Gem gem, string? displayName)
+                    : base(new Gem(gem), displayName) =>
+                    SourceGem = gem;
 
-                public Gem(ItemSlot slot, int socketIndex, string skillId)
-                    => (Slot, SocketIndex, SkillId) = (slot, socketIndex, skillId);
+                public Gem(GameModel.Skills.Gem gem) =>
+                    SourceGem = gem;
 
-                public ItemSlot Slot { get; }
-                public int SocketIndex { get; }
-                public string SkillId { get; }
+                public GameModel.Skills.Gem SourceGem { get; }
 
-                protected override object ToTuple() => (base.ToTuple(), Slot, SocketIndex);
+                protected override object ToTuple() => (base.ToTuple(), SourceGem);
             }
 
             public sealed class UserSpecified : Local

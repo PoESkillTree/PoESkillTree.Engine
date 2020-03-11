@@ -1,3 +1,7 @@
+using PoESkillTree.Engine.Computation.Common.Builders.Skills;
+using PoESkillTree.Engine.GameModel.Items;
+using PoESkillTree.Engine.GameModel.Skills;
+
 namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
 {
     /// <summary>
@@ -5,12 +9,26 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
     /// </summary>
     public interface IGemStatBuilders
     {
-        /// <summary>
-        /// A stat representing the modifier to the level of support gems.
-        /// </summary>
-        /// <remarks>
-        /// This stat is used locally to increase the level of socketed gems.
-        /// </remarks>
-        IStatBuilder IncreaseSupportLevel { get; }
+        IStatBuilder AdditionalActiveLevels(IGemTagBuilder gemTag);
+        IStatBuilder AdditionalActiveSpellLevels(IGemTagBuilder gemTag);
+
+        IStatBuilder AdditionalLevelsForModifierSourceItemSlot();
+        IStatBuilder AdditionalLevelsForModifierSourceItemSlot(IGemTagBuilder gemTag);
+        IStatBuilder AdditionalActiveLevelsForModifierSourceItemSlot();
+
+        IStatBuilder AdditionalLevels(Skill skill);
+
+
+        IStatBuilder AdditionalQualityForModifierSourceItemSlot { get; }
+        IStatBuilder AdditionalSupportQualityForModifierSourceItemSlot { get; }
+
+        IStatBuilder AdditionalQuality(Skill skill);
+
+
+        IStatBuilder IncreasedReservationForModifierSourceItemSlot { get; }
+        IStatBuilder IncreasedReservationForItemSlot(ItemSlot itemSlot);
+
+        IStatBuilder IncreasedNonCurseAuraEffectForModifierSourceItemSlot { get; }
+        IStatBuilder IncreasedNonCurseAuraEffectForItemSlot(ItemSlot itemSlot);
     }
 }

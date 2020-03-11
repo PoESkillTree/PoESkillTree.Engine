@@ -40,7 +40,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Effects
         public IDamageRelatedStatBuilder Chance =>
             DamageRelatedFromIdentity("ChanceToActivate", typeof(int)).WithHits;
 
-        public IConditionBuilder IsOn(IEntityBuilder target) => InternalOn(target).IsSet;
+        public IConditionBuilder IsOn(IEntityBuilder target) => InternalOn(target).IsTrue;
 
         public virtual IStatBuilder Duration =>
             FromIdentity("Duration", typeof(double));
@@ -115,6 +115,8 @@ namespace PoESkillTree.Engine.Computation.Builders.Effects
             : base(statFactory, CoreBuilder.Create("Stun"))
         {
         }
+
+        IDamageRelatedStatBuilder IStunEffectBuilder.Duration => (IDamageRelatedStatBuilder) Duration;
 
         public override IStatBuilder Duration =>
             DamageRelatedFromIdentity("Duration", typeof(double)).WithHits;

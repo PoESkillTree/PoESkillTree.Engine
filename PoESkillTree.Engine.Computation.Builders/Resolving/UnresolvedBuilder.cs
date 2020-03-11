@@ -51,6 +51,13 @@ namespace PoESkillTree.Engine.Computation.Builders.Resolving
         }
     }
 
+    internal class UnresolvedGemTagBuilder : UnresolvedBuilder<IGemTagBuilder, string>, IGemTagBuilder
+    {
+        public UnresolvedGemTagBuilder(string description, Func<ResolveContext, IGemTagBuilder> resolver) : base(description, resolver)
+        {
+        }
+    }
+
     public class UnresolvedValueBuilder : ValueBuilderImpl
     {
         private readonly string _description;

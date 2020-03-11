@@ -17,8 +17,13 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
     public interface IMetaStatBuilders
     {
         IStatBuilder EffectiveRegen(Pool pool);
+        IStatBuilder EffectiveDegeneration(Pool pool, DamageType damageType);
+        IStatBuilder EffectiveDegeneration(Pool pool);
+        IStatBuilder NetRegen(Pool pool);
+
         IStatBuilder EffectiveRecharge(Pool pool);
         IStatBuilder RechargeStartDelay(Pool pool);
+
         IStatBuilder EffectiveLeechRate(Pool pool);
         IStatBuilder AbsoluteLeechRate(Pool pool);
         IStatBuilder AbsoluteLeechRateLimit(Pool pool);
@@ -31,6 +36,8 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
 
         // Damage calculation
         IDamageRelatedStatBuilder Damage(DamageType damageType); // like DamageStatBuilder, but !canApplyToSkillDamage
+        IDamageRelatedStatBuilder EnemyResistanceFromArmourAgainstNonCrits { get; } // with hits
+        IDamageRelatedStatBuilder EnemyResistanceFromArmourAgainstCrits { get; } // with hits
         IDamageRelatedStatBuilder EnemyResistanceAgainstNonCrits(DamageType damageType); // with hits
         IDamageRelatedStatBuilder EnemyResistanceAgainstCrits(DamageType damageType); // with hits
         IDamageRelatedStatBuilder EffectiveDamageMultiplierWithNonCrits(DamageType damageType);
@@ -47,6 +54,13 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
         IStatBuilder AverageAilmentDamage(Ailment ailment);
         IStatBuilder AilmentInstanceLifetimeDamage(Ailment ailment);
         IStatBuilder AilmentDps(Ailment ailment);
+
+        IStatBuilder ImpaleRecordedDamage { get; }
+        IDamageRelatedStatBuilder EnemyResistanceAgainstNonCritImpales { get; } // with hits
+        IDamageRelatedStatBuilder EnemyResistanceAgainstCritImpales { get; } // with hits
+        IDamageRelatedStatBuilder ImpaleDamageMultiplier { get; } // with hits
+        IDamageRelatedStatBuilder EffectiveImpaleDamageMultiplierAgainstNonCrits { get; } // with hits
+        IDamageRelatedStatBuilder EffectiveImpaleDamageMultiplierAgainstCrits { get; } // with hits
 
         IStatBuilder CastRate { get; }
         IStatBuilder CastTime { get; }
@@ -73,8 +87,8 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
 
         IStatBuilder SkillHitDamageSource { get; }
         IStatBuilder SkillUsesHand(AttackDamageHand hand);
-        IStatBuilder SkillNumberOfHitsPerCast { get; }
         IStatBuilder SkillDoubleHitsWhenDualWielding { get; }
+        IStatBuilder SkillDpsWithHitsCalculationMode { get; }
 
         IStatBuilder MainSkillId { get; }
         IStatBuilder MainSkillHasKeyword(Keyword keyword);
@@ -88,12 +102,19 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
 
         IStatBuilder MainSkillItemSlot { get; }
         IStatBuilder MainSkillSocketIndex { get; }
+        IStatBuilder MainSkillSkillIndex { get; }
 
-        IStatBuilder SkillBaseCost(ItemSlot itemSlot, int socketIndex);
-        IStatBuilder SkillHasType(ItemSlot itemSlot, int socketIndex, string activeSkillType);
+        IStatBuilder SkillBaseCost(Skill skill);
+        IStatBuilder SkillHasType(Skill skill, string activeSkillType);
+        IStatBuilder SkillIsEnabled(Skill skill);
+
+        IStatBuilder ActiveCurses { get; }
+        ValueBuilder ActiveCurseIndex(int numericSkillId);
 
         IStatBuilder DamageBaseAddEffectiveness { get; }
         IStatBuilder DamageBaseSetEffectiveness { get; }
+
+        IStatBuilder CanBypassSkillCooldown { get; }
 
         IStatBuilder SelectedBandit { get; }
         IStatBuilder SelectedQuestPart { get; }
@@ -112,6 +133,7 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
 
         public static IConditionBuilder IsMainSkill(this IMetaStatBuilders @this, Skill skill)
             => @this.MainSkillItemSlot.Value.Eq((double) skill.ItemSlot)
-                .And(@this.MainSkillSocketIndex.Value.Eq(skill.SocketIndex));
+                .And(@this.MainSkillSocketIndex.Value.Eq(skill.SocketIndex))
+                .And(@this.MainSkillSkillIndex.Value.Eq(skill.SkillIndex));
     }
 }

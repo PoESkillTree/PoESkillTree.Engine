@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using PoESkillTree.Engine.GameModel.Items;
 using PoESkillTree.Engine.Utils;
@@ -8,30 +9,31 @@ namespace PoESkillTree.Engine.GameModel.Skills
     public class SkillDefinition : IDefinition<string>
     {
         private SkillDefinition(
-            string id, int numericId, bool isSupport, string statTranslationFile, IReadOnlyList<string> partNames,
+            string id, int numericId, bool isSupport, string statTranslationFile, string? secondarySkillId, IReadOnlyList<string> partNames,
             SkillBaseItemDefinition? baseItem, ActiveSkillDefinition? activeSkill, SupportSkillDefinition? supportSkill,
             IReadOnlyDictionary<int, SkillLevelDefinition> levels)
-            => (Id, NumericId, IsSupport, PartNames, BaseItem, ActiveSkill, SupportSkill, Levels, StatTranslationFile) =
-                (id, numericId, isSupport, partNames, baseItem, activeSkill!, supportSkill!, levels, statTranslationFile);
+            => (Id, NumericId, IsSupport, PartNames, BaseItem, ActiveSkill, SupportSkill, Levels, StatTranslationFile, SecondarySkillId) =
+                (id, numericId, isSupport, partNames, baseItem, activeSkill!, supportSkill!, levels, statTranslationFile, secondarySkillId);
 
         public static SkillDefinition CreateActive(
-            string id, int numericId, string statTranslationFile, IReadOnlyList<string> partNames,
+            string id, int numericId, string statTranslationFile, string? secondarySkillId, IReadOnlyList<string> partNames,
             SkillBaseItemDefinition? baseItem, ActiveSkillDefinition activeSkill,
             IReadOnlyDictionary<int, SkillLevelDefinition> levels)
-            => new SkillDefinition(id, numericId, false, statTranslationFile, partNames, baseItem, activeSkill, null,
-                levels);
+            => new SkillDefinition(id, numericId, false, statTranslationFile, secondarySkillId, partNames, baseItem,
+                activeSkill, null, levels);
 
         public static SkillDefinition CreateSupport(
-            string id, int numericId, string statTranslationFile, IReadOnlyList<string> partNames,
+            string id, int numericId, string statTranslationFile, string? secondarySkillId, IReadOnlyList<string> partNames,
             SkillBaseItemDefinition? baseItem, SupportSkillDefinition supportSkill,
             IReadOnlyDictionary<int, SkillLevelDefinition> levels)
-            => new SkillDefinition(id, numericId, true, statTranslationFile, partNames, baseItem, null, supportSkill,
-                levels);
+            => new SkillDefinition(id, numericId, true, statTranslationFile, secondarySkillId, partNames, baseItem,
+                null, supportSkill, levels);
 
         public string Id { get; }
         public int NumericId { get; }
         public bool IsSupport { get; }
         public string StatTranslationFile { get; }
+        public string? SecondarySkillId { get; }
 
         public IReadOnlyList<string> PartNames { get; }
 
@@ -41,18 +43,22 @@ namespace PoESkillTree.Engine.GameModel.Skills
         public SupportSkillDefinition SupportSkill { get; }
 
         public IReadOnlyDictionary<int, SkillLevelDefinition> Levels { get; }
+
+        public string? DisplayName => IsSupport
+            ? BaseItem?.DisplayName
+            : ActiveSkill.DisplayName;
     }
 
     public class SkillBaseItemDefinition
     {
         public SkillBaseItemDefinition(
-            string displayName, string metadataId, ReleaseState releaseState, IEnumerable<string> gemTags)
+            string displayName, string metadataId, ReleaseState releaseState, IReadOnlyCollection<string> gemTags)
             => (DisplayName, MetadataId, ReleaseState, GemTags) = (displayName, metadataId, releaseState, gemTags);
 
         public string DisplayName { get; }
         public string MetadataId { get; }
         public ReleaseState ReleaseState { get; }
-        public IEnumerable<string> GemTags { get; }
+        public IReadOnlyCollection<string> GemTags { get; }
     }
 
     public class ActiveSkillDefinition
@@ -102,7 +108,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
         public SkillLevelDefinition(
             double? damageEffectiveness, double? damageMultiplier, double? criticalStrikeChance,
             int? attackSpeedMultiplier,
-            int? manaCost, double? manaMultiplier, int? manaCostOverride, int? cooldown,
+            int? manaCost, double? manaMultiplier, int? manaCostOverride, int? cooldown, bool canBypassCooldown,
             int requiredLevel, int requiredDexterity, int requiredIntelligence, int requiredStrength,
             IReadOnlyList<UntranslatedStat> qualityStats, IReadOnlyList<UntranslatedStat> stats,
             IReadOnlyList<IReadOnlyList<UntranslatedStat>> additionalStatsPerPart,
@@ -118,6 +124,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
             ManaMultiplier = manaMultiplier;
             ManaCostOverride = manaCostOverride;
             Cooldown = cooldown;
+            CanBypassCooldown = canBypassCooldown;
             Requirements = new Requirements(requiredLevel, requiredDexterity, requiredIntelligence, requiredStrength);
             QualityStats = qualityStats;
             Stats = stats;
@@ -138,6 +145,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
         public double? ManaMultiplier { get; }
         public int? ManaCostOverride { get; }
         public int? Cooldown { get; }
+        public bool CanBypassCooldown { get; }
         
         public Requirements Requirements { get; }
 
@@ -157,18 +165,15 @@ namespace PoESkillTree.Engine.GameModel.Skills
         public SkillTooltipDefinition Tooltip { get; }
     }
 
-    public class BuffStat : ValueObject
+    public class BuffStat
     {
-        public BuffStat(UntranslatedStat stat, IReadOnlyList<Entity> affectedEntities)
-            => (Stat, AffectedEntities) = (stat, affectedEntities);
+        private readonly Func<Entity, IEnumerable<Entity>> _affectedEntitiesForSource;
 
-        public void Deconstruct(out UntranslatedStat stat, out IReadOnlyList<Entity> affectedEntities)
-            => (stat, affectedEntities) = (Stat, AffectedEntities);
+        public BuffStat(UntranslatedStat stat, Func<Entity, IEnumerable<Entity>> affectedEntitiesForSource) =>
+            (Stat, _affectedEntitiesForSource) = (stat, affectedEntitiesForSource);
 
         public UntranslatedStat Stat { get; }
-        public IReadOnlyList<Entity> AffectedEntities { get; }
-
-        protected override object ToTuple() => (Stat, WithSequenceEquality(AffectedEntities));
+        public IEnumerable<Entity> GetAffectedEntities(Entity sourceEntity) => _affectedEntitiesForSource(sourceEntity);
     }
 
     public class SkillTooltipDefinition

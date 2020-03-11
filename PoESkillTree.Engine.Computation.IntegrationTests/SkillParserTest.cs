@@ -7,7 +7,9 @@ using NUnit.Framework;
 using PoESkillTree.Engine.Computation.Builders.Stats;
 using PoESkillTree.Engine.Computation.Common;
 using PoESkillTree.Engine.Computation.Common.Builders.Damage;
+using PoESkillTree.Engine.Computation.Data.Steps;
 using PoESkillTree.Engine.Computation.Parsing;
+using PoESkillTree.Engine.Computation.Parsing.SkillParsers;
 using PoESkillTree.Engine.GameModel;
 using PoESkillTree.Engine.GameModel.Items;
 using PoESkillTree.Engine.GameModel.Skills;
@@ -21,7 +23,7 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
     {
 #pragma warning disable 8618 // Initialized in ClassInit
         private SkillDefinitions _skillDefinitions;
-        private IParser _parser;
+        private Parser<ParsingStep> _parser;
 #pragma warning restore 8618
 
         [SetUp]
@@ -34,12 +36,12 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
         [Test]
         public void ParseFrenzyReturnsCorrectResult()
         {
-            var frenzy = new Skill("Frenzy", 20, 20, ItemSlot.Boots, 0, 0);
+            var frenzyGem = new Gem("Frenzy", 20, 20, ItemSlot.Boots, 0, 0, true);
+            var frenzy = Skill.FromGem(frenzyGem, true);
             var definition = _skillDefinitions.GetSkillById("Frenzy");
             var levelDefinition = definition.Levels[20];
             var local = new ModifierSource.Local.Skill("Frenzy", "Frenzy");
             var global = new ModifierSource.Global(local);
-            var gemSource = new ModifierSource.Local.Gem(ItemSlot.Boots, 0, "Frenzy", "Frenzy");
             var valueCalculationContextMock = new Mock<IValueCalculationContext>();
             var isMainSkillStat = SetupIsActiveSkillInContext(valueCalculationContextMock, frenzy);
             var offHandTagsStat = new Stat("OffHand.ItemTags");
@@ -53,7 +55,7 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
             valueCalculationContextMock
                 .Setup(c => c.GetValue(frenzyAmountStat, NodeType.Total, PathDefinition.MainPath))
                 .Returns(new NodeValue(3));
-            var baseCostStat = new Stat("Boots.0.Cost");
+            var baseCostStat = new Stat("Boots.0.0.Cost");
             valueCalculationContextMock
                 .Setup(c => c.GetValue(baseCostStat, NodeType.Total, PathDefinition.MainPath))
                 .Returns((NodeValue?) levelDefinition.ManaCost);
@@ -70,6 +72,8 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
                         true),
                     ("Frenzy.ActiveSkillItemSlot", Form.BaseSet, (double) frenzy.ItemSlot, global, false),
                     ("Frenzy.ActiveSkillSocketIndex", Form.BaseSet, frenzy.SocketIndex, global, false),
+                    ("Boots.0.0.IsEnabled", Form.TotalOverride, 1, global, false),
+                    ("Frenzy.Reservation", Form.Increase, null, global, false),
                     ("Frenzy.Instances", Form.BaseAdd, 1, global, false),
                     ("Skills[].Instances", Form.BaseAdd, 1, global, false),
                     ("Skills[Attack].Instances", Form.BaseAdd, 1, global, false),
@@ -94,29 +98,28 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
                     ("MainSkillPart.Damage.Attack.Has.Bow", Form.TotalOverride, 1, global, true),
                     ("MainSkillPart.Damage.Spell.Has.Projectile", Form.TotalOverride, 1, global, true),
                     ("MainSkillPart.Damage.Secondary.Has.Projectile", Form.TotalOverride, 1, global, true),
-                    ("Boots.0.Type.attack", Form.TotalOverride, 1, global, false),
-                    ("Boots.0.Type.projectile_attack", Form.TotalOverride, 1, global, false),
-                    ("Boots.0.Type.mirage_archer_supportable", Form.TotalOverride, 1, global, false),
-                    ("Boots.0.Type.projectile", Form.TotalOverride, 1, global, false),
-                    ("Boots.0.Type.volley_supportable", Form.TotalOverride, 1, global, false),
-                    ("Boots.0.Type.totem_supportable", Form.TotalOverride, 1, global, false),
-                    ("Boots.0.Type.trap_supportable", Form.TotalOverride, 1, global, false),
-                    ("Boots.0.Type.remote_mine_supportable", Form.TotalOverride, 1, global, false),
-                    ("Boots.0.Type.melee_single_target_initial_hit", Form.TotalOverride, 1, global, false),
-                    ("Boots.0.Type.multistrike_supportable", Form.TotalOverride, 1, global, false),
-                    ("Boots.0.Type.melee", Form.TotalOverride, 1, global, false),
-                    ("Boots.0.Type.triggerable", Form.TotalOverride, 1, global, false),
+                    ("Boots.0.0.Type.attack", Form.TotalOverride, 1, global, false),
+                    ("Boots.0.0.Type.projectile_attack", Form.TotalOverride, 1, global, false),
+                    ("Boots.0.0.Type.mirage_archer_supportable", Form.TotalOverride, 1, global, false),
+                    ("Boots.0.0.Type.projectile", Form.TotalOverride, 1, global, false),
+                    ("Boots.0.0.Type.volley_supportable", Form.TotalOverride, 1, global, false),
+                    ("Boots.0.0.Type.totem_supportable", Form.TotalOverride, 1, global, false),
+                    ("Boots.0.0.Type.trap_supportable", Form.TotalOverride, 1, global, false),
+                    ("Boots.0.0.Type.remote_mine_supportable", Form.TotalOverride, 1, global, false),
+                    ("Boots.0.0.Type.melee_single_target_initial_hit", Form.TotalOverride, 1, global, false),
+                    ("Boots.0.0.Type.multistrike_supportable", Form.TotalOverride, 1, global, false),
+                    ("Boots.0.0.Type.melee", Form.TotalOverride, 1, global, false),
+                    ("Boots.0.0.Type.triggerable", Form.TotalOverride, 1, global, false),
                     ("DamageBaseAddEffectiveness", Form.TotalOverride, levelDefinition.DamageEffectiveness, global,
                         true),
                     ("DamageBaseSetEffectiveness", Form.TotalOverride, levelDefinition.DamageMultiplier, global, true),
-                    ("Boots.0.Cost", Form.BaseSet, levelDefinition.ManaCost, global, false),
-                    ("Mana.Cost", Form.BaseSet, levelDefinition.ManaCost, global, true),
+                    ("Boots.0.0.Cost", Form.BaseSet, levelDefinition.ManaCost, global, false),
+                    ("Frenzy.Cost", Form.BaseSet, levelDefinition.ManaCost, global, false),
+                    ("Mana.Cost", Form.BaseSet, null, global, true),
                     ("Frenzy.Reservation", Form.BaseSet, null, global, false),
                     ("Life.Reservation", Form.BaseAdd, null, global, false),
                     ("EnergyShield.Reservation", Form.BaseAdd, null, global, false),
                     ("Mana.Reservation", Form.BaseAdd, null, global, false),
-                    ("Level.Required", Form.BaseSet, levelDefinition.Requirements.Level, gemSource, false),
-                    ("Dexterity.Required", Form.BaseSet, levelDefinition.Requirements.Dexterity, gemSource, false),
                     ("CastRate.Attack.MainHand.Skill", Form.Increase, levelDefinition.QualityStats[0].Value * 20 / 1000,
                         global, true),
                     ("CastRate.Attack.OffHand.Skill", Form.Increase, levelDefinition.QualityStats[0].Value * 20 / 1000,
@@ -138,7 +141,7 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
                     ("Range.Attack.OffHand.Skill", Form.BaseAdd, null, global, true),
                 }.Select(t => (t.stat, t.form, (NodeValue?) t.value, t.source, t.mainSkillOnly)).ToArray();
 
-            var actual = _parser.ParseActiveSkill(frenzy);
+            var actual = _parser.ParseActiveSkill(new ActiveSkillParserParameter(frenzy, Entity.Character));
 
             AssertCorrectModifiers(valueCalculationContextMock, isMainSkillStat, expectedModifiers, actual);
         }
@@ -146,14 +149,14 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
         [Test]
         public void ParseAddedColdDamageSupportReturnsCorrectResult()
         {
-            var frenzy = new Skill("Frenzy", 20, 20, ItemSlot.Boots, 0, 0);
-            var support = new Skill("SupportAddedColdDamage", 20, 20, ItemSlot.Boots, 1, 0);
+            var frenzyGem = new Gem("Frenzy", 20, 20, ItemSlot.Boots, 0, 0, true);
+            var frenzy = Skill.FromGem(frenzyGem, true);
+            var supportGem = new Gem("SupportAddedColdDamage", 20, 20, ItemSlot.Boots, 1, 0, true);
+            var support = Skill.FromGem(supportGem, true);
             var definition = _skillDefinitions.GetSkillById(support.Id);
             var levelDefinition = definition.Levels[20];
             var local = new ModifierSource.Local.Skill("Frenzy", "Added Cold Damage Support");
             var global = new ModifierSource.Global(local);
-            var gemSource = new ModifierSource.Local.Gem(support.ItemSlot, support.SocketIndex,
-                "Frenzy", "Added Cold Damage Support");
             var valueCalculationContextMock = new Mock<IValueCalculationContext>();
             var isMainSkillStat = SetupIsActiveSkillInContext(valueCalculationContextMock, frenzy);
             var addedDamageValue = new NodeValue(levelDefinition.Stats[0].Value, levelDefinition.Stats[1].Value);
@@ -164,10 +167,8 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
                         Form.BaseSet, (double) support.ItemSlot, global, false),
                     ("SupportAddedColdDamage.ActiveSkillSocketIndex",
                         Form.BaseSet, support.SocketIndex, global, false),
-                    ("Mana.Cost", Form.More, levelDefinition.ManaMultiplier * 100 - 100, global, true),
-                    ("Frenzy.Reservation", Form.More, levelDefinition.ManaMultiplier * 100 - 100, global, false),
-                    ("Level.Required", Form.BaseSet, levelDefinition.Requirements.Level, gemSource, false),
-                    ("Dexterity.Required", Form.BaseSet, levelDefinition.Requirements.Dexterity, gemSource, false),
+                    ("Boots.1.0.IsEnabled", Form.TotalOverride, 1, global, false),
+                    ("Frenzy.Cost", Form.More, levelDefinition.ManaMultiplier * 100 - 100, global, false),
                     ("Cold.Damage.Attack.MainHand.Skill", Form.Increase,
                         levelDefinition.QualityStats[0].Value * 20 / 1000, global, true),
                     ("Cold.Damage.Attack.OffHand.Skill", Form.Increase,
@@ -210,7 +211,7 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
                     ("Cold.Damage.Secondary.Skill", Form.BaseAdd, addedDamageValue, global, true))
                 .ToArray();
 
-            var actual = _parser.ParseSupportSkill(frenzy, support);
+            var actual = _parser.ParseSupportSkill(new SupportSkillParserParameter(frenzy, support, Entity.Character));
 
             AssertCorrectModifiers(valueCalculationContextMock, isMainSkillStat, expectedModifiers, actual);
         }
@@ -227,7 +228,7 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
                 .Setup(c => c.GetValue(activeSkillSocketIndexStat, NodeType.Total, PathDefinition.MainPath))
                 .Returns(new NodeValue(frenzy.SocketIndex));
 
-            var mainSkillItemSlotStat = new Stat("MainSkillItemSlot");
+            var mainSkillItemSlotStat = new Stat("MainSkill.ItemSlot");
             contextMock
                 .Setup(c => c.GetValue(mainSkillItemSlotStat, NodeType.Total, PathDefinition.MainPath))
                 .Returns(new NodeValue((double) frenzy.ItemSlot));
@@ -239,6 +240,10 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
                 .Returns(() => new NodeValue(contextMock.Object.GetValue(isMainSkillStat).IsTrue()
                     ? frenzy.SocketIndex
                     : -1));
+
+            var mainSkillSkillIndexStat = new Stat("MainSkillSkillIndex");
+            contextMock.Setup(c => c.GetValue(mainSkillSkillIndexStat, NodeType.Total, PathDefinition.MainPath))
+                .Returns(() => new NodeValue(contextMock.Object.GetValue(isMainSkillStat).IsTrue() ? frenzy.SkillIndex : -1));
             return isMainSkillStat;
         }
 
@@ -300,14 +305,17 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
             var level = Math.Min(definition.Levels.Keys.Max(), 20);
             if (definition.IsSupport)
             {
-                var activeSkill = new Skill("BloodRage", 20, 20, default, 0, 0);
-                var supportSkill = new Skill(skillId, level, 20, default, 1, 0);
-                return _parser.ParseSupportSkill(activeSkill, supportSkill);
+                var activeGem = new Gem("BloodRage", 20, 20, default, 0, 0, true);
+                var activeSkill = Skill.FromGem(activeGem, true);
+                var supportGem = new Gem(skillId, level, 20, default, 1, 0, true);
+                var supportSkill = Skill.FromGem(supportGem, true);
+                return _parser.ParseSupportSkill(new SupportSkillParserParameter(activeSkill, supportSkill, Entity.Character));
             }
             else
             {
-                var skill = new Skill(skillId, level, 20, default, 0, 0);
-                return _parser.ParseActiveSkill(skill);
+                var gem = new Gem(skillId, level, 20, default, 0, 0, true);
+                var skill = Skill.FromGem(gem, true);
+                return _parser.ParseActiveSkill(new ActiveSkillParserParameter(skill, Entity.Character));
             }
         }
 

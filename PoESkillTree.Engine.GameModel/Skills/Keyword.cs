@@ -150,12 +150,22 @@ namespace PoESkillTree.Engine.GameModel.Skills
         /// Has no equivalent gem tag or ActiveSkillType.
         /// </summary>
         Banner,
+
+        /// <summary>
+        /// Equivalent to the ActiveSkillType.
+        /// </summary>
+        Ballista,
+
+        /// <summary>
+        /// Equivalent to the ActiveSkillType.
+        /// </summary>
+        Triggered,
     }
 
     public static class KeywordExtensions
     {
         private delegate bool KeywordApplies(
-            string skillDisplayName, IEnumerable<string> activeSkillTypes, IEnumerable<string> gemTags);
+            string skillDisplayName, IReadOnlyCollection<string> activeSkillTypes, IReadOnlyCollection<string> gemTags);
 
         private static readonly IReadOnlyDictionary<Keyword, KeywordApplies> Conditions =
             new Dictionary<Keyword, KeywordApplies>
@@ -180,7 +190,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 { Keyword.Warcry, (_, __, tags) => tags.Contains("warcry") },
                 { Keyword.Herald, (_, types, __) => types.Contains(ActiveSkillType.Herald) },
                 { Keyword.Offering, (name, _, __) => name.EndsWith("Offering") },
-                { Keyword.CounterAttack, (_, types, __) => types.Contains(ActiveSkillType.TriggerAttack) },
+                { Keyword.CounterAttack, (_, types, __) => types.Contains(ActiveSkillType.Attack) && types.Contains(ActiveSkillType.Triggered) },
                 { Keyword.Bow, (_, __, tags) => tags.Contains("bow") },
                 { Keyword.Physical, (_, types, __) => types.Contains(ActiveSkillType.Physical) },
                 { Keyword.Lightning, (_, types, __) => types.Contains(ActiveSkillType.Lightning) },
@@ -191,10 +201,12 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 { Keyword.Channelling, (_, types, __) => types.Contains(ActiveSkillType.Channelling) },
                 { Keyword.Guard, (_, types, __) => types.Contains(ActiveSkillType.Guard) },
                 { Keyword.Banner, (name, _, __) => name.EndsWith("Banner") },
+                { Keyword.Ballista, (_, types, __) => types.Contains(ActiveSkillType.Ballista) },
+                { Keyword.Triggered, (_, types, __) => types.Contains(ActiveSkillType.Triggered) },
             };
 
         public static bool IsOnSkill(this Keyword @this,
-            string skillDisplayName, IEnumerable<string> activeSkillTypes, IEnumerable<string> gemTags)
+            string skillDisplayName, IReadOnlyCollection<string> activeSkillTypes, IReadOnlyCollection<string> gemTags)
             => Conditions[@this](skillDisplayName, activeSkillTypes, gemTags);
     }
 }

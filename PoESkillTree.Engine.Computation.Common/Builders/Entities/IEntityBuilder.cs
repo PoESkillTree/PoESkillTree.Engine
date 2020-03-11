@@ -10,7 +10,7 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Entities
     public interface IEntityBuilder
     {
         /// <summary>
-        /// Builds to a non-empty collection of entities.
+        /// Builds to a potentially empty collection of entities.
         /// </summary>
         IReadOnlyCollection<Entity> Build(Entity modifierSourceEntity);
     }

@@ -42,8 +42,8 @@ namespace PoESkillTree.Engine.Utils.WikiApi
                 if (json is null)
                     return new JToken[0];
 
-                newResults = json["cargoquery"].Select(j => j["title"]).ToList();
-                limit = json["limits"].Value<int>("cargoquery");
+                newResults = json["cargoquery"]!.Select(j => j["title"]!).ToList();
+                limit = json["limits"]!.Value<int>("cargoquery");
                 results.AddRange(newResults);
             } while (newResults.Count >= limit);
             return results;
@@ -128,10 +128,10 @@ namespace PoESkillTree.Engine.Utils.WikiApi
                 if (!LogErrors(json, uri))
                 {
                     return
-                        from result in json["query"]["pages"]
+                        from result in json["query"]!["pages"]
                         let title = result.Value<string>("title")
                         where HasImageInfo(result, title)
-                        let url = result["imageinfo"].First.Value<string>("url")
+                        let url = result["imageinfo"]!.First!.Value<string>("url")
                         select (title, url);
                 }
                 LogWarnings(json, uri);

@@ -24,6 +24,11 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Skills
         IStatBuilder Instances { get; }
 
         /// <summary>
+        /// The cost of casting this skill. The base cost of the skill is only modified by cost multipliers from support skills in this stat.
+        /// </summary>
+        IStatBuilder Cost { get; }
+
+        /// <summary>
         /// The amount or percentage of a pool this skill reserves.
         /// </summary>
         IStatBuilder Reservation { get; }

@@ -12,8 +12,8 @@ namespace PoESkillTree.Engine.GameModel.Skills
         [TestCaseSource(nameof(CreateTestCases))]
         public IEnumerable<string> ReturnsCorrectResult(IEnumerable<string> supportSkillIds)
         {
-            var activeSkill = new Skill("active", 20, 20, default, 0, 0);
-            var supportSkills = supportSkillIds.Select((id, i) => new Skill(id, 20, 20, default, i + 1, 0));
+            var activeSkill = CreateSkillFromGem("active", default, 0, 0);
+            var supportSkills = supportSkillIds.Select((id, i) => CreateSkillFromGem(id, default, i + 1, 0));
             var sut = CreateSut();
 
             var actual = sut.SelectSupportingSkills(activeSkill, supportSkills);
@@ -59,8 +59,8 @@ namespace PoESkillTree.Engine.GameModel.Skills
         [Test]
         public void ActiveSkillCanOnlyBeSupportedBySupportsWithSameItemSlot()
         {
-            var activeSkill = new Skill("active", 20, 20, ItemSlot.Boots, 0, 0);
-            var supportSkills = new[] { new Skill("1empty", 20, 20, ItemSlot.Helm, 1, 0) };
+            var activeSkill = CreateSkillFromGem("active", ItemSlot.Boots, 0, 0);
+            var supportSkills = new[] { CreateSkillFromGem("1empty", ItemSlot.Helm, 1, 0) };
             var expected = new Skill[0];
             var sut = CreateSut();
 
@@ -72,12 +72,12 @@ namespace PoESkillTree.Engine.GameModel.Skills
         [Test]
         public void ActiveSkillWithoutGemGroupCanBeSupportedByAllGemGroups()
         {
-            var activeSkill = new Skill("active", 20, 20, default, 0, null);
+            var activeSkill = CreateSkillFromItem("active", default, 0);
             var supportSkills = new[]
             {
-                new Skill("2allows0", 20, 20, default, 1, 0),
-                new Skill("5allows3", 20, 20, default, 2, 1),
-                new Skill("14allows1", 20, 20, default, 3, null),
+                CreateSkillFromItem("14allows1", default, 1),
+                CreateSkillFromGem("2allows0", default, 1, 0),
+                CreateSkillFromGem("5allows3", default, 2, 1),
             };
             var expected = supportSkills;
             var sut = CreateSut();
@@ -90,14 +90,14 @@ namespace PoESkillTree.Engine.GameModel.Skills
         [Test]
         public void ActiveSkillWithGemGroupCanBeSupportedBySameOrNoGemGroup()
         {
-            var activeSkill = new Skill("active", 20, 20, default, 0, 1);
+            var activeSkill = CreateSkillFromGem("active", default, 0, 1);
             var supportSkills = new[]
             {
-                new Skill("2allows0", 20, 20, default, 1, 0),
-                new Skill("5allows3", 20, 20, default, 2, 1),
-                new Skill("14allows1", 20, 20, default, 3, null),
+                CreateSkillFromItem("14allows1", default, 0),
+                CreateSkillFromGem("2allows0", default, 1, 0),
+                CreateSkillFromGem("5allows3", default, 2, 1),
             };
-            var expected = new[] { supportSkills[1], supportSkills[2] };
+            var expected = new[] { supportSkills[0], supportSkills[2] };
             var sut = CreateSut();
 
             var actual = sut.SelectSupportingSkills(activeSkill, supportSkills).ToList();
@@ -108,8 +108,8 @@ namespace PoESkillTree.Engine.GameModel.Skills
         [Test]
         public void ActiveSkillWithoutGemGroupIsNotSupportedByGemOnlySupports()
         {
-            var activeSkill = new Skill("active", 20, 20, default, 0, null);
-            var supportSkills = new[] { new Skill("21allows0gemsOnly", 20, 20, default, 1, 0) };
+            var activeSkill = CreateSkillFromItem("active", default, 0);
+            var supportSkills = new[] { CreateSkillFromGem("21allows0gemsOnly", default, 1, 0) };
             var expected = new Skill[0];
             var sut = CreateSut();
 
@@ -121,8 +121,8 @@ namespace PoESkillTree.Engine.GameModel.Skills
         [Test]
         public void ActiveSkillWithGemGroupIsSupportedByGemOnlySupports()
         {
-            var activeSkill = new Skill("active", 20, 20, default, 0, 0);
-            var supportSkills = new[] { new Skill("21allows0gemsOnly", 20, 20, default, 1, 0) };
+            var activeSkill = CreateSkillFromGem("active", default, 0, 0);
+            var supportSkills = new[] { CreateSkillFromGem("21allows0gemsOnly", default, 1, 0) };
             var expected = supportSkills;
             var sut = CreateSut();
 
@@ -156,8 +156,8 @@ namespace PoESkillTree.Engine.GameModel.Skills
                     new[] { "totem", },
                     new[] { "duration", "unknown_78" }),
             };
-            var activeSkill = new Skill("activeBoolean", 20, 20, default, 0, 0);
-            var supportSkill = new Skill("SupportAuraDuration", 20, 20, default, 1, 0);
+            var activeSkill = CreateSkillFromGem("activeBoolean", default, 0, 0);
+            var supportSkill = CreateSkillFromGem("SupportAuraDuration", default, 1, 0);
             var sut = new SupportabilityTester(new SkillDefinitions(skills));
 
             var actual = sut.SelectSupportingSkills(activeSkill, new[] { supportSkill }).ToList();
@@ -188,8 +188,8 @@ namespace PoESkillTree.Engine.GameModel.Skills
                     },
                     new string[0]),
             };
-            var activeSkill = new Skill("activeBoolean", 20, 20, default, 0, 0);
-            var supportSkill = new Skill("SupportAuraDuration", 20, 20, default, 1, 0);
+            var activeSkill = CreateSkillFromGem("activeBoolean", default, 0, 0);
+            var supportSkill = CreateSkillFromGem("SupportAuraDuration", default, 1, 0);
             var sut = new SupportabilityTester(new SkillDefinitions(skills));
 
             var actual = sut.SelectSupportingSkills(activeSkill, new[] { supportSkill }).ToList();
@@ -203,7 +203,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
 
         private static IReadOnlyList<SkillDefinition> Skills => new[]
         {
-            SkillDefinition.CreateActive("active", 0, "", new string[0], null,
+            SkillDefinition.CreateActive("active", 0, "", null, new string[0], null,
                 new ActiveSkillDefinition("active", 0, new[] { "0", "1", "2" }, new[] { "3" }, new Keyword[0],
                     new IReadOnlyList<Keyword>[0], false, null, new ItemClass[0]),
                 new Dictionary<int, SkillLevelDefinition>()),
@@ -230,7 +230,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
         };
 
         private static SkillDefinition CreateActiveDefinition(string[] types)
-            => SkillDefinition.CreateActive("activeBoolean", 100, "", new string[0], null,
+            => SkillDefinition.CreateActive("activeBoolean", 100, "", null, new string[0], null,
                 new ActiveSkillDefinition("activeBoolean", 0, types, new string[0], new Keyword[0],
                     new IReadOnlyList<Keyword>[0], false, null, new ItemClass[0]),
                 new Dictionary<int, SkillLevelDefinition>());
@@ -238,8 +238,14 @@ namespace PoESkillTree.Engine.GameModel.Skills
         private static SkillDefinition CreateSupportDefinition(
             string id, int numericId, bool supportsGemsOnly, IEnumerable<string> allowedActiveSkillTypes,
             IEnumerable<string> excludedActiveSkillTypes, IEnumerable<string> addedActiveSkillTypes)
-            => SkillDefinition.CreateSupport(id, numericId, "", new string[0], null,
+            => SkillDefinition.CreateSupport(id, numericId, "", null, new string[0], null,
                 new SupportSkillDefinition(supportsGemsOnly, allowedActiveSkillTypes, excludedActiveSkillTypes,
                     addedActiveSkillTypes, new Keyword[0]), new Dictionary<int, SkillLevelDefinition>());
+
+        private static Skill CreateSkillFromGem(string skillId, ItemSlot itemSlot, int socketIndex, int gemGroup) =>
+            Skill.FromGem(new Gem(skillId, 20, 20, itemSlot, socketIndex, gemGroup, true), true);
+
+        private static Skill CreateSkillFromItem(string skillId, ItemSlot itemSlot, int skillIndex) =>
+            Skill.FromItem(skillId, 20, 20, itemSlot, skillIndex, true);
     }
 }

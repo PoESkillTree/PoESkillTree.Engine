@@ -5,9 +5,6 @@ using PoESkillTree.Engine.GameModel.Logging;
 using PoESkillTree.Engine.Utils.Extensions;
 using static MoreLinq.Extensions.MaxByExtension;
 using static MoreLinq.Extensions.ToDelimitedStringExtension;
-#if NETSTANDARD2_0
-using static MoreLinq.Extensions.ToHashSetExtension;
-#endif
 
 namespace PoESkillTree.Engine.GameModel.StatTranslation
 {

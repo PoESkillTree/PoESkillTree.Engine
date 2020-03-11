@@ -115,7 +115,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
         public void BuffsWithoutParametersCountBuildsToCorrectValue()
         {
             // Buff properties + conflux + dummy buffs + passed buff skills
-            var expected = 14 + 4 + 3 + 3;
+            var expected = 19 + 4 + 3 + 3;
             // For every source entity
             expected *= Enums.GetMemberCount<Entity>();
             var context = Mock.Of<IValueCalculationContext>(c =>
@@ -128,10 +128,10 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
         }
 
         [Test]
-        public void BuffsWithParamtersCountBuildsToCorrectValue()
+        public void BuffsWithParametersCountBuildsToCorrectValue()
         {
             // Buff properties + conflux + dummy buffs + passed buff skills
-            var expected = 14 + 4 + 3 + 3;
+            var expected = 19 + 4 + 3 + 3;
             var source = new ModifierSourceEntityBuilder();
             var target = new ModifierSourceEntityBuilder();
             var context = Mock.Of<IValueCalculationContext>(c =>
@@ -156,7 +156,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
 
         private static SkillDefinition CreateSkill(string id, IReadOnlyList<Keyword> keywords)
             => SkillDefinition.CreateActive(
-                id, 0, "", new[] { "" }, null,
+                id, 0, "", null, new[] { "" }, null,
                 new ActiveSkillDefinition(id, 0, new string[0], new string[0], keywords, new[] { keywords }, true,
                     null, new ItemClass[0]),
                 new Dictionary<int, SkillLevelDefinition>());

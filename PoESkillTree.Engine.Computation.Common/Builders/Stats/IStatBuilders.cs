@@ -67,9 +67,16 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
         IStatBuilder AreaOfEffect { get; }
 
         /// <summary>
-        /// Gets a stat representing the main skill's radius, if it has one.
+        /// Gets a stat representing modifiers to the main skill's radii, if it has any. Consolidation of primary, secondary and tertiary radii.
         /// </summary>
         IStatBuilder Radius { get; }
+
+        /// <summary>
+        /// Gets a stat representing the main skill's primary radius, if it has one.
+        /// </summary>
+        IStatBuilder PrimaryRadius { get; }
+        IStatBuilder SecondaryRadius { get; }
+        IStatBuilder TertiaryRadius { get; }
 
         /// <summary>
         /// Gets a stat representing the weapon range
@@ -96,6 +103,10 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
         /// </summary>
         IStatBuilder SecondaryDuration { get; }
 
+        IStatBuilder SkillRepeats { get; }
+        IStatBuilder DamageMultiplierOverRepeatCycle { get; }
+
+        IStatBuilder SkillNumberOfHitsPerCast { get; }
         IStatBuilder SkillStage { get; }
         IStatBuilder MainSkillPart { get; }
 
@@ -124,10 +135,6 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
 
         IStatBuilder AbyssalSockets { get; }
 
-        /// <summary>
-        /// Gets a stat representing the number of currently active rampage stacks.
-        /// </summary>
-        IStatBuilder RampageStacks { get; }
 
         /// <summary>
         /// The percentage of damage taken gained as mana over 4 seconds.
@@ -141,10 +148,15 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
 
         IStatBuilder BannerStage { get; }
 
+        IStatBuilder RuthlessBlowPeriod { get; }
+        ValueBuilder RuthlessBlowBonus { get; }
+
+        IStatBuilder CursesLinkedToBane { get; }
+
         /// <summary>
         /// Returns the value of a stat with type uint that can only be specified by the user.
         /// </summary>
-        ValueBuilder UniqueAmount(string name);
+        ValueBuilder UniqueAmount(string name, double defaultValue = 0);
 
         ValueBuilder UniqueEnum<T>(string name) where T : Enum;
 

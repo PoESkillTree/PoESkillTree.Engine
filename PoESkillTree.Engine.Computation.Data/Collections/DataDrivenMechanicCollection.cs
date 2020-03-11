@@ -115,6 +115,17 @@ namespace PoESkillTree.Engine.Computation.Data.Collections
         }
 
         public void Add(
+            IFormBuilder form, Func<DamageType, IDamageRelatedStatBuilder> stat,
+            Func<DamageType, IDamageRelatedStatBuilder> vp1, Func<DamageType, IDamageRelatedStatBuilder> vp2,
+            Func<DamageType, IDamageRelatedStatBuilder> vp3, Func<DamageType, IDamageRelatedStatBuilder> vp4,
+            Func<DamageType, IDamageRelatedStatBuilder> vp5,
+            Func<DamageType, IStatBuilder, IStatBuilder, IStatBuilder, IStatBuilder, IStatBuilder, IValueBuilder> value)
+        {
+            Add(form, stat, dt => new[] { vp1(dt), vp2(dt), vp3(dt), vp4(dt), vp5(dt) },
+                (dt, ss) => value(dt, ss[0], ss[1], ss[2], ss[3], ss[4]));
+        }
+
+        public void Add(
             IFormBuilder form, Func<Ailment, DamageType, IDamageRelatedStatBuilder> stat,
             Func<Ailment, DamageType, IDamageRelatedStatBuilder> vp1,
             Func<Ailment, DamageType, IDamageRelatedStatBuilder> vp2,
@@ -160,18 +171,40 @@ namespace PoESkillTree.Engine.Computation.Data.Collections
         public void Add(IFormBuilder form, Func<DamageType, IStatBuilder> stat, Func<DamageType, IValueBuilder> value)
             => Add<DamageType>(form, stat, value);
 
+        public void Add(IFormBuilder form, Func<Pool, DamageType, IStatBuilder> stat, Func<IPoolStatBuilder, DamageType, IValueBuilder> value)
+            => Add(form, stat, (p, dt) => value(PoolStatFrom(p), dt));
+
         private void Add<TEnum>(IFormBuilder form, Func<TEnum, IStatBuilder> stat, Func<TEnum, IValueBuilder> value)
             where TEnum : struct, Enum
         {
-            var ts = Enums.GetValues<TEnum>();
+            foreach (var t in GetValues<TEnum>())
+            {
+                Add(form, stat(t), value(t));
+            }
+        }
+
+        private void Add<TEnum1, TEnum2>(IFormBuilder form, Func<TEnum1, TEnum2, IStatBuilder> stat, Func<TEnum1, TEnum2, IValueBuilder> value)
+            where TEnum1 : struct, Enum
+            where TEnum2 : struct, Enum
+        {
+            foreach (var t1 in GetValues<TEnum1>())
+            {
+                foreach (var t2 in GetValues<TEnum2>())
+                {
+                    Add(form, stat(t1, t2), value(t1, t2));
+                }
+            }
+        }
+
+        private static IEnumerable<TEnum> GetValues<TEnum>()
+            where TEnum : struct, Enum
+        {
+            IEnumerable<TEnum> ts = Enums.GetValues<TEnum>();
             if (typeof(TEnum) == typeof(DamageType))
             {
                 ts = ts.Except((TEnum) (object) DamageType.RandomElement);
             }
-            foreach (var t in ts)
-            {
-                Add(form, stat(t), value(t));
-            }
+            return ts;
         }
     }
 }

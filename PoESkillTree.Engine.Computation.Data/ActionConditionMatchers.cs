@@ -36,26 +36,26 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "when you ({ActionMatchers}) an enemy", Reference.AsAction.On },
                 {
                     "when you ({ActionMatchers}) a rare or unique enemy",
-                    And(Enemy.IsRareOrUnique, Reference.AsAction.On)
+                    And(OpponentsOfSelf.IsRareOrUnique, Reference.AsAction.On)
                 },
                 {
                     "when projectile ({ActionMatchers}) a rare or unique enemy",
-                    And(Enemy.IsRareOrUnique, Condition.WithPart(Keyword.Projectile), Reference.AsAction.On)
+                    And(OpponentsOfSelf.IsRareOrUnique, Condition.WithPart(Keyword.Projectile), Reference.AsAction.On)
                 },
                 {
                     "(when you|on) ({ActionMatchers}) a ({AilmentMatchers}) enemy",
-                    And(References[1].AsAilment.IsOn(Enemy), References[0].AsAction.On)
+                    And(References[1].AsAilment.IsOn(MainOpponentOfSelf), References[0].AsAction.On)
                 },
                 {
                     "(when you|on) ({ActionMatchers}) a cursed enemy",
-                    And(Buffs(targets: Enemy).With(Keyword.Curse).Any(), References[0].AsAction.On)
+                    And(Buffs(targets: OpponentsOfSelf).With(Keyword.Curse).Any(), References[0].AsAction.On)
                 },
                 // kill
                 { "if you or your totems kill an enemy", Or(Kill.On, Kill.By(Entity.Totem).On) },
                 { "affecting enemies you kill", Kill.On },
                 // hit
-                { "when hit", Hit.By(Enemy).On },
-                { "when you are hit", Hit.By(Enemy).On },
+                { "when hit", Hit.By(OpponentsOfSelf).On },
+                { "when you are hit( by an enemy)?", Hit.By(OpponentsOfSelf).On },
                 { "with hits", Hit.On },
                 { "for each enemy hit by (your )?attacks", And(With(Keyword.Attack), Hit.On) },
                 { "for each enemy hit by (your )?spells", And(With(Keyword.Spell), Hit.On) },
@@ -65,8 +65,8 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 {
                     "for each blinded enemy hit by this weapon",
-                    (And(ModifierSourceIs(ItemSlot.MainHand), MainHandAttack, Hit.On, Buff.Blind.IsOn(Enemy)),
-                        And(ModifierSourceIs(ItemSlot.OffHand), OffHandAttack, Hit.On, Buff.Blind.IsOn(Enemy)))
+                    (And(ModifierSourceIs(ItemSlot.MainHand), MainHandAttack, Hit.On, Buff.Blind.IsOn(MainOpponentOfSelf)),
+                        And(ModifierSourceIs(ItemSlot.OffHand), OffHandAttack, Hit.On, Buff.Blind.IsOn(MainOpponentOfSelf)))
                 },
                 { "on hit no more than once every # seconds", Hit.On },
                 { "on melee hit, no more than once every # seconds", And(Condition.WithPart(Keyword.Melee), Hit.On) },
@@ -74,7 +74,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "critical strikes have a", CriticalStrike.On },
                 { "when you deal a critical strike", CriticalStrike.On },
                 { "if you get a critical strike", CriticalStrike.On },
-                { "when you take a critical strike", CriticalStrike.By(Enemy).On },
+                { "when you take a critical strike", CriticalStrike.By(OpponentsOfSelf).On },
                 // skill cast
                 { "when you place a totem", Totems.Cast.On },
                 { "when you summon a totem", Totems.Cast.On },

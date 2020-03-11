@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using EnumsNET;
 using PoESkillTree.Engine.GameModel;
 
 namespace PoESkillTree.Engine.Computation.Common
@@ -28,5 +29,8 @@ namespace PoESkillTree.Engine.Computation.Common
         public ExplicitRegistrationType? ExplicitRegistrationType { get; set; }
         public Type DataType => typeof(double);
         public IReadOnlyList<Behavior> Behaviors => new Behavior[0];
+        public NodeValue? Round(NodeValue? value) => value;
+
+        public override string ToString() => Entity.GetName() + "." + Identity;
     }
 }

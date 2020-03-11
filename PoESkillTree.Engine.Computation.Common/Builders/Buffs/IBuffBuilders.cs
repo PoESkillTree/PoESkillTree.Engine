@@ -18,6 +18,7 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Buffs
         /// Gets a buff representing Maim.
         /// </summary>
         IBuffBuilder Maim { get; }
+        IBuffBuilder Hinder { get; }
 
         /// <summary>
         /// Gets a buff representing Intimidate.
@@ -53,8 +54,12 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Buffs
         IBuffBuilder Tailwind { get; }
         IBuffBuilder CoveredInAsh { get; }
         IBuffBuilder Innervation { get; }
-        IBuffBuilder Impale { get; }
+        IImpaleBuffBuilder Impale { get; }
         IBuffBuilder Infusion { get; }
+        IBuffBuilder Snare { get; }
+        IBuffBuilder Rampage { get; }
+        IBuffBuilder Withered { get; }
+        IBuffBuilder Elusive { get; }
 
         IBuffBuilder GenericMine { get; }
 

@@ -21,13 +21,12 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
             new Lazy<Task<IParsingData<ParsingStep>>>(
                 () => Data.ParsingData.CreateAsync(LazyGameData.Value, LazyBuilderFactories.Value));
 
-        private static readonly Lazy<Task<IParser>> LazyParser = new Lazy<Task<IParser>>(
-            () => Parser<ParsingStep>.CreateAsync(LazyGameData.Value, LazyBuilderFactories.Value,
-                LazyParsingData.Value));
+        private static readonly Lazy<Task<Parser<ParsingStep>>> LazyParser = new Lazy<Task<Parser<ParsingStep>>>(
+            () => Parser<ParsingStep>.CreateAsync(LazyGameData.Value, LazyBuilderFactories.Value, LazyParsingData.Value));
 
         protected static GameData GameData => LazyGameData.Value;
         protected static Task<IBuilderFactories> BuilderFactoriesTask => LazyBuilderFactories.Value;
         protected static Task<IParsingData<ParsingStep>> ParsingDataTask => LazyParsingData.Value;
-        protected static Task<IParser> ParserTask => LazyParser.Value;
+        protected static Task<Parser<ParsingStep>> ParserTask => LazyParser.Value;
     }
 }

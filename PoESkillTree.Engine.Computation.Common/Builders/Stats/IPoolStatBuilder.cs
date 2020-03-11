@@ -1,4 +1,5 @@
 using PoESkillTree.Engine.Computation.Common.Builders.Conditions;
+using PoESkillTree.Engine.Computation.Common.Builders.Damage;
 using PoESkillTree.Engine.Computation.Common.Builders.Entities;
 
 namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
@@ -23,6 +24,8 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
         /// Gets a stat representing the regeneration value of this pool.
         /// </summary>
         IRegenStatBuilder Regen { get; }
+
+        IStatBuilder Degeneration(IDamageTypeBuilder damageType);
 
         /// <summary>
         /// Gets a stat representing the recharge value of this pool.

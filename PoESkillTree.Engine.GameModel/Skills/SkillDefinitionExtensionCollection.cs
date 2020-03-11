@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace PoESkillTree.Engine.GameModel.Skills
@@ -22,10 +23,10 @@ namespace PoESkillTree.Engine.GameModel.Skills
         public void Add(string skillId,
             SkillPartDefinitionExtension commonExtension,
             params (string name, SkillPartDefinitionExtension extension)[] parts)
-            => Add(skillId, commonExtension, new Dictionary<string, IReadOnlyList<Entity>>(), parts);
+            => Add(skillId, commonExtension, new Dictionary<string, Func<Entity, IEnumerable<Entity>>>(), parts);
 
         public void Add(string skillId,
-            IReadOnlyDictionary<string, IReadOnlyList<Entity>> buffStats,
+            IReadOnlyDictionary<string, Func<Entity, IEnumerable<Entity>>> buffStats,
             params (string name, SkillPartDefinitionExtension extension)[] parts)
             => Add(skillId, new SkillPartDefinitionExtension(), buffStats, parts);
 
@@ -35,23 +36,23 @@ namespace PoESkillTree.Engine.GameModel.Skills
             => Add(skillId, new SkillPartDefinitionExtension(), passiveStats, parts);
 
         public void Add(string skillId,
-            SkillPartDefinitionExtension commonExtension, IReadOnlyDictionary<string, IReadOnlyList<Entity>> buffStats,
+            SkillPartDefinitionExtension commonExtension, IReadOnlyDictionary<string, Func<Entity, IEnumerable<Entity>>> buffStats,
             params (string name, SkillPartDefinitionExtension extension)[] parts)
             => Add(skillId, commonExtension, buffStats, new string[0], parts);
 
         public void Add(string skillId,
             SkillPartDefinitionExtension commonExtension, IEnumerable<string> passiveStats,
             params (string name, SkillPartDefinitionExtension extension)[] parts)
-            => Add(skillId, commonExtension, new Dictionary<string, IReadOnlyList<Entity>>(), passiveStats, parts);
+            => Add(skillId, commonExtension, new Dictionary<string, Func<Entity, IEnumerable<Entity>>>(), passiveStats, parts);
 
         public void Add(string skillId,
-            IReadOnlyDictionary<string, IReadOnlyList<Entity>> buffStats, IEnumerable<string> passiveStats,
+            IReadOnlyDictionary<string, Func<Entity, IEnumerable<Entity>>> buffStats, IEnumerable<string> passiveStats,
             params (string name, SkillPartDefinitionExtension extension)[] parts)
             => Add(skillId, new SkillPartDefinitionExtension(), buffStats, passiveStats, parts);
 
         public void Add(string skillId,
             SkillPartDefinitionExtension commonExtension,
-            IReadOnlyDictionary<string, IReadOnlyList<Entity>> buffStats, IEnumerable<string> passiveStats,
+            IReadOnlyDictionary<string, Func<Entity, IEnumerable<Entity>>> buffStats, IEnumerable<string> passiveStats,
             params (string name, SkillPartDefinitionExtension extension)[] parts)
             => _collection.Add((skillId,
                 new SkillDefinitionExtension(commonExtension, buffStats, passiveStats, parts)));

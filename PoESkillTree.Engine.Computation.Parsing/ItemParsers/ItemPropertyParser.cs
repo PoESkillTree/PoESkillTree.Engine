@@ -22,8 +22,8 @@ namespace PoESkillTree.Engine.Computation.Parsing.ItemParsers
 
         public ParseResult Parse(PartialItemParserParameter parameter)
         {
-            var (item, slot, baseItemDefinition, localSource, _) = parameter;
-            _modifiers = new ModifierCollection(_builderFactories, localSource);
+            var (item, slot, entity, baseItemDefinition, localSource, _) = parameter;
+            _modifiers = new ModifierCollection(_builderFactories, localSource, entity);
 
             AddPropertySetupModifiers(slot, baseItemDefinition);
             AddPropertyModifiers(slot, baseItemDefinition);

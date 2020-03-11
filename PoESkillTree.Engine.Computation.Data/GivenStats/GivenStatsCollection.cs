@@ -37,15 +37,20 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             => new IGivenStats[]
             {
                 new CommonGivenStats(_builderFactories, modifierBuilder),
-                new CharacterGivenStats(_builderFactories, modifierBuilder, _characterBaseStats),
-                new MonsterGivenStats(_builderFactories, modifierBuilder),
-                new TotemGivenStats(_builderFactories, modifierBuilder),
+                new CommonMechanics(_builderFactories, modifierBuilder),
                 new EffectStats(_builderFactories, modifierBuilder),
-                new DataDrivenMechanics(_builderFactories, modifierBuilder),
-                new GameStateDependentMods(_builderFactories, modifierBuilder),
-                new EnemyGivenStats(_builderFactories, modifierBuilder, _monsterBaseStats),
+                new MonsterGivenStats(_builderFactories, modifierBuilder),
                 new AllyGivenStats(_builderFactories, modifierBuilder, _monsterBaseStats),
+                new AllyMechanics(_builderFactories, modifierBuilder),
+                new TotemGivenStats(_builderFactories, modifierBuilder),
+                new EnemyGivenStats(_builderFactories, modifierBuilder, _monsterBaseStats),
+                new EnemyMechanics(_builderFactories, modifierBuilder),
+                new CharacterGivenStats(_builderFactories, modifierBuilder, _characterBaseStats),
+                new CharacterMechanics(_builderFactories, modifierBuilder),
+                new DamageMechanics(_builderFactories, modifierBuilder),
+                new GameStateDependentMods(_builderFactories, modifierBuilder),
                 new AdditionalSkillStats(_builderFactories, modifierBuilder),
+                new SkillBaseRadii(_builderFactories, modifierBuilder),
             };
     }
 }

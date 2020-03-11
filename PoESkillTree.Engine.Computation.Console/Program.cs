@@ -38,7 +38,7 @@ namespace PoESkillTree.Engine.Computation.Console
         private Program(CompositionRoot compositionRoot)
         {
             _compositionRoot = compositionRoot;
-            _calculator = Calculator.Create();
+            _calculator = _compositionRoot.Calculator;
             _calculator.ExplicitlyRegisteredStats.CollectionChanged += ExplicitlyRegisteredStatsOnCollectionChanged;
             _dataUpdater = new Lazy<DataUpdater>(() => new DataUpdater(_compositionRoot.GameData));
         }

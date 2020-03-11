@@ -15,7 +15,6 @@ using PoESkillTree.Engine.GameModel.Items;
 using PoESkillTree.Engine.GameModel.PassiveTree;
 using PoESkillTree.Engine.GameModel.Skills;
 using PoESkillTree.Engine.GameModel.StatTranslation;
-using PoESkillTree.Engine.Utils;
 
 namespace PoESkillTree.Engine.Computation.Parsing
 {
@@ -27,9 +26,10 @@ namespace PoESkillTree.Engine.Computation.Parsing
         private readonly IParser<ItemParserParameter> _itemParser;
         private readonly IParser<ItemParserParameter> _itemJewelParser;
         private readonly IParser<JewelInSkillTreeParserParameter> _treeJewelParser;
-        private readonly IParser<IReadOnlyList<Skill>> _skillsParser;
-        private readonly IParser<Skill> _activeSkillParser;
+        private readonly IParser<SkillsParserParameter> _skillsParser;
+        private readonly IParser<ActiveSkillParserParameter> _activeSkillParser;
         private readonly IParser<SupportSkillParserParameter> _supportSkillParser;
+        private readonly IParser<GemsParserParameter> _gemsParser;
 
         private readonly StatTranslators _statTranslators;
         private readonly IEnumerable<IGivenStats> _givenStats;
@@ -38,7 +38,7 @@ namespace PoESkillTree.Engine.Computation.Parsing
             _untranslatedStatParsers =
                 new ConcurrentDictionary<IReadOnlyList<string>, IParser<UntranslatedStatParserParameter>>();
 
-        public static async Task<IParser> CreateAsync(
+        public static async Task<Parser<TStep>> CreateAsync(
             GameData gameData, Task<IBuilderFactories> builderFactoriesTask, Task<IParsingData<TStep>> parsingDataTask)
         {
             var passiveTreeTask = gameData.PassiveTree;
@@ -72,7 +72,9 @@ namespace PoESkillTree.Engine.Computation.Parsing
                 Caching(new ActiveSkillParser(skills, builderFactories, GetOrAddUntranslatedStatParser));
             _supportSkillParser =
                 Caching(new SupportSkillParser(skills, builderFactories, GetOrAddUntranslatedStatParser));
+            var skillModificationParser = new AdditionalSkillStatParser(skills, builderFactories);
             _skillsParser = new SkillsParser(skills, _activeSkillParser, _supportSkillParser);
+            _gemsParser = new GemsParser(skills, new GemParser(skills, builderFactories), skillModificationParser);
         }
 
         private IParser<UntranslatedStatParserParameter> GetOrAddUntranslatedStatParser(
@@ -103,23 +105,29 @@ namespace PoESkillTree.Engine.Computation.Parsing
         public ParseResult ParseSkilledPassiveNode(ushort nodeId)
             => _skilledPassiveNodeParser.Parse(nodeId);
 
-        public ParseResult ParseItem(Item item, ItemSlot itemSlot)
-            => _itemParser.Parse(new ItemParserParameter(item, itemSlot));
+        public ParseResult ParseItem(Item item, ItemSlot itemSlot, Entity entity = Entity.Character)
+            => _itemParser.Parse(new ItemParserParameter(item, itemSlot, entity));
 
-        public ParseResult ParseJewelSocketedInItem(Item item, ItemSlot itemSlot)
-            => _itemJewelParser.Parse(new ItemParserParameter(item, itemSlot));
+        public ParseResult ParseJewelSocketedInItem(Item item, ItemSlot itemSlot, Entity entity = Entity.Character)
+            => _itemJewelParser.Parse(new ItemParserParameter(item, itemSlot, entity));
 
         public ParseResult ParseJewelSocketedInSkillTree(Item item, JewelRadius jewelRadius, ushort nodeId)
             => _treeJewelParser.Parse(new JewelInSkillTreeParserParameter(item, jewelRadius, nodeId));
 
-        public ParseResult ParseSkills(IReadOnlyList<Skill> skills)
-            => _skillsParser.Parse(new SequenceEquatableListView<Skill>(skills));
+        public ParseResult ParseSkills(IReadOnlyList<Skill> skills, Entity entity = Entity.Character)
+            => _skillsParser.Parse(skills, entity);
 
-        public ParseResult ParseActiveSkill(Skill activeSkill)
-            => _activeSkillParser.Parse(activeSkill);
+        public (ParseResult result, IReadOnlyList<Skill> skills) ParseGems(IReadOnlyList<Gem> gems, Entity entity = Entity.Character)
+        {
+            var result = _gemsParser.Parse(gems, entity, out var skills);
+            return (result, skills);
+        }
 
-        public ParseResult ParseSupportSkill(Skill activeSkill, Skill supportSkill)
-            => _supportSkillParser.Parse(activeSkill, supportSkill);
+        public ParseResult ParseActiveSkill(ActiveSkillParserParameter parameter) =>
+            _activeSkillParser.Parse(parameter);
+
+        public ParseResult ParseSupportSkill(SupportSkillParserParameter parameter) =>
+            _supportSkillParser.Parse(parameter);
 
         public IReadOnlyList<Modifier> ParseGivenModifiers()
             => GivenStatsParser.Parse(_coreParser, _givenStats);

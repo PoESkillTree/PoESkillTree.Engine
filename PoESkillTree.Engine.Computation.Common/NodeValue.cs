@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using PoESkillTree.Engine.Utils.Extensions;
 
 namespace PoESkillTree.Engine.Computation.Common
@@ -194,7 +193,7 @@ namespace PoESkillTree.Engine.Computation.Common
         /// <summary>
         /// Returns true if this <c>NodeValue?</c> representing a boolean value represents <c>true</c>.
         /// </summary>
-        public static bool IsTrue(this NodeValue? @this) => @this.HasValue;
+        public static bool IsTrue(this NodeValue? @this) => @this.HasValue && @this.Value != new NodeValue(0);
 
         public static double Single(this NodeValue? @this)
         {
