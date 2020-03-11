@@ -250,7 +250,7 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
             var armour = 4000;
             var expected = 50 + 100 * armour / (armour + 10 * enemyDamage);
             var actual = nodes
-                .GetNode(Build(_metaStats.ResistanceAgainstHits(DamageType.Physical)).Single())
+                .GetNode(Build(_builderFactories.DamageTypeBuilders.Physical.ResistanceAgainstHits).Single())
                 .Value.Single();
             Assert.AreEqual(expected, actual);
         }

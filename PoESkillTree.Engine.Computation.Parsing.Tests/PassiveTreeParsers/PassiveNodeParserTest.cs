@@ -35,7 +35,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.PassiveTreeParsers
         [TestCase(false)]
         public void AddsToPassivePointsIfCostsPoint(bool costsPassivePoint)
         {
-            var definition = CreateNode(false, 0, costsPassivePoint);
+            var definition = CreateNode(false, costsPassivePoint);
             var expected = CreateConditionalModifier(definition, "PassivePoints", Form.BaseAdd, 1, "SkillPointSpent");
             var sut = CreateSut(definition);
 
@@ -50,21 +50,9 @@ namespace PoESkillTree.Engine.Computation.Parsing.PassiveTreeParsers
         [Test]
         public void AddsToAscendancyPassivePointsIfAscendancyNode()
         {
-            var definition = CreateNode(true, 0, true);
+            var definition = CreateNode(true, true);
             var expected =
                 CreateConditionalModifier(definition, "AscendancyPassivePoints", Form.BaseAdd, 1, "SkillPointSpent");
-            var sut = CreateSut(definition);
-
-            var result = sut.Parse(definition.Id);
-
-            result.Modifiers.Should().Contain(expected);
-        }
-
-        [Test]
-        public void AddsPassivePointsGrantedToPassivePointsMaximum()
-        {
-            var definition = CreateNode(false, 3, true);
-            var expected = CreateSkilledConditionalModifier(definition, "PassivePoints.Maximum", Form.BaseAdd, 3);
             var sut = CreateSut(definition);
 
             var result = sut.Parse(definition.Id);
@@ -149,16 +137,12 @@ namespace PoESkillTree.Engine.Computation.Parsing.PassiveTreeParsers
         }
 
         private static PassiveNodeDefinition CreateNode(params string[] modifiers)
-            => CreateNode(false, 0, true, modifiers);
+            => CreateNode(false, true, modifiers);
 
         private static PassiveNodeDefinition CreateNode(
-            bool isAscendancyNode, int passivePointsGranted, bool costsPassivePoint, params string[] modifiers)
+            bool isAscendancyNode, bool costsPassivePoint, params string[] modifiers)
             => new PassiveNodeDefinition(42, PassiveNodeType.Small, "node", isAscendancyNode, costsPassivePoint,
-                passivePointsGranted, default, modifiers);
-
-        private static Modifier CreateSkilledConditionalModifier(
-            PassiveNodeDefinition nodeDefinition, string stat, Form form, double value)
-            => CreateConditionalModifier(nodeDefinition, stat, form, value, "Allocated");
+                default, modifiers);
 
         private static Modifier CreateConditionalModifier(
             PassiveNodeDefinition nodeDefinition, string stat, Form form, double value, string conditionStatSuffix)

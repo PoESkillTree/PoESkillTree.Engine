@@ -27,13 +27,24 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Conditions
 
         /// <summary>
         /// Returns a condition that is satisfied if the damage related stat or action is done as an attack with
+        /// the given hand with a skill (not ailments).
+        /// </summary>
+        IConditionBuilder AttackWithSkills(AttackDamageHand hand);
+
+        /// <summary>
+        /// Returns a condition that is satisfied if the damage related stat or action is done as an attack with
         /// the given hand.
         /// </summary>
         IConditionBuilder AttackWith(AttackDamageHand hand);
 
         /// <summary>
         /// Returns a condition that is satisfied if the damage related stat or action is done as the given source
-        /// with a skill.
+        /// with a skill (not ailments).
+        /// </summary>
+        IConditionBuilder WithSkills(DamageSource damageSource);
+
+        /// <summary>
+        /// Returns a condition that is satisfied if the damage related stat or action is done as the given source.
         /// </summary>
         IConditionBuilder With(DamageSource damageSource);
 

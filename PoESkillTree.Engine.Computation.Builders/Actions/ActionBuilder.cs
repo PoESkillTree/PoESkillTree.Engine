@@ -21,17 +21,17 @@ namespace PoESkillTree.Engine.Computation.Builders.Actions
 
         protected IStatFactory StatFactory { get; }
         private readonly ICoreBuilder<string> _identity;
-        private readonly IEntityBuilder _entity;
+        protected IEntityBuilder Entity { get; }
 
         public ActionBuilder(IStatFactory statFactory, ICoreBuilder<string> identity, IEntityBuilder entity)
         {
             StatFactory = statFactory;
             _identity = identity;
-            _entity = entity;
+            Entity = entity;
         }
 
         public IActionBuilder Resolve(ResolveContext context) =>
-            new ActionBuilder(StatFactory, _identity.Resolve(context), _entity);
+            new ActionBuilder(StatFactory, _identity.Resolve(context), Entity);
 
         public IActionBuilder By(IEntityBuilder source) =>
             new ActionBuilder(StatFactory, _identity, source);
@@ -46,7 +46,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Actions
         private IEnumerable<IStat> ConvertStat(BuildParameters parameters, ICoreBuilder<string> identity, IStat stat)
         {
             var builtIdentity = identity.Build(parameters);
-            return from e in _entity.Build(stat.Entity)
+            return from e in Entity.Build(stat.Entity)
                    let i = $"On({builtIdentity}).By({e})"
                    let registrationType = GainOnAction(stat, builtIdentity, e)
                    select StatFactory.CopyWithSuffix(stat, i, stat.DataType, registrationType);
@@ -58,7 +58,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Actions
 
         private IValue BuildInPastXSecondsValue(BuildParameters parameters, IValueBuilder seconds)
         {
-            var builtEntity = BuildEntity(parameters, _entity);
+            var builtEntity = BuildEntity(parameters, Entity);
             var recentOccurrencesStat = BuildRecentOccurrencesStat(parameters, builtEntity);
             var lastOccurenceStat = BuildLastOccurrenceStat(parameters, builtEntity);
             var secondsValue = seconds.Build(parameters);
@@ -82,7 +82,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Actions
             new ValueBuilder(new ValueBuilderImpl(BuildCountRecentlyValue, c => Resolve(c).CountRecently));
 
         private IValue BuildCountRecentlyValue(BuildParameters parameters)
-            => new StatValue(BuildRecentOccurrencesStat(parameters, BuildEntity(parameters, _entity)));
+            => new StatValue(BuildRecentOccurrencesStat(parameters, BuildEntity(parameters, Entity)));
 
         private IStat BuildLastOccurrenceStat(BuildParameters parameters, Entity entity)
             => StatFactory.FromIdentity($"{Build(parameters)}.LastOccurrence", entity, typeof(uint),

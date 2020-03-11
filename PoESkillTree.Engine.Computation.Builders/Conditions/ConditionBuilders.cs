@@ -32,13 +32,21 @@ namespace PoESkillTree.Engine.Computation.Builders.Conditions
                 .And(activeSkillIdStat.Value.Eq(skill.SkillId));
         }
 
+        public IConditionBuilder AttackWithSkills(AttackDamageHand hand) =>
+            AttackWith(hand)
+                .And(new StatConvertingConditionBuilder(IfIsDamageStat(d => d.WithSkills)));
+
         public IConditionBuilder AttackWith(AttackDamageHand hand) =>
             With(DamageSource.Attack)
                 .And(new StatConvertingConditionBuilder(IfIsDamageStat(d => d.With(hand))));
 
+        public IConditionBuilder WithSkills(DamageSource damageSource) =>
+            With(damageSource)
+                .And(new StatConvertingConditionBuilder(IfIsDamageStat(d => d.WithSkills)));
+
         public IConditionBuilder With(DamageSource damageSource) =>
             new StatConvertingConditionBuilder(IfIsDamageStat(
-                d => d.WithSkills(damageSource),
+                d => d.With(damageSource),
                 _ => throw new ParseException(
                     $"IConditionBuilders.{nameof(With)} only works with damage related stats")));
 

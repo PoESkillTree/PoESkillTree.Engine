@@ -35,26 +35,29 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             => new DataDrivenMechanicCollection(ModifierBuilder, BuilderFactories)
             {
                 // resistances/damage reduction
-                { BaseSet, MetaStats.ResistanceAgainstHits(DamageType.Physical), Physical.Resistance.Value },
-                { BaseSet, MetaStats.ResistanceAgainstHits(DamageType.Physical).Maximum, 90 },
-                { TotalOverride, MetaStats.ResistanceAgainstHits(DamageType.Lightning), Lightning.Resistance.Value },
-                { TotalOverride, MetaStats.ResistanceAgainstHits(DamageType.Cold), Cold.Resistance.Value },
-                { TotalOverride, MetaStats.ResistanceAgainstHits(DamageType.Fire), Fire.Resistance.Value },
-                { TotalOverride, MetaStats.ResistanceAgainstHits(DamageType.Chaos), Chaos.Resistance.Value },
                 {
-                    BaseAdd, MetaStats.ResistanceAgainstHits(DamageType.Physical),
+                    BaseSet, dt => DamageTypeBuilders.From(dt).ResistanceAgainstHits,
+                    dt => DamageTypeBuilders.From(dt).Resistance.Value
+                },
+                {
+                    BaseSet, dt => DamageTypeBuilders.From(dt).ResistanceAgainstDoTs,
+                    dt => DamageTypeBuilders.From(dt).Resistance.Value
+                },
+                { BaseSet, Physical.ResistanceAgainstHits.Maximum, 90 },
+                {
+                    BaseAdd, Physical.ResistanceAgainstHits,
                     PhysicalDamageReductionFromArmour(Armour.Value,
                         Physical.Damage.WithSkills.With(AttackDamageHand.MainHand).For(Enemy).Value)
                 },
                 // damage mitigation (1 - (1 - resistance / 100) * damage taken)
                 {
                     TotalOverride, MetaStats.MitigationAgainstHits,
-                    dt => 1 - DamageTakenMultiplier(MetaStats.ResistanceAgainstHits(dt),
+                    dt => 1 - DamageTakenMultiplier(DamageTypeBuilders.From(dt).ResistanceAgainstHits,
                               DamageTaken(dt).WithSkills(DamageSource.Secondary))
                 },
                 {
                     TotalOverride, MetaStats.MitigationAgainstDoTs,
-                    dt => 1 - DamageTakenMultiplier(DamageTypeBuilders.From(dt).Resistance,
+                    dt => 1 - DamageTakenMultiplier(DamageTypeBuilders.From(dt).ResistanceAgainstDoTs,
                               DamageTaken(dt).WithSkills(DamageSource.OverTime))
                 },
                 // chance to evade

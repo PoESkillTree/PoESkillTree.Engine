@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using PoESkillTree.Engine.Computation.Common.Builders;
+using PoESkillTree.Engine.Computation.Common.Builders.Damage;
 using PoESkillTree.Engine.Computation.Common.Builders.Modifiers;
 using PoESkillTree.Engine.Computation.Common.Data;
 using PoESkillTree.Engine.Computation.Data.Base;
@@ -34,6 +36,8 @@ namespace PoESkillTree.Engine.Computation.Data
                     And(Condition.WithPart(References[0].AsKeyword), References[1].AsAction.On)
                 },
                 { "when you ({ActionMatchers}) an enemy", Reference.AsAction.On },
+                { "when you ({ActionMatchers}) a rare enemy", And(OpponentsOfSelf.IsRare, Reference.AsAction.On) },
+                { "when you ({ActionMatchers}) a unique enemy", And(OpponentsOfSelf.IsUnique, Reference.AsAction.On) },
                 {
                     "when you ({ActionMatchers}) a rare or unique enemy",
                     And(OpponentsOfSelf.IsRareOrUnique, Reference.AsAction.On)
@@ -68,22 +72,30 @@ namespace PoESkillTree.Engine.Computation.Data
                     (And(ModifierSourceIs(ItemSlot.MainHand), MainHandAttack, Hit.On, Buff.Blind.IsOn(MainOpponentOfSelf)),
                         And(ModifierSourceIs(ItemSlot.OffHand), OffHandAttack, Hit.On, Buff.Blind.IsOn(MainOpponentOfSelf)))
                 },
-                { "on hit no more than once every # seconds", Hit.On },
+                { "on hit,? no more than once every (second|# seconds)", Hit.On },
                 { "on melee hit, no more than once every # seconds", And(Condition.WithPart(Keyword.Melee), Hit.On) },
+                { "on hit with spell damage", And(Condition.With(DamageSource.Spell), Hit.On) },
                 // critical strike
                 { "critical strikes have a", CriticalStrike.On },
-                { "when you deal a critical strike", CriticalStrike.On },
-                { "if you get a critical strike", CriticalStrike.On },
+                { "(when you deal|if you get) a critical strike", CriticalStrike.On },
+                { "your critical strikes", CriticalStrike.On },
                 { "when you take a critical strike", CriticalStrike.By(OpponentsOfSelf).On },
                 // skill cast
                 { "when you place a totem", Totems.Cast.On },
                 { "when you summon a totem", Totems.Cast.On },
-                { "when you use a warcry", Skills[Keyword.Warcry].Cast.On },
+                { "when summoned", Totems.Cast.On },
+                { "when you( use a)? warcry", Skills[Keyword.Warcry].Cast.On },
                 { "when you use a skill", Skills.AllSkills.Cast.On },
-                { "when you use a fire skill", Skills[Fire].Cast.On },
+                { "when you use a ({DamageTypeMatchers}) skill", Skills[Reference.AsDamageType].Cast.On },
+                {
+                    "when you use an elemental skill",
+                    ElementalDamageTypes.Select(dt => Skills[dt].Cast.On).Aggregate((l, r) => l.Or(r))
+                },
                 // block
                 { "when they block", Block.On },
                 { "when you block", Block.On },
+                { "when you block attack damage", Block.Attack.On },
+                { "when you block spell damage", Block.Spell.On },
                 // buffs
                 { "when you ({BuffMatchers}) an enemy", Reference.AsBuff.InflictionAction.On },
                 // stun
@@ -97,11 +109,12 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "when you spend mana", Action.SpendMana(ValueFactory.Create(1)).On },
                 { "when you focus", Action.Focus.On },
                 { "when you gain a ({ChargeTypeMatchers})", Reference.AsChargeType.GainAction.On },
-                { "you gain", Condition.True }, // may be left over at the end, does nothing
+                { "every # seconds?", Action.EveryXSeconds(Values[0]).On },
+                { "(every|each) second", Action.EveryXSeconds(ValueFactory.Create(1)).On },
+                // leftover, meaningless words
+                { "you gain", Condition.True },
                 { "you", Condition.True },
                 { "grants", Condition.True },
-                { "every # seconds?(, up to a maximum of #)?", Action.EveryXSeconds(Values[0]).On },
-                { "(every|each) second(, up to a maximum of #)?", Action.EveryXSeconds(ValueFactory.Create(1)).On },
                 // unique
                 {
                     "when your trap is triggered by an enemy",
@@ -113,11 +126,11 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 { "on use", Action.Unique("When you use the Flask").On },
                 { "when you use a flask", Action.Unique("When you use any Flask").On },
+                { "when you use a life flask", Action.Unique("When you use any Life Flask").On },
                 { "if this skill hits any enemies", Action.Unique("When your active skill hits any enemies").On },
                 { "when you gain Adrenaline", Action.Unique("When you gain Adrenaline").On },
-                { "when you block attack damage", Action.Unique("Block.Attack").On },
-                { "when you block spell damage", Action.Unique("Block.Spell").On },
                 { "after channelling for # seconds?", Action.Unique("PeriodOfChannelling").On },
+                { "every second, consume a nearby corpse to", Action.Unique("When you consume a corpse, every second").On },
             }; // add
     }
 }

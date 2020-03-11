@@ -128,11 +128,22 @@ namespace PoESkillTree.Engine.Computation.Data
                     References[0].AsDamageType.Damage.WithHitsAndAilments
                         .ConvertTo(References[1].AsDamageType.Damage.WithHitsAndAilments)
                 },
+                {
+                    "wand ({DamageTypeMatchers}) damage converted to ({DamageTypeMatchers}) damage",
+                    References[0].AsDamageType.Damage.With(AttackDamageHand.MainHand)
+                        .ConvertTo(References[1].AsDamageType.Damage.With(AttackDamageHand.MainHand))
+                        .WithCondition(MainHand.Has(Tags.Wand)),
+                    References[0].AsDamageType.Damage.With(AttackDamageHand.OffHand)
+                        .ConvertTo(References[1].AsDamageType.Damage.With(AttackDamageHand.OffHand))
+                        .WithCondition(OffHand.Has(Tags.Wand))
+                },
                 // - penetration
                 // - exposure
                 // - crit
                 { "(global )?critical strike multiplier", CriticalStrike.Multiplier },
                 { "(global )?critical strike chance", CriticalStrike.Chance },
+                { "attack critical strike multiplier", CriticalStrike.Multiplier.With(DamageSource.Attack) },
+                { "spell critical strike multiplier", CriticalStrike.Multiplier.With(DamageSource.Spell) },
                 { "attack critical strike chance", CriticalStrike.Chance.With(DamageSource.Attack) },
                 { "spell critical strike chance", CriticalStrike.Chance.With(DamageSource.Spell) },
                 {
@@ -142,6 +153,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "({KeywordMatchers}) critical strike chance", CriticalStrike.Chance.With(Reference.AsKeyword) },
                 { "projectiles have critical strike chance", CriticalStrike.Chance.With(Keyword.Projectile) },
                 { "you take extra damage from critical strikes", CriticalStrike.ExtraDamageTaken },
+                { "extra damage taken from critical strikes", CriticalStrike.ExtraDamageTaken },
                 // - projectiles
                 { "projectile speed", Projectile.Speed },
                 { "arrow speed", Projectile.Speed, And(With(Keyword.Attack), MainHand.Has(Tags.Bow)) },
@@ -170,6 +182,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "maximum ({DamageTypeMatchers}) resistance", Reference.AsDamageType.Resistance.Maximum },
                 { "all maximum resistances", Elemental.And(Chaos).Resistance.Maximum },
                 { "all maximum elemental resistances", Elemental.Resistance.Maximum },
+                { "all elemental resistances and maximum elemental resistances", ApplyOnce(Elemental.Resistance, Elemental.Resistance.Maximum) },
                 { "physical damage reduction", Physical.Resistance },
                 // - leech
                 {
@@ -226,18 +239,23 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "chance to block spell and attack damage", Block.SpellChance, Block.AttackChance },
                 { "enemy block chance", ApplyOnce(Block.SpellChance, Block.AttackChance).For(OpponentsOfSelf) },
                 { "maximum chance to block attack damage", Block.AttackChance.Maximum },
-                // - other
+                { "maximum chance to block spell damage", Block.SpellChance.Maximum },
+                // - dodge
                 { "chance to dodge attacks", Stat.Dodge.AttackChance },
                 { "chance to dodge attack hits", Stat.Dodge.AttackChance },
                 { "chance to dodge spell hits", Stat.Dodge.SpellChance },
-                { "chance to dodge attack and spell hits", Stat.Dodge.AttackChance, Stat.Dodge.SpellChance },
+                { "chance to dodge attack (and|or) spell hits", Stat.Dodge.AttackChance, Stat.Dodge.SpellChance },
+                { "maximum chance to dodge attack hits", Stat.Dodge.AttackChance.Maximum },
+                { "maximum chance to dodge spell hits", Stat.Dodge.SpellChance.Maximum },
                 {
                     "enemies have chance to dodge hits",
                     ApplyOnce(Stat.Dodge.AttackChance, Stat.Dodge.SpellChance).For(OpponentsOfSelf)
                 },
-                { "chance to evade( attacks)?", Evasion.Chance },
+                // - chance to evade
+                { "chance to evade( attacks| attack hits)?", Evasion.Chance },
                 { "chance to evade projectile attacks", Evasion.ChanceAgainstProjectileAttacks },
                 { "chance to evade melee attacks", Evasion.ChanceAgainstMeleeAttacks },
+                // - other
                 {
                     "damage is taken from ({PoolStatMatchers}) before ({PoolStatMatchers})",
                     AnyDamageType.DamageTakenFrom(References[0].AsPoolStat).Before(References[1].AsPoolStat)
@@ -253,6 +271,7 @@ namespace PoESkillTree.Engine.Computation.Data
                     "({KeywordMatchers}) attack speed",
                     Stat.CastRate.With(DamageSource.Attack).With(Reference.AsKeyword)
                 },
+                { "off hand attack speed", Stat.CastRate.With(AttackDamageHand.OffHand) },
                 { "cast speed", Stat.CastRate.With(DamageSource.Spell), Stat.CastRate.With(DamageSource.Secondary) },
                 { "cast speed for curses", Stat.CastRate.With(DamageSource.Attack).With(Keyword.Curse) },
                 { "movement speed", Stat.MovementSpeed },
@@ -319,6 +338,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "mana reserved", AllSkills.Reservation },
                 { "mana reservation of skills", AllSkills.Reservation },
                 { "mana reservation of ({KeywordMatchers}) skills", Skills[Reference.AsKeyword].Reservation },
+                { "({KeywordMatchers}) skills have mana reservation", Skills[Reference.AsKeyword].Reservation },
                 { "mana reservation of skills that throw mines", Mines.Reservation },
                 { "({SkillMatchers}) has mana reservation", Reference.AsSkill.Reservation },
                 { "skill effect duration", Stat.Duration },
@@ -327,6 +347,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "warcry duration", Stat.Duration, With(Keyword.Warcry) },
                 { "curse duration", Stat.Duration, With(Keyword.Curse) },
                 { "({SkillMatchers}) duration", Stat.Duration, With(Reference.AsSkill) },
+                { "seal gain frequency", Stat.SealGainFrequency },
                 // traps, mines, totems
                 { "trap duration", Stat.Trap.Duration },
                 { "mine duration", Stat.Mine.Duration },
@@ -350,6 +371,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 { "maximum number of spectres", Skills.RaiseSpectre.Instances.Maximum },
                 { "maximum number of( raised)? zombies", Skills.RaiseZombie.Instances.Maximum },
+                { "maximum number of sentinels of purity", Skills.FromId("HeraldOfPurity").Instances.Maximum },
                 { "minion duration", Stat.Duration, With(Keyword.Minion) },
                 { "skeleton duration", Stat.Duration, WithSkeletonSkills },
                 { "skeleton movement speed", Stat.MovementSpeed.For(Entity.Minion), WithSkeletonSkills },
@@ -361,7 +383,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "effect of ({BuffMatchers})", Reference.AsBuff.Effect },
                 { "effect of ({BuffMatchers}) on you", Reference.AsBuff.EffectOn(Self) },
                 { "effect of ({BuffMatchers}) from this skill", Reference.AsBuff.Effect },
-                { "({SkillMatchers}) has buff effect", Reference.AsSkill.Buff.Effect },
+                { "({SkillMatchers}) has (buff|aura) effect", Reference.AsSkill.Buff.Effect },
                 { "effect of buffs granted by your golems", Buffs(Entity.Minion).With(Keyword.Golem).Effect },
                 {
                     "effect of buffs granted by your elemental golems",
@@ -373,15 +395,25 @@ namespace PoESkillTree.Engine.Computation.Data
                     "effect of buffs granted by your active ancestor totems",
                     Buffs(Entity.Totem).With(Keyword.Melee).Effect
                 },
-                { "effect of heralds on you", Buffs(targets: Self).With(Keyword.Herald).Effect },
+                { "effect of herald(s| buffs) on you", Buffs(targets: Self).With(Keyword.Herald).Effect },
                 { "effect of your curses", Buffs(Self).With(Keyword.Curse).Effect },
                 { "effect of curses on you", Buffs(targets: Self).With(Keyword.Curse).Effect },
                 {
                     "effect of non-curse auras from your skills",
                     Buffs(Self).With(Keyword.Aura).Without(Keyword.Curse).Effect
                 },
+                {
+                    "effect of non-curse auras from your skills on enemies",
+                    Buffs(Self, OpponentsOfSelf).With(Keyword.Aura).Without(Keyword.Curse).Effect
+                },
                 { "effect of auras from mines", Buffs(Self).With(Keyword.Aura).With(Keyword.Mine).Effect },
+                { "effect of auras on you", Buffs(Self).With(Keyword.Aura).Effect },
                 { "warcry buff effect", Buffs(targets: Self).With(Keyword.Warcry).Effect },
+                {
+                    "effect of impales inflicted by hits that also inflict bleeding",
+                    Buff.Impale.Effect, Condition.Unique("Do your Impaling hits also inflict Bleeding?")
+                },
+                { "effect of offerings", Buffs(Self).With(Keyword.Offering).Effect },
                 { "aura effect", Skills.ModifierSourceSkill.Buff.Effect },
                 { "(?<!area of )effect of aura", Skills.ModifierSourceSkill.Buff.Effect },
                 { "effect of supported curses", Skills.ModifierSourceSkill.Buff.Effect },
@@ -389,7 +421,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "effect of curse against players", Skills.ModifierSourceSkill.Buff.EffectOn(Entity.Character) },
                 // - chance
                 { "chance to (gain|grant|inflict) ({BuffMatchers})", Reference.AsBuff.Chance },
-                { "chance to ({BuffMatchers})( enemies)?", Reference.AsBuff.Chance },
+                { "chance to ({BuffMatchers})( enemies| nearby enemies)?", Reference.AsBuff.Chance },
                 { "chance for attacks to maim", Buff.Maim.Chance.With(DamageSource.Attack) },
                 { "chance to hinder enemies on hit with spells", Buff.Maim.Chance.With(DamageSource.Spell) },
                 { "chance to cover rare or unique enemies in ash", Buff.CoveredInAsh.Chance, OpponentsOfSelf.IsRareOrUnique },
@@ -403,6 +435,10 @@ namespace PoESkillTree.Engine.Computation.Data
                     Reference.AsAilment.Chance
                 },
                 {
+                    "chance to ({AilmentMatchers})( the enemy| enemies)? on hit with spell damage",
+                    Reference.AsAilment.Chance.With(DamageSource.Spell)
+                },
+                {
                     "chance to freeze, shock and ignite",
                     Ailment.Freeze.Chance, Ailment.Shock.Chance, Ailment.Ignite.Chance
                 },
@@ -410,15 +446,17 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "chance to avoid (being )?({AilmentMatchers})", Reference.AsAilment.Avoidance },
                 { "chance to avoid elemental ailments", Ailment.Elemental.Select(a => a.Avoidance) },
                 { "({AilmentMatchers}) duration( on enemies)?", Reference.AsAilment.Duration },
+                { "({AilmentMatchers}) duration on you", Reference.AsAilment.Duration.For(MainOpponentOfSelf) },
                 {
                     "({AilmentMatchers}) and ({AilmentMatchers}) duration( on enemies)?",
                     References[0].AsAilment.Duration, References[1].AsAilment.Duration
                 },
-                { "duration of ailments (on enemies|you inflict)", AllAilments.Select(a => a.Duration) },
+                { "duration of ailments (on enemies|you inflict|inflicted)", AllAilments.Select(a => a.Duration) },
                 { "duration of elemental ailments on enemies", Ailment.Elemental.Select(a => a.Duration) },
                 { "effect of shock", Ailment.ShockEffect },
+                { "effect of shock on you", Ailment.ShockEffect.For(MainOpponentOfSelf) },
                 { "effect of chill( on enemies)?", Ailment.ChillEffect },
-                { "effect of non-damaging ailments on enemies", Ailment.ShockEffect, Ailment.ChillEffect },
+                { "effect of non-damaging ailments( on enemies)?", Ailment.ShockEffect, Ailment.ChillEffect },
                 // stun
                 { "chance to avoid being stunned", Effect.Stun.Avoidance },
                 { "stun and block recovery", Effect.Stun.Recovery, Block.Recovery },
@@ -445,6 +483,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "life recover(ed|y from flasks)", Flask.LifeRecovery },
                 { "mana recover(ed|y from flasks)", Flask.ManaRecovery },
                 { "recovery", Flask.LifeRecovery, Flask.ManaRecovery },
+                { "life and mana recovery from flasks", Flask.LifeRecovery, Flask.ManaRecovery },
                 { "amount recovered", Flask.LifeRecovery, Flask.ManaRecovery },
                 { "(flask )?charges used", Flask.ChargesUsed },
                 { "(flask )?charges gained", Flask.ChargesGained },
@@ -474,6 +513,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "area of effect length", Stat.Radius },
                 { "melee weapon and unarmed( attack)? range", Stat.Range.With(Keyword.Melee) },
                 { "melee range", Stat.Range.With(Keyword.Melee) },
+                { "melee strike range", Stat.Range.With(Keyword.Melee) },
                 { "melee weapon range", Stat.Range.With(Keyword.Melee), MainHand.HasItem },
                 { "weapon range", Stat.Range },
                 // gem level

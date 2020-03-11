@@ -6,9 +6,9 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree
     {
         public PassiveNodeDefinition(
             ushort id, PassiveNodeType type, string name, bool isAscendancyNode, bool costsPassivePoint,
-            int passivePointsGranted, NodePosition position, IReadOnlyList<string> modifiers)
-            => (Id, Type, Name, IsAscendancyNode, CostsPassivePoint, PassivePointsGranted, Position, Modifiers) =
-                (id, type, name, isAscendancyNode, costsPassivePoint, passivePointsGranted, position, modifiers);
+            NodePosition position, IReadOnlyList<string> modifiers)
+            => (Id, Type, Name, IsAscendancyNode, CostsPassivePoint, Position, Modifiers) =
+                (id, type, name, isAscendancyNode, costsPassivePoint, position, modifiers);
 
         public ushort Id { get; }
 
@@ -16,7 +16,6 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree
         public string Name { get; }
         public bool IsAscendancyNode { get; }
         public bool CostsPassivePoint { get; }
-        public int PassivePointsGranted { get; }
 
         public NodePosition Position { get; }
 

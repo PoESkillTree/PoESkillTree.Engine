@@ -28,15 +28,37 @@ Transfiguration of Mind
 Transfiguration of Soul
 // - Unnerve
 Nearby Allies Unnerve Enemies for 4 seconds on Hit
+8% chance to Unnerve Enemies for 4 seconds on Hit
+Enemies Taunted by your Warcries are Unnerved
+Enemies you Curse are Unnerved
+// - alternative ailments: Scorch, Brittle, Sapped
+Cannot Ignite, Chill, Freeze or Shock Critical Strikes inflict Scorch, Brittle and Sapped
+// - Grasping Vines
+Gain 2 Grasping Vines each second while stationary 2% chance to deal Double Damage per Grasping Vine 1% less Damage taken per Grasping Vine
+// - Unencumbered
+You count as Dual Wielding while you are Unencumbered 60% more Attack Speed while you are Unencumbered 14 to 20 Added Attack Physical Damage per 10 Dexterity while you are Unencumbered
+// BaseSet Exposure via a new UserSpecifiedValue stat?
+13% chance to inflict Cold Exposure on Hit
+13% chance to inflict Fire Exposure on Hit
+13% chance to inflict Lightning Exposure on Hit
+Cold Skills have a 25% chance to apply Cold Exposure on Hit
+Fire Skills have a 25% chance to apply Fire Exposure on Hit
+Lightning Skills have a 25% chance to apply Lightning Exposure on Hit
+Nearby Enemies have Fire Exposure
 // More calculations for non-damaging ailments (shock, chill, freeze)
 Chills Enemies as though dealing 195% more Damage
 Shocks Enemies as though dealing 195% more Damage
 // Requires distinguishing flask types
 10% reduced Flask Charges used from Mana Flasks
 Mana Flasks gain 1 Charge every 3 seconds
+Life Flasks gain 1 Charge every 3 seconds
 You have Fortify during Effect of any Life Flask
 Remove a Curse when you use a Mana Flask
 Remove a random Elemental Ailment when you use a Mana Flask
+// Requires averaging of damage per damage type in DamageMechanics
+Lightning Damage with Non-Critical Strikes is Lucky
+// Requires Damage.ChanceToDouble being split into crit and non-crit
+Your Critical Strikes have a 5% chance to deal Double Damage
 // Item-inherent skills
 Curse Enemies with Level 10 Flammability on Hit
 Curse Enemies with Level 8 Assassin's Mark on Hit
@@ -47,6 +69,7 @@ Curse Enemies with Level 5 Frostbite on Hit
 Curse Enemies with Level 8 Poacher's Mark on Hit
 Curse Enemies with Level 5 Vulnerability on Hit
 Curse Enemies with Level 8 Warlord's Mark on Hit
+Curse Enemies with Level 5 Elemental Weakness on Hit
 25% chance to Curse non-Cursed Enemies with Enfeeble on Hit
 Grants Level 22 Abyssal Cry Skill
 Grants Level 22 Anger Skill
@@ -138,6 +161,7 @@ Socketed Gems are Supported by Level 16 Vicious Projectiles
 Socketed Gems are Supported by Level 16 Volley
 Socketed Gems are Supported by Level 16 Inspiration
 Socketed Gems are Supported by Level 18 Blastchain Mine
+Socketed Gems are Supported by Level 18 Ballista Totem
 Trigger a Socketed Spell when you Use a Skill
 Trigger Socketed Spells when you Focus
 Triggers Level 20 Spectral Spirits when Equipped
@@ -147,11 +171,11 @@ Triggers Level 7 Abberath's Fury when Equipped
 10% Chance to Trigger Level 18 Summon Spectral Wolf on Kill
 10% chance to Cast Level 20 Fire Burst on Hit
 Drops Burning Ground while moving, dealing 2500 Fire Damage per second
-Enemies killed explode dealing 5% of their Life as Fire Damage
 Your Hits inflict Decay, dealing 500 Chaos Damage per second for 8 seconds
 // Minions
 10% increased area of effect for each Summoned Sentinel of Purity
 Grants 50% of Life Recovery to Minions
++5 to Maximum Virulence
 // - modifies minion skill
 With at least 40 Intelligence in Radius, Raised Zombies' Slam Attack deals 30% increased Damage
 Raised Zombies' Slam Attack has 100% increased Area of Effect

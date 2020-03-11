@@ -31,17 +31,37 @@ namespace PoESkillTree.Engine.Computation.Data.Base
         protected IConditionBuilder WithSkeletonSkills
             => Or(With(Skills.SummonSkeletons), With(Skills.VaalSummonSkeletons));
 
+        protected (IConditionBuilder mainHand, IConditionBuilder offHand) AttackWith(Tags tags) =>
+            (MainHandAttackWith(tags), OffHandAttackWith(tags));
+
+        protected (IConditionBuilder mainHand, IConditionBuilder offHand) AttackWithEither(Tags tags1, Tags tags2) =>
+            (Or(MainHandAttackWith(tags1), MainHandAttackWith(tags2)),
+                Or(OffHandAttackWith(tags1), OffHandAttackWith(tags2)));
+
         protected IConditionBuilder MainHandAttackWith(Tags tags) =>
             MainHandAttack.And(MainHand.Has(tags));
 
         protected IConditionBuilder OffHandAttackWith(Tags tags) =>
             OffHandAttack.And(OffHand.Has(tags));
 
-        protected (IConditionBuilder mainHand, IConditionBuilder offHand) AttackWith(Tags tags) =>
-            (MainHandAttackWith(tags), OffHandAttackWith(tags));
-
         protected IConditionBuilder MainHandAttack => Condition.AttackWith(AttackDamageHand.MainHand);
         protected IConditionBuilder OffHandAttack => Condition.AttackWith(AttackDamageHand.OffHand);
+
+        protected (IConditionBuilder mainHand, IConditionBuilder offHand) AttackWithSkills(Tags tags) =>
+            (MainHandAttackWithSkills(tags), OffHandAttackWithSkills(tags));
+
+        protected (IConditionBuilder mainHand, IConditionBuilder offHand) AttackWithSkillsEither(Tags tags1, Tags tags2) =>
+            (Or(MainHandAttackWithSkills(tags1), MainHandAttackWithSkills(tags2)),
+                Or(OffHandAttackWithSkills(tags1), OffHandAttackWithSkills(tags2)));
+
+        protected IConditionBuilder MainHandAttackWithSkills(Tags tags) =>
+            MainHandAttackWithSkills().And(MainHand.Has(tags));
+
+        protected IConditionBuilder OffHandAttackWithSkills(Tags tags) =>
+            OffHandAttackWithSkills().And(OffHand.Has(tags));
+
+        protected IConditionBuilder MainHandAttackWithSkills() => Condition.AttackWithSkills(AttackDamageHand.MainHand);
+        protected IConditionBuilder OffHandAttackWithSkills() => Condition.AttackWithSkills(AttackDamageHand.OffHand);
 
         protected IConditionBuilder ModifierSourceIs(ItemSlot slot)
             => Condition.ModifierSourceIs(new ModifierSource.Local.Item(slot));
