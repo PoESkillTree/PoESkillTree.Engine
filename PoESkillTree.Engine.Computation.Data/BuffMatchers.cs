@@ -26,7 +26,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "hinder(ed)?", Buff.Hinder },
                 { "intimidate", Buff.Intimidate },
                 { "taunt(ed)?", Buff.Taunt },
-                { "blind", Buff.Blind },
+                { "blind(ed)?", Buff.Blind },
                 { "onslaught", Buff.Onslaught },
                 { "unholy might", Buff.UnholyMight },
                 { "phasing", Buff.Phasing },

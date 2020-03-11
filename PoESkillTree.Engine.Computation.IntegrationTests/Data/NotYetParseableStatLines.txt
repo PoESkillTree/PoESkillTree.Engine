@@ -28,6 +28,10 @@ Transfiguration of Mind
 Transfiguration of Soul
 // - Unnerve
 Nearby Allies Unnerve Enemies for 4 seconds on Hit
+// BaseSet Exposure via a new UserSpecifiedValue stat?
+13% chance to inflict Cold Exposure on Hit
+13% chance to inflict Fire Exposure on Hit
+13% chance to inflict Lightning Exposure on Hit
 // More calculations for non-damaging ailments (shock, chill, freeze)
 Chills Enemies as though dealing 195% more Damage
 Shocks Enemies as though dealing 195% more Damage
@@ -152,6 +156,7 @@ Your Hits inflict Decay, dealing 500 Chaos Damage per second for 8 seconds
 // Minions
 10% increased area of effect for each Summoned Sentinel of Purity
 Grants 50% of Life Recovery to Minions
++5 to Maximum Virulence
 // - modifies minion skill
 With at least 40 Intelligence in Radius, Raised Zombies' Slam Attack deals 30% increased Damage
 Raised Zombies' Slam Attack has 100% increased Area of Effect

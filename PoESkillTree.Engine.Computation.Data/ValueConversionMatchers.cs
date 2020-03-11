@@ -49,10 +49,8 @@ namespace PoESkillTree.Engine.Computation.Data
                 // stats
                 { "per # accuracy rating", PerStat(Stat.Accuracy.With(AttackDamageHand.MainHand)) },
                 { "per #%? ({StatMatchers})(?! leech)", PerStat(stat: Reference.AsStat, divideBy: Value) },
-                {
-                    "per # ({StatMatchers}), up to #%",
-                    CappedMultiplier((Reference.AsStat.Value / Values[0]).Floor(), Values[1])
-                },
+                { "per # ({StatMatchers}), up to #%", CappedMultiplier((Reference.AsStat.Value / Values[0]).Floor(), Values[1]) },
+                { "per # ({StatMatchers}), up to a maximum of #%", CappedMultiplier((Reference.AsStat.Value / Values[0]).Floor(), Values[1]) },
                 { "per # ({StatMatchers}) ceiled", PerStatCeiled(stat: Reference.AsStat, divideBy: Value) },
                 { "per ({StatMatchers})(?! leech)", PerStat(stat: Reference.AsStat) },
                 { "per ({StatMatchers}), up to #%", CappedMultiplier(Reference.AsStat.Value, Value) },
@@ -114,6 +112,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 // buffs
                 { "per buff on you", Buffs(targets: Self).Count() },
                 { "per curse on you", Buffs(targets: Self).With(Keyword.Curse).Count() },
+                { "for each herald affecting you", Buffs(targets: Self).With(Keyword.Herald).Count() },
                 { "per curse on enemy", Buffs(targets: OpponentsOfSelf).With(Keyword.Curse).Count() },
                 { "for each curse on that enemy,", Buffs(targets: OpponentsOfSelf).With(Keyword.Curse).Count() },
                 { "for each impale on enemy", Buff.Impale.StackCount.For(MainOpponentOfSelf).Value },
@@ -135,6 +134,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 // skills
                 { "for each zombie you own", Skills.RaiseZombie.Instances.Value },
                 { "for each raised zombie", Skills.RaiseZombie.Instances.Value },
+                { "per summoned sentinel of purity", Skills.FromId("HeraldOfPurity").Instances.Value },
                 { "for each summoned golem", Golems.CombinedInstances.Value },
                 { "per summoned golem", Golems.CombinedInstances.Value },
                 { "for each golem you have summoned", Golems.CombinedInstances.Value },

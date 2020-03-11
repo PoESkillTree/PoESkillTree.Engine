@@ -69,6 +69,12 @@ namespace PoESkillTree.Engine.Computation.Builders.Damage
         public IStatBuilder Resistance =>
             new StatBuilder(_statFactory, CoreStat(typeof(int)));
 
+        public IStatBuilder ResistanceAgainstHits =>
+            new StatBuilder(_statFactory, CoreStat(typeof(double)));
+
+        public IStatBuilder ResistanceAgainstDoTs =>
+            new StatBuilder(_statFactory, CoreStat(typeof(double)));
+
         public IDamageStatBuilder Damage =>
             new DamageStatBuilder(_statFactory, CoreStat(_statFactory.Damage));
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using PoESkillTree.Engine.Computation.Common.Builders;
 using PoESkillTree.Engine.Computation.Common.Builders.Modifiers;
 using PoESkillTree.Engine.Computation.Common.Data;
@@ -34,6 +35,8 @@ namespace PoESkillTree.Engine.Computation.Data
                     And(Condition.WithPart(References[0].AsKeyword), References[1].AsAction.On)
                 },
                 { "when you ({ActionMatchers}) an enemy", Reference.AsAction.On },
+                { "when you ({ActionMatchers}) a rare enemy", And(OpponentsOfSelf.IsRare, Reference.AsAction.On) },
+                { "when you ({ActionMatchers}) a unique enemy", And(OpponentsOfSelf.IsUnique, Reference.AsAction.On) },
                 {
                     "when you ({ActionMatchers}) a rare or unique enemy",
                     And(OpponentsOfSelf.IsRareOrUnique, Reference.AsAction.On)
@@ -81,6 +84,10 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "when you use a warcry", Skills[Keyword.Warcry].Cast.On },
                 { "when you use a skill", Skills.AllSkills.Cast.On },
                 { "when you use a fire skill", Skills[Fire].Cast.On },
+                {
+                    "when you use an elemental skill",
+                    ElementalDamageTypes.Select(dt => Skills[dt].Cast.On).Aggregate((l, r) => l.Or(r))
+                },
                 // block
                 { "when they block", Block.On },
                 { "when you block", Block.On },

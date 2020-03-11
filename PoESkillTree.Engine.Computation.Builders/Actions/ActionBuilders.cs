@@ -41,8 +41,11 @@ namespace PoESkillTree.Engine.Computation.Builders.Actions
                 throw new ParseException(
                     $"IDamageTypeBuilders passed to {nameof(HitWith)} must build to exactly one damage type." +
                     $" {string.Join(",", damageTypes)} given");
-            return damageTypes.Single() + "Hit";
+            return $"Hit.{damageTypes.Single()}";
         }
+
+        public IActionBuilder HitWith(AttackDamageHand hand) =>
+            new ActionBuilder(_statFactory, CoreBuilder.Create($"Hit.{hand}"), _entity);
 
         public IActionBuilder SavageHit => Create();
         public ICriticalStrikeActionBuilder CriticalStrike => new CriticalStrikeActionBuilder(_statFactory, _entity);

@@ -149,9 +149,6 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
             => DamageRelatedFromIdentity("CriticalStrike.EffectiveChance", typeof(double)).WithHits;
 
 
-        public IStatBuilder ResistanceAgainstHits(DamageType damageType)
-            => FromIdentity($"{damageType}.ResistanceAgainstHits", typeof(double));
-
         public IStatBuilder MitigationAgainstHits(DamageType damageType)
             => FromIdentity($"{damageType}.MitigationAgainstHits", typeof(double));
 

@@ -1,4 +1,5 @@
-﻿using PoESkillTree.Engine.Computation.Builders.Stats;
+﻿using System.Runtime.CompilerServices;
+using PoESkillTree.Engine.Computation.Builders.Stats;
 using PoESkillTree.Engine.Computation.Common.Builders.Actions;
 using PoESkillTree.Engine.Computation.Common.Builders.Entities;
 using PoESkillTree.Engine.Computation.Common.Builders.Stats;
@@ -20,5 +21,11 @@ namespace PoESkillTree.Engine.Computation.Builders.Actions
 
         public IStatBuilder SpellChance =>
             StatBuilderUtils.FromIdentity(StatFactory, "Block.ChanceAgainstSpells", typeof(uint));
+
+        public IActionBuilder Attack => Create();
+        public IActionBuilder Spell => Create();
+
+        private IActionBuilder Create([CallerMemberName] string identity = "") =>
+            new ActionBuilder(StatFactory, CoreBuilder.Create("Block." + identity), Entity);
     }
 }

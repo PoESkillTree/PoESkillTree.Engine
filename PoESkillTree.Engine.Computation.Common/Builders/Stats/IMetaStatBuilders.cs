@@ -2,7 +2,6 @@
 using PoESkillTree.Engine.Computation.Common.Builders.Damage;
 using PoESkillTree.Engine.Computation.Common.Builders.Effects;
 using PoESkillTree.Engine.Computation.Common.Builders.Values;
-using PoESkillTree.Engine.GameModel.Items;
 using PoESkillTree.Engine.GameModel.Skills;
 
 namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
@@ -75,7 +74,6 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
 
         IDamageRelatedStatBuilder EffectiveCritChance { get; }
 
-        IStatBuilder ResistanceAgainstHits(DamageType damageType);
         IStatBuilder MitigationAgainstHits(DamageType damageType);
         IStatBuilder MitigationAgainstDoTs(DamageType damageType);
         IStatBuilder ChanceToAvoidMeleeAttacks { get; }

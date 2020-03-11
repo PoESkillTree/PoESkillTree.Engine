@@ -22,6 +22,8 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Effects
         /// </summary>
         IAilmentBuilderCollection Elemental { get; }
 
+        IAilmentBuilderCollection All { get; }
+
         IStatBuilder ShockEffect { get; }
         IStatBuilder ChillEffect { get; }
     }

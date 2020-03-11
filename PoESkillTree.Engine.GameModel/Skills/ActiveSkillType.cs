@@ -40,5 +40,6 @@
         public const string Guard = "guard";
         public const string Ballista = "ballista";
         public const string Triggered = "triggered";
+        public const string Travel = "travel";
     }
 }

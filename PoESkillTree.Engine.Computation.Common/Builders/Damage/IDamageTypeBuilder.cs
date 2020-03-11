@@ -41,6 +41,8 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Damage
         /// Gets a stat representing the resistances to the damage types in this collection.
         /// </summary>
         IStatBuilder Resistance { get; }
+        IStatBuilder ResistanceAgainstHits { get; }
+        IStatBuilder ResistanceAgainstDoTs { get; }
 
         /// <summary>
         /// Gets a damage stat representing the damage of the damage types in this collection.

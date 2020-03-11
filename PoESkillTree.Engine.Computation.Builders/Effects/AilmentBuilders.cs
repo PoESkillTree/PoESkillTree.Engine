@@ -28,6 +28,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Effects
         public IAilmentBuilder Poison => _allAilments[Ailment.Poison];
         public IAilmentBuilder From(Ailment ailment) => _allAilments[ailment];
         public IAilmentBuilderCollection Elemental { get; }
+        public IAilmentBuilderCollection All => _allAilments;
         public IStatBuilder ShockEffect { get; }
         public IStatBuilder ChillEffect { get; }
     }

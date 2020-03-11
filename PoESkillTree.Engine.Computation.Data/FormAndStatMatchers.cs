@@ -186,7 +186,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 {
                     @"fire, cold and lightning exposure (?<inner>.*), applying #% to those resistances",
-                    BaseSet, Value, ElementalDamageTypes.Select(t => t.Exposure).Aggregate((l, r) => l.Concat(r))
+                    BaseSet, Value, ElementalDamageTypes.Select(t => t.Exposure).Aggregate((l, r) => l.Concat(r)), "${inner}"
                 },
                 // - crit
                 { @"\+#% critical strike chance", BaseAdd, Value, CriticalStrike.Chance },
@@ -277,6 +277,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "immune to ({DamageTypeMatchers}) damage", TotalOverride, 100, Reference.AsDamageType.Resistance },
                 { @"\+#% elemental resistances", BaseAdd, Value, Elemental.Resistance },
                 { @"\+?#% physical damage reduction", BaseAdd, Value, Physical.Resistance },
+                { @"\+#% ({DamageTypeMatchers}) resistance against damage over time", BaseAdd, Value, Reference.AsDamageType.ResistanceAgainstDoTs },
                 // - leech
                 {
                     "leech energy shield instead of life",
