@@ -62,16 +62,16 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                 },
                 { TotalOverride, Ailment.Chill.On(Self), 1, Ailment.Freeze.IsOn(Self) },
                 {
-                    PercentIncrease, Ailment.Shock.AddStat(Damage.Taken), MetaStats.IncreasedDamageTakenFromShocks.Value
+                    PercentIncrease, Ailment.Shock.AddStat(Damage.Taken), Ailment.IncreasedDamageTakenFromShocks.Value
                 },
-                { TotalOverride, MetaStats.IncreasedDamageTakenFromShocks.Maximum, 50 },
-                { TotalOverride, MetaStats.IncreasedDamageTakenFromShocks.Minimum, 1 },
+                { BaseSet, Ailment.IncreasedDamageTakenFromShocks.Maximum, 50 },
+                { TotalOverride, Ailment.IncreasedDamageTakenFromShocks.Minimum, 1 },
                 {
                     PercentReduce, Ailment.Chill.AddStat(Stat.ActionSpeed),
-                    MetaStats.ReducedActionSpeedFromChill.Value
+                    Ailment.ReducedActionSpeedFromChill.Value
                 },
-                { TotalOverride, MetaStats.ReducedActionSpeedFromChill.Maximum, 30 },
-                { TotalOverride, MetaStats.ReducedActionSpeedFromChill.Minimum, 1 },
+                { BaseSet, Ailment.ReducedActionSpeedFromChill.Maximum, 30 },
+                { TotalOverride, Ailment.ReducedActionSpeedFromChill.Minimum, 1 },
                 { BaseSet, a => Ailment.From(a).TickRateModifier, a => ValueFactory.Create(1) },
                 { PercentMore, a => Ailment.From(a).Duration, a => 100 / Ailment.From(a).TickRateModifier.Value },
                 // stun (see https://pathofexile.gamepedia.com/Stun)

@@ -153,6 +153,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "({KeywordMatchers}) critical strike chance", CriticalStrike.Chance.With(Reference.AsKeyword) },
                 { "projectiles have critical strike chance", CriticalStrike.Chance.With(Keyword.Projectile) },
                 { "you take extra damage from critical strikes", CriticalStrike.ExtraDamageTaken },
+                { "extra damage taken from critical strikes", CriticalStrike.ExtraDamageTaken },
                 // - projectiles
                 { "projectile speed", Projectile.Speed },
                 { "arrow speed", Projectile.Speed, And(With(Keyword.Attack), MainHand.Has(Tags.Bow)) },
@@ -337,6 +338,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "mana reserved", AllSkills.Reservation },
                 { "mana reservation of skills", AllSkills.Reservation },
                 { "mana reservation of ({KeywordMatchers}) skills", Skills[Reference.AsKeyword].Reservation },
+                { "({KeywordMatchers}) skills have mana reservation", Skills[Reference.AsKeyword].Reservation },
                 { "mana reservation of skills that throw mines", Mines.Reservation },
                 { "({SkillMatchers}) has mana reservation", Reference.AsSkill.Reservation },
                 { "skill effect duration", Stat.Duration },
@@ -345,6 +347,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "warcry duration", Stat.Duration, With(Keyword.Warcry) },
                 { "curse duration", Stat.Duration, With(Keyword.Curse) },
                 { "({SkillMatchers}) duration", Stat.Duration, With(Reference.AsSkill) },
+                { "seal gain frequency", Stat.SealGainFrequency },
                 // traps, mines, totems
                 { "trap duration", Stat.Trap.Duration },
                 { "mine duration", Stat.Mine.Duration },
@@ -380,7 +383,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "effect of ({BuffMatchers})", Reference.AsBuff.Effect },
                 { "effect of ({BuffMatchers}) on you", Reference.AsBuff.EffectOn(Self) },
                 { "effect of ({BuffMatchers}) from this skill", Reference.AsBuff.Effect },
-                { "({SkillMatchers}) has buff effect", Reference.AsSkill.Buff.Effect },
+                { "({SkillMatchers}) has (buff|aura) effect", Reference.AsSkill.Buff.Effect },
                 { "effect of buffs granted by your golems", Buffs(Entity.Minion).With(Keyword.Golem).Effect },
                 {
                     "effect of buffs granted by your elemental golems",

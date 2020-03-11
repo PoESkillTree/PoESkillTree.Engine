@@ -27,6 +27,9 @@ Unaffected by Desecrated Ground
 Reflects 2 Physical Damage to Melee Attackers
 Flask Effect is not removed at Full Mana
 Mana Recovery occurs instantly at the end of the Flask effect
+Killed Enemies Explode, dealing 3% of their Life as Physical Damage
+Enemies killed explode dealing 5% of their Life as Fire Damage
+When you Kill a Rare Monster, 25% chance to gain one of its Modifiers for 10 seconds
 // Master crafted: =====================================================================================================
 15% of Damage Taken from Hits is Leeched as Life during Flask Effect
 7% increased Brand Attachment range
@@ -41,6 +44,7 @@ Suffixes Cannot Be Changed
 33% increased Rarity of Items Dropped by Slain Rare or Unique Enemies
 Attack Projectiles Return to you after hitting targets
 Hits with this Weapon have Culling Strike against Bleeding Enemies
+Can have up to 3 Crafted Modifiers
 // Unique/Implicit Weapons: ============================================================================================
 Can roll Minion Modifiers
 // Unique/Implicit Armour: =============================================================================================
@@ -308,6 +312,23 @@ You are Unaffected by Bleeding while Leeching
 20% increased Brand Attachment range
 20% increased Raised Zombie Size
 25% increased Totem Placement range
+6% chance to Avoid Cold Damage from Hits
+6% chance to Avoid Lightning Damage from Hits
+6% chance to Avoid Physical Damage from Hits
+Enemies killed by your Attack Hits have a 15% chance to Explode, dealing a tenth of their maximum Life as Physical Damage
+Enemies killed by your Wand Hits have a 10% chance to Explode, dealing a quarter of their Life as Chaos Damage
+Enemies you Kill have a 10% chance to Explode, dealing a quarter of their maximum Life as Chaos Damage
+Freezes you inflict spread to other Enemies within a Radius of 12
+Ignited Enemies you hit are destroyed on Kill
+Ignites you inflict spread to other Enemies within a Radius of 15
+Minions created Recently cannot be Damaged
+Minions created Recently have 10% increased Attack and Cast Speed
+Minions created Recently have 30% increased Movement Speed
+Minions recover 4% of Life on Minion Death
+Unaffected by Poison
+Unattached Brands gain 20% increased Brand Attachment Range per second
+Warcries count as having 10 additional nearby Enemies
+You have Culling Strike against Cursed Enemies
 // Side effect from how jewels are currently handled, the stat doesn't actually exist
 +1 Jewel Socket
 // Ascendancies: =======================================================================================================
@@ -325,7 +346,7 @@ Moving while Bleeding doesn't cause you to take extra Damage
 // - Pathfinder
 Enemies you Kill that are affected by Elemental Ailments grant 100% increased Flask Charges
 You lose Virulence 50% slower
-When you kill a Poisoned Enemy during any Flask Effect, nearby enemies are Poisoned
+You lose Virulence 30% slower
 // - Occultist
 Cursed Enemies you or your Minions Kill have a 25% chance to Explode, dealing a quarter of their maximum Life as Chaos Damage
 Energy Shield Recharge is not interrupted by Damage if Recharge began Recently

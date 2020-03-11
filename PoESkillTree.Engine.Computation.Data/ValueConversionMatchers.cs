@@ -218,6 +218,10 @@ namespace PoESkillTree.Engine.Computation.Data
                         (Stat.UniqueAmount("# of prior mines in detonation sequence") / Value).Floor(),
                         Mines.CombinedInstances.Maximum.Value)
                 },
+                {
+                    "while stationary, gain (?<inner>#% .*) every second, up to a maximum of #%",
+                    CappedMultiplier(Stat.UniqueAmount("# of seconds you've been stationary for"), Values[1] / Values[0]), "${inner}"
+                },
             }; // add
 
         private ValueBuilder MineAura()

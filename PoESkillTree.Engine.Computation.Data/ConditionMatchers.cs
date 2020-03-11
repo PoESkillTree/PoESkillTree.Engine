@@ -32,9 +32,9 @@ namespace PoESkillTree.Engine.Computation.Data
             {
                 // actions
                 // - generic
-                { "if you('ve| have) ({ActionMatchers})( an enemy)? recently", Reference.AsAction.Recently },
-                { "if you haven't ({ActionMatchers}) recently", Not(Reference.AsAction.Recently) },
-                { "if you've ({ActionMatchers}) in the past # seconds", Reference.AsAction.InPastXSeconds(Value) },
+                { @"if you('ve|\\u2019ve| have) ({ActionMatchers})( an enemy)? recently", Reference.AsAction.Recently },
+                { @"if you haven('|\\u2019)t ({ActionMatchers}) recently", Not(Reference.AsAction.Recently) },
+                { @"if you('|\\u2019)ve ({ActionMatchers}) in the past # seconds", Reference.AsAction.InPastXSeconds(Value) },
                 { "for # seconds on ({ActionMatchers})", Reference.AsAction.InPastXSeconds(Value) },
                 { "on ({ActionMatchers}) for # seconds", Reference.AsAction.InPastXSeconds(Value) },
                 {
@@ -93,6 +93,10 @@ namespace PoESkillTree.Engine.Computation.Data
                     And(Hit.Recently, Buffs(targets: OpponentsOfSelf).With(Keyword.Curse).Any())
                 },
                 // - critical strike
+                { 
+                    "if you've dealt a critical strike with a two handed melee weapon recently",
+                    And(MainHandAttackWith(Tags.TwoHandWeapon), Not(MainHand.Has(Tags.Ranged)), CriticalStrike.Recently)
+                },
                 { "if you've crit in the past # seconds", CriticalStrike.InPastXSeconds(Value) },
                 { "if you've dealt a crit in the past # seconds", CriticalStrike.InPastXSeconds(Value) },
                 // - block
@@ -107,15 +111,12 @@ namespace PoESkillTree.Engine.Computation.Data
                     And(MainHand.Has(Tags.TwoHandWeapon), Not(MainHand.Has(Tags.Ranged)), With(Keyword.Attack), Effect.Stun.InflictionAction.Recently)
                 },
                 { "if you've taken a savage hit recently", Action.SavageHit.By(MainOpponentOfSelf).Recently },
-                { "if you've shattered an enemy recently", Action.Shatter.Recently },
                 { "if you've spent # total mana recently", Action.SpendMana(Value).Recently },
                 {
                     "for # seconds after spending( a total of)? # mana",
                     Action.SpendMana(Values[1]).InPastXSeconds(Values[0])
                 },
-                { "if (you have|you've) consumed a corpse recently", Action.ConsumeCorpse.Recently },
-                { "if you haven't taken damage recently", Not(Action.TakeDamage.Recently) },
-                { "if a minion has been killed recently", Action.Die.By(Entity.Minion).Recently },
+                { "if a minion has (been killed|died) recently", Action.Die.By(Entity.Minion).Recently },
                 { "while focussed", Action.Focus.Recently },
                 { "for # seconds when you focus", Action.Focus.InPastXSeconds(Value) },
                 // damage
@@ -123,75 +124,88 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "with attacks", Condition.With(DamageSource.Attack) },
                 { "for attacks", Condition.With(DamageSource.Attack) },
                 { "for spells", Condition.With(DamageSource.Spell) },
-                { "(your )?spells have", Condition.With(DamageSource.Spell) },
+                { "(your )?spells have( a)?", Condition.With(DamageSource.Spell) },
                 // - by item tag
-                { "with weapons", AttackWith(Tags.Weapon) },
-                { "(?<!this )weapon", AttackWith(Tags.Weapon) },
-                { "with (a bow|bows)", AttackWith(Tags.Bow) },
-                { "with arrow hits", AttackWith(Tags.Bow) },
-                { "bow", AttackWith(Tags.Bow) },
-                { "with swords", AttackWith(Tags.Sword) },
-                { "to sword attacks", AttackWith(Tags.Sword) },
-                { "with claws", AttackWith(Tags.Claw) },
-                { "claw", AttackWith(Tags.Claw) },
-                { "to claw attacks", AttackWith(Tags.Claw) },
-                { "with daggers", AttackWith(Tags.Dagger) },
-                { "to dagger attacks", AttackWith(Tags.Dagger) },
-                { "with wands", AttackWith(Tags.Wand) },
-                { "wand", AttackWith(Tags.Wand) },
-                { "to wand attacks", AttackWith(Tags.Wand) },
-                { "with axes", AttackWith(Tags.Axe) },
-                { "to axe attacks", AttackWith(Tags.Axe) },
-                { "with (a staff|staves)", AttackWith(Tags.Staff) },
-                { "to staff attacks", AttackWith(Tags.Staff) },
-                { "with ranged weapons", AttackWith(Tags.Ranged) },
-                { "with maces", AttackWith(Tags.Mace) },
-                { "to mace attacks", AttackWith(Tags.Mace) },
-                {
-                    "with axes (and|or) swords",
-                    (Or(MainHandAttackWith(Tags.Axe), MainHandAttackWith(Tags.Sword)),
-                        Or(OffHandAttackWith(Tags.Axe), OffHandAttackWith(Tags.Sword)))
-                },
+                { "with axes", AttackWithSkills(Tags.Axe) },
+                { "to axe attacks", AttackWithSkills(Tags.Axe) },
+                { "axe attacks deal", AttackWith(Tags.Axe) },
+                { "with axes (and|or) swords", AttackWithSkillsEither(Tags.Axe, Tags.Sword) },
+                { "attacks with axes or swords", AttackWithSkillsEither(Tags.Axe, Tags.Sword) },
+                { "axe or sword attacks deal", AttackWithEither(Tags.Axe, Tags.Sword) },
+                { "with (a bow|bows)", AttackWithSkills(Tags.Bow) },
+                { "with arrow hits", AttackWithSkills(Tags.Bow) },
+                { "bow", AttackWithSkills(Tags.Bow) },
+                { "with claws", AttackWithSkills(Tags.Claw) },
+                { "claw", AttackWithSkills(Tags.Claw) },
+                { "to claw attacks", AttackWithSkills(Tags.Claw) },
+                { "claw attacks deal", AttackWith(Tags.Claw) },
                 {
                     "with (a claw|claws) (and|or) daggers?",
-                    (Or(MainHandAttackWith(Tags.Claw), MainHandAttackWith(Tags.Dagger)),
-                        Or(OffHandAttackWith(Tags.Claw), OffHandAttackWith(Tags.Dagger)))
+                    (Or(MainHandAttackWithSkills(Tags.Claw), MainHandAttackWithSkills(Tags.Dagger)),
+                        Or(OffHandAttackWithSkills(Tags.Claw), OffHandAttackWithSkills(Tags.Dagger)))
+                },
+                { "with daggers", AttackWithSkills(Tags.Dagger) },
+                { "to dagger attacks", AttackWithSkills(Tags.Dagger) },
+                { "dagger attacks deal", AttackWith(Tags.Dagger) },
+                { "with maces", AttackWithSkills(Tags.Mace) },
+                { "to mace attacks", AttackWithSkills(Tags.Mace) },
+                { "with maces (and|or) sceptres", AttackWithSkillsEither(Tags.Mace, Tags.Sceptre) },
+                { "to mace and sceptre attacks", AttackWithSkillsEither(Tags.Mace, Tags.Sceptre) },
+                { "mace or sceptre attacks deal", AttackWithEither(Tags.Mace, Tags.Sceptre) },
+                {
+                    "with (a mace|maces), sceptres? or (staff|staves)",
+                    (Or(MainHandAttackWithSkills(Tags.Mace), MainHandAttackWithSkills(Tags.Sceptre), MainHandAttackWithSkills(Tags.Staff)),
+                        Or(OffHandAttackWithSkills(Tags.Mace), OffHandAttackWithSkills(Tags.Sceptre), OffHandAttackWithSkills(Tags.Staff)))
                 },
                 {
-                    "with maces (and|or) sceptres",
-                    (Or(MainHandAttackWith(Tags.Mace), MainHandAttackWith(Tags.Sceptre)),
-                        Or(OffHandAttackWith(Tags.Mace), OffHandAttackWith(Tags.Sceptre)))
-                },
-                {
-                    "to mace and sceptre attacks",
-                    (Or(MainHandAttackWith(Tags.Mace), MainHandAttackWith(Tags.Sceptre)),
-                        Or(OffHandAttackWith(Tags.Mace), OffHandAttackWith(Tags.Sceptre)))
-                },
-                {
-                    "with maces, sceptres or staves",
+                    "mace, sceptre or staff attacks deal",
                     (Or(MainHandAttackWith(Tags.Mace), MainHandAttackWith(Tags.Sceptre), MainHandAttackWith(Tags.Staff)),
                         Or(OffHandAttackWith(Tags.Mace), OffHandAttackWith(Tags.Sceptre), OffHandAttackWith(Tags.Staff)))
                 },
-                { "with one handed weapons", AttackWith(Tags.OneHandWeapon) },
+                { "with (a staff|staves)", AttackWithSkills(Tags.Staff) },
+                { "to staff attacks", AttackWithSkills(Tags.Staff) },
+                { "staff attacks deal", AttackWith(Tags.Staff) },
+                { "with swords", AttackWithSkills(Tags.Sword) },
+                { "to sword attacks", AttackWithSkills(Tags.Sword) },
+                { "sword attacks deal", AttackWith(Tags.Sword) },
+                { "with wands", AttackWithSkills(Tags.Wand) },
+                { "wand", AttackWithSkills(Tags.Wand) },
+                { "to wand attacks", AttackWithSkills(Tags.Wand) },
+                { "wand attacks deal", AttackWith(Tags.Wand) },
+                { "with ranged weapons", AttackWithSkills(Tags.Ranged) },
+                { "with melee weapons", And(Condition.WithSkills(DamageSource.Attack), Not(MainHand.Has(Tags.Ranged))) },
+                { "attacks with melee weapons deal", And(Condition.With(DamageSource.Attack), Not(MainHand.Has(Tags.Ranged))) },
+                { "with one handed weapons", AttackWithSkills(Tags.OneHandWeapon) },
+                { "attacks with one handed weapons deal", AttackWith(Tags.OneHandWeapon) },
                 {
                     "with one handed melee weapons",
-                    (And(MainHandAttackWith(Tags.OneHandWeapon), Not(MainHand.Has(Tags.Ranged))),
-                        And(OffHandAttackWith(Tags.OneHandWeapon), Not(OffHand.Has(Tags.Ranged))))
+                    (And(MainHandAttackWithSkills(Tags.OneHandWeapon), Not(MainHand.Has(Tags.Ranged))),
+                        And(OffHandAttackWithSkills(Tags.OneHandWeapon), Not(OffHand.Has(Tags.Ranged))))
                 },
-                { "with two handed weapons", AttackWith(Tags.TwoHandWeapon) },
                 {
-                    "with two handed melee weapons",
-                    And(MainHandAttackWith(Tags.TwoHandWeapon), Not(MainHand.Has(Tags.Ranged)))
+                    "attacks with one handed melee weapons deal",
+                    (And(MainHandAttackWith(Tags.OneHandWeapon), Not(MainHand.Has(Tags.Ranged))),
+                        And(MainHandAttackWith(Tags.OneHandWeapon), Not(OffHand.Has(Tags.Ranged))))
                 },
-                { "with unarmed attacks", And(MainHandAttack, Not(MainHand.HasItem)) },
+                { "with two handed weapons", AttackWithSkills(Tags.TwoHandWeapon) },
+                { "attacks with two handed weapons deal", AttackWith(Tags.TwoHandWeapon) },
+                { "with two handed melee weapons", And(MainHandAttackWithSkills(Tags.TwoHandWeapon), Not(MainHand.Has(Tags.Ranged))) },
+                { "attacks with two handed melee weapons deal", And(MainHandAttackWith(Tags.TwoHandWeapon), Not(MainHand.Has(Tags.Ranged))) },
+                { "with weapons", AttackWithSkills(Tags.Weapon) },
+                { "(?<!this )weapon", AttackWithSkills(Tags.Weapon) },
+                { "with unarmed attacks", And(MainHandAttackWithSkills(), Not(MainHand.HasItem)) },
                 // - by item slot
                 { "with the main-hand weapon", MainHandAttack },
                 { "with main hand", MainHandAttack },
                 { "with off hand", OffHandAttack },
                 {
                     "(attacks |hits )?with this weapon( deal| have)?",
-                    (ModifierSourceIs(ItemSlot.MainHand).And(MainHandAttack),
-                        ModifierSourceIs(ItemSlot.OffHand).And(OffHandAttack))
+                    (ModifierSourceIs(ItemSlot.MainHand).And(MainHandAttack), ModifierSourceIs(ItemSlot.OffHand).And(OffHandAttack))
+                },
+                {
+                    "against this weapon's hits",
+                    (ModifierSourceIs(ItemSlot.MainHand).And(MainHandAttackWithSkills()),
+                        ModifierSourceIs(ItemSlot.OffHand).And(OffHandAttackWithSkills()))
                 },
                 // - taken
                 { "(?<!when you )take", Condition.DamageTaken },
@@ -233,6 +247,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "when not on low ({PoolStatMatchers})", Not(Reference.AsPoolStat.IsLow) },
                 { "(when|while) on full ({PoolStatMatchers})", Reference.AsPoolStat.IsFull },
                 { "while ({PoolStatMatchers}) is full", Reference.AsPoolStat.IsFull },
+                { "while they are on full ({PoolStatMatchers})", Reference.AsPoolStat.IsFull },
                 { "while not on full ({PoolStatMatchers})", Not(Reference.AsPoolStat.IsFull) },
                 { "if you have ({PoolStatMatchers})", Not(Reference.AsPoolStat.IsEmpty) },
                 { "while no ({PoolStatMatchers}) is reserved", Reference.AsPoolStat.Reservation.Value <= 0 },
@@ -282,6 +297,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "while affected by a ({KeywordMatchers}) skill buff", Buffs(Self).With(Reference.AsKeyword).Any() },
                 { "while affected by a non-vaal ({KeywordMatchers}) skill", Buffs(Self).Without(Keyword.Vaal).With(Reference.AsKeyword).Any() },
                 { "while affected by a herald", Buffs(Self).With(Keyword.Herald).Any() },
+                { "while you are affected by a herald", Buffs(Self).With(Keyword.Herald).Any() },
                 { "during onslaught", Buff.Onslaught.IsOn(Self) },
                 { "while phasing", Buff.Phasing.IsOn(Self) },
                 { "while elusive", Buff.Elusive.IsOn(Self) },
@@ -322,7 +338,7 @@ namespace PoESkillTree.Engine.Computation.Data
                     "against enemies( that are)? affected by no elemental ailments",
                     Not(Ailment.Elemental.Any(a => a.IsOn(MainOpponentOfSelf)))
                 },
-                { "enemies chilled by supported skills( have)?", Ailment.Chill.IsOn(MainOpponentOfSelf) },
+                { "enemies ({AilmentMatchers}) by (supported skills|you)( have)?", Reference.AsAilment.IsOn(MainOpponentOfSelf) },
                 { "against enemies affected by ailments", Ailment.All.Any(a => a.IsOn(MainOpponentOfSelf)) },
                 // ground effects
                 { "while on consecrated ground", Ground.Consecrated.IsOn(Self) },
@@ -330,10 +346,14 @@ namespace PoESkillTree.Engine.Computation.Data
                 // - by keyword
                 { "vaal( skill)?", With(Keyword.Vaal) },
                 { "non-vaal skills deal", Not(With(Keyword.Vaal)) },
+                { "bow skills (have|deal)", With(Keyword.Bow) },
                 { "with bow skills", And(MainHand.Has(Tags.Bow), With(Keyword.Bow)) },
-                { "chaos skills have", With(Chaos) },
-                { "spell skills have", With(Keyword.Spell) },
-                { "(with|of|for) ({KeywordMatchers}) skills", With(Reference.AsKeyword) },
+                { "spell skills (have|deal)", With(Keyword.Spell) },
+                { "attack skills (have|deal)", With(Keyword.Attack) },
+                { "non-curse aura skills have", And(With(Keyword.Aura), Not(With(Keyword.Curse))) },
+                { "spells cast by totems (have|deal)", And(With(Keyword.Spell), With(Keyword.Totem)) },
+                { "(with|of|for|from) ({KeywordMatchers}) skills", With(Reference.AsKeyword) },
+                { "({DamageTypeMatchers}) skills (have|deal)", With(Reference.AsDamageType) },
                 { "(supported )?({KeywordMatchers}) skills (have|deal)", With(Reference.AsKeyword) },
                 { "(supported )?({KeywordMatchers}) spells (have|deal)", And(With(Reference.AsKeyword), With(Keyword.Spell)) },
                 {
@@ -359,6 +379,10 @@ namespace PoESkillTree.Engine.Computation.Data
                     Or(With(References[0].AsSkill), With(References[1].AsSkill))
                 },
                 { "while you have an? ({SkillMatchers})", Reference.AsSkill.Instances.Value > 0 },
+                {
+                    "skills supported by (intensify|unleash) have",
+                    Condition.True // the stats with this condition only affect anything when supported by the support anyway
+                },
                 // - cast recently/in past x seconds
                 { "if you've used a ({KeywordMatchers}) skill recently", Skills[Reference.AsKeyword].Cast.Recently },
                 { "if you haven't used a ({KeywordMatchers}) skill recently", Not(Skills[Reference.AsKeyword].Cast.Recently) },
@@ -367,6 +391,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "if (you've|you have) used a minion skill recently", Minions.Cast.Recently },
                 { "if you've used a warcry recently", Skills[Keyword.Warcry].Cast.Recently },
                 { "if you've warcried recently", Skills[Keyword.Warcry].Cast.Recently },
+                { @"if you('ve|\\u2019ve) cursed an enemy recently", Skills[Keyword.Curse].Cast.Recently },
                 { "if you've warcried in the past # seconds", Skills[Keyword.Warcry].Cast.InPastXSeconds(Value) },
                 {
                     "if you've used a ({DamageTypeMatchers}) skill in the past # seconds",
@@ -425,15 +450,21 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "if you haven't summoned a totem in the past # seconds", Totems.Cast.InPastXSeconds(Value) },
                 // minions
                 { "minions", For(Entity.Minion) },
-                { "minions (deal|have|gain)", For(Entity.Minion) },
+                { "minions (deal|have a|have|gain)", For(Entity.Minion) },
                 { "supported skills have minion", For(Entity.Minion) },
                 { "minions from supported skills deal", For(Entity.Minion) },
                 { "you and your minions have", For(Entity.Minion).Or(For(Self)) },
                 { "golems", And(For(Entity.Minion), With(Keyword.Golem)) },
                 { "golems have", And(For(Entity.Minion), With(Keyword.Golem)) },
                 { "summoned golems( are)?", And(For(Entity.Minion), With(Keyword.Golem)) },
-                { "spectres have", And(For(Entity.Minion), With(Skills.RaiseSpectre)) },
-                { "skeletons deal", And(For(Entity.Minion), WithSkeletonSkills) },
+                { "spectres (have|deal)", And(For(Entity.Minion), With(Skills.RaiseSpectre)) },
+                { "raised zombies (have|deal)", And(For(Entity.Minion), With(Skills.RaiseZombie)) },
+                { "(summoned )?skeletons (have|deal)", And(For(Entity.Minion), WithSkeletonSkills) },
+                { 
+                    "raised spectres, raised zombies, and summoned skeletons have",
+                    And(For(Entity.Minion),
+                        Or(With(Skills.RaiseSpectre), With(Skills.RaiseZombie), With(Skills.SummonSkeletons), With(Skills.VaalSummonSkeletons)))
+                },
                 { "while you have a summoned golem", Golems.CombinedInstances.Value > 0 },
                 // flasks
                 { "while using a flask", Equipment.IsAnyFlaskActive() },
@@ -511,6 +542,12 @@ namespace PoESkillTree.Engine.Computation.Data
                     Condition.Unique("Should modifiers requiring Ailments to be inflicted with critical strikes apply?")
                 },
                 { "if a non-vaal guard buff was lost recently", Condition.Unique("Have you lost a non-vaal guard buff recently?") },
+                {
+                    "for 6 seconds on melee hit with a mace, sceptre or staff",
+                    And(Or(MainHand.Has(Tags.Mace), MainHand.Has(Tags.Sceptre), MainHand.Has(Tags.Staff),
+                        OffHand.Has(Tags.Mace), OffHand.Has(Tags.Sceptre), OffHand.Has(Tags.Staff)),
+                        Condition.Unique("Did you hit an enemy with a melee attack in the past 6 seconds?"))
+                },
                 // support gem mod clarifications. Irrelevant for parsing.
                 {
                     "((a|for|with|from) )?supported (skill|spell|attack skill|attack)s?'?( (have|deal))?",

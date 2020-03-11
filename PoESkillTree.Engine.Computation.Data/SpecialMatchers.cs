@@ -68,11 +68,6 @@ namespace PoESkillTree.Engine.Computation.Data
                         .ApplyModifiersToSkills(DamageSource.OverTime, Form.Increase, Form.More)
                 },
                 {
-                    "increases and reductions to spell damage also apply to attacks",
-                    TotalOverride, 100,
-                    Damage.With(DamageSource.Attack).ApplyModifiersToSkills(DamageSource.Spell, Form.Increase)
-                },
-                {
                     "increases and reductions to minion damage also affect you",
                     TotalOverride, 1, Flag.IncreasesToSourceApplyToTarget(Damage.For(Entity.Minion), Damage)
                 },
@@ -133,6 +128,49 @@ namespace PoESkillTree.Engine.Computation.Data
                 {
                     "mines hinder enemies near them for 2 seconds when they land",
                     TotalOverride, 1, Buff.Hinder.On(OpponentsOfSelf), Condition.Unique("Did a Mine Land near the Enemy in the past 2 seconds?")
+                },
+                {
+                    "arrows gain critical strike chance as they travel farther, up to #% increased critical strike chance",
+                    PercentIncrease,
+                    Value * ValueFactory.LinearScale(Projectile.TravelDistance, (35, 0), (70, 1)),
+                    CriticalStrike.Chance.With(DamageSource.Attack).With(Keyword.Projectile),
+                    MainHand.Has(Tags.Bow)
+                },
+                {
+                    "arrows gain damage as they travel farther, dealing up to #% increased damage with hits to targets",
+                    PercentIncrease,
+                    Value * ValueFactory.LinearScale(Projectile.TravelDistance, (35, 0), (70, 1)),
+                    Damage.With(DamageSource.Attack).With(Keyword.Projectile),
+                    MainHand.Has(Tags.Bow)
+                },
+                {
+                    "attack projectiles always inflict bleeding and maim, and knock back enemies projectiles cannot pierce, fork or chain",
+                    (TotalOverride, 100, Ailment.Bleed.Chance.With(DamageSource.Attack).With(Keyword.Projectile)),
+                    (TotalOverride, 100, Buff.Maim.Chance.With(DamageSource.Attack).With(Keyword.Projectile)),
+                    (TotalOverride, 100, Effect.Knockback.Chance.With(DamageSource.Attack).With(Keyword.Projectile)),
+                    (TotalOverride, 0, Projectile.PierceCount),
+                    (TotalOverride, 0, Projectile.Fork),
+                    (TotalOverride, 0, Projectile.ChainCount)
+                },
+                {
+                    "you have chilling conflux for # seconds every # seconds",
+                    TotalOverride, 1, Buff.Conflux.Chilling.On(Self),
+                    Condition.Unique("Is the Chilling Conflux from your Hunter helmet currently active?")
+                },
+                {
+                    "you have igniting conflux for # seconds every # seconds",
+                    TotalOverride, 1, Buff.Conflux.Igniting.On(Self),
+                    Condition.Unique("Is the Igniting Conflux from your Hunter helmet currently active?")
+                },
+                {
+                    "you have shocking conflux for # seconds every # seconds",
+                    TotalOverride, 1, Buff.Conflux.Shocking.On(Self),
+                    Condition.Unique("Is the Shocking Conflux from your Hunter helmet currently active?")
+                },
+                {
+                    "poisons you inflict on non-poisoned enemies deal #% increased damage",
+                    PercentIncrease, Value, Damage.With(Ailment.Poison),
+                    Condition.Unique("Should Poison Damage be based on the initial Poison instance on the Enemy?")
                 },
                 // Socketed gem modifiers
                 {
@@ -434,7 +472,8 @@ namespace PoESkillTree.Engine.Computation.Data
                     // Unleash Support
                     "supported spells gain a seal every # seconds, to a maximum of # seals " +
                     "supported spells are unsealed when cast, and their effects reoccur for each seal lost",
-                    TotalOverride, Values[0].Invert, Stat.AdditionalCastRate
+                    (BaseSet, Values[0].Invert, Stat.SealGainFrequency),
+                    (TotalOverride, Stat.SealGainFrequency.Value, Stat.AdditionalCastRate)
                 },
                 {
                     "supported skills deal #% less damage when reoccurring",
@@ -500,7 +539,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 {
                     // Mortal Conviction
-                    "you can only have one non-banner aura with no duration on you from your skills non-banner, non-mine aura skills reserve no mana",
+                    "you can only have one permanent non-banner aura on you from your skills your non-banner skills that create permanent auras on you do not reserve mana",
                     TotalOverride, 0, Skills[Keyword.Aura].Reservation
                 },
                 {
@@ -654,10 +693,6 @@ namespace PoESkillTree.Engine.Computation.Data
                     (PercentIncrease, 25, Buff.Buff(Stat.MovementSpeed, Self),
                         Condition.Unique("Do you have Adrenaline?")),
                     (BaseAdd, 10, Buff.Buff(Physical.Resistance, Self), Condition.Unique("Do you have Adrenaline?"))
-                },
-                {
-                    "impales you inflict last # additional hits",
-                    BaseAdd, Value, Buff.Impale.StackCount.For(OpponentsOfSelf).Maximum
                 },
                 {
                     "banner skills reserve no mana",

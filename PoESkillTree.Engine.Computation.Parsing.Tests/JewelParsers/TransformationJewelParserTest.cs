@@ -192,6 +192,6 @@ namespace PoESkillTree.Engine.Computation.Parsing.JewelParsers
 
         private static PassiveNodeDefinition CreateNode(ushort id, params string[] modifiers)
             => new PassiveNodeDefinition(id, default, "", default,
-                default, default, default, modifiers);
+                default, default, modifiers);
     }
 }

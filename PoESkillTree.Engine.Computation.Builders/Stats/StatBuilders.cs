@@ -129,6 +129,8 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
 
         public IStatBuilder CursesLinkedToBane => FromIdentity(typeof(uint));
 
+        public IStatBuilder SealGainFrequency => FromIdentity(typeof(double));
+
         public IStatBuilder DamageTakenGainedAsMana => FromIdentity(typeof(uint));
 
         public ValueBuilder UniqueAmount(string name, double defaultValue = 0)

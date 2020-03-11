@@ -25,6 +25,8 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Effects
         IAilmentBuilderCollection All { get; }
 
         IStatBuilder ShockEffect { get; }
+        IStatBuilder IncreasedDamageTakenFromShocks { get; }
         IStatBuilder ChillEffect { get; }
+        IStatBuilder ReducedActionSpeedFromChill { get; }
     }
 }

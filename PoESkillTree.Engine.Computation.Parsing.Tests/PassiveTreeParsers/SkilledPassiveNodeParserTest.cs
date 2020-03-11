@@ -13,7 +13,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.PassiveTreeParsers
         public void ReturnsCorrectModifier(ushort nodeId)
         {
             var definition = new PassiveNodeDefinition(nodeId, PassiveNodeType.Small, "", false,
-                true, 0, default, new string[0]);
+                true, default, new string[0]);
             var expected = new[]
             {
                 CreateModifier($"{nodeId}.Allocated", Form.TotalOverride, 1, CreateGlobalSource(definition)),
