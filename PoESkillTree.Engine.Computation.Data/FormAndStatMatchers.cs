@@ -402,6 +402,7 @@ namespace PoESkillTree.Engine.Computation.Data
                     BaseAdd, Values[0].AsPercentage * Values[1].PercentOf(Reference.AsStat), Reference.AsPoolStat.Gain
                 },
                 // charges
+                { "maximum # ({ChargeTypeMatchers})", TotalOverride, Value, Reference.AsChargeType.Amount.Maximum },
                 {
                     "#% chance to gain a power, frenzy or endurance charge",
                     BaseAdd, Value / 3,

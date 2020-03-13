@@ -110,19 +110,19 @@ namespace PoESkillTree.Engine.Computation.Data
                     TotalOverride, 0, Damage, Not(MainHand.Has(ItemClass.Bow))
                 },
                 {
-                    "supported skills can only be used with bows and wands",
+                    "supported skills can only be used with bows (and|or) wands",
                     TotalOverride, 0, Damage, Not(Or(MainHand.Has(ItemClass.Bow), MainHand.Has(ItemClass.Wand)))
                 },
                 {
-                    "supported skills can only be used with axes and swords",
+                    "supported skills can only be used with axes (and|or) swords",
                     TotalOverride, 0, Damage, Not(Or(MainHand.Has(Tags.Sword), MainHand.Has(Tags.Axe)))
                 },
                 {
-                    "supported skills can only be used with claws and daggers",
+                    "supported skills can only be used with claws (and|or) daggers",
                     TotalOverride, 0, Damage, Not(Or(MainHand.Has(Tags.Claw), MainHand.Has(Tags.Dagger)))
                 },
                 {
-                    "supported skills can only be used with maces, sceptres and staves",
+                    "supported skills can only be used with maces, sceptres (and|or) staves",
                     TotalOverride, 0, Damage, Not(Or(MainHand.Has(Tags.Mace), MainHand.Has(Tags.Sceptre), MainHand.Has(Tags.Staff)))
                 },
                 {
@@ -318,6 +318,11 @@ namespace PoESkillTree.Engine.Computation.Data
                     "this skill's cast speed cannot be modified",
                     TotalOverride, Stat.CastRate.With(DamageSource.Spell).ValueFor(NodeType.BaseSet),
                     Stat.CastRate.With(DamageSource.Spell)
+                },
+                {
+                    // Explosive Arrow
+                    "maximum # explosive arrows stuck in an enemy",
+                    TotalOverride, Value, Stat.SkillStage.Maximum
                 },
                 {
                     // Freeze Mine

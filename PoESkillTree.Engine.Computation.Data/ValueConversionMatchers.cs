@@ -104,7 +104,7 @@ namespace PoESkillTree.Engine.Computation.Data
                     CappedMultiplier(Action.SpendMana(Values[0]).CountRecently, Values[1])
                 },
                 {
-                    "per # additional melee range",
+                    "per # additional melee( strike)? range",
                     PerStat(Stat.Range.With(AttackDamageHand.MainHand).ValueFor(NodeType.BaseAdd), Value)
                 },
                 { "per projectile", PerStat(Projectile.Count) },

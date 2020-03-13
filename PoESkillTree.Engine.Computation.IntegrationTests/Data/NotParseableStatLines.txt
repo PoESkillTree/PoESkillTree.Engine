@@ -279,6 +279,16 @@ Inflicts 6 Withered Debuffs the first time each Enemy enters the Area
 Traps are thrown randomly around you
 Supported Skills will Trigger Shockwave on Melee Hit
 This Gem gains 100% increased Experience
+5 Volleys
+Leaves a Lingering Blade in the ground for every Volley
+Maximum 40 Lingering Blades can be left in the ground at a time
+Leaves 50% fewer Lingering Blades in the ground if you don't Cast this Spell yourself
+Leaves a Lingering Blade in the ground for every 3 Projectiles fired
+38% increased maximum travel distance
+57% increased travel distance
+Supported Curses are Cast as Auras Supported Curse Skills also count as Aura Skills
+Supported Skills gain Intensity when used Supported Skills lose Intensity every 0.25 seconds while moving, or immediately if you teleport
+Maximum of 60 Orbs at a time
 // passive skills: =====================================================================================================
 10% Chance for Traps to Trigger an additional time
 Share Endurance, Frenzy and Power Charges with nearby party members

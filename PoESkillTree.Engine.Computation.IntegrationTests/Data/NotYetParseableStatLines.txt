@@ -1,7 +1,7 @@
 ﻿// TODO not handled yet
 // Unclear mechanics
 // - Explosive Arrow: does this apply to all damage that's not the additional explosion damage? All damage? BaseSet only?
-Explosion deals 50% of Base Damage
+Explosion deals 50% less Base Damage
 // Requires not yet implemented stats
 // - Stat that modifies Mana.Cost(Total). Could be done via behavior.
 Channelling Skills have -3 to Total Mana Cost
@@ -185,7 +185,7 @@ Summoned Sentinels of Purity have 50% increased Area of effect
 // - adds new minion skill
 With at least 40 Intelligence in Radius, Summon Skeletons can Summon up to 15 Skeleton Mages
 summon 4 additional skeleton warriors with summon skeleton
-With at least 40 Dexterity in Radius, Animate Weapon can Animate up to 8 Ranged Weapons
+With at least 40 Dexterity in Radius, Animate Weapon can Animate up to 12 Ranged Weapons
 Minions explode when reduced to Low Life, dealing 33% of their maximum Life as Fire Damage to surrounding Enemies
 Your Raised Zombies spread Caustic Ground on Death, dealing 50% of their maximum Life as Chaos Damage per second
 Summoned Sentinels use Crusade Slam
