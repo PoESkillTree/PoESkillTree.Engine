@@ -289,6 +289,14 @@ Leaves a Lingering Blade in the ground for every 3 Projectiles fired
 Supported Curses are Cast as Auras Supported Curse Skills also count as Aura Skills
 Supported Skills gain Intensity when used Supported Skills lose Intensity every 0.25 seconds while moving, or immediately if you teleport
 Maximum of 60 Orbs at a time
+Projectile changes direction 8 times
+Modifiers which would cause projectiles to Fork instead cause them to change direction additional times
+75% of Damage from Hits is taken from Buff before your Life or Energy Shield Buff can take Damage equal to Mana Spent by this Skill's effect
+20% more Area of Effect per Blade Vortex blade detonated
+Supported Non-Instant Skills have +1 Cooldown Use
+Trigger Supported Spells when you fire Projectiles from a Wand Attack
+This Skill's Mana Reservation is the total of the Mana Reservations of Supported Skills, and cannot be further modified
+A Rune is Improved for each 24 Mana Spent
 // passive skills: =====================================================================================================
 10% Chance for Traps to Trigger an additional time
 Share Endurance, Frenzy and Power Charges with nearby party members

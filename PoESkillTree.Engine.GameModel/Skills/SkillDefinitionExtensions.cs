@@ -56,6 +56,10 @@ namespace PoESkillTree.Engine.GameModel.Skills
                     "attack_minimum_added_fire_damage", "attack_maximum_added_fire_damage")
             },
             {
+                "ArcaneCloak",
+                SelfBuff("arcane_cloak_gain_%_of_consumed_mana_as_lightning_damage")
+            },
+            {
                 "ArcticArmour",
                 SelfBuff("new_arctic_armour_physical_damage_taken_when_hit_+%_final",
                     "new_arctic_armour_fire_damage_taken_when_hit_+%_final")

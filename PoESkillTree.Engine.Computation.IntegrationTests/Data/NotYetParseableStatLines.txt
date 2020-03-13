@@ -31,6 +31,7 @@ Nearby Allies Unnerve Enemies for 4 seconds on Hit
 8% chance to Unnerve Enemies for 4 seconds on Hit
 Enemies Taunted by your Warcries are Unnerved
 Enemies you Curse are Unnerved
+Unnerve Enemies for 4 seconds on Hit
 // - alternative ailments: Scorch, Brittle, Sapped
 Cannot Ignite, Chill, Freeze or Shock Critical Strikes inflict Scorch, Brittle and Sapped
 // - Grasping Vines

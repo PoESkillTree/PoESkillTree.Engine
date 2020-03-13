@@ -68,6 +68,11 @@ namespace PoESkillTree.Engine.Computation.Data
                         .ApplyModifiersToSkills(DamageSource.OverTime, Form.Increase, Form.More)
                 },
                 {
+                    "increases and reductions to spell damage also apply to attack damage from this skill at #% of their value",
+                    TotalOverride, Value,
+                    Damage.With(DamageSource.Attack).ApplyModifiersToSkills(DamageSource.Spell, Form.Increase)
+                },
+                {
                     "increases and reductions to minion damage also affect you",
                     TotalOverride, 1, Flag.IncreasesToSourceApplyToTarget(Damage.For(Entity.Minion), Damage)
                 },
@@ -276,6 +281,15 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 // skills
                 {
+                    // Arcane Cloak
+                    "spends #% of current mana",
+                    BaseSet, Value.AsPercentage * Stat.UniqueAmount("Mana.Current"), Skills.ModifierSourceSkill.Cost
+                },
+                {
+                    "buff grants added lightning damage equal to #% of mana spent by this skill's effect",
+                    BaseAdd, Value.AsPercentage * Skills.ModifierSourceSkill.Cost.Value, Lightning.Damage.WithHits
+                },
+                {
                     // Bane
                     "this curse is applied by bane",
                     BaseAdd, 1, Stat.CursesLinkedToBane
@@ -348,9 +362,20 @@ namespace PoESkillTree.Engine.Computation.Data
                     Damage
                 },
                 {
+                    // Spellslinger (support)
+                    "supported skills have added spell damage equal to #% of damage of equipped wand "
+                    + "if two wands are equipped, each contributes half as much added damage",
+                    BaseAdd, Value.AsPercentage * SpellslingerSupportEquippedWandDamage(), Lightning.Damage.WithSkills(DamageSource.Spell)
+                },
+                {
                     // Static Strike
                     "#% increased beam frequency per buff stack",
                     PercentIncrease, Value * Stat.SkillStage.Value, Stat.HitRate
+                },
+                {
+                    // Stormbind
+                    "runes can be improved # times",
+                    TotalOverride, Value, Stat.SkillStage.Maximum
                 },
                 {
                     // Swift Affliction Support
@@ -411,6 +436,12 @@ namespace PoESkillTree.Engine.Computation.Data
                     "increases and reductions to cast speed also apply to projectile frequency",
                     TotalOverride, 1,
                     Flag.IncreasesToSourceApplyToTarget(Stat.CastRate.With(DamageSource.Spell), Stat.HitRate)
+                },
+                {
+                    // Archmage Support
+                    "supported skills have base mana cost equal to #% of unreserved maximum mana, if that value is higher "
+                    + "supported skills gain added lightning damage equal to #% of mana cost, if mana cost is not higher than the maximum you could spend",
+                    ArchmageSupport().ToArray()
                 },
                 {
                     // Blasphemy Support
@@ -806,6 +837,14 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
             };
 
+        private IEnumerable<(IFormBuilder form, IValueBuilder value, IStatBuilder stat, IConditionBuilder condition)> ArchmageSupport()
+        {
+            var unreservedMana = Mana.Value - Mana.Reservation.Value;
+            var addedBaseCost = Values[0].AsPercentage * unreservedMana - Skills.ModifierSourceSkill.Cost.ValueFor(NodeType.BaseSet);
+            yield return (BaseAdd, addedBaseCost, Skills.ModifierSourceSkill.Cost, addedBaseCost > 0);
+            yield return (BaseAdd, Values[1].AsPercentage * Mana.Cost.Value, Lightning.Damage.WithHits, Mana.Cost.Value <= unreservedMana);
+        }
+
         private IEnumerable<(IFormBuilder form, IValueBuilder value, IStatBuilder stat, IConditionBuilder condition)>
             ElementalArmy()
         {
@@ -813,6 +852,23 @@ namespace PoESkillTree.Engine.Computation.Data
             yield return (BaseSet, Value, Lightning.Exposure, exposureDamageTypeValue.Eq((int) DamageType.Lightning));
             yield return (BaseSet, Value, Cold.Exposure, exposureDamageTypeValue.Eq((int) DamageType.Cold));
             yield return (BaseSet, Value, Fire.Exposure, exposureDamageTypeValue.Eq((int) DamageType.Fire));
+        }
+
+        private IValueBuilder SpellslingerSupportEquippedWandDamage()
+        {
+            var mainHandValue = SpellslingerSupportEquippedWandDamageForHand(AttackDamageHand.MainHand);
+            var offHandValue = SpellslingerSupportEquippedWandDamageForHand(AttackDamageHand.OffHand);
+            return ValueFactory.If(OffHand.Has(ItemClass.Wand))
+                .Then(0.5 * mainHandValue + 0.5 * offHandValue)
+                .Else(mainHandValue);
+        }
+
+        private ValueBuilder SpellslingerSupportEquippedWandDamageForHand(AttackDamageHand hand)
+        {
+            var handSlot = hand == AttackDamageHand.MainHand ? ItemSlot.MainHand : ItemSlot.OffHand;
+            return Enums.GetValues<DamageType>()
+                .Select(dt => DamageTypeBuilders.From(dt).Damage.WithSkills.With(hand).AsItemPropertyForSlot(handSlot).Value)
+                .Aggregate((l, r) => l + r);
         }
 
         private IConditionBuilder CombatFocusCondition(string skillId, int skillPart)
