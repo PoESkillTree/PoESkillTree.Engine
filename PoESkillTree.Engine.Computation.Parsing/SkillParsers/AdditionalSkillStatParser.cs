@@ -16,7 +16,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             _parsers = new IParser<AdditionalSkillStatParserParameter>[]
             {
                 new AdditionalSkillLevelParser(skillDefinitions, builderFactories.StatBuilders.Gem, builderFactories.GemTagBuilders,
-                    builderFactories.ValueBuilders, builderFactories.MetaStatBuilders),
+                    builderFactories.ValueBuilders, builderFactories.MetaStatBuilders, builderFactories.SkillBuilders),
                 new AdditionalSkillLevelMaximumParser(skillDefinitions, builderFactories.StatBuilders.Gem, builderFactories.ValueBuilders),
                 new AdditionalSkillQualityParser(skillDefinitions, builderFactories.StatBuilders.Gem,
                     builderFactories.ValueBuilders, builderFactories.MetaStatBuilders),

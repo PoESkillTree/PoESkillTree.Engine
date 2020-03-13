@@ -10,8 +10,10 @@
 5% additional Physical Damage Reduction during any Flask Effect
 2% additional Physical Damage Reduction if you weren't Damaged by a Hit Recently
 8% additional Physical Damage Reduction while Focussed
+60% chance for Bleeding inflicted with this Weapon to deal 100% more Damage
 25% chance for Flasks to gain a Charge when you take a Critical Strike
 8% chance for Flasks you use to not consume Charges
+60% chance for Poisons inflicted with this Weapon to deal 100% more Damage
 7% chance to Avoid being Chilled
 7% chance to Avoid being Frozen
 7% chance to Avoid being Ignited
@@ -51,6 +53,7 @@
 10% chance to gain a Frenzy Charge on Hit
 5% chance to gain a Frenzy Charge on Kill
 22% chance to gain a Frenzy Charge when you Block
+4% chance to gain a Frenzy Charge when you Hit a Rare or Unique Enemy
 15% chance to gain a Power Charge on Critical Strike
 5% chance to gain a Power Charge on Kill
 10% chance to gain a Power Charge when you Block
@@ -85,6 +88,7 @@
 10% chance to Trigger Level 1 Blood Rage when you Kill an Enemy
 10% Chance to Trigger Level 18 Summon Spectral Wolf on Kill
 8% chance to Unnerve Enemies for 4 seconds on Hit
+15% chance when Hit for double Armour effect
 9% faster start of Energy Shield Recharge
 5% Global chance to Blind Enemies on hit
 25% increased Accuracy Rating if you haven't Killed Recently
@@ -107,7 +111,9 @@
 3% increased Attack and Cast Speed
 10% increased Attack and Cast Speed during any Flask Effect
 23% increased Attack and Cast Speed while Focussed
+16% increased Attack Critical Strike Chance while Dual Wielding
 6% increased Attack Damage
+13% increased Attack Damage while Dual Wielding
 13% increased Attack Damage while holding a Shield
 4% increased Attack Speed
 11% increased Attack Speed during any Flask Effect
@@ -123,7 +129,7 @@
 7% increased Attack Speed with Bows
 7% increased Attack Speed with Claws
 7% increased Attack Speed with Daggers
-7% increased Attack Speed with Maces and Sceptres
+7% increased Attack Speed with Maces or Sceptres
 5% increased Attack Speed with One Handed Melee Weapons
 7% increased Attack Speed with Staves
 7% increased Attack Speed with Swords
@@ -153,7 +159,7 @@
 22% increased Charges used
 14% increased Chill and Freeze Duration on Enemies
 15% increased Chill Duration on Enemies
-13% increased Cold Damage
+18% increased Cold Damage
 12% increased Cooldown Recovery Speed
 14% increased Cooldown Recovery Speed for throwing Traps
 23% increased Critical Strike Chance
@@ -174,7 +180,7 @@
 12% increased Critical Strike Chance with Elemental Skills
 16% increased Critical Strike Chance with Fire Skills
 16% increased Critical Strike Chance with Lightning Skills
-14% increased Critical Strike Chance with Maces and Sceptres
+14% increased Critical Strike Chance with Maces or Sceptres
 14% increased Critical Strike Chance with Mines
 16% increased Critical Strike Chance with One Handed Melee Weapons
 14% increased Critical Strike Chance with Staves
@@ -182,11 +188,11 @@
 14% increased Critical Strike Chance with Traps
 16% increased Critical Strike Chance with Two Handed Melee Weapons
 14% increased Critical Strike Chance with Wands
-10% increased Damage
+13% increased Damage
 35% increased Damage against Abyssal Monsters
 22% increased Damage during any Flask Effect
 17% increased Damage if you've Killed Recently
-11% increased Damage over Time
+20% increased Damage over Time
 12% increased Damage over Time while Dual Wielding
 12% increased Damage over Time while holding a Shield
 12% increased Damage over Time while wielding a Two Handed Weapon
@@ -205,7 +211,7 @@
 15% increased Damage with Daggers
 40% increased Damage with Hits against Chilled Enemies
 9% increased Damage with Hits and Ailments per Curse on Enemy
-15% increased Damage with Maces and Sceptres
+15% increased Damage with Maces or Sceptres
 13% increased Damage with One Handed Weapons
 25% increased Damage with Poison
 15% increased Damage with Staves
@@ -214,21 +220,24 @@
 15% increased Damage with Wands
 6% increased Dexterity
 35% increased Duration
+11% increased Duration of Ailments on Enemies
 90% increased Duration of Ailments you inflict while Focussed
 25% increased effect
-6% increased Effect of Auras on you
+17% increased Effect of Auras on you
 8% increased Effect of Chill
 15% increased Effect of Fortify on you
 80% increased Effect of Fortify on you while Focussed
-17% increased Effect of non-Damaging Ailments on Enemies
+17% increased Effect of Non-Damaging Ailments
 18% increased effect of Offerings
 8% increased Effect of Shock
 12% increased Effect of your Curses
 13% increased Elemental Damage
 15% increased Elemental Damage if you've dealt a Critical Strike Recently
+6% increased Elemental Damage taken
 15% increased Elemental Damage with Attack Skills
 12% increased Endurance Charge Duration
 39% increased Energy Shield
+23% increased Energy Shield from Body Armour
 7% increased Energy Shield Recharge Rate
 9% increased Energy Shield Recovery rate
 39% increased Evasion and Energy Shield
@@ -282,8 +291,9 @@
 6% increased Movement Speed if you've Hit an Enemy Recently
 3% increased Movement Speed if you've Killed Recently
 12% increased Movement speed while on Burning, Chilled or Shocked ground
+25% increased Physical Attack Damage while Dual Wielding
 39% increased Physical Damage
-25% increased Physical Weapon Damage while Dual Wielding
+9% increased Physical Damage taken
 7% increased Poison Duration
 12% increased Power Charge Duration
 20% increased Projectile Attack Damage
@@ -323,8 +333,6 @@
 18% increased Trap Duration
 9% increased Trap Throwing Speed
 19% increased Warcry Cooldown Recovery Speed
-16% increased Weapon Critical Strike Chance while Dual Wielding
-13% increased Weapon Damage while Dual Wielding
 525% more Physical Damage with Unarmed Attacks
 0.4% of Attack Damage Leeched as Life during Flask effect
 0.4% of Chaos Damage Leeched as Life
@@ -349,22 +357,22 @@
 25% of Physical Damage Converted to Fire Damage
 25% of Physical Damage Converted to Lightning Damage
 7% of Physical Damage from Hits taken as Chaos Damage
-9% of Physical Damage from Hits taken as Cold Damage
-9% of Physical Damage from Hits taken as Fire Damage
-9% of Physical Damage from Hits taken as Lightning Damage
+4% of Physical Damage from Hits taken as Cold Damage
+4% of Physical Damage from Hits taken as Fire Damage
+4% of Physical Damage from Hits taken as Lightning Damage
 0.4% of Physical Damage Leeched as Life
 50% of Recovery applied Instantly
 0.4% of Spell Damage Leeched as Energy Shield during Flask effect
 0.2% of Spell Damage Leeched as Life
 0.2% of Spell Damage Leeched as Mana
-66% reduced Amount Recovered
+30% reduced Amount Recovered
 18% reduced Attribute Requirements
 5% reduced Chaos Damage taken
 25% reduced Chaos Damage taken over time
 22% reduced Charges used
 5% reduced Cold Damage taken
 5% reduced Damage taken from Damage Over Time
-25% reduced Duration
+30% reduced Duration
 27% reduced Effect of Curses on you
 5% reduced Elemental Damage Taken while stationary
 12% reduced Enemy Block Chance
@@ -379,9 +387,10 @@
 12% reduced Mana Cost of Skills during Flask Effect
 4% reduced Mana Reserved
 33% reduced Recovery rate
-10% reduced Reflected Damage taken
-38% reduced Reflected Elemental Damage taken
-38% reduced Reflected Physical Damage taken
+-9% to Chaos Resistance
+-9% to Cold Resistance
+-9% to Fire Resistance
+-9% to Lightning Resistance
 +575 Armour if you've Blocked Recently
 +2 Energy Shield gained for each Enemy hit by your Attacks
 +42 Life gained for each Blinded Enemy Hit by this Weapon
@@ -416,6 +425,7 @@
 +1 to Level of all Minion Skill Gems
 +1 to Level of all Physical Skill Gems
 +1 to Level of all Physical Spell Skill Gems
++1 to Level of all Raise Spectre Gems
 +1 to Level of all Spell Skill Gems
 +1 to Level of all Strength Skill Gems
 +1 to Level of Socketed Active Skill Gems
@@ -446,15 +456,15 @@
 +1 to maximum number of Spectres
 +1 to maximum number of Summoned Totems
 +1 to Maximum Power Charges
-+1 to Melee Weapon and Unarmed Attack range
-+2 to Melee Weapon Range if you have Killed Recently
++1 to Melee Strike Range
++2 to Melee Strike Range if you have Killed Recently
 +1 to Minimum Endurance Charges
 +1 to Minimum Frenzy Charges
 +1 to Minimum Power Charges
 +14 to Strength
 +9 to Strength and Dexterity
 +9 to Strength and Intelligence
-+1 to Weapon range
++1 to Weapon Range
 +2% Chance to Block
 +1% Chance to Block Attack Damage
 +2% Chance to Block Attack Damage if there are at least 5 nearby Enemies
@@ -471,7 +481,7 @@
 +1% Chance to Block Spell Damage while holding a Shield
 +1% Chance to Block Spell Damage while wielding a Staff
 +17% chance to Dodge Attack Hits while Focussed
-+4% chance to Evade Attacks
++4% chance to Evade Attack Hits
 +19% Critical Strike Multiplier while a Rare or Unique Enemy is Nearby
 +9% to all Elemental Resistances
 +1% to all maximum Resistances
@@ -498,7 +508,7 @@
 +13% to Critical Strike Multiplier with Elemental Skills
 +16% to Critical Strike Multiplier with Fire Skills
 +16% to Critical Strike Multiplier with Lightning Skills
-+9% to Critical Strike Multiplier with Maces and Sceptres
++9% to Critical Strike Multiplier with Maces or Sceptres
 +9% to Critical Strike Multiplier with Mines
 +16% to Critical Strike Multiplier with One Handed Melee Weapons
 +9% to Critical Strike Multiplier with Staves
@@ -545,7 +555,7 @@ Adds 4 to 9 Cold Damage to Axe Attacks
 Adds 4 to 9 Cold Damage to Bow Attacks
 Adds 4 to 9 Cold Damage to Claw Attacks
 Adds 4 to 9 Cold Damage to Dagger Attacks
-Adds 4 to 9 Cold Damage to Mace and Sceptre Attacks
+Adds 4 to 9 Cold Damage to Mace or Sceptre Attacks
 Adds 7 to 10 Cold Damage to Spells
 Adds 18 to 40 Cold Damage to Spells and Attacks
 Adds 3 to 6 Cold Damage to Spells while Dual Wielding
@@ -564,7 +574,7 @@ Adds 5 to 11 Fire Damage to Axe Attacks
 Adds 5 to 11 Fire Damage to Bow Attacks
 Adds 5 to 11 Fire Damage to Claw Attacks
 Adds 5 to 11 Fire Damage to Dagger Attacks
-Adds 5 to 11 Fire Damage to Mace and Sceptre Attacks
+Adds 5 to 11 Fire Damage to Mace or Sceptre Attacks
 Adds 7 to 10 Fire Damage to Spells
 Adds 18 to 40 Fire Damage to Spells and Attacks
 Adds 3 to 6 Fire Damage to Spells while Dual Wielding
@@ -582,7 +592,7 @@ Adds 1 to 19 Lightning Damage to Axe Attacks
 Adds 1 to 19 Lightning Damage to Bow Attacks
 Adds 1 to 19 Lightning Damage to Claw Attacks
 Adds 1 to 19 Lightning Damage to Dagger Attacks
-Adds 1 to 19 Lightning Damage to Mace and Sceptre Attacks
+Adds 1 to 19 Lightning Damage to Mace or Sceptre Attacks
 Adds 1 to 17 Lightning Damage to Spells
 Adds 10 to 50 Lightning Damage to Spells and Attacks
 Adds 1 to 8 Lightning Damage to Spells while Dual Wielding
@@ -598,7 +608,7 @@ Adds 2 to 3 Physical Damage to Axe Attacks
 Adds 2 to 3 Physical Damage to Bow Attacks
 Adds 2 to 3 Physical Damage to Claw Attacks
 Adds 2 to 3 Physical Damage to Dagger Attacks
-Adds 2 to 3 Physical Damage to Mace and Sceptre Attacks
+Adds 2 to 3 Physical Damage to Mace or Sceptre Attacks
 Adds 3 to 6 Physical Damage to Spells
 Adds 1 to 4 Physical Damage to Spells while Dual Wielding
 Adds 1 to 4 Physical Damage to Spells while holding a Shield
@@ -619,7 +629,9 @@ Attacks with this Weapon Penetrate 6% Cold Resistance
 Attacks with this Weapon Penetrate 5% Elemental Resistances
 Attacks with this Weapon Penetrate 6% Fire Resistance
 Attacks with this Weapon Penetrate 6% Lightning Resistance
+Auras from your Skills grant 4% increased Damage to you and Allies
 Bleeding you inflict deals Damage 10% faster
+Bow Attacks fire 2 additional Arrows
 Bow Attacks fire an additional Arrow
 Can have up to 3 Crafted Modifiers
 Cannot be Chilled
@@ -656,10 +668,11 @@ Drops Burning Ground while moving, dealing 2500 Fire Damage per second
 Enemies have 20% reduced Evasion if you have Hit them Recently
 Enemies have -14% to Total Physical Damage Reduction against this Weapon's Hits
 Enemies have -9% to Total Physical Damage Reduction against your Hits
-Enemies killed explode dealing 5% of their Life as Fire Damage
+Enemies Killed with Attack or Spell Hits Explode, dealing 5% of their Life as Fire Damage
+Enemies you Kill Explode, dealing 3% of their Life as Physical Damage
 Every 5 seconds, Regenerate 15% of Life over one second
 Ezomyte Shell Hook
-Flask Effect is not removed at Full Mana
+Flask Effect is not removed at Full Mana Flask Effect does not Queue
 Flasks applied to you have 5% increased Effect
 Gain 1 Charge when you are Hit by an Enemy
 Gain 4% of Cold Damage as Extra Chaos Damage
@@ -719,7 +732,6 @@ Instant Recovery
 Instant Recovery when on Low Life
 Item drops on Death if Equipped by an Animated Guardian
 Items and Gems have 7% reduced Attribute Requirements
-Killed Enemies Explode, dealing 3% of their Life as Physical Damage
 Malevolence has 30% increased Aura Effect
 Malevolence has 22% reduced Mana Reservation
 Mana Recovery occurs instantly at the end of the Flask effect
@@ -752,6 +764,12 @@ Minions Regenerate 3 Life per second
 Minions Regenerate 0.6% of Life per second
 Moving while Bleeding doesn't cause you to take extra Damage
 Nearby Enemies are Blinded
+Nearby Enemies have -9% to Chaos Resistance
+Nearby Enemies have -9% to Cold Resistance
+Nearby Enemies have -9% to Fire Resistance
+Nearby Enemies have -9% to Lightning Resistance
+Nearby Enemies take 6% increased Elemental Damage
+Nearby Enemies take 9% increased Physical Damage
 Non-Channelling Skills have -7 to Total Mana Cost
 Non-Vaal Skills deal 35% increased Damage during Soul Gain Prevention
 Poisons you inflict deal Damage 10% faster
@@ -799,6 +817,7 @@ Skills supported by Unleash have +1 to maximum number of Seals
 Skills used by Mines have 23% increased Area of Effect
 Skills used by Traps have 23% increased Area of Effect
 Skills which Throw Traps throw up to 1 additional Trap
+Socketed Attacks have -15 to Total Mana Cost
 Socketed Attacks have +1% to Critical Strike Chance
 Socketed Attacks have +30% to Critical Strike Multiplier
 Socketed Gems are Supported by Level 16 Added Fire Damage
@@ -876,6 +895,8 @@ Socketed Gems have 10% reduced Mana Reservation
 Socketed Gems have +3.5% Critical Strike Chance
 Socketed Movement Skills have no Mana Cost
 Socketed Non-Curse Aura Gems have 20% increased Aura Effect
+Socketed Skills deal 20% more Attack Damage
+Socketed Skills deal 20% more Spell Damage
 Socketed Spells have +1% to Critical Strike Chance
 Socketed Spells have +30% to Critical Strike Multiplier
 Spells have +0.75% to Critical Strike Chance 
@@ -894,6 +915,9 @@ Unaffected by Shocked Ground
 When you Kill a Rare Monster, 25% chance to gain one of its Modifiers for 10 seconds
 Wrath has 30% increased Aura Effect
 Wrath has 22% reduced Mana Reservation
+You and your Minions take 10% reduced Reflected Damage
+You and your Minions take 38% reduced Reflected Elemental Damage
+You and your Minions take 38% reduced Reflected Physical Damage
 You are Immune to Ailments while Focussed
 You can apply an additional Curse
 You have Chilling Conflux for 3 seconds every 8 seconds

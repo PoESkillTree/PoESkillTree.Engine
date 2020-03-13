@@ -22,6 +22,14 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         private IStatBuilder AdditionalLevels(string identityInfix, IGemTagBuilder gemTag) =>
             AdditionalLevels(identityInfix, gemTag, (_, i) => i);
 
+        public IStatBuilder AdditionalLevels(ISkillBuilder skill)
+        {
+            var coreBuilder = new CoreStatBuilderFromCoreBuilder<string>(
+                CoreBuilder.Proxy(skill, (ps, b) => b.Build(ps).Id),
+                (e, t) => StatFactory.FromIdentity($"Gem.AdditionalLevels.{t}", e, typeof(int)));
+            return new StatBuilder(StatFactory, coreBuilder);
+        }
+
         public IStatBuilder AdditionalLevelsForModifierSourceItemSlot() =>
             AdditionalLevels("", GetItemSlot);
 

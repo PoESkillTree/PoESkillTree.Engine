@@ -519,6 +519,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 // gem level
                 { "level of all ({GemTagMatchers}) skill gems", Gem.AdditionalActiveLevels(Reference.AsGemTag) },
                 { "level of all ({GemTagMatchers}) spell skill gems", Gem.AdditionalActiveSpellLevels(Reference.AsGemTag) },
+                { "level of all ({SkillMatchers}) gems", Gem.AdditionalLevels(Reference.AsSkill) },
                 { "level of socketed gems", Gem.AdditionalLevelsForModifierSourceItemSlot() },
                 { "level of socketed active skill gems", Gem.AdditionalActiveLevelsForModifierSourceItemSlot() },
                 { "level of socketed ({GemTagMatchers}) gems", Gem.AdditionalLevelsForModifierSourceItemSlot(Reference.AsGemTag) },
@@ -531,8 +532,11 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "quality of socketed support gems", Gem.AdditionalSupportQualityForModifierSourceItemSlot },
                 // other
                 { "reflected damage taken", AnyDamageType.ReflectedDamageTaken },
+                { "take reflected damage", AnyDamageType.ReflectedDamageTaken },
                 { "reflected elemental damage taken", Elemental.ReflectedDamageTaken },
+                { "take reflected elemental damage", Elemental.ReflectedDamageTaken },
                 { "reflected physical damage taken", Physical.ReflectedDamageTaken },
+                { "take reflected physical damage", Physical.ReflectedDamageTaken },
                 { "damage taken gained as mana over 4 seconds when hit", Stat.DamageTakenGainedAsMana },
                 { "character size", Stat.IndependentMultiplier("CharacterSize") },
                 { "light radius", Stat.IndependentMultiplier("LightRadius") },

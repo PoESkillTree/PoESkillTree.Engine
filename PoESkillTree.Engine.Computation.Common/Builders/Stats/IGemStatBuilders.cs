@@ -12,6 +12,8 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
         IStatBuilder AdditionalActiveLevels(IGemTagBuilder gemTag);
         IStatBuilder AdditionalActiveSpellLevels(IGemTagBuilder gemTag);
 
+        IStatBuilder AdditionalLevels(ISkillBuilder skill);
+
         IStatBuilder AdditionalLevelsForModifierSourceItemSlot();
         IStatBuilder AdditionalLevelsForModifierSourceItemSlot(IGemTagBuilder gemTag);
         IStatBuilder AdditionalActiveLevelsForModifierSourceItemSlot();

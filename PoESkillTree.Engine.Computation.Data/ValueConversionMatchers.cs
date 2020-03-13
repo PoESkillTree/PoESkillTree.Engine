@@ -83,6 +83,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "per (stage|fuse charge|explosive arrow on target)", PerStat(Stat.SkillStage) },
                 { "for each (stage|blade)", PerStat(Stat.SkillStage) },
                 { @"per (stage|explosive arrow on target), up to \+#", CappedMultiplier(Stat.SkillStage.Value, Value) },
+                { "runes (have|deal) (?<inner>.*) for each time they have been improved", Stat.SkillStage.Value, "${inner}" },
                 { "per stage after the first", PerStatAfterFirst(Stat.SkillStage) },
                 {
                     "per ({ChargeTypeMatchers}) removed",
@@ -104,7 +105,7 @@ namespace PoESkillTree.Engine.Computation.Data
                     CappedMultiplier(Action.SpendMana(Values[0]).CountRecently, Values[1])
                 },
                 {
-                    "per # additional melee range",
+                    "per # additional melee( strike)? range",
                     PerStat(Stat.Range.With(AttackDamageHand.MainHand).ValueFor(NodeType.BaseAdd), Value)
                 },
                 { "per projectile", PerStat(Projectile.Count) },
