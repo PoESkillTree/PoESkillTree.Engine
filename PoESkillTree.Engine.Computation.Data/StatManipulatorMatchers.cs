@@ -28,6 +28,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "you and nearby allies(?! deal| have)", s => Buff.Aura(s, Self, Ally) },
                 { "you and nearby non-minion allies have a", s => Buff.Aura(s, Self, Entity.Totem) },
                 { "you and nearby party members", s => s }, // The player character is the only party member with an Entity
+                { "you and your minions(?= take)", s => s.Concat(s.For(Entity.Minion)) },
                 {
                     "auras from your skills grant (?<inner>.*) to you and allies",
                     s => Buffs(Self, Self, Ally).With(Keyword.Aura).Without(Keyword.Curse).AddStat(s), "${inner}"

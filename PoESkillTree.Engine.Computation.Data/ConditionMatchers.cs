@@ -150,7 +150,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "with maces", AttackWithSkills(Tags.Mace) },
                 { "to mace attacks", AttackWithSkills(Tags.Mace) },
                 { "with maces (and|or) sceptres", AttackWithSkillsEither(Tags.Mace, Tags.Sceptre) },
-                { "to mace and sceptre attacks", AttackWithSkillsEither(Tags.Mace, Tags.Sceptre) },
+                { "to mace (and|or) sceptre attacks", AttackWithSkillsEither(Tags.Mace, Tags.Sceptre) },
                 { "mace or sceptre attacks deal", AttackWithEither(Tags.Mace, Tags.Sceptre) },
                 {
                     "with (a mace|maces), sceptres? or (staff|staves)",
@@ -408,8 +408,8 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "shard", Stat.MainSkillPart.Value.Eq(1) }, // Spectral Shield Throw
                 { "at maximum charge distance", Stat.MainSkillPart.Value.Eq(1) }, // Shield Charge
                 // - socketed
-                { "socketed gems", Condition.MainSkillHasModifierSourceItemSlot },
-                { "socketed gems (deal|have)", Condition.MainSkillHasModifierSourceItemSlot },
+                { "socketed (skills|gems)", Condition.MainSkillHasModifierSourceItemSlot },
+                { "socketed (skills|gems) (deal|have)", Condition.MainSkillHasModifierSourceItemSlot },
                 { "socketed attacks have", And(Condition.With(DamageSource.Attack), Condition.MainSkillHasModifierSourceItemSlot) },
                 { "socketed spells have", And(Condition.With(DamageSource.Spell), Condition.MainSkillHasModifierSourceItemSlot) },
                 // - other

@@ -116,6 +116,13 @@ namespace PoESkillTree.Engine.Computation.Data
                     PercentMore, Value * ValueFactory.LinearScale(OpponentsOfSelf.Distance, (15, 1), (40, 0)),
                     Damage.With(Keyword.Melee)
                 },
+                {
+                    "#% chance for ({AilmentMatchers}) inflicted with this weapon to deal #% more damage",
+                    (PercentMore, Values[0].AsPercentage * Values[1], Damage.With(Reference.AsAilment),
+                        ModifierSourceIs(ItemSlot.MainHand).And(MainHandAttack)),
+                    (PercentMore, Values[0].AsPercentage * Values[1], Damage.With(Reference.AsAilment),
+                        ModifierSourceIs(ItemSlot.OffHand).And(OffHandAttack))
+                },
                 // - damage taken
                 {
                     "cold damage taken increased by chill effect",
@@ -219,12 +226,10 @@ namespace PoESkillTree.Engine.Computation.Data
                 // - projectiles
                 { "fires? # additional projectiles", BaseAdd, Value, Projectile.Count },
                 { "fires? # additional arrows", BaseAdd, Value, Projectile.Count, With(Keyword.Attack) },
+                { "bow attacks fire # additional arrows", BaseAdd, Value, Projectile.Count, And(With(Keyword.Attack), With(Keyword.Bow)) },
                 { "fires? an additional projectile", BaseAdd, 1, Projectile.Count },
                 { "fires? an additional arrow", BaseAdd, 1, Projectile.Count, With(Keyword.Attack) },
-                {
-                    "bow attacks fire an additional arrow",
-                    BaseAdd, 1, Projectile.Count, And(With(Keyword.Attack), MainHand.Has(Tags.Bow))
-                },
+                { "bow attacks fire an additional arrow", BaseAdd, 1, Projectile.Count, And(With(Keyword.Attack), MainHand.Has(Tags.Bow)) },
                 { "skills fire an additional projectile", BaseAdd, 1, Projectile.Count },
                 { "attack skills fire an additional projectile", BaseAdd, 1, Projectile.Count, With(Keyword.Attack) },
                 { "skills fire # additional projectiles", BaseAdd, Value, Projectile.Count },
@@ -285,6 +290,10 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "converts all evasion rating to armour", TotalOverride, 100, Evasion.ConvertTo(Armour) },
                 { "cannot evade enemy attacks", TotalOverride, 0, Evasion.Chance },
                 { @"\+# evasion rating", BaseAdd, Value, Evasion },
+                {
+                    "#% increased energy shield from body armour",
+                    PercentIncrease, Value, EnergyShield, Condition.BaseValueComesFrom(ItemSlot.BodyArmour)
+                },
                 // - resistances
                 { "immune to ({DamageTypeMatchers}) damage", TotalOverride, 100, Reference.AsDamageType.Resistance },
                 { @"\+#% elemental resistances", BaseAdd, Value, Elemental.Resistance },

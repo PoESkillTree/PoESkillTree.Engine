@@ -5,6 +5,7 @@ using PoESkillTree.Engine.Computation.Common;
 using PoESkillTree.Engine.Computation.Common.Builders;
 using PoESkillTree.Engine.Computation.Common.Builders.Conditions;
 using PoESkillTree.Engine.Computation.Common.Builders.Damage;
+using PoESkillTree.Engine.Computation.Common.Builders.Equipment;
 using PoESkillTree.Engine.Computation.Common.Builders.Forms;
 using PoESkillTree.Engine.Computation.Common.Builders.Modifiers;
 using PoESkillTree.Engine.Computation.Common.Builders.Stats;
@@ -641,7 +642,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 // - Pathfinder
                 {
                     "poisons you inflict during any flask effect have #% chance to deal #% more damage",
-                    PercentMore, Values[0].AsPercentage * Values[1], Damage.With(Ailment.Poison)
+                    PercentMore, Values[0].AsPercentage * Values[1], Damage.With(Ailment.Poison), Equipment.IsAnyFlaskActive()
                 },
                 // - Occultist
                 { "your curses can apply to hexproof enemies", TotalOverride, 1, Flag.IgnoreHexproof },

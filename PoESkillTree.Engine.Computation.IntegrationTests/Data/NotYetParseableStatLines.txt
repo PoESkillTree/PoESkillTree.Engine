@@ -7,6 +7,7 @@ Explosion deals 50% less Base Damage
 Channelling Skills have -3 to Total Mana Cost
 Channelling Skills have -1 to Total Mana Cost
 Non-Channelling Skills have -7 to Total Mana Cost
+Socketed Attacks have -15 to Total Mana Cost
 -7 to Total Mana Cost of Skills
 // - Lucky/Unlucky for chances
 Chance to Block Spell Damage is Unlucky

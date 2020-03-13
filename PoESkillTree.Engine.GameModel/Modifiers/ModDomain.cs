@@ -19,5 +19,7 @@ namespace PoESkillTree.Engine.GameModel.Modifiers
         AbyssJewel,
         Atlas,
         Delve,
+        [EnumMember(Value = "affliction_jewel")]
+        ClusterJewel,
     }
 }

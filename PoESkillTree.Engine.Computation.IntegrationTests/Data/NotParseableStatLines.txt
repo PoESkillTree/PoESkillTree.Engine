@@ -30,6 +30,10 @@ Mana Recovery occurs instantly at the end of the Flask effect
 Killed Enemies Explode, dealing 3% of their Life as Physical Damage
 Enemies killed explode dealing 5% of their Life as Fire Damage
 When you Kill a Rare Monster, 25% chance to gain one of its Modifiers for 10 seconds
+15% chance when Hit for double Armour effect
+Enemies Killed with Attack or Spell Hits Explode, dealing 5% of their Life as Fire Damage
+Enemies you Kill Explode, dealing 3% of their Life as Physical Damage
+Flask Effect is not removed at Full Mana Flask Effect does not Queue
 // Master crafted: =====================================================================================================
 15% of Damage Taken from Hits is Leeched as Life during Flask Effect
 7% increased Brand Attachment range
