@@ -5,10 +5,10 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
 {
     public class JsonPassiveTreePosition
     {
-        [JsonProperty("x", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [JsonProperty("x", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public virtual float OriginalX { get; set; } = 0f;
 
-        [JsonProperty("y", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [JsonProperty("y", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public virtual float OriginalY { get; set; } = 0f;
 
         [JsonIgnore]

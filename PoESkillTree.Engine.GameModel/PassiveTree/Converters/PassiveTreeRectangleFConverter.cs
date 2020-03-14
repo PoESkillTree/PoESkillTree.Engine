@@ -3,7 +3,6 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Drawing;
 using System.Linq;
-using System.Reflection;
 
 namespace PoESkillTree.Engine.GameModel.PassiveTree.Converters
 {

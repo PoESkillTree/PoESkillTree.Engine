@@ -17,6 +17,9 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
         [JsonProperty("isProxy", NullValueHandling = NullValueHandling.Ignore)]
         public bool? IsProxy { get; set; }
 
+        [JsonIgnore]
+        public Dictionary<ushort, JsonPassiveNode> PassiveNodes { get; } = new Dictionary<ushort, JsonPassiveNode>();
+
         #region Legacy Parsing Purposes
 #pragma warning disable IDE0051 // Remove unused private members
 #pragma warning disable IDE1006 // Naming Styles

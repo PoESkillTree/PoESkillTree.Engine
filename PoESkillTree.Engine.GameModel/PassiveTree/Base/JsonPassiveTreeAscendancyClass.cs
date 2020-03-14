@@ -11,7 +11,7 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
 
         [JsonProperty("name")]
         public string Name { get; set; } = string.Empty;
-        
+
         [JsonProperty("flavourText")]
         public string FlavourText { get; set; } = string.Empty;
 

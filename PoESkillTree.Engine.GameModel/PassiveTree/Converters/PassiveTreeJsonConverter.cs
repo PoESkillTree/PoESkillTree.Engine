@@ -48,7 +48,7 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Converters
                         }
                     }
                 }
-                
+
                 jObject.Remove("nodes");
             }
 
@@ -119,6 +119,7 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Converters
                 if (passiveNode.PassiveNodeGroupId.HasValue && passiveTree.PassiveNodeGroups.ContainsKey(passiveNode.PassiveNodeGroupId.Value))
                 {
                     passiveNode.PassiveNodeGroup = passiveTree.PassiveNodeGroups[passiveNode.PassiveNodeGroupId.Value];
+                    passiveNode.PassiveNodeGroup.PassiveNodes[passiveNode.Id] = passiveNode;
                 }
 
                 // Populate proper "In Nodes"
@@ -126,9 +127,12 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Converters
                 {
                     if (passiveTree.PassiveNodes.ContainsKey(passiveNodeOutId))
                     {
+                        passiveNode.NeighborPassiveNodes[passiveNodeOutId] = passiveTree.PassiveNodes[passiveNodeOutId];
+
                         if (!passiveTree.PassiveNodes[passiveNodeOutId].InPassiveNodeIds.Contains(passiveNode.Id))
                         {
                             passiveTree.PassiveNodes[passiveNodeOutId].InPassiveNodeIds.Add(passiveNode.Id);
+                            passiveTree.PassiveNodes[passiveNodeOutId].NeighborPassiveNodes[passiveNode.Id] = passiveNode;
                         }
                     }
                 }

@@ -102,6 +102,9 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
         [JsonProperty("in")]
         public HashSet<ushort> InPassiveNodeIds { get; } = new HashSet<ushort>();
 
+        [JsonIgnore]
+        public Dictionary<ushort, JsonPassiveNode> NeighborPassiveNodes { get; } = new Dictionary<ushort, JsonPassiveNode>();
+
         #region Assigned Properties
         [JsonIgnore]
         public bool IsSkilled { get; set; } = false;
@@ -150,7 +153,7 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
                     }
                     else if (IsJewelSocket)
                     {
-                        _passiveNodeType = ExpansionJewel is null ? PassiveNodeType.JewelSocket : PassiveNodeType.ExpansionJewelSocket;
+                        _passiveNodeType = ExpansionJewel is null ? PassiveNodeType.JewelSocket : PassiveNodeType.OuterJewelSocket;
                     }
                     else
                     {
