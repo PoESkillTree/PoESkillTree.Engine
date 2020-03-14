@@ -22,5 +22,8 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Actions
         /// Gets a stat representing block chance against spells.
         /// </summary>
         IStatBuilder SpellChance { get; }
+
+        IActionBuilder Attack { get; }
+        IActionBuilder Spell { get; }
     }
 }

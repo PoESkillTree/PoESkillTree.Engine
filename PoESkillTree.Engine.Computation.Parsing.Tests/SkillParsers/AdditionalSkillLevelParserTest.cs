@@ -64,6 +64,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         [TestCase("Gem.AdditionalLevels.ActiveSkill.g1", 5)]
         [TestCase("Gem.AdditionalLevels.ActiveSkill.spell.g2", 6)]
         [TestCase("Gem.AdditionalLevels.g2.Belt", 7)]
+        [TestCase("Gem.AdditionalLevels.a", 8)]
         public void GivenActiveSkillWithAdditionalLevelStatsAndNoSupportingSkills_WhenParsing_ThenValueIsAdditionalLevels(
             string statId, int statValue)
         {
@@ -132,6 +133,7 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
 
         [TestCase("Gem.AdditionalLevels.Belt", 3)]
         [TestCase("Gem.AdditionalLevels.g2.Belt", 7)]
+        [TestCase("Gem.AdditionalLevels.s1", 8)]
         public void GivenSupportSkillWithAdditionalLevelStats_WhenParsing_ThenValueIsAdditionalLevels(
             string statId, int statValue)
         {
@@ -319,7 +321,8 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 new GemStatBuilders(statFactory),
                 new GemTagBuilders(),
                 new ValueBuilders(),
-                new MetaStatBuilders(statFactory));
+                new MetaStatBuilders(statFactory),
+                new SkillBuilders(statFactory, skillDefinitions));
         }
 
         private static string StatIdentity(Skill skill) =>

@@ -14,16 +14,18 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
         private readonly IGemTagBuilders _gemTagBuilders;
         private readonly IValueBuilders _valueBuilders;
         private readonly IMetaStatBuilders _metaStatBuilders;
+        private readonly ISkillBuilders _skillBuilders;
 
         public AdditionalSkillLevelParser(
             SkillDefinitions skillDefinitions, IGemStatBuilders gemStatBuilders, IGemTagBuilders gemTagBuilders, IValueBuilders valueBuilders,
-            IMetaStatBuilders metaStatBuilders)
+            IMetaStatBuilders metaStatBuilders, ISkillBuilders skillBuilders)
             : base(skillDefinitions)
         {
             _gemStatBuilders = gemStatBuilders;
             _gemTagBuilders = gemTagBuilders;
             _valueBuilders = valueBuilders;
             _metaStatBuilders = metaStatBuilders;
+            _skillBuilders = skillBuilders;
         }
 
         protected override IReadOnlyDictionary<Skill, ValueBuilder> Parse(Skill activeSkill, IReadOnlyList<Skill> supportingSkills)
@@ -42,7 +44,8 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
             if (supportingSkill.Gem is null)
                 return value;
 
-            value += _gemStatBuilders.AdditionalLevelsForModifierSourceItemSlot().Value;
+            value += _gemStatBuilders.AdditionalLevelsForModifierSourceItemSlot().Value
+                     + _gemStatBuilders.AdditionalLevels(_skillBuilders.FromId(supportingSkill.Id)).Value;
             
             var baseItem = GetBaseItem(supportingSkill);
             if (baseItem is null)
@@ -62,7 +65,8 @@ namespace PoESkillTree.Engine.Computation.Parsing.SkillParsers
                 return value;
 
             value += _gemStatBuilders.AdditionalLevelsForModifierSourceItemSlot().Value
-                     + _gemStatBuilders.AdditionalActiveLevelsForModifierSourceItemSlot().Value;
+                     + _gemStatBuilders.AdditionalActiveLevelsForModifierSourceItemSlot().Value
+                     + _gemStatBuilders.AdditionalLevels(_skillBuilders.FromId(activeSkill.Id)).Value;
 
             var baseItem = GetBaseItem(activeSkill);
             if (baseItem is null)

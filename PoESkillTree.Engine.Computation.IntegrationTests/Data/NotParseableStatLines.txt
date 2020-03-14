@@ -27,6 +27,13 @@ Unaffected by Desecrated Ground
 Reflects 2 Physical Damage to Melee Attackers
 Flask Effect is not removed at Full Mana
 Mana Recovery occurs instantly at the end of the Flask effect
+Killed Enemies Explode, dealing 3% of their Life as Physical Damage
+Enemies killed explode dealing 5% of their Life as Fire Damage
+When you Kill a Rare Monster, 25% chance to gain one of its Modifiers for 10 seconds
+15% chance when Hit for double Armour effect
+Enemies Killed with Attack or Spell Hits Explode, dealing 5% of their Life as Fire Damage
+Enemies you Kill Explode, dealing 3% of their Life as Physical Damage
+Flask Effect is not removed at Full Mana Flask Effect does not Queue
 // Master crafted: =====================================================================================================
 15% of Damage Taken from Hits is Leeched as Life during Flask Effect
 7% increased Brand Attachment range
@@ -41,6 +48,7 @@ Suffixes Cannot Be Changed
 33% increased Rarity of Items Dropped by Slain Rare or Unique Enemies
 Attack Projectiles Return to you after hitting targets
 Hits with this Weapon have Culling Strike against Bleeding Enemies
+Can have up to 3 Crafted Modifiers
 // Unique/Implicit Weapons: ============================================================================================
 Can roll Minion Modifiers
 // Unique/Implicit Armour: =============================================================================================
@@ -275,6 +283,24 @@ Inflicts 6 Withered Debuffs the first time each Enemy enters the Area
 Traps are thrown randomly around you
 Supported Skills will Trigger Shockwave on Melee Hit
 This Gem gains 100% increased Experience
+5 Volleys
+Leaves a Lingering Blade in the ground for every Volley
+Maximum 40 Lingering Blades can be left in the ground at a time
+Leaves 50% fewer Lingering Blades in the ground if you don't Cast this Spell yourself
+Leaves a Lingering Blade in the ground for every 3 Projectiles fired
+38% increased maximum travel distance
+57% increased travel distance
+Supported Curses are Cast as Auras Supported Curse Skills also count as Aura Skills
+Supported Skills gain Intensity when used Supported Skills lose Intensity every 0.25 seconds while moving, or immediately if you teleport
+Maximum of 60 Orbs at a time
+Projectile changes direction 8 times
+Modifiers which would cause projectiles to Fork instead cause them to change direction additional times
+75% of Damage from Hits is taken from Buff before your Life or Energy Shield Buff can take Damage equal to Mana Spent by this Skill's effect
+20% more Area of Effect per Blade Vortex blade detonated
+Supported Non-Instant Skills have +1 Cooldown Use
+Trigger Supported Spells when you fire Projectiles from a Wand Attack
+This Skill's Mana Reservation is the total of the Mana Reservations of Supported Skills, and cannot be further modified
+A Rune is Improved for each 24 Mana Spent
 // passive skills: =====================================================================================================
 10% Chance for Traps to Trigger an additional time
 Share Endurance, Frenzy and Power Charges with nearby party members
@@ -303,6 +329,28 @@ Moving while Bleeding doesn't cause Minions to take extra Damage
 Skills supported by Unleash have +1 to maximum number of Seals
 Strike Skills target 1 additional nearby Enemy
 You are Unaffected by Bleeding while Leeching
+10% chance to create a Smoke Cloud on Kill
+10% chance to throw up to 1 additional Trap or Mine
+20% increased Brand Attachment range
+20% increased Raised Zombie Size
+25% increased Totem Placement range
+6% chance to Avoid Cold Damage from Hits
+6% chance to Avoid Lightning Damage from Hits
+6% chance to Avoid Physical Damage from Hits
+Enemies killed by your Attack Hits have a 15% chance to Explode, dealing a tenth of their maximum Life as Physical Damage
+Enemies killed by your Wand Hits have a 10% chance to Explode, dealing a quarter of their Life as Chaos Damage
+Enemies you Kill have a 10% chance to Explode, dealing a quarter of their maximum Life as Chaos Damage
+Freezes you inflict spread to other Enemies within a Radius of 12
+Ignited Enemies you hit are destroyed on Kill
+Ignites you inflict spread to other Enemies within a Radius of 15
+Minions created Recently cannot be Damaged
+Minions created Recently have 10% increased Attack and Cast Speed
+Minions created Recently have 30% increased Movement Speed
+Minions recover 4% of Life on Minion Death
+Unaffected by Poison
+Unattached Brands gain 20% increased Brand Attachment Range per second
+Warcries count as having 10 additional nearby Enemies
+You have Culling Strike against Cursed Enemies
 // Side effect from how jewels are currently handled, the stat doesn't actually exist
 +1 Jewel Socket
 // Ascendancies: =======================================================================================================
@@ -320,7 +368,7 @@ Moving while Bleeding doesn't cause you to take extra Damage
 // - Pathfinder
 Enemies you Kill that are affected by Elemental Ailments grant 100% increased Flask Charges
 You lose Virulence 50% slower
-When you kill a Poisoned Enemy during any Flask Effect, nearby enemies are Poisoned
+You lose Virulence 30% slower
 // - Occultist
 Cursed Enemies you or your Minions Kill have a 25% chance to Explode, dealing a quarter of their maximum Life as Chaos Damage
 Energy Shield Recharge is not interrupted by Damage if Recharge began Recently

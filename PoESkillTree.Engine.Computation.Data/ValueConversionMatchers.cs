@@ -49,10 +49,8 @@ namespace PoESkillTree.Engine.Computation.Data
                 // stats
                 { "per # accuracy rating", PerStat(Stat.Accuracy.With(AttackDamageHand.MainHand)) },
                 { "per #%? ({StatMatchers})(?! leech)", PerStat(stat: Reference.AsStat, divideBy: Value) },
-                {
-                    "per # ({StatMatchers}), up to #%",
-                    CappedMultiplier((Reference.AsStat.Value / Values[0]).Floor(), Values[1])
-                },
+                { "per # ({StatMatchers}), up to #%", CappedMultiplier((Reference.AsStat.Value / Values[0]).Floor(), Values[1]) },
+                { "per # ({StatMatchers}), up to a maximum of #%", CappedMultiplier((Reference.AsStat.Value / Values[0]).Floor(), Values[1]) },
                 { "per # ({StatMatchers}) ceiled", PerStatCeiled(stat: Reference.AsStat, divideBy: Value) },
                 { "per ({StatMatchers})(?! leech)", PerStat(stat: Reference.AsStat) },
                 { "per ({StatMatchers}), up to #%", CappedMultiplier(Reference.AsStat.Value, Value) },
@@ -85,6 +83,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "per (stage|fuse charge|explosive arrow on target)", PerStat(Stat.SkillStage) },
                 { "for each (stage|blade)", PerStat(Stat.SkillStage) },
                 { @"per (stage|explosive arrow on target), up to \+#", CappedMultiplier(Stat.SkillStage.Value, Value) },
+                { "runes (have|deal) (?<inner>.*) for each time they have been improved", Stat.SkillStage.Value, "${inner}" },
                 { "per stage after the first", PerStatAfterFirst(Stat.SkillStage) },
                 {
                     "per ({ChargeTypeMatchers}) removed",
@@ -106,7 +105,7 @@ namespace PoESkillTree.Engine.Computation.Data
                     CappedMultiplier(Action.SpendMana(Values[0]).CountRecently, Values[1])
                 },
                 {
-                    "per # additional melee range",
+                    "per # additional melee( strike)? range",
                     PerStat(Stat.Range.With(AttackDamageHand.MainHand).ValueFor(NodeType.BaseAdd), Value)
                 },
                 { "per projectile", PerStat(Projectile.Count) },
@@ -114,6 +113,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 // buffs
                 { "per buff on you", Buffs(targets: Self).Count() },
                 { "per curse on you", Buffs(targets: Self).With(Keyword.Curse).Count() },
+                { "for each herald affecting you", Buffs(targets: Self).With(Keyword.Herald).Count() },
                 { "per curse on enemy", Buffs(targets: OpponentsOfSelf).With(Keyword.Curse).Count() },
                 { "for each curse on that enemy,", Buffs(targets: OpponentsOfSelf).With(Keyword.Curse).Count() },
                 { "for each impale on enemy", Buff.Impale.StackCount.For(MainOpponentOfSelf).Value },
@@ -135,6 +135,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 // skills
                 { "for each zombie you own", Skills.RaiseZombie.Instances.Value },
                 { "for each raised zombie", Skills.RaiseZombie.Instances.Value },
+                { "per summoned sentinel of purity", Skills.FromId("HeraldOfPurity").Instances.Value },
                 { "for each summoned golem", Golems.CombinedInstances.Value },
                 { "per summoned golem", Golems.CombinedInstances.Value },
                 { "for each golem you have summoned", Golems.CombinedInstances.Value },
@@ -217,6 +218,10 @@ namespace PoESkillTree.Engine.Computation.Data
                     CappedMultiplier(
                         (Stat.UniqueAmount("# of prior mines in detonation sequence") / Value).Floor(),
                         Mines.CombinedInstances.Maximum.Value)
+                },
+                {
+                    "while stationary, gain (?<inner>#% .*) every second, up to a maximum of #%",
+                    CappedMultiplier(Stat.UniqueAmount("# of seconds you've been stationary for"), Values[1] / Values[0]), "${inner}"
                 },
             }; // add
 

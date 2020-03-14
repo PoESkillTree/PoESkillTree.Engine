@@ -23,7 +23,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
 
         private static IEnumerable<TestCaseData> CreateTestCases()
         {
-            yield return CreateCase(("1empty", false));
+            yield return CreateCase(("1empty", true));
             yield return CreateCase(("2allows0", true));
             yield return CreateCase(("3allows0excludes1", false));
             yield return CreateCase(("5allows3", true));

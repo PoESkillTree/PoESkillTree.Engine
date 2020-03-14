@@ -23,7 +23,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Actions
             var result = sut.HitWith(damageTypeBuilder).On.Build();
             var stat = result.StatConverter(InputStat).BuildToSingleStat();
 
-            Assert.AreEqual("stat.On(FireHit).By(Character)", stat.Identity);
+            Assert.AreEqual("stat.On(Hit.Fire).By(Character)", stat.Identity);
         }
 
         [Test]

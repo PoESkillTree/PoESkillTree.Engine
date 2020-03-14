@@ -153,6 +153,8 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
 
         IStatBuilder CursesLinkedToBane { get; }
 
+        IStatBuilder SealGainFrequency { get; }
+
         /// <summary>
         /// Returns the value of a stat with type uint that can only be specified by the user.
         /// </summary>

@@ -62,6 +62,6 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree
 
         private static PassiveNodeDefinition CreateNode(ushort id, NodePosition position = default)
             => new PassiveNodeDefinition(id, default, "", false, false,
-                0, position, new string[0]);
+                position, new string[0]);
     }
 }

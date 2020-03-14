@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using PoESkillTree.Engine.Utils.Extensions;
 
 namespace PoESkillTree.Engine.GameModel.Skills
 {
@@ -49,8 +50,8 @@ namespace PoESkillTree.Engine.GameModel.Skills
         private static bool Excludes(SupportSkillDefinition supportDefinition, IReadOnlyCollection<string> activeTypes)
             => EvaluateTypes(supportDefinition.ExcludedActiveSkillTypes, activeTypes);
 
-        private static bool Allows(SupportSkillDefinition supportDefinition, IReadOnlyCollection<string> activeTypes)
-            => EvaluateTypes(supportDefinition.AllowedActiveSkillTypes, activeTypes);
+        private static bool Allows(SupportSkillDefinition supportDefinition, IReadOnlyCollection<string> activeTypes) =>
+            supportDefinition.AllowedActiveSkillTypes.IsEmpty() || EvaluateTypes(supportDefinition.AllowedActiveSkillTypes, activeTypes);
 
         private static bool EvaluateTypes(IEnumerable<string> supportTypes, IReadOnlyCollection<string> activeTypes)
         {

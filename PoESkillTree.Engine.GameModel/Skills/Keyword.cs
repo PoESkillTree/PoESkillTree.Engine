@@ -160,6 +160,11 @@ namespace PoESkillTree.Engine.GameModel.Skills
         /// Equivalent to the ActiveSkillType.
         /// </summary>
         Triggered,
+
+        /// <summary>
+        /// Equivalent to the ActiveSkillType.
+        /// </summary>
+        Travel,
     }
 
     public static class KeywordExtensions
@@ -200,9 +205,10 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 { Keyword.Brand, (_, types, __) => types.Contains(ActiveSkillType.Brand) },
                 { Keyword.Channelling, (_, types, __) => types.Contains(ActiveSkillType.Channelling) },
                 { Keyword.Guard, (_, types, __) => types.Contains(ActiveSkillType.Guard) },
-                { Keyword.Banner, (name, _, __) => name.EndsWith("Banner") },
+                { Keyword.Banner, (_, types, __) => types.Contains(ActiveSkillType.Banner) },
                 { Keyword.Ballista, (_, types, __) => types.Contains(ActiveSkillType.Ballista) },
                 { Keyword.Triggered, (_, types, __) => types.Contains(ActiveSkillType.Triggered) },
+                { Keyword.Travel, (_, types, __) => types.Contains(ActiveSkillType.Travel) },
             };
 
         public static bool IsOnSkill(this Keyword @this,

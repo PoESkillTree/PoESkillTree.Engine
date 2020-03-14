@@ -47,6 +47,22 @@ namespace PoESkillTree.Engine.Computation.Data
                 @"(.* hinder enemies.*), reducing movement speed by (\d+%)",
                 "$1", "hinder enemies with $2 reduced movement speed"
             },
+            {
+                @"(enemies .* are hindered), with (\d+% reduced movement speed)",
+                "$1", "hinder enemies with $2"
+            },
+            {
+                @"(every \d+ seconds?, gain a) (.*), up to a maximum of (\d+)",
+                "$1 $2", "+$3 to maximum $2"
+            },
+            {
+                @"(every second, consume a nearby corpse to .* mana) (\d+% .* if you haven't consumed a corpse recently)",
+                "$1", "$2"
+            },
+            {
+                @"(you can only have one herald) (\d+% .* herald buffs on you) (\d+% .* herald skills) (\d+% .* herald skills) (minions from herald skills deal \d+% more damage) (your aura skills are disabled)",
+                "$2", "$3", "$4", "$5"
+            },
             // keystones
             {
                 // Acrobatics

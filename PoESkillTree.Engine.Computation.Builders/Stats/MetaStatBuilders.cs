@@ -137,20 +137,9 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         public IStatBuilder AilmentEffectiveInstances(Ailment ailment)
             => FromIdentity($"{ailment}.EffectiveInstances", typeof(double));
 
-        public IStatBuilder IncreasedDamageTakenFromShocks
-            => FromIdentity("Shock.IncreasedDamageTaken", typeof(uint),
-                ExplicitRegistrationTypes.UserSpecifiedValue(15));
-
-        public IStatBuilder ReducedActionSpeedFromChill
-            => FromIdentity("Chill.ReducedActionSpeed", typeof(uint),
-                ExplicitRegistrationTypes.UserSpecifiedValue(10));
-
         public IDamageRelatedStatBuilder EffectiveCritChance
             => DamageRelatedFromIdentity("CriticalStrike.EffectiveChance", typeof(double)).WithHits;
 
-
-        public IStatBuilder ResistanceAgainstHits(DamageType damageType)
-            => FromIdentity($"{damageType}.ResistanceAgainstHits", typeof(double));
 
         public IStatBuilder MitigationAgainstHits(DamageType damageType)
             => FromIdentity($"{damageType}.MitigationAgainstHits", typeof(double));

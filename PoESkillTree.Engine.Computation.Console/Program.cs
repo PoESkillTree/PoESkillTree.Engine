@@ -94,14 +94,14 @@ namespace PoESkillTree.Engine.Computation.Console
                     _dataUpdater.Value.UpdateSkillTreeStatLines(
                         command.Substring("update SkillTreeStatLines ".Length));
                     return true;
+                case "update RePoE":
+                    await _dataUpdater.Value.UpdateRePoEAsync();
+                    return true;
                 case "update ParseableBaseItems":
                     await _dataUpdater.Value.UpdateParseableBaseItemsAsync();
                     return true;
                 case "update ItemAffixes":
                     await _dataUpdater.Value.UpdateItemAffixesAsync();
-                    return true;
-                case "update RePoE":
-                    await _dataUpdater.Value.UpdateRePoEAsync();
                     return true;
                 case "update Uniques":
                     await _dataUpdater.Value.UpdateUniquesAsync();

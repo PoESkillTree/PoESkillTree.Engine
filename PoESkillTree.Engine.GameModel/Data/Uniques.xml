@@ -545,6 +545,8 @@
       <string>ConvertLightningDamageToChaosUniqueBow10Updated</string>
       <string>ChanceToShockUniqueBow10</string>
       <string>ChaosDamageCanShockUniqueBow10</string>
+      <string>AttacksShockAsIfDealingMoreDamageUniqueBow10</string>
+      <string>MaximumShockOverrideUniqueBow10</string>
     </Explicit>
     <Properties />
   </Unique>
@@ -571,10 +573,10 @@
   </Unique>
   <Unique Name="Xoph's Nurture" Level="64" BaseMetadataId="Metadata/Items/Weapons/TwoHandWeapons/Bows/Bow17">
     <Explicit>
+      <string>SupportedByIgniteProliferationUnique1</string>
       <string>LocalIncreasedPhysicalDamagePercentUnique__23</string>
       <string>ConvertPhysicalToFireUnique__1</string>
       <string>ChanceToIgniteUnique__3</string>
-      <string>GlobalIgniteProlifUnique__1</string>
       <string>GainLifeOnIgnitingEnemyUnique__1</string>
       <string>BreachFireUniqueUnleashed__1</string>
     </Explicit>
@@ -2080,6 +2082,16 @@
       <string>LocalAddedLightningDamageUnique__5</string>
       <string>SpellAddedLightningDamageUnique__4</string>
       <string>AreaOfEffectUnique__3</string>
+    </Explicit>
+    <Properties />
+  </Unique>
+  <Unique Name="The Saviour" Level="62" BaseMetadataId="Metadata/Items/Weapons/OneHandWeapons/OneHandSwords/OneHandSword19">
+    <Explicit>
+      <string>SummonDoubleOnCritUnique__1</string>
+      <string>LocalIncreasedPhysicalDamagePercentUnique__37__</string>
+      <string>LocalAddedPhyiscalDamageUnique__40__</string>
+      <string>LocalIncreasedAttackSpeedUnique__31</string>
+      <string>LocalCriticalStrikeChanceUnique__16</string>
     </Explicit>
     <Properties />
   </Unique>
@@ -5235,6 +5247,10 @@
     </Explicit>
     <Properties />
   </Unique>
+  <Unique Name="Perfidy" Level="68" BaseMetadataId="Metadata/Items/Armours/BodyArmours/BodyStr17">
+    <Explicit />
+    <Properties />
+  </Unique>
   <Unique Name="Queen of the Forest" Level="59" BaseMetadataId="Metadata/Items/Armours/BodyArmours/BodyDex14">
     <Explicit>
       <string>LocalIncreasedEvasionRatingPercentUniqueBodyDex6</string>
@@ -5678,6 +5694,18 @@
       <string>MovementVelocityUniqueBootsDex7</string>
       <string>SpellDodgeUniqueBootsDex7_</string>
     </Explicit>
+    <Properties />
+  </Unique>
+  <Unique Name="Beacon of Madness" Level="70" BaseMetadataId="Metadata/Items/Armours/Boots/BootsAtlas1">
+    <Explicit />
+    <Properties />
+  </Unique>
+  <Unique Name="Beacon of Madness" Level="70" BaseMetadataId="Metadata/Items/Armours/Boots/BootsAtlas2">
+    <Explicit />
+    <Properties />
+  </Unique>
+  <Unique Name="Beacon of Madness" Level="70" BaseMetadataId="Metadata/Items/Armours/Boots/BootsAtlas3">
+    <Explicit />
     <Properties />
   </Unique>
   <Unique Name="Bones of Ullr" Level="22" BaseMetadataId="Metadata/Items/Armours/Boots/BootsInt3">
@@ -6310,6 +6338,10 @@
       <string>ManaRegenerationUniqueIntHelmet2</string>
       <string>MovementVelocityUniqueIntHelmet2</string>
     </Explicit>
+    <Properties />
+  </Unique>
+  <Unique Name="Assailum" Level="64" BaseMetadataId="Metadata/Items/Armours/Helmets/HelmetDex9">
+    <Explicit />
     <Properties />
   </Unique>
   <Unique Name="Black Sun Crest" Level="51" BaseMetadataId="Metadata/Items/Armours/Helmets/HelmetStrDex7">
@@ -7206,6 +7238,10 @@
       <string>LightningResistUniqueHelmetInt10</string>
       <string>RandomCurseOnHitChanceUniqueHelmetInt10</string>
     </Explicit>
+    <Properties />
+  </Unique>
+  <Unique Name="Algor Mortis" Level="50" BaseMetadataId="Metadata/Items/Armours/Gloves/GlovesDexInt6">
+    <Explicit />
     <Properties />
   </Unique>
   <Unique Name="Allelopathy" Level="69" BaseMetadataId="Metadata/Items/Armours/Gloves/GlovesInt9">
@@ -9970,7 +10006,7 @@
       <string>BarrageThresholdUnique__1</string>
     </Explicit>
     <Properties>
-      <string>Limited to: 3</string>
+      <string>Limited to: 1</string>
     </Properties>
   </Unique>
   <Unique Name="Warlord's Reach" Level="1" BaseMetadataId="Metadata/Items/Jewels/JewelStr">

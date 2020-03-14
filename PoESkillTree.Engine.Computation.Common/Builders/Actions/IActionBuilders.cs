@@ -28,6 +28,8 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Actions
         /// </summary>
         IActionBuilder HitWith(IDamageTypeBuilder damageType);
 
+        IActionBuilder HitWith(AttackDamageHand hand);
+
         /// <summary>
         /// Gets an action that occurs when Self savagely hits any entity.
         /// </summary>
