@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using PoESkillTree.Engine.GameModel.PassiveTree.Base;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 
 namespace PoESkillTree.Engine.GameModel.PassiveTree.Converters
@@ -11,18 +12,43 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Converters
     {
         public override bool CanConvert(Type objectType) => objectType == typeof(JsonPassiveTree);
 
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override object ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
         {
             var jObject = JObject.Load(reader);
             var passiveTree = new JsonPassiveTree();
 
-            if (jObject.GetValue("nodes") is JToken nodes && nodes.Type == JTokenType.Array)
+            if (jObject.GetValue("nodes") is JToken nodesToken)
             {
-                foreach (var item in nodes.ToObject<List<JsonPassiveNode>>())
+                if (nodesToken.Type == JTokenType.Array)
                 {
-                    passiveTree.PassiveNodes.Add(item.Id, item);
+                    foreach (var item in nodesToken.ToObject<List<JsonPassiveNode>>() ?? new List<JsonPassiveNode>())
+                    {
+                        item.Skill = item.Id;
+                        passiveTree.PassiveNodes.Add(item.Id, item);
+                    }
                 }
-
+                else
+                {
+                    var nodes = nodesToken.ToObject<Dictionary<string, JsonPassiveNode>>() ?? new Dictionary<string, JsonPassiveNode>();
+                    var maxLength = nodes.Max(x => x.Key.Length);
+                    foreach (var node in nodes.OrderBy(x => x.Key.PadLeft(maxLength, '0')))
+                    {
+                        if (ushort.TryParse(node.Key, out var id))
+                        {
+                            if (node.Value.Skill == 0)
+                            {
+                                node.Value.Skill = id;
+                            }
+                            node.Value.Id = id;
+                            passiveTree.PassiveNodes[id] = node.Value;
+                        }
+                        else if (node.Key == "root")
+                        {
+                            passiveTree.Root = node.Value;
+                        }
+                    }
+                }
+                
                 jObject.Remove("nodes");
             }
 
@@ -42,19 +68,19 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Converters
                             {
                                 passiveTree.SkillSprites.Add($"normal{key}", new List<JsonPassiveTreeSkillSprite>());
                             }
-                            passiveTree.SkillSprites[$"normal{key}"].Add(new JsonPassiveTreeSkillSprite(j.FileName, j.Coords));
+                            passiveTree.SkillSprites[$"normal{key}"].Add(new JsonPassiveTreeSkillSprite { FileName = j.FileName, Coords = j.Coords ?? new Dictionary<string, RectangleF>() });
 
                             if (!passiveTree.SkillSprites.ContainsKey($"notable{key}"))
                             {
                                 passiveTree.SkillSprites.Add($"notable{key}", new List<JsonPassiveTreeSkillSprite>());
                             }
-                            passiveTree.SkillSprites[$"notable{key}"].Add(new JsonPassiveTreeSkillSprite(j.FileName, j.NotableCoords));
+                            passiveTree.SkillSprites[$"notable{key}"].Add(new JsonPassiveTreeSkillSprite { FileName = j.FileName, Coords = j.NotableCoords ?? new Dictionary<string, RectangleF>() });
 
                             if (!passiveTree.SkillSprites.ContainsKey($"keystone{key}"))
                             {
                                 passiveTree.SkillSprites.Add($"keystone{key}", new List<JsonPassiveTreeSkillSprite>());
                             }
-                            passiveTree.SkillSprites[$"keystone{key}"].Add(new JsonPassiveTreeSkillSprite(j.FileName, j.KeystoneCoords));
+                            passiveTree.SkillSprites[$"keystone{key}"].Add(new JsonPassiveTreeSkillSprite { FileName = j.FileName, Coords = j.KeystoneCoords ?? new Dictionary<string, RectangleF>() });
                         }
                     }
                     jObject.Remove("skillSprites");
@@ -66,7 +92,7 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Converters
             // The PassiveNodeInIds are always the Id of the "Current Node" instead of the Id of the "In Node"
             foreach (var passiveNode in passiveTree.PassiveNodes.Values)
             {
-                passiveNode.PassiveNodeInIds.Clear();
+                passiveNode.InPassiveNodeIds.Clear();
             }
 
             // Hydrate Extra Images
@@ -90,19 +116,19 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Converters
                 passiveNode.OrbitRadii = passiveTree.Constants.OrbitRadii;
                 passiveNode.ZoomLevel = passiveTree.MaxImageZoomLevel;
 
-                if (passiveTree.PassiveNodeGroups.ContainsKey(passiveNode.PassiveNodeGroupId))
+                if (passiveNode.PassiveNodeGroupId.HasValue && passiveTree.PassiveNodeGroups.ContainsKey(passiveNode.PassiveNodeGroupId.Value))
                 {
-                    passiveNode.PassiveNodeGroup = passiveTree.PassiveNodeGroups[passiveNode.PassiveNodeGroupId];
+                    passiveNode.PassiveNodeGroup = passiveTree.PassiveNodeGroups[passiveNode.PassiveNodeGroupId.Value];
                 }
 
                 // Populate proper "In Nodes"
-                foreach (var passiveNodeOutId in passiveNode.PassiveNodeOutIds)
+                foreach (var passiveNodeOutId in passiveNode.OutPassiveNodeIds)
                 {
                     if (passiveTree.PassiveNodes.ContainsKey(passiveNodeOutId))
                     {
-                        if (!passiveTree.PassiveNodes[passiveNodeOutId].PassiveNodeInIds.Contains(passiveNode.Id))
+                        if (!passiveTree.PassiveNodes[passiveNodeOutId].InPassiveNodeIds.Contains(passiveNode.Id))
                         {
-                            passiveTree.PassiveNodes[passiveNodeOutId].PassiveNodeInIds.Add(passiveNode.Id);
+                            passiveTree.PassiveNodes[passiveNodeOutId].InPassiveNodeIds.Add(passiveNode.Id);
                         }
                     }
                 }
@@ -112,6 +138,6 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Converters
         }
 
         public override bool CanWrite => false;
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) => throw new NotImplementedException($"{nameof(CanWrite)} should be false (is {CanWrite}). There is no need for write converter.");
+        public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer) => throw new NotImplementedException($"{nameof(CanWrite)} should be false (is {CanWrite}). There is no need for write converter.");
     }
 }

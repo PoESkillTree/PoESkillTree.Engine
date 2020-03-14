@@ -1,16 +1,18 @@
-﻿using Newtonsoft.Json;
+﻿using EnumsNET;
+using Newtonsoft.Json;
 using PoESkillTree.Engine.GameModel.PassiveTree.Converters;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
 {
     [JsonConverter(typeof(PassiveTreeJsonConverter))]
     public class JsonPassiveTree
     {
-        [JsonProperty("characterData")]
-        public Dictionary<CharacterClass, JsonPassiveTreeCharacterData> CharacterData { get; } = new Dictionary<CharacterClass, JsonPassiveTreeCharacterData>();
+        [JsonProperty("classes")]
+        public List<JsonPassiveTreeCharacterClass> CharacterClasses { get; } = new List<JsonPassiveTreeCharacterClass>();
 
         [JsonProperty("groups")]
         public Dictionary<ushort, JsonPassiveNodeGroup> PassiveNodeGroups { get; } = new Dictionary<ushort, JsonPassiveNodeGroup>();
@@ -71,7 +73,7 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
                 return _bounds.Value;
             }
         }
-        
+
         [JsonIgnore]
         public Uri WebCDN => new Uri(@"http://web.poecdn.com/");
 
@@ -98,6 +100,29 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
             }
             set => _imageRoot = $"/{value.TrimStart('/').TrimEnd('/')}/".Replace(WebCDN.AbsoluteUri, string.Empty);
         }
+        #endregion
+
+        #region Legacy Parsing Purposes
+#pragma warning disable IDE0051 // Remove unused private members
+#pragma warning disable IDE1006 // Naming Styles
+        [JsonProperty("characterData")]
+        private Dictionary<CharacterClass, JsonPassiveTreeCharacterClass> __characterData
+        {
+            set
+            {
+                if (!(value is null))
+                {
+                    foreach (var (key, character) in value.OrderBy(x => x.Key))
+                    {
+                        character.Name = Enums.AsString(key);
+                        CharacterClasses.Add(character);
+                    }
+                }
+            }
+        }
+
+#pragma warning restore IDE1006 // Naming Styles
+#pragma warning restore IDE0051 // Remove unused private members
         #endregion
     }
 }

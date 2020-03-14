@@ -17,7 +17,7 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
         {
             var node = new JsonPassiveNode()
             {
-                StartingCharacterClasses = characterClass.HasValue ? new[] { characterClass.Value } : new CharacterClass[0]
+                StartingCharacterClass = characterClass
             };
 
             Assert.AreEqual(characterClass.HasValue, node.IsRootNode);

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using PoESkillTree.Engine.GameModel.Items;
 using System.Collections.Generic;
 
 namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
