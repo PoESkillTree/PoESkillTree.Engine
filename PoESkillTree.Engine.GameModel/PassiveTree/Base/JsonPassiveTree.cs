@@ -51,7 +51,7 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
         public Dictionary<CharacterClass, JsonPassiveTreeExtraImage> ExtraImages { get; } = new Dictionary<CharacterClass, JsonPassiveTreeExtraImage>();
 
         [JsonProperty("jewelSlots")]
-        public List<ushort> JewelPassiveNodeIds { get; } = new List<ushort>();
+        public List<ushort> JewelSocketPassiveNodeIds { get; } = new List<ushort>();
 
         #region Calculated Properties
         [JsonIgnore]
