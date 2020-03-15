@@ -7,6 +7,6 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree
         Keystone,
         Mastery,
         JewelSocket,
-        OuterJewelSocket
+        ExpansionJewelSocket
     }
 }

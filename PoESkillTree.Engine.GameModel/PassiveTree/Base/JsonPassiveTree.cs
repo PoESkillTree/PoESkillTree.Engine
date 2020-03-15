@@ -50,6 +50,9 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
         [JsonProperty("extraImages")]
         public Dictionary<CharacterClass, JsonPassiveTreeExtraImage> ExtraImages { get; } = new Dictionary<CharacterClass, JsonPassiveTreeExtraImage>();
 
+        [JsonProperty("jewelSlots")]
+        public List<ushort> JewelPassiveNodeIds { get; } = new List<ushort>();
+
         #region Calculated Properties
         [JsonIgnore]
         public int MaxImageZoomLevelIndex => ImageZoomLevels.Length - 1;

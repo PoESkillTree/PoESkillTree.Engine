@@ -153,7 +153,7 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
                     }
                     else if (IsJewelSocket)
                     {
-                        _passiveNodeType = ExpansionJewel is null ? PassiveNodeType.JewelSocket : PassiveNodeType.OuterJewelSocket;
+                        _passiveNodeType = ExpansionJewel is null ? PassiveNodeType.JewelSocket : PassiveNodeType.ExpansionJewelSocket;
                     }
                     else
                     {
