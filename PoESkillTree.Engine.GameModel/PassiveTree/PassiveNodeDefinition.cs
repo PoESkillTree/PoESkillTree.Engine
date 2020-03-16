@@ -21,7 +21,31 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree
                   passiveNode.StatDescriptions)
         { }
 
-        public static PassiveNodeDefinition Convert(JsonPassiveNode passiveNode) => new PassiveNodeDefinition(passiveNode);
+        public static PassiveNodeDefinition Convert(JsonPassiveNode passiveNode, float zoomLevel = 1f)
+        {
+            static float? SetZoomLevel(JsonPassiveTreePosition? position, float? _zoomLevel)
+            {
+                if (position is null || _zoomLevel is null)
+                {
+                    return null;
+                }
+
+                var temp = position.ZoomLevel;
+                position.ZoomLevel = _zoomLevel.Value;
+                position.ClearPositionCache();
+                return temp;
+            }
+
+            var tempGroupZoom = SetZoomLevel(passiveNode.PassiveNodeGroup, zoomLevel);
+            var tempNodeZoom = SetZoomLevel(passiveNode, zoomLevel);
+
+            var passiveNodeDefinition = new PassiveNodeDefinition(passiveNode);
+
+            SetZoomLevel(passiveNode.PassiveNodeGroup, tempGroupZoom);
+            SetZoomLevel(passiveNode, tempNodeZoom);
+
+            return passiveNodeDefinition;
+        }
 
         public ushort Id { get; }
 
