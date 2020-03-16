@@ -3,9 +3,9 @@
     <RootNamespace>PoESkillTree.Engine.GameModel</RootNamespace>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <LangVersion>8</LangVersion>
-    <AssemblyTitle>PoESkillTree.Engine.GameModel.Tests</AssemblyTitle>
-    <Product>PoESkillTree.Engine.GameModel.Tests</Product>
-    <Copyright>Copyright ©  2018</Copyright>
+    <AssemblyTitle>PoESkillTree.Engine.GameModel.IntegrationTests</AssemblyTitle>
+    <Product>PoESkillTree.Engine.GameModel.IntegrationTests</Product>
+    <Copyright>Copyright Â©  2018</Copyright>
     <IsPackable>False</IsPackable>
     <Nullable>enable</Nullable>
     <WarningsAsErrors>8600;8601;8602;8603;8604;8619;8620</WarningsAsErrors>

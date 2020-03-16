@@ -1,12 +1,17 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 namespace PoESkillTree.Engine.GameModel.Items
 {
     public enum JewelRadius
     {
+        [EnumMember(Value = "None")]
         None,
+        [EnumMember(Value = "Small")]
         Small,
+        [EnumMember(Value = "Medium")]
         Medium,
+        [EnumMember(Value = "Large")]
         Large,
     }
 
@@ -28,5 +33,7 @@ namespace PoESkillTree.Engine.GameModel.Items
                     throw new ArgumentOutOfRangeException(nameof(@this), @this, null);
             }
         }
+
+        public static float GetRadius(this JewelRadius @this, float zoomLevel) => @this.GetRadius() * zoomLevel;
     }
 }
