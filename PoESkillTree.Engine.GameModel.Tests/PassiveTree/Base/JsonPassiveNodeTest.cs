@@ -129,7 +129,7 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
                 ZoomLevel = zoomLevel,
             };
 
-            var nodeDefinition = PassiveNodeDefinition.Convert(node);
+            var nodeDefinition = PassiveNodeDefinition.Convert(node, zoomLevel);
             nodeDefinition.Position.Deconstruct(out double x, out double y);
             Assert.AreEqual(nodeDefinition.Position.X, x);
             Assert.AreEqual(nodeDefinition.Position.Y, y);
