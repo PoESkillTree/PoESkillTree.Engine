@@ -94,7 +94,7 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
         public string[]? Recipe { get; set; }
 
         [JsonProperty("expansionJewel", NullValueHandling = NullValueHandling.Ignore)]
-        public ExpansionJewel? ExpansionJewel { get; set; }
+        public JsonExpansionJewelSocket? ExpansionJewelSocket { get; set; }
 
         [JsonProperty("out")]
         public HashSet<ushort> OutPassiveNodeIds { get; } = new HashSet<ushort>();
@@ -153,7 +153,7 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
                     }
                     else if (IsJewelSocket)
                     {
-                        _passiveNodeType = ExpansionJewel is null ? PassiveNodeType.JewelSocket : PassiveNodeType.ExpansionJewelSocket;
+                        _passiveNodeType = ExpansionJewelSocket is null ? PassiveNodeType.JewelSocket : PassiveNodeType.ExpansionJewelSocket;
                     }
                     else
                     {
@@ -241,7 +241,7 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
         #endregion
     }
 
-    public partial class ExpansionJewel
+    public class JsonExpansionJewelSocket
     {
         [JsonProperty("size")]
         public int Size { get; set; }
