@@ -57,12 +57,6 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
         }
 
         [TestCase(0, new[] { 1f })]
-        [TestCase(0, new[] { 1f })]
-        [TestCase(0, new[] { 1f })]
-        [TestCase(0, new[] { 1f })]
-        [TestCase(1, new[] { 1f, 2f })]
-        [TestCase(1, new[] { 1f, 2f })]
-        [TestCase(1, new[] { 1f, 2f })]
         [TestCase(1, new[] { 1f, 2f })]
         public void JsonPassiveNode_Arc(int skillsPerOrbitIndex, float[] skillsPerOrbit)
         {
