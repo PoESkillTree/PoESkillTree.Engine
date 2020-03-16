@@ -35,6 +35,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoESkillTree.Engine.Computa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoESkillTree.Engine", "PoESkillTree.Engine\PoESkillTree.Engine.csproj", "{70C1083D-BAF7-4876-BD73-60BB5B4BE1BD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoESkillTree.Engine.GameModel.IntegrationTests", "PoESkillTree.Engine.GameModel.IntegrationTests\PoESkillTree.Engine.GameModel.IntegrationTests.csproj", "{3C079BA8-29E6-4095-BC4B-6CDBE166D69A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -105,6 +107,10 @@ Global
 		{70C1083D-BAF7-4876-BD73-60BB5B4BE1BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70C1083D-BAF7-4876-BD73-60BB5B4BE1BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70C1083D-BAF7-4876-BD73-60BB5B4BE1BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C079BA8-29E6-4095-BC4B-6CDBE166D69A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C079BA8-29E6-4095-BC4B-6CDBE166D69A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C079BA8-29E6-4095-BC4B-6CDBE166D69A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C079BA8-29E6-4095-BC4B-6CDBE166D69A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
