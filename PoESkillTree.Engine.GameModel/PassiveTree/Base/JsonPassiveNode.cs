@@ -179,19 +179,22 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
             {
                 if (!_position.HasValue)
                 {
-                    if (PassiveNodeGroup is null)
-                    {
-                        _position = Vector2.Zero;
-                    }
-                    else
-                    {
-                        var orbitRadius = OrbitRadii[OrbitRadiiIndex] * ZoomLevel;
-                        _position = PassiveNodeGroup.Position - new Vector2(orbitRadius * (float)Math.Sin(-Arc), orbitRadius * (float)Math.Cos(-Arc));
-                    }
+                    _position = PositionAtZoomLevel(ZoomLevel);
                 }
 
                 return _position.Value;
             }
+        }
+
+        public override Vector2 PositionAtZoomLevel(float zoomLevel)
+        {
+            if (PassiveNodeGroup is null)
+            {
+                return Vector2.Zero;
+            }
+
+            var orbitRadius = OrbitRadii[OrbitRadiiIndex] * zoomLevel;
+            return PassiveNodeGroup.Position - new Vector2(orbitRadius * (float)Math.Sin(-Arc), orbitRadius * (float)Math.Cos(-Arc));
         }
         #endregion
 

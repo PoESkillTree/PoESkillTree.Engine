@@ -24,11 +24,16 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
             {
                 if (!_position.HasValue)
                 {
-                    _position = new Vector2(OriginalX * ZoomLevel, OriginalY * ZoomLevel);
+                    _position = PositionAtZoomLevel(ZoomLevel);
                 }
 
                 return _position.Value;
             }
+        }
+
+        public virtual Vector2 PositionAtZoomLevel(float zoomLevel)
+        {
+            return new Vector2(OriginalX * zoomLevel, OriginalY * zoomLevel);
         }
 
         public void ClearPositionCache() => _position = null;

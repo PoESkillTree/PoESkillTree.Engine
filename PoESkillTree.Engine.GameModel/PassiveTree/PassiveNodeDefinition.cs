@@ -17,35 +17,11 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree
                   passiveNode.Name,
                   passiveNode.IsAscendancyNode,
                   !passiveNode.IsRootNode && !passiveNode.IsAscendancyNode && !passiveNode.IsMultipleChoiceOption,
-                  new NodePosition(passiveNode.Position.X, passiveNode.Position.Y),
+                  new NodePosition(passiveNode.PositionAtZoomLevel(1f).X, passiveNode.PositionAtZoomLevel(1f).Y),
                   passiveNode.StatDescriptions)
         { }
 
-        public static PassiveNodeDefinition Convert(JsonPassiveNode passiveNode, float zoomLevel = 1f)
-        {
-            static float? SetZoomLevel(JsonPassiveTreePosition? position, float? _zoomLevel)
-            {
-                if (position is null || _zoomLevel is null)
-                {
-                    return null;
-                }
-
-                var temp = position.ZoomLevel;
-                position.ZoomLevel = _zoomLevel.Value;
-                position.ClearPositionCache();
-                return temp;
-            }
-
-            var tempGroupZoom = SetZoomLevel(passiveNode.PassiveNodeGroup, zoomLevel);
-            var tempNodeZoom = SetZoomLevel(passiveNode, zoomLevel);
-
-            var passiveNodeDefinition = new PassiveNodeDefinition(passiveNode);
-
-            SetZoomLevel(passiveNode.PassiveNodeGroup, tempGroupZoom);
-            SetZoomLevel(passiveNode, tempNodeZoom);
-
-            return passiveNodeDefinition;
-        }
+        public static PassiveNodeDefinition Convert(JsonPassiveNode passiveNode) => new PassiveNodeDefinition(passiveNode);
 
         public ushort Id { get; }
 
