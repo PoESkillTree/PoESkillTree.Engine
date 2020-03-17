@@ -170,7 +170,7 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
         private double? _arc = null;
 
         [JsonIgnore]
-        public double Arc => _arc ??= 2 * Math.PI * SkillsPerOrbitIndex / SkillsPerOrbit[SkillsPerOrbitIndex];
+        public double Arc => _arc ??= 2 * Math.PI * SkillsPerOrbitIndex / SkillsPerOrbit[OrbitRadiiIndex];
 
         [JsonIgnore]
         public override Vector2 Position

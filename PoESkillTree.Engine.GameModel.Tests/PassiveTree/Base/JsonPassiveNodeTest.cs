@@ -56,17 +56,21 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
             return node.PassiveNodeType;
         }
 
-        [TestCase(0, new[] { 1f })]
-        [TestCase(1, new[] { 1f, 2f })]
-        public void JsonPassiveNode_Arc(int skillsPerOrbitIndex, float[] skillsPerOrbit)
+        [TestCase(1, new[] { 0f, 82f }, 0, new[] { 1f, 2f })]
+        [TestCase(0, new[] { 0f, 82f }, 5, new[] { 1f, 2f })]
+        [TestCase(1, new[] { 0f, 82f }, 10, new[] { 1f, 2f })]
+        [TestCase(1, new[] { 0f, 82f }, 30, new[] { 1f, 2f })]
+        public void JsonPassiveNode_Arc(int orbitRadiiIndex, float[] orbitRadii, int skillsPerOrbitIndex, float[] skillsPerOrbit)
         {
             var node = new JsonPassiveNode
             {
+                OrbitRadiiIndex = orbitRadiiIndex,
+                OrbitRadii = orbitRadii,
                 SkillsPerOrbitIndex = skillsPerOrbitIndex,
                 SkillsPerOrbit = skillsPerOrbit,
             };
 
-            Assert.AreEqual(2 * Math.PI * skillsPerOrbitIndex / skillsPerOrbit[skillsPerOrbitIndex], node.Arc);
+            Assert.AreEqual(2 * Math.PI * skillsPerOrbitIndex / skillsPerOrbit[orbitRadiiIndex], node.Arc);
         }
 
         [TestCase(0, 0, 0.3835f, 0, new[] { 0f }, 0, new[] { 1f })]
@@ -97,8 +101,8 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
                 ZoomLevel = zoomLevel,
             };
 
-            Assert.AreEqual(group.Position.X - orbitRadii[orbitRadiiIndex] * zoomLevel * (float)Math.Sin(-2 * Math.PI * skillsPerOrbitIndex / skillsPerOrbit[skillsPerOrbitIndex]), node.Position.X);
-            Assert.AreEqual(group.Position.Y - orbitRadii[orbitRadiiIndex] * zoomLevel * (float)Math.Cos(-2 * Math.PI * skillsPerOrbitIndex / skillsPerOrbit[skillsPerOrbitIndex]), node.Position.Y);
+            Assert.AreEqual(group.Position.X - orbitRadii[orbitRadiiIndex] * zoomLevel * (float)Math.Sin(-2 * Math.PI * skillsPerOrbitIndex / skillsPerOrbit[orbitRadiiIndex]), node.Position.X);
+            Assert.AreEqual(group.Position.Y - orbitRadii[orbitRadiiIndex] * zoomLevel * (float)Math.Cos(-2 * Math.PI * skillsPerOrbitIndex / skillsPerOrbit[orbitRadiiIndex]), node.Position.Y);
         }
 
         [TestCase(0, 0, 0.3835f, 0, new[] { 0f }, 0, new[] { 1f })]
