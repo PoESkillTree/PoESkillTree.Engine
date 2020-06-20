@@ -153,6 +153,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         public IProjectileStatBuilders Projectile => new ProjectileStatBuilders(StatFactory);
         public IFlagStatBuilders Flag => new FlagStatBuilders(StatFactory);
         public IGemStatBuilders Gem => new GemStatBuilders(StatFactory);
+        public IWarcryStatBuilders Warcry => new WarcryStatBuilders(StatFactory);
     }
 
     internal class TrapStatBuilders : PrefixedStatBuildersBase, ITrapStatBuilders
@@ -341,5 +342,21 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
                 }
             }
         }
+    }
+
+    internal class WarcryStatBuilders : PrefixedStatBuildersBase, IWarcryStatBuilders
+    {
+        public WarcryStatBuilders(IStatFactory statFactory) : base(statFactory, "Warcry")
+        {
+        }
+
+        public IStatBuilder PowerMultiplier => FromIdentity(typeof(double));
+        public IStatBuilder MinimumPower => FromIdentity(typeof(uint));
+        public IStatBuilder ExertedAttacks => FromIdentity(typeof(uint));
+
+        public ValueBuilder AllyPower => FromIdentity(typeof(int), UserSpecifiedValue(0)).Value;
+        public ValueBuilder EnemyPower => FromIdentity(typeof(int), UserSpecifiedValue(0)).Value;
+        public ValueBuilder CorpsePower => FromIdentity(typeof(int), UserSpecifiedValue(0)).Value;
+        public ValueBuilder LastPower => PowerMultiplier.Value * FromIdentity(typeof(int), UserSpecifiedValue(0)).Value;
     }
 }

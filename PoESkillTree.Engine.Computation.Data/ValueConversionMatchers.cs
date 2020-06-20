@@ -44,6 +44,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 { "for each hit you've blocked recently", Block.CountRecently },
                 { "for each corpse consumed recently", Action.ConsumeCorpse.CountRecently },
+                { "for each corpse consumed recently, up to a maximum of #%", CappedMultiplier(Action.ConsumeCorpse.CountRecently, Value) },
                 // equipment
                 { "for each magic item( you have)? equipped", Equipment.Count(e => e.Has(FrameType.Magic)) },
                 // stats
@@ -96,6 +97,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "per nearby enemy", OpponentsOfSelf.CountNearby },
                 { "per one hundred nearby enemies", OpponentsOfSelf.CountNearby / 100 },
                 { @"per nearby enemy, up to \+#%?", CappedMultiplier(OpponentsOfSelf.CountNearby, Value) },
+                { "per # unreserved maximum mana", PerStat(Mana.Value - Mana.Reservation.Value, divideBy: Value) },
                 {
                     "per # unreserved maximum mana, up to #%",
                     CappedMultiplier(((Mana.Value - Mana.Reservation.Value) / Values[0]).Floor(), Values[1])
@@ -110,10 +112,15 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 { "per projectile", PerStat(Projectile.Count) },
                 { "per curse applied", PerStat(Stat.CursesLinkedToBane) },
+                {
+                    "per # power,? up to a maximum of #%",
+                    CappedMultiplier((Stat.Warcry.LastPower / Values[0]).Floor(), Values[1])
+                },
                 // buffs
                 { "per buff on you", Buffs(targets: Self).Count() },
                 { "per curse on you", Buffs(targets: Self).With(Keyword.Curse).Count() },
                 { "for each herald affecting you", Buffs(targets: Self).With(Keyword.Herald).Count() },
+                { "for each herald affecting you, up to #%", CappedMultiplier(Buffs(targets: Self).With(Keyword.Herald).Count(), Value) },
                 { "per curse on enemy", Buffs(targets: OpponentsOfSelf).With(Keyword.Curse).Count() },
                 { "for each curse on that enemy,", Buffs(targets: OpponentsOfSelf).With(Keyword.Curse).Count() },
                 { "for each impale on enemy", Buff.Impale.StackCount.For(MainOpponentOfSelf).Value },
@@ -145,9 +152,14 @@ namespace PoESkillTree.Engine.Computation.Data
                     CappedMultiplier(Skills[Keyword.Minion].CombinedInstances.Value, Value)
                 },
                 {
+                    "per brand, up to a maximum of #%",
+                    CappedMultiplier(Skills[Keyword.Brand].CombinedInstances.Value, Value)
+                },
+                {
                     "for each skill you've used Recently, up to #%",
                     CappedMultiplier(AllSkills.Cast.CountRecently, Value)
                 },
+                { "for each time you've warcried recently", Skills[Keyword.Warcry].Cast.CountRecently },
                 // traps, mines, totems
                 { "for each trap", Traps.CombinedInstances.Value },
                 { "for each mine", Mines.CombinedInstances.Value },
@@ -186,6 +198,7 @@ namespace PoESkillTree.Engine.Computation.Data
                     AtLeastZero(Projectile.ChainCount.Value - Stat.UniqueAmount("Projectile.ChainedCount"))
                 },
                 { "per chain", Stat.UniqueAmount("Projectile.ChainedCount") },
+                { "for each time they have chained", Stat.UniqueAmount("Projectile.ChainedCount") },
                 { "for each enemy pierced", Stat.UniqueAmount("Projectile.PiercedCount") },
                 {
                     "for each (of your mines|mine) detonated recently, up to #%( per second)?",

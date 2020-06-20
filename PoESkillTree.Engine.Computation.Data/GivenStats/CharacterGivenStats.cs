@@ -89,7 +89,8 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             { BaseSet, CriticalStrike.Multiplier, 150 },
             { BaseAdd, Ground.Consecrated.AddStat(Life.Regen), 6 },
             // resistances
-            { BaseSet, Physical.Resistance.Maximum, 90 },
+            { BaseSet, AnyDamageType.DamageReduction.Maximum, 90 },
+            { BaseSet, AnyDamageType.DamageReductionIncludingArmour.Maximum, 90 },
             // traps, mines and totems
             { BaseSet, Traps.CombinedInstances.Maximum, 15 },
             { BaseSet, Mines.CombinedInstances.Maximum, 15 },

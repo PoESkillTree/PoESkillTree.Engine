@@ -22,8 +22,8 @@ namespace PoESkillTree.Engine.Computation.Console
             var json = JObject.Parse(File.ReadAllText(skillTreeTxtPath));
             var nodes = json.Value<JObject>("nodes");
             var statLines = nodes.PropertyValues()
-                .OrderBy(t => t.Value<int>("id")) // Order for more useful diffs
-                .SelectMany(t => t["sd"]!.Values<string>())
+                .OrderBy(t => t.Value<int>("skill")) // Order for more useful diffs
+                .SelectMany(t => t["stats"]?.Values<string>() ?? Enumerable.Empty<string>())
                 .Select(s => s.Replace("\n", " "));
 
             var path = baseTargetPath + "PoESkillTree.Engine.GameModel/Data/SkillTreeStatLines.txt";

@@ -25,20 +25,25 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
 
         public abstract IReadOnlyList<Entity> AffectedEntities { get; }
 
-        public IReadOnlyList<string> GivenStatLines { get; } = new string[0];
+        public IReadOnlyList<string> GivenStatLines { get; } = Array.Empty<string>();
 
         public abstract IReadOnlyList<IIntermediateModifier> GivenModifiers { get; }
 
-        protected static ValueBuilder DamageTakenMultiplier(IStatBuilder resistance, IStatBuilder damageTaken)
-            => (1 - resistance.Value.AsPercentage) * damageTaken.Value;
+        protected static ValueBuilder DamageTakenMultiplier(IStatBuilder resistance, IStatBuilder damageReduction, IStatBuilder damageTaken)
+            => (1 - resistance.Value.AsPercentage) * (1 - damageReduction.Value.AsPercentage) * damageTaken.Value;
 
         protected IDamageRelatedStatBuilder DamageTaken(DamageType damageType)
             => DamageTypeBuilders.From(damageType).Damage.Taken;
 
-        protected ValueBuilder PhysicalDamageReductionFromArmour(ValueBuilder armour, ValueBuilder physicalDamage)
-            => 100 * ValueFactory.If(armour.Eq(0))
+        protected ValueBuilder PhysicalDamageReductionFromArmour(IStatBuilder armour, ValueBuilder physicalDamage)
+        {
+            var armourValue = ValueFactory.If(armour.ChanceToDouble.Value >= 100)
+                .Then(2 * armour.Value)
+                .Else(armour.Value);
+            return 100 * ValueFactory.If(armourValue.Eq(0))
                 .Then(0)
-                .Else(armour / (armour + 10 * physicalDamage.Average));
+                .Else(armourValue / (armourValue + 10 * physicalDamage.Average));
+        }
 
         protected ValueBuilder ChanceToHitValue(
             IStatBuilder accuracyStat, IStatBuilder evasionStat, IConditionBuilder isBlinded)

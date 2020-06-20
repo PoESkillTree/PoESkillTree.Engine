@@ -351,6 +351,38 @@ Unaffected by Poison
 Unattached Brands gain 20% increased Brand Attachment Range per second
 Warcries count as having 10 additional nearby Enemies
 You have Culling Strike against Cursed Enemies
+1% increased Fishing Line Strength
+15% increased Brand Attachment range
+15% increased Chaining range
+20% increased Effect of Impales you inflict with Two Handed Weapons on Non-Impaled Enemies
+30% chance to avoid being Impaled
+50% chance to inflict Withered for two seconds on Hit if there are 5 or fewer Withered Debuffs on Enemy
+50% increased Projectile Fork angle
+50% reduced Projectile Fork angle
+Brand Recall grants 20% increased Brand Attachment range to recalled Brands
+Brands Attach to a new Enemy each time they Activate, no more than once every 0.3 seconds
+Brands have 100% more Activation Frequency if 75% of Attached Duration expired
+Corpses you Spawn have 15% increased Maximum Life
+Desecrate and Unearth have +2 to Maximum number of corpses allowed
+Enemies Cursed by you have Malediction if 33% of Curse Duration expired
+Enemies Killed with Attack Hits have a 15% chance to Explode, dealing a tenth of their Life as Physical Damage
+Enemies Killed with Wand Hits have a 10% chance to Explode, dealing a quarter of their Life as Chaos Damage
+Mines have a 10% chance to be Detonated an Additional Time
+Non-Cursed Enemies you inflict Non-Aura Curses on are Blinded for 4 seconds
+Projectiles deal 10% increased Damage with Hits and Ailments to targets they Chain from
+Projectiles deal 20% increased Damage with Hits to targets at the start of their movement, reducing to 0% as they travel farther
+Projectiles have 10% chance for an additional Projectile when Forking
+Projectiles have 50% chance for an additional Projectile when Forking
+Recover 20% of Mana over 1 second when you use a Guard Skill
+Remove a Curse after Channelling for 2 seconds
+Remove an Ailment when you Warcry
+Skills which Throw Traps have +1 Cooldown Use
+Skills which create Brands have 35% chance to create an additional Brand
+Unattached Brands gain 20% increased Brand Attachment Range per second, up to 100%
+Warcries cannot Exert Travel Skills
+Warcries grant 10 Rage per 5 Power if you have less than 25 Rage
+Warcries have 5% Chance to grant an Endurance, Frenzy or Power Charge per Power
+You lose Rage 20% slower
 // Side effect from how jewels are currently handled, the stat doesn't actually exist
 +1 Jewel Socket
 // Ascendancies: =======================================================================================================

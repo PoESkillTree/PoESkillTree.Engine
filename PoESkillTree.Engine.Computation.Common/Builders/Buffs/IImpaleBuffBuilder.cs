@@ -4,6 +4,6 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Buffs
 {
     public interface IImpaleBuffBuilder : IBuffBuilder
     {
-        IStatBuilder Penetration { get; }
+        IStatBuilder Overwhelm { get; }
     }
 }

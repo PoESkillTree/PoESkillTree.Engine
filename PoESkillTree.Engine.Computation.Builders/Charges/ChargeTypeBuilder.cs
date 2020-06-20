@@ -43,6 +43,10 @@ namespace PoESkillTree.Engine.Computation.Builders.Charges
             new ActionBuilder(_statFactory,
                 CoreBuilder.UnaryOperation(_chargeType, t => t + ".GainAction"), new ModifierSourceEntityBuilder());
 
+        public IActionBuilder LoseAction =>
+            new ActionBuilder(_statFactory,
+                CoreBuilder.UnaryOperation(_chargeType, t => t + ".LoseAction"), new ModifierSourceEntityBuilder());
+
         public ChargeType Build(BuildParameters parameters) => _chargeType.Build(parameters);
     }
 }

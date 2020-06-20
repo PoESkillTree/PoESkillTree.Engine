@@ -30,6 +30,11 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Charges
         /// </summary>
         IActionBuilder GainAction { get; }
 
+        /// <summary>
+        /// Gets an action occurring when Self loses a charge of this type.
+        /// </summary>
+        IActionBuilder LoseAction { get; }
+
         ChargeType Build(BuildParameters parameters);
     }
 }

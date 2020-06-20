@@ -233,7 +233,7 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
         }
 
         [Test]
-        public void ResistanceAgainstPhysicalHits()
+        public void PhysicalDamageReductionIncludingArmour()
         {
             var calculator = Calculator.Create();
             var nodes = calculator.NodeRepository;
@@ -241,7 +241,7 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
             calculator.NewBatchUpdate()
                 .AddModifiers(_givenMods)
                 .AddModifier(Build(_builderFactories.StatBuilders.Armour), Form.BaseAdd, 4000)
-                .AddModifier(Build(_builderFactories.DamageTypeBuilders.Physical.Resistance), Form.BaseAdd, 50)
+                .AddModifier(Build(_builderFactories.DamageTypeBuilders.Physical.DamageReduction), Form.BaseAdd, 50)
                 .DoUpdate();
 
             var enemyDamageStat = BuildMainHandSkillSingle(
@@ -250,7 +250,7 @@ namespace PoESkillTree.Engine.Computation.IntegrationTests
             var armour = 4000;
             var expected = 50 + 100 * armour / (armour + 10 * enemyDamage);
             var actual = nodes
-                .GetNode(Build(_builderFactories.DamageTypeBuilders.Physical.ResistanceAgainstHits).Single())
+                .GetNode(Build(_builderFactories.DamageTypeBuilders.Physical.DamageReductionIncludingArmour).Single())
                 .Value.Single();
             Assert.AreEqual(expected, actual);
         }

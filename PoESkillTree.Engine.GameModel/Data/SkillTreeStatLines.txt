@@ -1,15 +1,18 @@
 12% increased Accuracy Rating while Dual Wielding
 75% increased Attack Critical Strike Chance while Dual Wielding
+10% increased Area of Effect
+25% increased Flammability Curse Effect
 20% increased Attack Damage
 6% increased Attack Speed
 15% increased Global Accuracy Rating
 20% increased Damage with Ailments from Attack Skills
-Minions have 20% increased maximum Life
-20% increased Raised Zombie Size
+Minions have 25% increased maximum Life
 Raised Zombies have 5% chance to Taunt Enemies on Hit
 10% increased Evasion Rating
 4% increased maximum Life
+50% increased Defences from Equipped Shield
 +40 to Strength
+Exerted Attacks deal 20% increased Damage
 +10 to Dexterity
 20% increased Golem Damage per Summoned Golem
 35% chance to Avoid Elemental Ailments per Summoned Golem
@@ -21,14 +24,14 @@ Claw Attacks deal 10% increased Damage with Hits and Ailments
 18% increased Endurance Charge Duration
 15% chance to Ignite
 Enemies Ignited by you have -10% to Fire Resistance
-6% increased Attack Damage
-Minions deal 6% increased Damage
+10% increased Attack Damage
+Minions deal 8% increased Damage
 +10 to Dexterity
 4% increased Attack Speed
 10% increased Projectile Damage
 +10 to Strength
 +10 to Strength
-+5% to Damage over Time Multiplier for Poison
++10% to Damage over Time Multiplier for Poison
 Claw Attacks deal 20% increased Damage with Hits and Ailments
 10% increased Poison Duration
 10% chance to Poison on Hit with Attacks
@@ -39,10 +42,14 @@ Each Totem applies 1% increased Damage taken to Enemies near it
 40% increased Critical Strike Chance against Blinded Enemies
 10% chance to Blind Enemies on Hit with Attacks
 +20 to Strength and Dexterity
++5% to all Elemental Resistances
+5% reduced Elemental Ailment Duration on you
+5% reduced Effect of Non-Damaging Ailments on you
 10% increased Elemental Damage
 +15% to Critical Strike Multiplier
 10% increased Attack Damage
 4% increased Cast Speed
+10% increased Attack Damage
 2% more Attack and Movement Speed per Challenger Charge
 25% chance to gain a Challenger Charge when you Hit a Rare or Unique Enemy while in Blood Stance
 Gain a Challenger Charge when you Kill an Enemy while in Sand Stance
@@ -53,12 +60,15 @@ Gain a Challenger Charge when you Kill an Enemy while in Sand Stance
 Attack Skills deal 30% increased Damage with Ailments while holding a Shield
 5% chance to gain an Endurance Charge on Kill while holding a Shield
 +4% Chance to Block Attack Damage while holding a Shield
+10% increased Effect of Impales you inflict with Two Handed Weapons
 10% increased Trap Damage
 10% increased Mine Damage
 5% increased Trap Throwing Speed
 12% increased Fire Damage
 Attack Skills deal 10% increased Damage while Dual Wielding
 6% increased Accuracy Rating while Dual Wielding
+Purity of Lightning has 30% increased Aura Effect
++10 to Intelligence
 3% increased Attack Speed
 30% increased maximum Mana
 10% of Damage is taken from Mana before Life
@@ -68,8 +78,8 @@ Transfiguration of Mind
 10% increased Damage Over Time with Bow Skills
 8% increased Attack and Cast Speed
 25% increased Physical Damage
+10% increased Area of Effect
 Regenerate 0.5% of Life per second
-15% increased Endurance Charge Duration
 25% increased Skill Effect Duration
 +10 to Intelligence
 Skills Supported by Unleash have 30% increased Seal gain frequency
@@ -84,6 +94,8 @@ Attack Skills deal 10% increased Damage while holding a Shield
 4% increased Attack Speed
 5% increased maximum Life
 6% chance to Knock Enemies Back on hit
+15% increased Warcry Speed
+Exerted Attacks deal 15% increased Damage
 10% increased maximum Life
 Regenerate 1.6% of Life per second
 8% increased Attack Speed while you have Fortify
@@ -91,14 +103,15 @@ Regenerate 1.6% of Life per second
 10% increased Effect of Fortify on you
 20% increased Attack Damage while you have Fortify
 20% increased Critical Strike Chance for Spells
+10% increased Projectile Damage
 0.8% of Attack Damage Leeched as Mana
 25% increased Maximum total Recovery per second from Mana Leech
-20% increased total Recovery per second from Mana Leech
-Dagger Attacks deal 15% increased Damage with Hits and Ailments
-6% increased Attack Speed with Daggers
+60% increased total Recovery per second from Mana Leech
+Dagger Attacks deal 20% increased Damage with Hits and Ailments
+8% increased Attack Speed with Daggers
 15% increased Accuracy Rating with Daggers
 10% chance to gain Phasing for 4 seconds on Kill
-+8% to Chaos Resistance
++12% to Chaos Resistance
 +10 to Dexterity
 +5% Chance to Block Attack Damage while Dual Wielding
 Attack Skills deal 25% increased Damage while Dual Wielding
@@ -109,20 +122,19 @@ Channelling Skills have 3% increased Attack Speed
 +10 to Dexterity
 8% increased Fire Damage
 Regenerate 0.4% of Life per second
-Sword Attacks deal 10% increased Damage with Hits and Ailments
-60% increased Critical Strike Chance with Swords
-+30% to Critical Strike Multiplier with Swords
+50% increased Critical Strike Chance with Swords
++25% to Critical Strike Multiplier with Swords
 10% increased Projectile Damage
++1% to maximum Fire Resistance
 +20% to Fire Resistance
-40% chance to Avoid being Ignited
-6% chance to Avoid Fire Damage from Hits
+30% chance to Avoid being Ignited
 40% increased Defences from Equipped Shield
 +2% Chance to Block Attack Damage while holding a Shield
 10% increased Trap Damage
 10% increased Mine Damage
 Minions Leech 0.6% of Damage as Life
-+3% to Damage over Time Multiplier for Poison
-10% increased Damage with Poison
+10% chance to Poison on Hit
+15% increased Damage with Poison
 +15% to Critical Strike Multiplier with Traps
 +15% to Critical Strike Multiplier with Mines
 +2% Chance to Block Attack Damage while Dual Wielding or holding a Shield
@@ -134,20 +146,21 @@ Gain 10% of Physical Damage as Extra Chaos Damage
 10% more Chaos Damage with Attack Skills
 You lose Virulence 50% slower
 Poisons you inflict during any Flask Effect have 40% chance to deal 100% more Damage
-25% increased Critical Strike Chance with Swords
-+12% to Critical Strike Multiplier with Swords
+20% increased Critical Strike Chance with Swords
++10% to Critical Strike Multiplier with Swords
 1% of Fire Damage Leeched as Life
-20% chance to Cover Rare or Unique Enemies in Ash for 10 Seconds on Hit
+Cover Rare or Unique Enemies in Ash for 10 Seconds on Hit
 10% increased Strength
 30% chance to gain an Endurance Charge when you are Hit
 25% chance that if you would gain Endurance Charges, you instead gain up to your maximum number of Endurance Charges
-Gain an Endurance Charge every second if you've been Hit Recently
+Gain 1 Endurance Charge every second if you've been Hit Recently
 +1 to Maximum Endurance Charges
 Staff Attacks deal 15% increased Damage with Hits and Ailments
+5% reduced Enemy Stun Threshold
 15% increased Armour
-12% increased Evasion Rating
-+12 to maximum Energy Shield
-+12 to maximum Life
+10% increased Evasion Rating
++15 to maximum Energy Shield
++15 to maximum Life
 +4% to all Elemental Resistances
 5% increased maximum Energy Shield
 4% increased maximum Life
@@ -163,12 +176,14 @@ Recover 0.5% of Life per Poison affecting Enemies you Kill
 4% increased Cast Speed
 30% increased Totem Damage
 Totems Hinder Enemies near them when Summoned, with 25% reduced Movement Speed
+10% increased Melee Damage
++1 to Melee Strike Range
 14% increased Evasion Rating
 5% increased maximum Life
 20% increased Mana Regeneration Rate
 +5 to Intelligence
 10% increased Damage with Bows
-3% increased Attack Speed with Bows
+4% increased Attack Speed with Bows
 10% increased Damage Over Time with Bow Skills
 15% increased maximum Mana
 30% increased Mana Regeneration Rate
@@ -187,17 +202,16 @@ Fire Skills have a 25% chance to apply Fire Exposure on Hit
 Lightning Skills have a 25% chance to apply Lightning Exposure on Hit
 10% increased Damage over Time
 4% increased Attack and Cast Speed
-5% increased maximum Mana
-Minions deal 10% increased Damage
-Attack Skills deal 10% increased Damage while holding a Shield
-30% increased Defences from Equipped Shield
+10% increased maximum Mana
+Minions deal 12% increased Damage
+40% increased Defences from Equipped Shield
 +3% Chance to Block Attack Damage while Dual Wielding
 Attack Skills deal 10% increased Damage while Dual Wielding
 14% increased Physical Damage with Maces or Sceptres
 Mace or Sceptre Attacks deal 14% increased Damage with Ailments
 5% chance to double Stun Duration
-12% increased Physical Damage with Two Handed Melee Weapons
-Attacks with Two Handed Melee Weapons deal 12% increased Damage with Ailments
+16% increased Physical Damage with Two Handed Melee Weapons
+Attacks with Two Handed Melee Weapons deal 16% increased Damage with Ailments
 Grants 1 Passive Skill Point
 +6% to Fire Damage over Time Multiplier
 24% increased Fire Damage
@@ -216,7 +230,7 @@ Chance to Block Spell Damage is equal to Chance to Block Attack Damage Maximum C
 12% increased Armour
 5% chance to Dodge Attack Hits while Channelling
 Channelling Skills have 10% increased Attack Speed
-20% chance to Avoid being Stunned while Channelling
+30% chance to Avoid being Stunned while Channelling
 10% chance to gain Unholy Might for 4 seconds on Critical Strike
 12% increased Accuracy Rating while Dual Wielding
 30% increased Spell Damage if you've Cast a Spell Recently
@@ -238,17 +252,19 @@ Attack Skills deal 10% increased Damage while Dual Wielding
 18% increased Frenzy Charge Duration
 30% increased Block Recovery
 +2% Chance to Block Attack Damage while holding a Shield
-You can only have one Herald 50% more Effect of Herald Buffs on you 50% more Damage with Hits from Herald Skills 50% more Damage Over Time with Herald Skills Minions from Herald Skills deal 20% more Damage Your Aura Skills are Disabled
+You can only have one Herald 50% more Effect of Herald Buffs on you 100% more Damage with Hits from Herald Skills 50% more Damage Over Time with Herald Skills Minions from Herald Skills deal 25% more Damage Your Aura Skills are Disabled
 Curse Skills have 10% increased Cast Speed
 4% increased Attack Speed with Claws
 10% chance to Poison on Hit with Attacks
+Minions deal 10% increased Damage while you are affected by a Herald
+30% reduced Effect of Shock on you
 Dagger Attacks deal 12% increased Damage with Hits and Ailments
 5% increased Movement Speed
 +20 to maximum Energy Shield
 14% increased maximum Energy Shield
 10% increased Energy Shield Recharge Rate
 +10 to Dexterity
-4% increased maximum Life
+5% increased maximum Life
 3% reduced Mana Cost of Skills
 18% increased Power Charge Duration
 20% increased maximum Mana
@@ -268,17 +284,17 @@ Regenerate 8% of Mana over 2 seconds when you Consume a corpse
 25% increased Physical Damage
 +15% to Critical Strike Multiplier with Daggers
 10% increased Poison Duration
+Exerted Attacks deal 20% increased Damage
 15% increased Armour
-8% increased Global Accuracy Rating
+10% increased Global Accuracy Rating
 +10 to Dexterity
 +12% to Critical Strike Multiplier
 24% increased Damage over Time
 10% increased Flask Charges gained
 20% increased Life and Mana Recovery from Flasks
-30% increased Global Accuracy Rating
-Minions deal 15% increased Damage
+20% increased Global Accuracy Rating
 Increases and Reductions to Minion Damage also affect you
-30% increased Minion Accuracy Rating
+20% increased Minion Accuracy Rating
 10% increased Elemental Damage
 5% increased Damage taken
 15% more Damage
@@ -288,6 +304,8 @@ Cannot be Stunned while you have at least 25 Rage
 Mace, Sceptre or Staff Attacks deal 30% increased Damage with Hits and Ailments
 4% chance to deal Double Damage while wielding a Mace, Sceptre or Staff
 +20 to Strength
+15% reduced Skill Effect Duration
+Debuffs on you expire 15% faster
 10% increased Evasion Rating
 5% increased maximum Energy Shield
 10% chance to gain a Power Charge on Critical Strike
@@ -295,15 +313,15 @@ Mace, Sceptre or Staff Attacks deal 30% increased Damage with Hits and Ailments
 +1 to Maximum Power Charges
 Minions have 10% increased maximum Life
 Minions Regenerate 1% of Life per second
+Brand Skills have 15% increased Duration
 14% increased Totem Damage
 10% increased Totem Placement speed
-14% increased Damage with Brand Skills
 15% increased Physical Damage with Swords
 Sword Attacks deal 15% increased Damage with Ailments
 Attacks have 10% chance to cause Bleeding
 +10 to Intelligence
 10% increased Maximum total Recovery per second from Life Leech
-10% increased total Recovery per second from Life Leech
+30% increased total Recovery per second from Life Leech
 +10 to Intelligence
 6% increased maximum Energy Shield
 Damage with Weapons Penetrates 6% Elemental Resistance
@@ -312,16 +330,17 @@ Damage with Weapons Penetrates 6% Elemental Resistance
 While there are at least five nearby Allies, you and nearby Allies have Onslaught
 While there is at least one nearby Ally, you and nearby Allies deal 10% more Damage
 +10 to Intelligence
-5% increased Mine Throwing Speed
+4% increased Mine Throwing Speed
 Mines have 10% increased Detonation Speed
 4% increased Attack Speed while Dual Wielding
-6% increased Attack Damage
-Minions deal 6% increased Damage
+10% increased Attack Damage
+Minions deal 8% increased Damage
 14% increased Evasion Rating
 10% increased Cooldown Recovery Speed of Movement Skills
 3% Chance to Block Spell Damage
-25% chance to Avoid Elemental Ailments
+25% reduced Elemental Ailment Duration on you
 +3% Chance to Block Attack Damage
+25% reduced Effect of Non-Damaging Ailments on you
 4% increased Attack Speed with Swords
 8% increased Accuracy Rating with Swords
 12% increased Fire Damage
@@ -347,22 +366,21 @@ Bleeding you inflict deals Damage 15% faster
 +12% to Damage over Time Multiplier for Bleeding
 2% of Attack Damage Leeched as Life against Bleeding Enemies
 20% increased total Recovery per second from Life Leech
-10% increased Evasion Rating and Armour
-10% increased Onslaught Effect
+12% increased Evasion Rating and Armour
+15% increased Onslaught Effect
 15% increased maximum Mana
 30% increased Mana Recovery from Flasks
-5% increased Mana Recovery Rate during Effect of any Mana Flask
+25% chance to gain a Power Charge when you use a Mana Flask
 12% increased Damage over Time
 20% increased Global Critical Strike Chance while wielding a Staff
-+8% to Global Critical Strike Multiplier while wielding a Staff
++10% to Global Critical Strike Multiplier while wielding a Staff
 10% increased Mine Damage
 5% reduced Mana Reservation of Skills that throw Mines
-35% chance to gain an Endurance Charge when you use a Fire skill
-5% increased Physical Damage per Endurance Charge
-5% increased Fire Damage per Endurance Charge
+10% chance to Poison on Hit with Spell Damage
+Trigger Level 20 Tawhoa's Chosen when you Attack with a Non-Vaal Slam Skill near an Enemy
 12% increased Physical Damage with Axes
 Axe Attacks deal 12% increased Damage with Ailments
-5% increased Area of Effect
+6% increased Area of Effect
 20% increased Critical Strike Chance with Maces or Sceptres
 +16% to Critical Strike Multiplier with Maces or Sceptres
 20% increased Flask Charges gained
@@ -371,12 +389,12 @@ Axe Attacks deal 12% increased Damage with Ailments
 10% increased Projectile Damage
 Cannot be Blinded
 10% reduced Damage taken from Blinded Enemies
+Nearby Enemies are Blinded
 30% increased Damage with Hits and Ailments against Blinded Enemies
 25% chance to Blind Enemies on Hit
-Nearby Enemies are Blinded
 28% increased Physical Damage with Maces or Sceptres
 Mace or Sceptre Attacks deal 28% increased Damage with Ailments
-Enemies have -12% to Total Physical Damage Reduction against your Hits
+Overwhelm 12% Physical Damage Reduction
 50% increased Stun Duration against Enemies that are on Full Life
 10% chance to double Stun Duration
 12% increased Damage over Time
@@ -388,12 +406,13 @@ Enemies have -12% to Total Physical Damage Reduction against your Hits
 +10 to Dexterity
 +15 to maximum Mana
 15% increased maximum Mana
-8% of Damage taken gained as Mana over 4 seconds when Hit
+10% of Damage taken gained as Mana over 4 seconds when Hit
 +10 to Intelligence
 +10 to Dexterity
 Minions deal 15% increased Damage
 5% increased effect of Non-Curse Auras from your Skills
 Gain 5% of Physical Damage as Extra Fire Damage
+20% of Physical Damage Converted to Fire Damage
 24% increased Fire Damage with Attack Skills
 10% increased Attack Speed
 30% increased Projectile Damage
@@ -401,7 +420,7 @@ Gain 5% of Physical Damage as Extra Fire Damage
 100% increased Blink Arrow and Mirror Arrow Cooldown Recovery Speed
 +30 to Strength
 10% increased Area of Effect while wielding a Staff
-10% increased Area Damage
+10% increased Area of Effect
 12% increased Attack Physical Damage
 3% increased Attack and Cast Speed
 8% increased Physical Damage
@@ -416,7 +435,6 @@ Regenerate 0.5% of Life per second
 18% increased Power Charge Duration
 4% increased maximum Life
 +4% to Chaos Resistance
-+1 to maximum number of Sentinels of Purity
 +5 to Maximum Virulence
 Minions deal 20% increased Damage while you are affected by a Herald
 Dagger Attacks deal 12% increased Damage with Hits and Ailments
@@ -425,13 +443,13 @@ Dagger Attacks deal 12% increased Damage with Hits and Ailments
 Cannot be Stunned
 Action Speed cannot be modified to below base value
 Movement Speed cannot be modified to below base value
-12% increased Attack Speed
-6% increased Cast Speed
+10% increased Attack Speed
+8% increased Cast Speed
 +10 to Dexterity and Intelligence
 12% increased Attack Physical Damage
 10% increased total Recovery per second from Life Leech
 3% increased Cast Speed
-15% increased Critical Strike Chance for Spells
+10% increased Critical Strike Chance for Spells
 +4% to Fire Damage over Time Multiplier
 8% increased Fire Damage
 15% increased Evasion Rating
@@ -445,12 +463,13 @@ Damage Penetrates 10% Elemental Resistances
 Enemies you Kill that are affected by Elemental Ailments grant 100% increased Flask Charges
 Axe Attacks deal 12% increased Damage with Hits and Ailments
 8% increased Accuracy Rating with Axes
+5% chance to Impale Enemies on Hit with Attacks
 +6% to all Elemental Resistances
 10% increased Elemental Damage
 +15% to Critical Strike Multiplier
 15% increased Critical Strike Chance
-25% increased Critical Strike Chance with Swords
-+12% to Critical Strike Multiplier with Swords
+20% increased Critical Strike Chance with Swords
++10% to Critical Strike Multiplier with Swords
 15% increased Physical Damage with Axes
 Axe Attacks deal 15% increased Damage with Ailments
 20% increased Bleeding Duration
@@ -459,19 +478,20 @@ Skills used by Mines deal 30% increased Area Damage if you Detonated a Mine Rece
 Skills used by Mines have 10% increased Area of Effect
 Skills used by Mines have 10% increased Area of Effect if you Detonated a Mine Recently
 10% increased Global Accuracy Rating
-4% increased Movement Speed
-5% increased Attack and Cast Speed
+5% increased Movement Speed
+6% increased Attack and Cast Speed
 +20 to Dexterity
-8% increased Fire Damage
 10% chance to Ignite
+Ignites you inflict deal Damage 5% faster
 Curse Skills have 15% increased Skill Effect Duration
 Damage Penetrates 10% Cold Resistance against Chilled Enemies
+6% increased effect of Non-Curse Auras from your Skills
 8% increased maximum Life
 Enemies Cannot Leech Life From you
-15% increased Armour
-Regenerate 15 Life per second
+10% increased Armour
+3% increased maximum Life
 +10 to Dexterity
-Sword Attacks deal 10% increased Damage with Hits and Ailments
+Sword Attacks deal 12% increased Damage with Hits and Ailments
 8% increased Accuracy Rating with Swords
 +10 to Strength
 8% increased Global Accuracy Rating
@@ -479,23 +499,22 @@ Sword Attacks deal 10% increased Damage with Hits and Ailments
 +10 to Intelligence
 10% increased Evasion Rating
 4% increased maximum Life
+Attacks with Two Handed Melee Weapons deal 20% increased Damage with Hits and Ailments
 40% increased Damage with Hits and Ailments against Unique Enemies
 +10 to Dexterity
 Damage with Weapons Penetrates 8% Lightning Resistance
 30% increased Lightning Damage with Attack Skills
 10% increased Effect of Shock
-4% increased Cast Speed while Dual Wielding
+3% increased Cast Speed while Dual Wielding
 15% increased Cooldown Recovery Speed of Movement Skills
 Mace or Sceptre Attacks deal 10% increased Damage with Hits and Ailments
 5% increased Area of Effect
 15% increased Damage with Bows
-6% increased Global Accuracy Rating
+20% increased Critical Strike Chance with Bows
 15% increased Damage Over Time with Bow Skills
 Minions have 5% increased Movement Speed
 Minions deal 10% increased Damage
-20% increased Warcry Cooldown Recovery Speed
 Enemies Taunted by your Warcries are Intimidated
-Enemies Taunted by your Warcries are Unnerved
 Minions have 20% chance to Ignite
 Minions deal 20% increased Damage against Ignited Enemies
 Minions gain 6% of Physical Damage as Extra Fire Damage
@@ -521,9 +540,9 @@ Regenerate 15 Mana per second if you've used a Movement Skill Recently
 6% increased effect of Non-Curse Auras from your Skills
 12% increased Physical Damage with Two Handed Melee Weapons
 Attacks with Two Handed Melee Weapons deal 12% increased Damage with Ailments
-25% increased total Recovery per second from Life Leech
+60% increased total Recovery per second from Life Leech
 15% increased Damage with Bows
-6% increased Global Accuracy Rating
+20% increased Critical Strike Chance with Bows
 15% increased Damage Over Time with Bow Skills
 6% increased maximum Energy Shield
 10% increased Energy Shield Recharge Rate
@@ -536,25 +555,23 @@ Damage with Weapons Penetrates 4% Elemental Resistance
 20% increased Taunt Duration
 0.2% of Elemental Damage Leeched as Life
 25% increased Elemental Damage
-40% increased Defences from Equipped Shield
+50% increased Defences from Equipped Shield
+Projectiles have 50% chance for an additional Projectile when Forking
 12% increased Physical Damage with Swords
 Sword Attacks deal 12% increased Damage with Ailments
 +2% Chance to Block Attack Damage while Dual Wielding or holding a Shield
-16% increased Attack Damage
-4% increased Attack Speed
+10% increased Attack Speed
 +10 to Strength and Dexterity
 8% increased Lightning Damage
 8% increased Physical Damage
-20% increased Warcry Cooldown Recovery Speed
-50% increased Melee Critical Strike Chance if you've Warcried Recently
-+35% to Melee Critical Strike Multiplier if you've Warcried Recently
+Gain 25% increased Armour per 5 Power for 8 seconds when you Warcry, up to a maximum of 100%
 +10 to Dexterity
 30% increased Trap Damage
 20% increased Trap Trigger Area of Effect
 Can have up to 2 additional Traps placed at a time
 15% chance to gain a Frenzy Charge when your Trap is triggered by an Enemy
 10% increased Lightning Damage
-Lightning Spells have 10% of Physical Damage Converted to Lightning Damage
+10% increased Effect of Shock
 10% increased Armour
 +5% to all Elemental Resistances
 +4% to Fire Damage over Time Multiplier
@@ -568,40 +585,43 @@ You have Culling Strike against Cursed Enemies
 Curse Skills have 20% increased Skill Effect Duration
 +3% to Damage over Time Multiplier for Bleeding
 15% increased Damage with Bleeding
-10% increased Armour
-Regenerate 0.3% of Life per second
+12% increased Armour
+Regenerate 0.5% of Life per second
 Arrows gain Critical Strike Chance as they travel farther, up to 100% increased Critical Strike Chance
 Arrows gain Damage as they travel farther, dealing up to 50% increased Damage with Hits to targets
-3% increased Attack Speed with Staves
-3% increased Cast Speed while wielding a Staff
+4% increased Attack Speed with Staves
+4% increased Cast Speed while wielding a Staff
 8% increased Area of Effect while wielding a Staff
-4% increased maximum Life
+5% increased maximum Life
 3% reduced Mana Cost of Skills
 +10 to Intelligence
+Warcries cannot Exert Travel Skills
 +10 to Intelligence
 5% increased maximum Energy Shield
 10% increased Energy Shield Recharge Rate
 5% increased Mana Regeneration Rate
 16% increased Lightning Damage
-4% increased Cast Speed
-+15% to Critical Strike Multiplier
+6% increased Cast Speed
 10% increased Effect of Shock
 4% reduced Mana Reserved
+10% increased Projectile Damage
+Projectiles have 10% chance for an additional Projectile when Forking
 10% increased Skill Effect Duration
 Can Allocate Passives from the Ranger's starting point
 Grants 2 Passive Skill Points
 +15 to maximum Energy Shield
 10% increased Energy Shield Recharge Rate
-15% increased Skill Effect Duration
-Minions deal 20% increased Damage
-Minions deal 20% increased Damage if you've used a Minion Skill Recently
-15% increased Minion Duration
+Minions deal 30% increased Damage if you've used a Minion Skill Recently
+20% increased Minion Duration
+Summoned Phantasms have 5% chance to refresh their Duration when they Hit a Unique Enemy
+Summoned Raging Spirits have 5% chance to refresh their Duration when they Hit a Unique Enemy
 12% increased Totem Damage
 Attacks used by Totems have 4% increased Attack Speed
 5% increased Melee Attack Speed
-Minions deal 8% increased Damage
-Minions have 8% increased Area of Effect
+Minions deal 6% increased Damage
+Minions have 12% increased Area of Effect
 +2% Chance to Block Attack Damage while Dual Wielding or holding a Shield
+20% increased Block Recovery
 +5% Chance to Block Spell Damage while wielding a Staff
 15% increased Spell Damage while wielding a Staff
 10% chance to gain Unholy Might on block for 3 seconds
@@ -619,9 +639,9 @@ Minions have 8% increased Area of Effect
 25% increased Critical Strike Chance with Mines
 15% increased Evasion Rating
 25% chance to Avoid interruption from Stuns while Casting
-+20 to Strength and Dexterity
++25 to Strength and Dexterity
 6% increased Elemental Damage
-Damage Penetrates 1% Elemental Resistances
+Damage Penetrates 2% Elemental Resistances
 +12% to Damage over Time Multiplier for Bleeding
 30% increased Bleeding Duration
 Damage Penetrates 10% of Enemy Elemental Resistances
@@ -637,11 +657,11 @@ Channelling Skills have 5% increased Attack and Cast Speed
 40% increased Damage if you've taken no Damage from Hits Recently
 Cannot be Stunned by Hits you Block
 Your Counterattacks deal Double Damage
-12% increased Physical Damage with Two Handed Melee Weapons
-Attacks with Two Handed Melee Weapons deal 12% increased Damage with Ailments
+14% increased Physical Damage with Two Handed Melee Weapons
+Attacks with Two Handed Melee Weapons deal 14% increased Damage with Ailments
 5% reduced Enemy Stun Threshold
-20% increased Projectile Speed
-20% increased Projectile Attack Damage
+25% increased Projectile Speed
+20% increased Projectile Damage
 Projectiles gain Damage as they travel farther, dealing up to 40% increased Damage with Hits to targets
 16% increased Physical Damage with Maces or Sceptres
 Mace or Sceptre Attacks deal 16% increased Damage with Ailments
@@ -673,7 +693,7 @@ Herald Skills deal 20% increased Damage
 +30% to Critical Strike Multiplier with Daggers
 +40% to Critical Strike Multiplier against Enemies that are on Full Life
 30% increased Critical Strike Chance against Enemies on Full Life
-3% increased maximum Life
+4% increased maximum Life
 10% increased Life Recovery from Flasks
 +10 to Dexterity
 +10 to Intelligence
@@ -683,36 +703,39 @@ Herald Skills deal 20% increased Damage
 +15% to Critical Strike Multiplier
 15% increased Critical Strike Chance
 +20% to Damage over Time Multiplier for Ailments from Critical Strikes
-30% increased Critical Strike Chance
+40% increased Critical Strike Chance
 20% chance to gain an Endurance Charge when you Block
 +6% Chance to Block Attack Damage while at Maximum Endurance Charges
-20% increased Mine Damage
 Can have up to 2 additional Remote Mines placed at a time
 Mines have 20% increased Detonation Speed
 Each Mine applies 2% increased Damage taken to Enemies near it, up to 10%
+30% reduced Effect of Chill on you
+30% reduced Freeze Duration on you
 0.4% of Attack Damage Leeched as Life
-10% increased total Recovery per second from Life Leech
+40% increased total Recovery per second from Life Leech
 +10% to Fire Resistance
 Regenerate 0.5% of Life per second
 15% increased Attack Physical Damage
 5% increased Attack Speed
-Enemies you Impale have -10% to Total Physical Damage Reduction against Impale Hits
+Impale Damage dealt to Enemies Impaled by you Overwhelms 10% Physical Damage Reduction
 15% chance to Impale Enemies on Hit with Attacks
 5% increased maximum Life
-+4% chance to Evade Attack Hits if you haven't been Hit Recently
+30% chance to avoid Bleeding
+30% chance to avoid being Impaled
+30% increased Evasion Rating if you haven't been Hit Recently
 +1 to Minimum Power Charges
-5% chance to gain a Power Charge on Kill
-5% increased Damage per Power Charge
+8% chance to gain a Power Charge on Kill
+8% increased Damage per Power Charge
 Sword Attacks deal 10% increased Damage with Hits and Ailments
-5% increased Area of Effect
++1 to Melee Strike Range with Swords
 2% of Attack Damage Leeched as Life
 2% of Attack Damage Leeched as Mana
 25% increased Attack Speed if you've been Hit Recently
 50% increased Maximum total Recovery per second from Life Leech if you've taken a Savage Hit Recently
 5% increased Movement Speed
 5% chance to Dodge Attack and Spell Hits while moving
-6% increased Attack Damage
-Minions deal 6% increased Damage
+10% increased Attack Damage
+Minions deal 8% increased Damage
 10% increased Movement Speed during any Flask Effect
 10% increased Attack Speed during any Flask Effect
 Flasks gain 3 Charges every 3 seconds
@@ -727,7 +750,7 @@ Flasks applied to you have 5% increased Effect
 +4% to Chaos Resistance
 6% increased effect of Non-Curse Auras from your Skills
 You can only have one Permanent Non-Banner Aura on you from your Skills Your Non-Banner Skills that create Permanent Auras on you do not Reserve Mana
-8% increased Cast Speed
+10% increased Cast Speed
 10% increased Energy Shield Recharge Rate
 20% increased Mana Regeneration Rate
 25% increased Critical Strike Chance
@@ -738,13 +761,14 @@ Minions have 4% increased Attack Speed
 24% increased Damage with Bows
 10% increased Skill Effect Duration
 24% increased Damage Over Time with Bow Skills
-Poisons you inflict deal Damage 10% faster
 0.8% of Spell Damage Leeched as Energy Shield
 20% increased Maximum total Recovery per second from Energy Shield Leech
 24% increased Damage while on Full Energy Shield
 Minions deal 10% increased Damage
 10% increased Armour
 +5% to all Elemental Resistances
+12% increased Evasion Rating
+10% increased Elusive Effect
 12% increased Evasion Rating
 3% increased Movement Speed
 6% increased Cast Speed
@@ -766,11 +790,11 @@ Attacks have 10% chance to cause Bleeding
 24% increased Physical Damage with Two Handed Melee Weapons
 Attacks with Two Handed Melee Weapons deal 24% increased Damage with Ailments
 50% increased Damage with Hits against Enemies that are on Low Life
-8% increased Area of Effect if you've Killed Recently
+12% increased Area of Effect if you've Killed Recently
 4% increased Attack Speed
 6% increased maximum Life
 12% increased Armour
-Guard Skills have 15% increased Cooldown Recovery Speed
+Guard Skills have 20% increased Cooldown Recovery Speed
 Your Offering Skills also affect you
 Your Offerings have 25% reduced Effect on you
 Minions deal 30% increased Damage
@@ -787,46 +811,50 @@ Life Leech effects are not removed at Full Life
 +10 to Strength
 10% increased Fire Damage
 Regenerate 0.5% of Life per second
-12% increased Physical Damage with One Handed Melee Weapons
-Attacks with One Handed Melee Weapons deal 12% increased Damage with Ailments
+16% increased Physical Damage with One Handed Melee Weapons
+Attacks with One Handed Melee Weapons deal 16% increased Damage with Ailments
 Mace or Sceptre Attacks deal 10% increased Damage with Hits and Ailments
 6% increased Accuracy Rating with Maces or Sceptres
-20% increased Damage over Time
-20% increased Duration of Ailments on Enemies
-15% increased Skill Effect Duration
+25% increased Damage over Time
+25% increased Duration of Ailments on Enemies
 20% increased Mana Regeneration Rate
 +20% to Lightning Resistance
 Regenerate 1.5% of Life per second
 +10 to Intelligence
-4% additional Physical Damage Reduction while Channelling
+Channelling Skills deal 12% increased Damage
 Channelling Skills have 6% increased Attack and Cast Speed
 Channelling Skills deal 15% increased Damage
+25% increased Effect of Infusion
 24% increased Armour
 +12% to all Elemental Resistances
 3% increased Movement Speed
 10% chance to Shock
 10% increased Lightning Damage with Attack Skills
 +10 to Intelligence
+15% increased Warcry Speed
+Warcry Skills have 15% increased Area of Effect
 Regenerate 0.5% of Life per second
 10% increased Elemental Damage
 Converts all Evasion Rating to Armour. Dexterity provides no bonus to Evasion Rating
+15% increased Critical Strike Chance
 20% increased Critical Strike Chance
 Spells Cast by Totems have 5% increased Cast Speed
 Attacks used by Totems have 7% increased Attack Speed
-5% increased Brand Activation frequency
+5% increased Cast Speed with Brand Skills
 Life Leeched per Second is doubled Maximum total Recovery per second from Life Leech is doubled Life Regeneration has no effect
 +10 to Dexterity
-25% increased maximum Mana
+20% increased maximum Mana
 15% increased Mana Regeneration Rate
+5% reduced Mana Cost of Skills
 10% increased Projectile Damage
 10% increased Physical Attack Damage while holding a Shield
 Attack Skills deal 10% increased Damage with Ailments while holding a Shield
 +2% Chance to Block Attack Damage while holding a Shield
 15% increased Fire Damage
 Minions have 12% increased maximum Life
-20% increased Burning Damage
-+15% to Fire Damage over Time Multiplier while Burning
-Regenerate 1.50% of Life per second while Burning
+20% increased Fire Damage
+Cannot be Chilled while Burning
+5% chance to Cover Enemies in Ash on Hit while you are Burning
 +20 to maximum Life
 20% chance to gain an Endurance Charge when you Block
 +4% Chance to Block Attack Damage
@@ -836,19 +864,22 @@ Regenerate 1.50% of Life per second while Burning
 5% increased maximum Energy Shield
 10% increased maximum Mana
 20% increased Mana Regeneration Rate
-4% increased maximum Life
+5% increased maximum Life
 3% reduced Mana Cost of Skills
 15% chance to Avoid interruption from Stuns while Casting
++10 to Strength and Dexterity
 +6% to Cold Damage over Time Multiplier
 10% increased Totem Life
+10% increased Totem Duration
 Totems have 10% additional Physical Damage Reduction
-Brand Skills have 10% increased Duration
 Minions have 10% increased maximum Life
 Minions have 10% chance to Knock Enemies Back on Hit with Attacks
+Corpses you Spawn have 15% increased Maximum Life
+20% less Damage taken if you haven't been Hit Recently 40% less Evasion Rating if you haven't been Hit Recently 20% more Evasion Rating if you've been Hit Recently
 1% increased Damage per 1% Chance to Block Attack Damage
 +10 to Intelligence
-25% increased Damage with Bleeding
-25% increased Damage with Poison
+20% increased Damage with Bleeding
+20% increased Damage with Poison
 18% increased Frenzy Charge Duration
 15% increased effect of Non-Curse Auras from your Skills
 You and Allies affected by your placed Banners Regenerate 0.1% of  Life per second for each Stage
@@ -859,8 +890,8 @@ You and nearby Allies have 12% increased Movement Speed
 5% increased Cast Speed
 +20 to Intelligence
 6% increased maximum Energy Shield
-10% increased Totem Life
-Totems have 10% additional Physical Damage Reduction
+15% increased Totem Life
+Totems have 15% additional Physical Damage Reduction
 Maximum Life becomes 1, Immune to Chaos Damage
 18% increased Critical Strike Chance with Daggers
 +14% to Critical Strike Multiplier with Daggers
@@ -870,40 +901,46 @@ With at least one nearby corpse, nearby Enemies deal 10% reduced Damage
 +10 to Dexterity
 8% increased maximum Energy Shield
 0.3% of Spell Damage Leeched as Energy Shield
-20% increased Maximum total Recovery per second from Energy Shield Leech
-10% increased Physical Damage with Two Handed Melee Weapons
-Attacks with Two Handed Melee Weapons deal 10% increased Damage with Ailments
+10% increased Maximum total Recovery per second from Energy Shield Leech
+12% increased Physical Damage with Two Handed Melee Weapons
+Attacks with Two Handed Melee Weapons deal 12% increased Damage with Ailments
 5% increased Area of Effect
 Summoned Skeletons have 10% chance to Wither Enemies for 2 seconds on Hit
 Summoned Skeletons have 30% of Physical Damage Converted to Chaos Damage
 +10 to Intelligence
-Attacks have 15% chance to cause Bleeding
++4% to Damage over Time Multiplier for Bleeding
 100% increased Onslaught Effect
 30% increased Attack Damage during Onslaught
 30% more chance to Evade Melee Attacks during Onslaught
 30% more chance to Evade Projectile Attacks during Onslaught
 20% increased Lightning Damage
 20% increased Shock Duration on Enemies
-10% chance to Shock
-15% increased Effect of Shock
+15% chance to Shock
+20% increased Effect of Shock
 +10 to Intelligence
 15% chance to Avoid interruption from Stuns while Casting
++10 to Strength and Dexterity
 20% increased Area Damage
 Area Skills have 10% chance to Knock Enemies Back on Hit
-14% increased Projectile Attack Damage
+14% increased Projectile Damage
 6% increased Spell Damage
 8% increased Spell Damage while holding a Shield
-+1% Chance to Block Attack Damage while holding a Shield
++2% Chance to Block Attack Damage while holding a Shield
 10% increased Melee Damage
 Melee Skills have 5% increased Area of Effect
-+20% to Critical Strike Multiplier with Mines
++15% to Critical Strike Multiplier with Mines
 +1 to Maximum Endurance Charges
 +4% Chance to Block Attack Damage while Dual Wielding
 Attack Skills deal 16% increased Damage while Dual Wielding
 6% increased Attack Speed while Dual Wielding
 12% increased Accuracy Rating while Dual Wielding
-10% increased Poison Duration
-15% increased Damage with Poison
+15% increased Warcry Duration
+15% increased Warcry Speed
+15% chance to Poison on Hit
++5% to all Elemental Resistances
++1% to all maximum Elemental Resistances
+15% reduced Elemental Ailment Duration on you
+15% reduced Effect of Non-Damaging Ailments on you
 14% increased Evasion Rating
 5% chance to Blind Enemies on Hit with Attacks
 +10 to Strength
@@ -911,8 +948,9 @@ Attack Skills deal 16% increased Damage while Dual Wielding
 20% increased Fire Damage
 20% increased Ignite Duration on Enemies
 20% chance to Ignite
-+5% to Chaos Damage over Time Multiplier
-Chaos Skills have 30% increased Skill Effect Duration
+Spell Skills have +5% to Damage over Time Multiplier for Poison
+25% increased Chaos Damage
+50% chance to inflict Withered for two seconds on Hit if there are 5 or fewer Withered Debuffs on Enemy
 4% increased Attack Speed with Staves
 6% increased Accuracy Rating with Staves
 4% increased Attack Speed with Bows
@@ -920,17 +958,15 @@ Chaos Skills have 30% increased Skill Effect Duration
 14% increased effect of Non-Curse Auras from your Skills
 15% increased Evasion Rating
 15% increased Onslaught Effect
-10% increased Area Damage
-15% increased Area of Effect if you've Killed Recently
-10% increased Area of Effect if you've Killed at least 5 Enemies Recently
+25% increased Area of Effect if you've Killed at least 5 Enemies Recently
 3% increased Cast Speed
-15% increased Critical Strike Chance for Spells
+10% increased Critical Strike Chance for Spells
 Attack Skills deal 12% increased Damage while holding a Shield
 12% increased Spell Damage while holding a Shield
 +3% to Damage over Time Multiplier for Bleeding
 Attacks have 10% chance to cause Bleeding
 5% increased maximum Energy Shield
-8% increased maximum Mana
+6% increased maximum Mana
 10% increased Lightning Damage
 35% increased Projectile Damage
 10% chance to Taunt Enemies on Projectile Hit
@@ -939,20 +975,19 @@ Attacks have 10% chance to cause Bleeding
 Axe Attacks deal 12% increased Damage with Ailments
 3% increased Attack Speed with Axes
 +10 to Dexterity
-10% increased Ignite Duration on Enemies
+20% increased Ignite Duration on Enemies
 15% chance to Ignite
-10% increased Fire Damage with Attack Skills
+15% increased Fire Damage with Attack Skills
 10% increased Elemental Damage
 You can apply an additional Curse
 10% increased Effect of your Curses
 Regenerate 1.5% of Energy Shield per second
 Cannot Be Stunned while you have Energy Shield
-+10 to Armour
-Enemies have -5% to Total Physical Damage Reduction against your Hits
++50 to Armour
 +20 to Strength
-12% increased Physical Damage
-Sword Attacks deal 10% increased Damage with Hits and Ailments
-4% increased Attack Speed with Swords
+16% increased Physical Damage
++2% Chance to Block Attack Damage while Dual Wielding or holding a Shield
+Sword Attacks deal 12% increased Damage with Hits and Ailments
 +5% to Critical Strike Multiplier per Power Charge
 16% increased Critical Strike Chance with Bows
 +12% to Critical Strike Multiplier with Bows
@@ -960,12 +995,13 @@ Sword Attacks deal 10% increased Damage with Hits and Ailments
 10% increased Global Accuracy Rating
 20% increased Critical Strike Chance
 +20 to Dexterity and Intelligence
-8% increased Evasion Rating
+10% increased Evasion Rating
 4% increased maximum Life
 Attack Skills deal 30% increased Damage while holding a Shield
 +2% Chance to Block Attack Damage
 +2 to Melee Strike Range while Holding a Shield
-12% increased Attack Speed
+6% increased Attack Speed
++10 to Maximum Rage
 16% increased Trap Damage
 16% increased Mine Damage
 10% increased Power Charge Duration
@@ -987,10 +1023,10 @@ Every second, Consume a nearby Corpse to Recover 5% of Life and Mana 10% more Da
 +10 to Dexterity
 30% increased Damage with Maces, Sceptres or Staves
 Gain Fortify for 6 seconds on Melee Hit with a Mace, Sceptre or Staff
-+6% to Fire Damage over Time Multiplier
-18% increased Elemental Damage
-Damage Penetrates 5% Elemental Resistances
-10% increased Effect of Non-Damaging Ailments
+12% increased Fire Damage
+50% increased Elemental Damage
+3% increased Cast Speed
+15% increased Damage with Poison
 10% increased Skill Effect Duration
 12% increased Cold Damage
 10% increased Effect of Chill
@@ -1003,16 +1039,16 @@ Damage Penetrates 5% Elemental Resistances
 Impales you inflict last 2 additional Hits
 If you've Impaled an Enemy Recently, you and nearby Allies have +1000 to Armour
 You and nearby Allies deal 6 to 12 added Physical Damage for each Impale on Enemy
-You can Cast an additional Brand
-Brand Skills have 20% increased Duration
-10% increased Brand Activation frequency
+10% increased Cast Speed with Brand Skills
+Brand Skills have 10% increased Duration
 20% increased Brand Attachment range
 25% increased Armour
 +20% to Fire Resistance
 0.4% of Fire Damage Leeched as Life
 10% increased Fire Damage
+10% increased Ignite Duration on Enemies
 5% chance to Ignite
-+1% Chance to Block Attack Damage while Dual Wielding
++2% Chance to Block Attack Damage while Dual Wielding
 3% increased Attack Speed while Dual Wielding
 3% increased Cast Speed while Dual Wielding
 5% increased maximum Life
@@ -1022,6 +1058,7 @@ Brand Skills have 20% increased Duration
 10% chance to create a Smoke Cloud on Kill
 Attack Skills deal 10% increased Damage while Dual Wielding
 3% increased Attack Speed while Dual Wielding
+Attack Skills deal 10% increased Damage with Ailments while Dual Wielding
 Projectiles Pierce an additional Target
 20% increased Projectile Speed
 10% increased Projectile Damage
@@ -1032,15 +1069,24 @@ Projectiles Pierce an additional Target
 Gain Arcane Surge when you Summon a Totem
 Spells cast by Totems deal 25% increased Damage
 10% chance to Shock
-10% increased Effect of Shock
+20% increased Effect of Shock
+Recover 10% of Life when you use a Warcry
+15% increased Warcry Cooldown Recovery Speed
+20% increased Damage for each time you've Warcried Recently
 +10 to Intelligence
++4% to Physical Damage over Time Multiplier
 15% increased Fire Damage
 +10 to Strength
 4% increased maximum Life
 +4% to Chaos Resistance
+10% increased Skill Effect Duration
+25% increased Despair Curse Effect
+Axe Attacks deal 12% increased Damage with Hits and Ailments
+Sword Attacks deal 12% increased Damage with Hits and Ailments
 0.6% of Spell Damage Leeched as Energy Shield
-20% increased Maximum total Recovery per second from Energy Shield Leech
+25% increased Spell Damage while on Full Energy Shield
 10% chance to Hinder Enemies on Hit with Spells, with 30% reduced Movement Speed
+5% reduced Skill Effect Duration
 30% increased Area of Effect
 8% reduced Area Damage taken from Hits
 +30% to Critical Strike Multiplier against Burning Enemies
@@ -1050,17 +1096,17 @@ Damage Penetrates 10% Elemental Resistances against Chilled Enemies
 8% increased Flask Effect Duration
 Flasks applied to you have 5% increased Effect
 6% increased Accuracy Rating with Daggers
-15% increased Critical Strike Chance with Daggers
+20% increased Critical Strike Chance with Daggers
 6% increased maximum Energy Shield
 6% increased maximum Energy Shield
 +10 to Dexterity
+12% increased Attack Damage while holding a Shield
 Attacks with Melee Weapons deal 14% increased Damage with Ailments
 14% increased Melee Physical Damage while you have Fortify
 5% increased Effect of Fortify on you
 30% increased Armour
 +20% to Fire Resistance
-5% additional Physical Damage Reduction
-Enemies you Curse are Intimidated
+15% chance to Defend with Double Armour
 Enemies you Curse are Unnerved
 12% increased Fire Damage with Attack Skills
 10% increased Attack Speed with Two Handed Melee Weapons
@@ -1079,7 +1125,7 @@ Attacks with Two Handed Melee Weapons deal 25% increased Damage with Ailments
 +20 to Strength
 Gain 5% of Physical Damage as Extra Lightning Damage
 12% increased Elemental Damage
-Lightning Spells have 15% of Physical Damage Converted to Lightning Damage
+Lightning Spells have 25% of Physical Damage Converted to Lightning Damage
 12% increased Physical Damage
 Curse Skills have 15% increased Cast Speed
 4% increased Attack Speed
@@ -1087,9 +1133,9 @@ Curse Skills have 15% increased Cast Speed
 10% increased Spell Damage
 Spell Skills have 5% increased Area of Effect
 20% increased Critical Strike Chance with Bows
-+20 to maximum Mana
++25 to maximum Mana
 15% increased maximum Mana
-+2 Mana gained for each Enemy hit by your Attacks
+10% increased Effect of Non-Curse Auras from your Skills on Enemies
 20% increased Mana Regeneration Rate
 20% increased Totem Placement speed
 30% Chance to Dodge Spell Hits
@@ -1112,12 +1158,12 @@ Minions have 4% increased Cast Speed
 8% increased Minion Duration
 50% increased Attack Damage with Main Hand
 20% increased Attack Speed with Off Hand
-Attack Skills deal 50% increased Damage with Ailments while Dual Wielding
+Attack Skills deal 25% increased Damage with Ailments while Dual Wielding
 10% increased Physical Damage with Maces or Sceptres
 Mace or Sceptre Attacks deal 10% increased Damage with Ailments
 20% increased Critical Strike Chance with Maces or Sceptres
 +10 to Intelligence
-10% increased Impale Effect
+5% increased Impale Effect
 4% increased Attack Speed
 +5 to Dexterity
 14% increased Physical Damage with Maces or Sceptres
@@ -1141,9 +1187,13 @@ Totems' Action Speed cannot be modified to below base value
 10% increased Area of Effect
 15% increased Effect of your Curses
 +10 to Strength
+2% increased Attack Damage per 75 Armour or Evasion Rating on Shield
++1% to Critical Strike Multiplier per 10 Maximum Energy Shield on Shield
 12% increased Physical Damage with Two Handed Melee Weapons
 Attacks with Two Handed Melee Weapons deal 12% increased Damage with Ailments
 10% increased Stun Duration with Two Handed Melee Weapons on Enemies
+15% increased Warcry Speed
+12% increased Warcry Cooldown Recovery Speed
 8% increased maximum Life
 0.4% of Attack Damage Leeched as Life
 +10 Life gained for each Enemy hit by your Attacks
@@ -1162,7 +1212,7 @@ Attacks Maim on Hit against Bleeding Enemies
 10% chance to Blind with Hits against Bleeding Enemies
 Enemies Maimed by you take 10% increased Physical Damage
 +10 to Strength
-+15% to Melee Critical Strike Multiplier
++12% to Melee Critical Strike Multiplier
 10% increased Area of Effect
 20% increased Area Damage
 20% increased Critical Strike Chance with Staves
@@ -1180,8 +1230,8 @@ Attack Skills deal 15% increased Damage while holding a Shield
 6% increased Attack and Cast Speed while Leeching Energy Shield
 6% increased Armour
 4% increased maximum Life
-12% increased Damage with Brand Skills
-10% increased Brand Attachment range
+10% increased Brand Damage
+Brand Skills have 10% increased Duration
 5% increased Attack and Cast Speed while Channelling
 Channelling Skills deal 20% increased Damage
 Gain Arcane Surge after Channelling for 1 second
@@ -1201,6 +1251,7 @@ Transfiguration of Soul
 Your Maximum Endurance Charges is equal to your Maximum Frenzy Charges
 10% increased Global Accuracy Rating
 15% increased Critical Strike Chance
+12% increased Attack Damage while Dual Wielding
 +10 to Dexterity
 10% increased Mana Recovery from Flasks
 5% increased Flask Effect Duration
@@ -1210,7 +1261,7 @@ Mace or Sceptre Attacks deal 30% increased Damage with Ailments
 10% reduced Enemy Stun Threshold with Maces or Sceptres
 Hits that Stun Enemies have Culling Strike
 10% increased Spell Damage while Dual Wielding
-3% increased Movement Speed
+2% increased Movement Speed
 14% increased Armour
 5% increased maximum Energy Shield
 Minions deal 10% increased Damage
@@ -1231,6 +1282,7 @@ Regenerate 1% of Life per Second for each Trap Triggered Recently, up to 10% per
 20% reduced Mana Reservation of Skills that throw Mines
 Minions deal 35% increased Damage while you are affected by a Herald
 8% increased Critical Strike Chance per Power Charge
+16% increased Damage if you have Consumed a corpse Recently
 6% increased maximum Energy Shield
 5% increased Effect of your Curses
 25% increased Stun Duration on Enemies
@@ -1241,7 +1293,8 @@ Herald Skills deal 40% increased Damage
 24% increased Cold Damage
 20% increased Projectile Speed
 10% chance to Freeze
-10% increased Effect of Chill
+20% increased Effect of Chill
+10% increased Damage while affected by a Herald
 +10 to Dexterity
 +15 to maximum Energy Shield
 10% increased Energy Shield Recharge Rate
@@ -1256,19 +1309,23 @@ Nearby enemies have -30% to Critical Strike Multiplier
 5% increased maximum Life
 5% increased maximum Mana
 8% increased maximum Mana
-Minions have 14% increased maximum Life
+10% increased Area of Effect of Aura Skills
+Minions have 12% increased maximum Life
 8% increased maximum Mana
 Grants 1 Passive Skill Point
 10% increased maximum Mana
 15% increased Mana Recovery from Flasks
 12% increased Evasion Rating and Armour
-+3% to all Elemental Resistances
++4% to all Elemental Resistances
 25% increased Critical Strike Chance with Totem Skills
-25% increased Critical Strike Chance with Brand Skills
+25% increased Brand Critical Strike Chance
 10% increased Spell Damage
++200 to Evasion Rating
 20% increased Evasion Rating
 60% chance to Avoid Blind
-5% reduced Damage taken from Blinded Enemies
+10% chance to Blind Enemies on Hit with Attacks
+5% increased Cast Speed
+25% increased Conductivity Curse Effect
 8% increased Melee Physical Damage
 +10 to Intelligence
 40% increased Stun and Block Recovery
@@ -1276,13 +1333,12 @@ Purity of Fire has 30% reduced Mana Reservation
 +20 to Strength
 8% increased Global Accuracy Rating
 12% increased Evasion Rating
-30% increased Warcry Duration
-Warcries count as having 10 additional nearby Enemies
-30% increased Warcry Buff Effect
+Exerted Attacks deal 25% increased Damage
+Warcries have minimum of 10 Power
 You can inflict Bleeding on an Enemy up to 8 times Your Bleeding does not deal extra Damage while the Enemy is moving 50% less Damage with Bleeding
 4% increased maximum Life
 10% increased Mana Regeneration Rate
-Attacks have 15% chance to cause Bleeding
++4% to Damage over Time Multiplier for Bleeding
 14% increased Mine Damage
 30% increased Damage over Time while affected by a Herald
 Herald Skills deal 50% increased Damage over Time
@@ -1293,11 +1349,13 @@ Attacks with One Handed Melee Weapons deal 12% increased Damage with Ailments
 4% increased Attack Speed with One Handed Melee Weapons
 10% increased Elemental Damage
 5% chance to Freeze, Shock and Ignite
+10% increased Melee Damage
++1 to Melee Strike Range
 +30 to Intelligence
 +10 to Intelligence
 +10 to Dexterity
 4% increased Attack Speed with Staves
-6% increased Accuracy Rating with Staves
+8% increased Accuracy Rating with Staves
 10% chance to gain Elusive on Kill
 25% increased Elusive Effect
 6% Chance to Block Spell Damage
@@ -1308,36 +1366,37 @@ Attacks with One Handed Melee Weapons deal 12% increased Damage with Ailments
 Minions have 10% increased maximum Life
 Minions deal 15% increased Damage
 Minions have 10% increased maximum Life
-Minions have +5% Chance to Block Attack Damage
+Minions have +10% Chance to Block Attack Damage
 20% increased Critical Strike Chance with Maces or Sceptres
 +16% to Critical Strike Multiplier with Maces or Sceptres
-3% increased maximum Life
+4% increased maximum Life
 10% increased Life Recovery from Flasks
 Attacks with Two Handed Weapons deal 25% increased Damage with Hits and Ailments
 10% reduced Enemy Stun Threshold
 15% increased Area of Effect if you've Stunned an Enemy with a Two Handed Melee Weapon Recently
+5% increased Effect of your Curses
 25% increased Fortify duration
 10% increased Effect of Fortify on you
 8% increased maximum Mana
 Minions deal 15% increased Damage
 10% increased Effect of your Curses
 Enemies you Curse are Hindered, with 15% reduced Movement Speed
-Regenerate 1% of Energy Shield per second if you\u2019ve Killed an Enemy Recently
+Regenerate 1% of Energy Shield per second if you’ve Killed an Enemy Recently
 8% increased Mine Damage
-4% reduced Mana Reservation of Skills that throw Mines
-Minions explode when reduced to Low Life, dealing 33% of their maximum Life as Fire Damage to surrounding Enemies
+5% reduced Mana Reservation of Skills that throw Mines
+Minions Explode when reduced to Low Life, dealing 33% of their Life as Fire Damage to surrounding Enemies
 Attack Skills deal 10% increased Damage while holding a Shield
 6% increased Global Accuracy Rating
 20% increased Attack Damage
 30% increased Evasion Rating during Onslaught
-20% increased Onslaught Effect
+30% increased Onslaught Effect
 10% chance to gain Onslaught for 4 seconds on Kill
-+8% to Chaos Damage over Time Multiplier
 22% increased Chaos Damage
-+8% to Chaos Resistance
++1% to maximum Chaos Resistance
++12% to Chaos Resistance
 15% increased Fire Damage
 5% increased maximum Energy Shield
-8% increased maximum Mana
+6% increased maximum Mana
 10% increased maximum Energy Shield
 8% increased maximum Life
 +10 to Strength
@@ -1348,6 +1407,8 @@ Channelling Skills have 3% increased Attack Speed
 10% increased maximum Energy Shield
 6% increased maximum Life
 4% increased Cast Speed
+12% increased Damage with Bows
+12% increased Damage Over Time with Bow Skills
 Attacks with Melee Weapons deal 4% increased Damage with Ailments
 4% increased Melee Physical Damage
 +2% Chance to Block Spell Damage while wielding a Staff
@@ -1355,7 +1416,7 @@ Attacks with Melee Weapons deal 4% increased Damage with Ailments
 3% increased Cast Speed while wielding a Staff
 +2% Chance to Block Attack Damage while wielding a Staff
 8% increased Spell Damage while holding a Shield
-+1% Chance to Block Attack Damage while holding a Shield
++2% Chance to Block Attack Damage while holding a Shield
 10% increased maximum Life
 8% chance to Avoid Elemental Ailments
 20% increased Movement Speed if you've Killed Recently
@@ -1371,22 +1432,26 @@ Minions Regenerate 1% of Life per second
 10% increased Totem Placement speed
 24% increased Evasion Rating and Armour
 +10% to all Elemental Resistances
-10% increased Physical Damage
+14% increased Physical Damage
 10% increased Damage with Claws
 Claw Attacks deal 20% increased Damage with Ailments
+10% chance to Poison on Hit with Attacks
+12% increased Warcry Cooldown Recovery Speed
 4% increased maximum Life
-+5 Life gained on Kill
++10 Life gained on Kill
 3% chance to Dodge Attack Hits
 +10 to maximum Energy Shield
 3% increased maximum Energy Shield
 Axe Attacks deal 10% increased Damage with Hits and Ailments
 10% increased Accuracy Rating with Axes
 +10 to Intelligence
-+20 to Accuracy Rating
-12% increased Projectile Damage
++100 to Accuracy Rating
+16% increased Projectile Damage
 +20 to Dexterity
-40% reduced Freeze Duration on you
-15% additional Physical Damage Reduction while Frozen
+30% reduced Effect of Chill on you
+30% reduced Freeze Duration on you
+You cannot be Frozen if you've been Frozen Recently
+Unaffected by Chilled Ground
 14% increased Evasion Rating
 5% increased maximum Energy Shield
 4% increased Attack and Cast Speed
@@ -1402,14 +1467,18 @@ Nearby Allies have 15% increased Attack, Cast and Movement Speed
 Nearby Allies have 30% increased Area of Effect
 Nearby Allies Intimidate Enemies for 4 seconds on Hit
 Nearby Allies Unnerve Enemies for 4 seconds on Hit
-Brand Skills have 10% increased Duration
-4% increased Brand Activation frequency
+Brand Recall has 10% increased Cooldown Recovery Speed
+10% increased Brand Attachment range
 20% increased Damage with Ailments
 Damaging Ailments deal damage 10% faster
 +10 to Dexterity
 8% increased maximum Life
 Regenerate 0.5% of Life per second
 Every 5 seconds, Regenerate 10% of Life over one second
+30% increased Damage while in Blood Stance
+15% increased Area of Effect while in Sand Stance
+10% increased Attack Speed if you’ve changed Stance Recently
+Maximum Energy Shield is 0 While not on Full Life, Sacrifice 20% of Mana per Second to Recover that much Life
 40% increased Defences from Equipped Shield
 10% increased maximum Life
 20% increased Life Recovery from Flasks
@@ -1431,17 +1500,18 @@ Attacks have 10% chance to cause Bleeding
 5% increased maximum Energy Shield
 5% increased effect of Non-Curse Auras from your Skills
 Curse Skills have 15% increased Skill Effect Duration
-10% chance to Poison on Hit
+5% increased Poison Duration
+10% increased Damage with Poison
 +20% to Critical Strike Multiplier with Totem Skills
-+20% to Critical Strike Multiplier with Brand Skills
++20% to Brand Critical Strike Multiplier
 12% increased Damage with Daggers
 Dagger Attacks deal 20% increased Damage with Ailments
 10% chance to Poison on Hit with Attacks
 +14 to maximum Life
 20% increased Mana Regeneration Rate
 +100 to maximum Energy Shield
-+1% Chance to Block Attack Damage while Dual Wielding or holding a Shield
-30% increased Block Recovery
++2% Chance to Block Attack Damage while Dual Wielding or holding a Shield
+20% increased Block Recovery
 20% increased Elemental Damage
 30% increased Mana Regeneration Rate if you have Frozen an Enemy Recently
 30% increased Mana Regeneration Rate if you have Shocked an Enemy Recently
@@ -1454,6 +1524,7 @@ Dagger Attacks deal 20% increased Damage with Ailments
 +16% to Critical Strike Multiplier with Maces or Sceptres
 15% increased Chaos Damage
 Flasks applied to you have 5% increased Effect
+Minions have 12% increased maximum Life
 +1 to Maximum Power Charges
 30% increased Effect of Arcane Surge on you
 10% chance to gain Arcane Surge when you Hit a Unique enemy
@@ -1465,16 +1536,16 @@ Dagger Attacks deal 12% increased Damage with Hits and Ailments
 +10 to Dexterity
 8% increased Global Accuracy Rating
 12% increased Evasion Rating
-+3% Chance to Block Spell Damage while holding a Shield
++4% Chance to Block Spell Damage while holding a Shield
 +12% Elemental Resistances while holding a Shield
-+3% Chance to Block Attack Damage while holding a Shield
++4% Chance to Block Attack Damage while holding a Shield
 Bow Skills have 25% increased Area of Effect
-5% reduced Area Damage taken from Hits
 +2 to Melee Strike Range
 10% increased Area of Effect if you have Stunned an Enemy Recently
 Melee Skills have 10% increased Area of Effect
-3% increased Attack Speed with Wands
-6% increased Accuracy Rating with Wands
++10 to Strength
+5% increased Attack Speed with Wands
+8% increased Accuracy Rating with Wands
 8% increased Fire Damage
 8% increased Cold Damage
 10% increased Attack Damage
@@ -1484,15 +1555,17 @@ Mace or Sceptre Attacks deal 14% increased Damage with Ailments
 +30 to maximum Mana
 20% increased maximum Mana
 6% increased Elemental Damage
+Attacks with Two Handed Melee Weapons deal 25% increased Damage with Hits and Ailments
 8% increased Area of Effect
 25% chance to Intimidate nearby Enemies for 4 seconds on Melee Kill
 4% increased maximum Mana
 10% increased Lightning Damage with Attack Skills
 10% increased Effect of Shock
 10% increased Area Damage
-8% increased Cold Damage
+12% increased Brand Damage
+10% increased Cold Damage
 5% chance to Freeze
-5% increased Effect of Chill
+10% increased Effect of Chill
 Projectiles Pierce 2 additional Targets
 10% increased Elemental Damage
 25% more Damage with Hits and Ailments against Enemies that are on Low Life
@@ -1509,9 +1582,8 @@ Mine Damage Penetrates 10% Elemental Resistances
 20% increased Mana Regeneration Rate
 Regenerate 0.8% of Life per second
 You can Cast an additional Brand
-Brand Skills deal 30% increased Damage to Enemies they're Attached to
-Brand Skills have 10% increased Duration
-12% increased Brand Activation frequency
+12% increased Cast Speed with Brand Skills
+Enemies take 5% increased Damage for each of your Brands Attached to them
 20% increased Armour
 5% increased maximum Life
 Regenerate 1% of Life per second
@@ -1524,23 +1596,28 @@ Projectiles Pierce all nearby Targets
 20% increased Cold Damage
 20% increased Freeze Duration on Enemies
 10% chance to Freeze
-15% increased Effect of Chill
+20% increased Effect of Chill
 10% increased Elemental Damage
-20% increased Mine Damage
 40% increased Mine Duration
 10% increased Mine Throwing Speed
 Each Mine applies 2% reduced Damage dealt to Enemies near it, up to 10%
 15% increased maximum Mana
 25% increased Mana Recovery from Flasks
-15% reduced Flask Charges used
+10% reduced Flask Charges used
 Flasks applied to you have 8% increased Effect
+50% less Life Regeneration Rate 50% less maximum Total Recovery per Second from Life Leech Energy Shield Recharge instead applies to Life
 +10 to Intelligence
-+17% to Chaos Resistance
-Unaffected by Poison
-12% increased Physical Damage
++1% to maximum Chaos Resistance
++23% to Chaos Resistance
+30% chance to Avoid being Poisoned
+3% increased Attack and Cast Speed
+8% increased Physical Damage
 18% increased Frenzy Charge Duration
 5% increased maximum Life
+10% increased Spell Damage
 18% increased Frenzy Charge Duration
+10% increased Stun Threshold
+Determination has 30% reduced Mana Reservation
 14% increased Armour
 8% increased maximum Mana
 10% increased Spell Damage
@@ -1551,13 +1628,14 @@ Minions have +10% Chance to Block Attack Damage
 Minions have +10% Chance to Block Spell Damage
 Minions Recover 2% of their Life when they Block
 4% reduced Mana Reserved
-12% increased Movement Speed while Shocked
-40% reduced Effect of Shock on you
-+10 to maximum Mana
+You cannot be Shocked if you've been Shocked Recently
+30% reduced Effect of Shock on you
+Unaffected by Shocked Ground
++25 to maximum Mana
 10% increased maximum Mana
 Minions deal 8% increased Damage
 8% increased Minion Duration
-40% more Elemental Damage if you've dealt a Crit in the past 8 seconds No Critical Strike Multiplier Ailments never count as being from Critical Strikes
+40% more Elemental Damage if you've dealt a Crit in the past 8 seconds Your Critical Strikes do not deal extra Damage Ailments never count as being from Critical Strikes
 15% increased Cold Damage
 Sword Attacks deal 10% increased Damage with Hits and Ailments
 8% increased Accuracy Rating with Swords
@@ -1567,14 +1645,14 @@ Dagger Attacks deal 8% increased Damage with Hits and Ailments
 +10 to Strength
 1% of Physical Attack Damage Leeched as Life
 15% increased Maximum total Recovery per second from Life Leech
-20% increased total Recovery per second from Life Leech
+100% increased total Recovery per second from Life Leech
 30% increased Damage while Leeching
 12% increased Physical Damage with Wands
 Wand Attacks deal 12% increased Damage with Ailments
 4% increased Attack Speed with Wands
 Attack Skills deal 12% increased Damage while Dual Wielding
-+15% to Critical Strike Multiplier with Traps
-+15% to Critical Strike Multiplier with Mines
++10% to Critical Strike Multiplier with Traps
++10% to Critical Strike Multiplier with Mines
 Trap Damage Penetrates 5% Elemental Resistances
 Mine Damage Penetrates 5% Elemental Resistances
 8% increased maximum Mana
@@ -1592,7 +1670,7 @@ Minions Leech 0.4% of Damage as Life
 40% increased Energy Shield from Equipped Shield
 20% increased Attack Damage
 20% increased Damage with Ailments from Attack Skills
-Enemies killed by your Attack Hits have a 15% chance to Explode, dealing a tenth of their maximum Life as Physical Damage
+Enemies Killed with Attack Hits have a 15% chance to Explode, dealing a tenth of their Life as Physical Damage
 Damage Penetrates 8% Lightning Resistance
 0.5% of Lightning Damage Leeched as Energy Shield
 4% increased maximum Mana
@@ -1602,14 +1680,16 @@ Damage Penetrates 8% Lightning Resistance
 20% increased Endurance Charge Duration
 20% increased Power Charge Duration
 40% increased Global Critical Strike Chance while wielding a Staff
-+35% to Global Critical Strike Multiplier while wielding a Staff
++30% to Global Critical Strike Multiplier while wielding a Staff
++5% Chance to Block Attack Damage if you've dealt a Critical Strike Recently
 +10 to Strength
 30% increased Evasion Rating
 3% chance to Dodge Attack Hits
 3% chance to Dodge Spell Hits
-16% increased Elemental Damage with Staves
+10% increased Elemental Damage with Staves
+Damage with Weapons Penetrates 2% Elemental Resistance
 15% increased Totem Placement speed
-10% increased Brand Attachment range
+15% increased Brand Attachment range
 10% increased Skill Effect Duration
 25% increased Damage while wielding a Wand
 5% increased Attack Speed with Wands
@@ -1617,7 +1697,6 @@ Increases and Reductions to Spell Damage also apply to Attacks while wielding a 
 15% increased Damage over Time
 15% increased Critical Strike Chance
 +10 to Strength
-10% increased Warcry Cooldown Recovery Speed
 25% increased Physical Damage with Axes
 Axe Attacks deal 25% increased Damage with Ailments
 8% increased Attack Speed with Axes
@@ -1627,13 +1706,15 @@ Axe Attacks deal 25% increased Damage with Ailments
 5% increased Dexterity
 +1 to Maximum Frenzy Charges
 14% increased Totem Damage
-14% increased Damage with Brand Skills
-20% increased Cold Damage
-Recover 2% of Life on Kill
+14% increased Brand Damage
+Using Warcries is Instant Warcries share their Cooldown
++8% to Cold Damage over Time Multiplier
+Recover 2% of Life on Killing a Chilled Enemy
 6% increased Projectile Damage
 Minions deal 12% increased Damage
 15% increased Minion Accuracy Rating
-25% increased Damage with Bleeding
+Attacks have 10% chance to cause Bleeding
+20% increased Damage with Bleeding
 25% increased maximum Mana
 Movement Skills cost no Mana
 20% increased Attack and Cast Speed if you've used a Movement Skill Recently
@@ -1650,9 +1731,8 @@ Gain 10% of Physical Damage as Extra Chaos Damage
 Modifiers to Critical Strike Multiplier also apply to Damage over Time Multiplier for Ailments from Critical Strikes at 50% of their value 30% less Damage with Hits
 10% increased Mana Recovery from Flasks
 5% increased Flask Effect Duration
-20% increased Critical Strike Chance
-+2% to Damage over Time Multiplier for Poison
-4% increased Attack Speed
+25% increased Critical Strike Chance
++4% to Damage over Time Multiplier for Poison
 8% increased Damage with Poison
 15% increased Mana Regeneration Rate
 Regenerate 0.4% of Life per second
@@ -1661,9 +1741,10 @@ Regenerate 0.4% of Life per second
 4% increased Cast Speed
 4% increased Cast Speed
 Minions deal 15% increased Damage
+Skills Supported by Unleash have 10% increased Seal gain frequency
 Share Endurance, Frenzy and Power Charges with nearby party members
 30% increased Damage if you have Consumed a corpse Recently
-2% increased Attack and Cast Speed for each corpse Consumed Recently
+2% increased Attack and Cast Speed for each corpse Consumed Recently, up to a maximum of 200%
 Enemies near corpses you Spawned Recently are Chilled and Shocked
 Corpses you Spawn have 50% increased Maximum Life
 10% increased Chaos Damage
@@ -1676,7 +1757,7 @@ Axe Attacks deal 12% increased Damage with Hits and Ailments
 8% increased maximum Life
 10% increased maximum Mana
 10% increased Damage with Bows
-3% increased Attack Speed with Bows
+4% increased Attack Speed with Bows
 10% increased Damage Over Time with Bow Skills
 Energy Shield Recharge is not interrupted by Damage if Recharge began Recently 50% less Energy Shield Regeneration Rate 50% less Maximum total Recovery per Second from Energy Shield Leech
 2% increased Movement Speed per Frenzy Charge
@@ -1685,11 +1766,13 @@ Energy Shield Recharge is not interrupted by Damage if Recharge began Recently 5
 +15 to all Attributes
 +15% Elemental Resistances while holding a Shield
 60% increased Defences from Equipped Shield
-25% increased Damage for each Herald affecting you
-12% increased Attack Damage
-12% increased Spell Damage
+5% increased Damage for each Herald affecting you
+20% increased Damage while affected by a Herald
+12% increased Damage
 20% increased Mana Regeneration Rate
 +20 to Intelligence
+10% chance to gain Elusive on Kill
+25% increased Elusive Effect
 +10 to Strength
 24% increased Evasion Rating
 +8% to all Elemental Resistances
@@ -1698,18 +1781,19 @@ Energy Shield Recharge is not interrupted by Damage if Recharge began Recently 5
 8% increased Physical Damage with Maces or Sceptres
 Mace or Sceptre Attacks deal 8% increased Damage with Ailments
 20% increased Critical Strike Chance with Maces or Sceptres
-14% increased Totem Damage
+10% increased Totem Damage
+5% increased Totem Placement speed
 Attack Skills deal 10% increased Damage while Dual Wielding
 3% increased Attack Speed while Dual Wielding
 20% increased Global Critical Strike Chance while wielding a Staff
-16% increased maximum Mana
-5% reduced Mana Cost of Skills
+20% increased maximum Mana
+Guard Skills have 25% increased Duration
+Recover 20% of Mana over 1 second when you use a Guard Skill
 30% increased Fire Damage
 12% increased Area of Effect
 +10 to Strength and Intelligence
-1% additional Physical Damage Reduction per Summoned Sentinel of Purity
-You lose Virulence 30% slower
 Minions deal 20% increased Damage while you are affected by a Herald
+Summoned Sentinels have 25% increased Cooldown Recovery Speed
 20% increased maximum Mana
 20% increased Mana Regeneration Rate
 +20 to Intelligence
@@ -1736,9 +1820,10 @@ Attack Skills deal 12% increased Damage while Dual Wielding
 10% increased Trap Throwing Speed
 10% increased Mine Throwing Speed
 5% increased Movement Speed if you've thrown a Trap or Mine Recently
-6% increased Accuracy Rating with Maces or Sceptres
+8% increased Accuracy Rating with Maces or Sceptres
 12% increased Elemental Damage with Maces or Sceptres
-Mace or Sceptre Attacks deal 18% increased Damage with Hits and Ailments
+100% chance to Defend with Double Armour Maximum Damage Reduction for any Damage Type is 50%
+Mace or Sceptre Attacks deal 24% increased Damage with Hits and Ailments
 6% increased Attack Speed with Maces or Sceptres
 15% increased Area of Effect if you have Stunned an Enemy Recently
 Can Allocate Passives from the Marauder's starting point
@@ -1750,6 +1835,9 @@ Minions have 4% increased Cast Speed
 +1000 Evasion Rating while you have Tailwind
 If you've used a Skill Recently, you and nearby Allies have Tailwind
 10% increased Effect of Tailwind on you for each Skill you've used Recently, up to 100%
+20% chance to Impale Enemies on Hit with Two Handed Weapons
+20% increased Effect of Impales you inflict with Two Handed Weapons on Non-Impaled Enemies
+25% increased Impale Duration
 +10 to Strength
 20% increased Effect of Buffs granted by your Golems
 Golems have 12% increased Maximum Life
@@ -1758,29 +1846,32 @@ Attack Skills deal 20% increased Damage while Dual Wielding
 20% chance to gain a Power Charge when you Block
 +10 to Strength
 10% increased maximum Life
-+5 Life gained on Kill
++10 Life gained on Kill
 +20 to Strength
-8% increased Evasion Rating
+10% increased Evasion Rating
 4% increased maximum Life
 15% increased Evasion Rating and Armour
 5% increased effect of Non-Curse Auras from your Skills
 10% increased Trap Damage
 10% increased Mine Damage
 5% increased Mine Throwing Speed
+20% of Physical Damage Converted to Fire Damage
 8% increased Fire Damage with Attack Skills
+10% increased Melee Damage
+15% increased Melee Splash Area of Effect
 15% increased maximum Mana
 20% increased Mana Regeneration Rate
 20% increased Flask Charges gained
 +20 to Strength and Intelligence
 6% increased Accuracy Rating while Dual Wielding
-+15% to Attack Critical Strike Multiplier while Dual Wielding
++10% to Attack Critical Strike Multiplier while Dual Wielding
 Minions have 4% increased Attack Speed
 Minions have 4% increased Cast Speed
-10% increased maximum Mana
 10% increased Mana Regeneration Rate
+5% reduced Mana Cost of Skills
 6% increased maximum Life
-Flasks applied to you have 10% increased Effect
 5% increased Attack and Cast Speed during any Flask Effect
+Gain Alchemist's Genius when you use a Flask
 +20% to Chaos Damage over Time Multiplier
 +60% to Chaos Resistance
 Every second, inflict Withered on nearby Enemies for 15 seconds
@@ -1798,13 +1889,16 @@ Minions have 15% additional Physical Damage Reduction
 Minions have +15% to all Elemental Resistances
 Moving while Bleeding doesn't cause Minions to take extra Damage
 +1 to Maximum Power Charges
+30% increased Damage if you have Consumed a corpse Recently
+Desecrate and Unearth have +2 to Maximum number of corpses allowed
+Regenerate 2% of Life per second if you've Consumed a corpse Recently
 4% Chance to Block Spell Damage
 20% increased Spell Damage
 20% chance to gain a Power Charge when you Block
-+2% Chance to Block Attack Damage while Dual Wielding
++3% Chance to Block Attack Damage while Dual Wielding
 Attack Skills deal 24% increased Damage while Dual Wielding
 6% increased Attack Speed while Dual Wielding
-10% increased Elemental Damage with Attack Skills
+12% increased Elemental Damage with Attack Skills
 +15 to Strength
 Enemies Chilled by your Hits are Shocked
 Enemies Shocked by your Hits are Chilled
@@ -1815,11 +1909,14 @@ Enemies Shocked by your Hits are Chilled
 Damage Penetrates 5% Elemental Resistances while you have a Power Charge
 14% increased Physical Damage with Axes
 Axe Attacks deal 14% increased Damage with Ailments
+10% increased Mana Regeneration Rate
+5% increased Mana Cost of Skills
 20% increased Totem Duration
 Spells Cast by Totems have 3% increased Cast Speed
 Attacks used by Totems have 5% increased Attack Speed
-20% increased Critical Strike Chance for Spells
+25% increased Critical Strike Chance for Spells
 +10 to Strength
++3% to Damage over Time Multiplier for Poison
 15% chance to Poison on Hit
 14% increased Trap Damage
 Claw Attacks deal 8% increased Damage with Hits and Ailments
@@ -1829,23 +1926,27 @@ Claw Attacks deal 8% increased Damage with Hits and Ailments
 0.3% of Spell Damage Leeched as Energy Shield
 4% reduced Mana Reserved
 5% increased maximum Life
-+50% to Critical Strike Multiplier if you've taken a Savage Hit Recently
-40% increased Critical Strike Chance
+25% increased Frostbite Curse Effect
+15% increased Critical Strike Chance
++30% to Critical Strike Multiplier if you've taken a Savage Hit Recently
+30% increased Critical Strike Chance
+30% reduced Reflected Physical Damage taken
+15% increased Physical Damage
 26% increased Physical Damage with Axes
 Axe Attacks deal 26% increased Damage with Ailments
 6% increased Attack Speed with Axes
-Enemies have -12% to Total Physical Damage Reduction against your Hits
+Overwhelm 12% Physical Damage Reduction
 +1 to Melee Strike Range with Axes
 +200 to Accuracy Rating
 50% increased Area of Effect
 Skills fire an additional Projectile
-Axe Attacks deal 25% increased Damage with Hits and Ailments
+Axe Attacks deal 28% increased Damage with Hits and Ailments
 8% increased Attack Speed with Axes
-40% increased Global Evasion Rating when on Full Life
++5 to Maximum Rage
 25% increased Damage over Time
 +13% to Chaos Resistance
 Axe Attacks deal 10% increased Damage with Hits and Ailments
-20% increased Critical Strike Chance with Axes
+25% increased Critical Strike Chance with Axes
 0.4% of Attack Damage Leeched as Life
 30% increased Damage while Leeching
 15% increased Attack Speed while Leeching
@@ -1853,8 +1954,7 @@ Axe Attacks deal 10% increased Damage with Hits and Ailments
 +8% to Damage over Time Multiplier for Bleeding
 40% increased Attack Damage against Bleeding Enemies
 25% increased Damage with Bleeding
-5% reduced Damage taken from Bleeding Enemies
-Bleeding you inflict deals Damage 10% faster
+Bleeding you inflict deals Damage 5% faster
 4% increased Cast Speed
 Minions deal 15% increased Damage
 Purity of Ice has 30% reduced Mana Reservation
@@ -1872,31 +1972,32 @@ Mace or Sceptre Attacks deal 8% increased Damage with Hits and Ailments
 Minions deal 12% increased Damage
 +10 to Strength
 4% increased maximum Life
+4% chance to Avoid Elemental Ailments
 20% increased Shock Duration on Enemies
 40% increased Critical Strike Chance against Shocked Enemies
 30% increased Damage if you have Shocked an Enemy Recently
-30% increased Effect of Shock
+20% increased Effect of Shock
 12% increased Spell Damage while wielding a Staff
 +6% to Chaos Resistance
-15% increased Damage over Time
-+10% to Chaos Damage over Time Multiplier
-15% increased Chaos Damage
+25% increased Chaos Damage
+20% increased Effect of Withered
 8% increased Armour
 20% increased Mana Regeneration Rate
 20% increased Totem Placement speed
 Regenerate 0.3% of Life per second
-25% increased Brand Activation Frequency if you haven't used a Brand Skill Recently
-20% increased Brand Attachment range
+Brand Recall grants 20% increased Brand Attachment range to recalled Brands
+Brand Recall has 4% increased Cooldown Recovery Speed per Brand, up to a maximum of 40%
 20% increased Armour
 10% increased maximum Energy Shield
 Regenerate 1% of Life per second
 +10 to Strength and Intelligence
 10% increased Projectile Damage
 10% increased Critical Strike Chance
+20% increased maximum Mana
+10% increased Mana Cost of Skills
 Nearby Enemies have -20% to Cold Resistance
 Nearby Enemies have -20% to Chaos Resistance
 Nearby Enemies have 100% reduced Life Regeneration rate
-12% increased Melee Damage
 Strike Skills target 1 additional nearby Enemy
 Mace or Sceptre Attacks deal 14% increased Damage with Hits and Ailments
 You take 20% reduced Extra Damage from Critical Strikes
@@ -1904,13 +2005,14 @@ You take 20% reduced Extra Damage from Critical Strikes
 20% reduced Effect of Curses on you
 12% increased Physical Damage with Two Handed Melee Weapons
 Attacks with Two Handed Melee Weapons deal 12% increased Damage with Ailments
-0.4% of Physical Attack Damage Leeched as Life
+0.8% of Physical Attack Damage Leeched as Life
 20% increased maximum Mana
-Regenerate 2 Mana per second
+Regenerate 3 Mana per second
 20% increased Mana Recovery from Flasks
-Gain 4% of Maximum Mana as Extra Maximum Energy Shield
+Gain 3% of Maximum Mana as Extra Maximum Energy Shield
 20% increased Trap Damage
 10% increased Cooldown Recovery Speed for throwing Traps
+Skills which Throw Traps have +1 Cooldown Use
 8% increased maximum Life
 12% increased maximum Mana
 10% increased Chaos Damage
@@ -1918,14 +2020,13 @@ Gain 4% of Maximum Mana as Extra Maximum Energy Shield
 +10 to Dexterity
 30% increased Physical Damage with Two Handed Melee Weapons
 Attacks with Two Handed Melee Weapons deal 30% increased Damage with Ailments
-0.8% of Physical Attack Damage Leeched as Life
-50% increased total Recovery per second from Life Leech
-Enemies have -12% to Total Physical Damage Reduction against your Hits
+100% increased total Recovery per second from Life Leech
+Overwhelm 12% Physical Damage Reduction
 Minions deal 15% increased Damage
-Minions have 8% increased Attack Speed
+Minions have 6% increased Attack Speed
 30% increased Minion Accuracy Rating
-Minions have 5% chance to deal Double Damage
-+2% Chance to Block Spell Damage while holding a Shield
+Minions have 4% chance to deal Double Damage
++3% Chance to Block Spell Damage while holding a Shield
 10% increased Spell Damage while holding a Shield
 +10 to Intelligence
 20% increased Critical Strike Chance with Totem Skills
@@ -1941,16 +2042,17 @@ Your Hits permanently Intimidate Enemies that are on Full Life
 Gain Adrenaline for 20 seconds when you reach Low Life if you do not have Adrenaline
 Recover 25% of Life when you gain Adrenaline
 Remove all Ailments and Burning when you gain Adrenaline
-Minions have 10% increased maximum Life
+Minions have 15% increased maximum Life
 Minions deal 15% increased Damage
-30% increased Minion Accuracy Rating
 +1 to Maximum number of Raised Zombies
 +1 to Maximum number of Skeletons
+6% increased Flask Effect Duration
 +10 to Intelligence
 +10 to Dexterity
 +5% to Damage over Time Multiplier for Ignite from Critical Strikes
 15% increased Critical Strike Chance for Spells
 3% increased Attack Speed
+You lose Rage 20% slower
 4% increased Attack Speed with Maces or Sceptres
 8% increased Accuracy Rating with Maces or Sceptres
 8% increased maximum Life
@@ -1967,7 +2069,7 @@ Bleeding Enemies you Kill Explode, dealing 10% of their Maximum Life as Physical
 20% increased Trap Trigger Area of Effect
 4% increased Trap Throwing Speed
 +10 to Dexterity
-Enemies have -10% to Total Physical Damage Reduction against your Hits
+Overwhelm 10% Physical Damage Reduction
 35% increased Physical Damage
 8% increased maximum Mana
 10% increased Mana Regeneration Rate
@@ -1976,8 +2078,9 @@ Recover 1% of Life on Kill
 Recover 1% of Energy Shield on Kill
 3% increased Attack Speed
 8% increased maximum Mana
+10% increased Mana Regeneration Rate
 3% increased Attack Speed
-20% increased total Recovery per second from Life Leech
+40% increased total Recovery per second from Life Leech
 6% increased maximum Mana
 +10 to Strength
 Anger has 30% increased Aura Effect
@@ -1985,8 +2088,8 @@ Wrath has 30% increased Aura Effect
 Hatred has 30% increased Aura Effect
 20% chance to gain a Power Charge when you Block
 +6% Chance to Block Spell Damage while at Maximum Power Charges
-80% increased Critical Strike Chance if you haven\u2019t Blocked Recently
-+40% to Critical Strike Multiplier if you have Blocked Recently
+60% increased Critical Strike Chance if you haven’t Blocked Recently
++30% to Critical Strike Multiplier if you have Blocked Recently
 10% increased maximum Mana
 +5 Mana gained on Kill
 Claw Attacks deal 20% increased Damage with Hits and Ailments
@@ -1998,24 +2101,25 @@ You gain 8% increased Damage for each Trap
 20% Chance for Traps to Trigger an additional time
 +2% Chance to Block Spell Damage while holding a Shield
 40% increased Block Recovery
-20% increased Effect of Herald Buffs on you
-10% reduced Mana Reservation of Herald Skills
+Nearby Enemies have Cold Exposure while you are affected by Herald of Ice
+Nearby Enemies have Fire Exposure while you are affected by Herald of Ash
+Nearby Enemies have Lightning Exposure while you are affected by Herald of Thunder
 +10 to Dexterity
 Attacks have 10% chance to cause Bleeding
 10% chance to Impale Enemies on Hit with Attacks
 15% increased Effect of Impales inflicted by Hits that also inflict Bleeding
-20% increased Critical Strike Chance with Bows
+25% increased Critical Strike Chance with Bows
 30% increased Lightning Damage
 Your Shocks can increase Damage taken by up to a maximum of 60%
 30% increased Effect of Shock
-20% increased Warcry Cooldown Recovery Speed
-You and nearby Party members gain 5 Rage when you Warcry
+Exerted Attacks deal 25% increased Damage
+Warcries have 5% Chance to grant an Endurance, Frenzy or Power Charge per Power
 14% increased Trap Damage
 14% increased Mine Damage
-+35% to Critical Strike Multiplier
-30% increased Critical Strike Chance
++25% to Critical Strike Multiplier
+25% increased Critical Strike Chance
 Dagger Attacks deal 8% increased Damage with Hits and Ailments
-20% increased Critical Strike Chance with Daggers
+25% increased Critical Strike Chance with Daggers
 50% chance to gain Elusive on Critical Strike
 15% increased Attack and Cast Speed while Elusive
 8% reduced Damage taken while Elusive
@@ -2038,17 +2142,19 @@ Gain 20% of Maximum Mana as Extra Maximum Energy Shield
 1% increased Area of Effect per 50 Unreserved Maximum Mana, up to 100%
 50% less Mana Cost of Skills
 10% less Mana Reservation of Skills
-14% increased Damage with Brand Skills
-12% increased Physical Damage with Two Handed Melee Weapons
-Attacks with Two Handed Melee Weapons deal 12% increased Damage with Ailments
+10% increased Brand Damage
+10% increased Brand Attachment range
+14% increased Physical Damage with Two Handed Melee Weapons
+Attacks with Two Handed Melee Weapons deal 14% increased Damage with Ailments
 20% increased Stun Duration with Two Handed Melee Weapons on Enemies
-+12% to Fire Damage over Time Multiplier
++10% to Fire Damage over Time Multiplier
 20% increased Fire Damage
 15% chance to Ignite
+Ignites you inflict deal Damage 5% faster
 10% increased Elemental Damage
-10% increased Damage with Bows
+12% increased Damage with Bows
 15% increased Evasion Rating
-10% increased Damage Over Time with Bow Skills
+12% increased Damage Over Time with Bow Skills
 +13% to Chaos Resistance
 Regenerate 1.2% of Life per second
 Regenerate 0.6% of Energy Shield per second
@@ -2065,6 +2171,7 @@ Minions have 12% increased maximum Life
 40% increased Trap Trigger Area of Effect
 +10 to Intelligence
 3% increased Attack Speed
+You lose Rage 20% slower
 +10 to Strength
 12% increased Physical Damage with One Handed Melee Weapons
 Attacks with One Handed Melee Weapons deal 12% increased Damage with Ailments
@@ -2076,8 +2183,8 @@ Minions deal 20% increased Damage
 Minions have 5% increased Attack Speed
 Minions have 5% increased Cast Speed
 Minions have 10% chance to gain Onslaught for 4 seconds on Kill
-Enemies Taunted by you take 5% increased Damage
-Warcry Skills have 40% increased Area of Effect
+Exerted Attacks have 8% chance to deal Double Damage
++20 to Strength
 Channelling Skills deal 10% increased Attack Damage
 Channelling Skills have 3% increased Attack Speed
 50% reduced Mana Reservation of Banner Skills
@@ -2086,15 +2193,16 @@ Axe Attacks deal 8% increased Damage with Hits and Ailments
 3% increased Attack Speed with Axes
 0.4% of Physical Attack Damage Leeched as Life
 5% increased Maximum total Recovery per second from Life Leech
-+15% to Critical Strike Multiplier with Traps
-+15% to Critical Strike Multiplier with Mines
-Wand Attacks deal 15% increased Damage with Hits and Ailments
++10% to Critical Strike Multiplier with Traps
++10% to Critical Strike Multiplier with Mines
+Wand Attacks deal 16% increased Damage with Hits and Ailments
 2% more Attack Speed per Blitz Charge
 10% reduced Critical Strike Chance per Blitz Charge
 Gain a Blitz Charge on Critical Strike
 +20 to Maximum Blitz Charges
 Ignites you inflict deal Damage 15% faster
 8% increased maximum Mana
+12% increased Melee Damage
 +5 to Evasion Rating per 1 Maximum Energy Shield on Helmet
 +1 to maximum Energy Shield per 6 Evasion Rating on Body Armour
 6% increased Attack and Cast Speed per Ghost Shroud
@@ -2103,8 +2211,8 @@ Cannot be Stunned while you have Ghost Shrouds
 Sword Attacks deal 10% increased Damage with Hits and Ailments
 20% increased Critical Strike Chance with Swords
 You can Cast an additional Brand
-20% increased Damage with Brand Skills
-10% increased Brand Attachment range
+20% increased Brand Damage
+20% increased Brand Attachment range
 4% increased Attack Speed
 5% increased maximum Life
 +10 to Dexterity
@@ -2114,17 +2222,17 @@ Axe Attacks deal 10% increased Damage with Hits and Ailments
 3% increased Attack Speed with Axes
 +3% to Chaos Damage over Time Multiplier
 10% increased Chaos Damage
-10% increased Projectile Damage
+12% increased Projectile Damage
 12% chance to Knock Enemies Back on hit
 25% increased Knockback Distance
 10% increased Physical Damage
 25% increased Lightning Damage
 5% increased Cast Speed with Lightning Skills
 +15% to Lightning Resistance
-10% increased Trap Damage
-10% increased Mine Damage
-4% increased Trap Throwing Speed
-4% increased Mine Throwing Speed
+8% increased Trap Damage
+8% increased Mine Damage
+3% increased Trap Throwing Speed
+3% increased Mine Throwing Speed
 16% increased Melee Physical Damage
 10% increased Damage over Time
 4% increased maximum Life
@@ -2134,7 +2242,7 @@ Damage with Weapons Penetrates 8% Fire Resistance
 30% increased Fire Damage with Attack Skills
 16% increased Critical Strike Chance with Bows
 +12% to Critical Strike Multiplier with Bows
-+12% to Critical Strike Multiplier
++15% to Critical Strike Multiplier
 45% increased Critical Strike Chance
 14% increased Physical Damage with Maces or Sceptres
 Mace or Sceptre Attacks deal 14% increased Damage with Ailments
@@ -2142,8 +2250,8 @@ Mace or Sceptre Attacks deal 14% increased Damage with Ailments
 Gain 10% of Wand Physical Damage as Extra Lightning Damage
 25% of Wand Physical Damage converted to Lightning Damage
 20% increased Attack Critical Strike Chance while Dual Wielding
-Minions have 10% increased maximum Life
-Minions have +10% to all Elemental Resistances
+Minions have 8% increased maximum Life
+Minions have +8% to all Elemental Resistances
 +10 to Dexterity
 Grants 1 Passive Skill Point
 +10 to Intelligence
@@ -2155,10 +2263,9 @@ Damage with Weapons Penetrates 3% Elemental Resistance
 20% increased Critical Strike Chance with Claws
 +10% to Critical Strike Multiplier with Claws
 5% increased Effect of your Curses
-10% increased Totem Life
-Totems gain +16% to all Elemental Resistances
-12% increased Physical Damage with Two Handed Melee Weapons
-Attacks with Two Handed Melee Weapons deal 12% increased Damage with Ailments
+15% increased Totem Life
+Totems gain +20% to all Elemental Resistances
+12% increased Accuracy Rating with Two Handed Melee Weapons
 Gain 2 Grasping Vines each second while stationary 2% chance to deal Double Damage per Grasping Vine 1% less Damage taken per Grasping Vine
 Attack Skills deal 10% increased Damage while holding a Shield
 3% increased Attack Speed while holding a Shield
@@ -2167,7 +2274,8 @@ Auras from your Skills grant +1% Physical Damage Reduction to you and Allies
 Every 5 seconds, Regenerate 20% of Life over one second
 You and nearby Party Members Share Power, Frenzy and Endurance Charges with each other
 While there are at least five nearby Allies, you and nearby Allies have Onslaught
-14% increased Elemental Damage with Wands
+10% increased Elemental Damage with Wands
+Damage with Weapons Penetrates 2% Elemental Resistance
 3% increased Attack Speed
 2% increased Movement Speed
 12% increased Elemental Damage with Attack Skills
@@ -2175,19 +2283,22 @@ Attack Skills deal 20% increased Damage while holding a Shield
 +8% Elemental Resistances while holding a Shield
 +3% Chance to Block Attack Damage while holding a Shield
 +10 to Dexterity
-Minions have 10% increased maximum Life
-Minions have 10% additional Physical Damage Reduction
+Minions have 8% increased maximum Life
+Minions have 8% additional Physical Damage Reduction
 2% chance to gain a Power, Frenzy or Endurance Charge on Kill
 8% increased Fire Damage
 8% increased Physical Damage
+Projectiles Pierce an additional Target
 10% increased Projectile Damage
-30% increased Warcry Duration
-If you've Warcried Recently, you and nearby allies have 10% increased Attack, Cast and Movement Speed
-Warcries cost no Mana
-8% increased Evasion Rating
+Enemies Taunted by your Warcries take 5% increased Damage
+Warcries Debilitate Enemies for 1 second
+15% increased Warcry Buff Effect
+10% increased Evasion Rating
 4% increased maximum Life
 +5% to Chaos Damage over Time Multiplier
 6% increased maximum Energy Shield
+4% increased Movement Speed
+Purity of Ice has 30% increased Aura Effect
 You can apply an additional Curse
 15% increased Effect of your Curses
 When you Kill an Enemy, for each Curse on that Enemy, gain 8% of Non-Chaos Damage as extra Chaos Damage for 4 seconds
@@ -2202,19 +2313,23 @@ Enemies you Curse have Malediction
 +1 to Maximum Frenzy Charges
 6% increased Mine Damage
 Skills used by Mines have 6% increased Area of Effect
+10% increased Damage while affected by a Herald
 20% increased Totem Placement speed
 10% increased Attack and Cast Speed if you've summoned a Totem Recently
 5% increased maximum Life
 +10 to Intelligence
 20% increased Trap Trigger Area of Effect
 4% increased Trap Throwing Speed
-16% increased Attack Damage
-4% increased Movement Speed
+20% increased Attack Damage
+5% increased Movement Speed
 20% increased Critical Strike Chance
 +10 to Dexterity and Intelligence
+10% reduced Projectile Speed
+20% increased Projectile Damage
+Projectiles deal 20% increased Damage with Hits to targets at the start of their movement, reducing to 0% as they travel farther
 Spells Cast by Totems have 5% increased Cast Speed
 Attacks used by Totems have 8% increased Attack Speed
-5% increased Brand Activation frequency
++4% to Fire Damage over Time Multiplier
 10% increased Trap Damage
 10% increased Mine Damage
 +40 to Dexterity
@@ -2227,6 +2342,8 @@ Axe Attacks deal 16% increased Damage with Ailments
 Totems are Immune to Fire Damage
 Enemies near your Totems deal 8% less Damage
 Enemies near your Totems take 16% increased Physical and Fire Damage
+Claw Attacks deal 12% increased Damage with Hits and Ailments
+Dagger Attacks deal 12% increased Damage with Hits and Ailments
 You have Fortify
 30% more Spell Damage when on Low Life
 15% increased Mana Regeneration Rate
@@ -2247,7 +2364,9 @@ Your hits can't be Evaded Never deal Critical Strikes
 Minions have 10% increased maximum Life
 20% increased Armour
 15% increased maximum Mana
-4% additional Physical Damage Reduction
++1 Armour per 10 Unreserved Maximum Mana
+15% increased Damage while in Blood Stance
+10% increased Area of Effect while in Sand Stance
 12% increased Accuracy Rating with Two Handed Melee Weapons
 40% increased Critical Strike Chance with Two Handed Melee Weapons
 +20% to Critical Strike Multiplier with Two Handed Melee Weapons
@@ -2257,9 +2376,8 @@ Minions have 10% increased maximum Life
 15% increased Armour
 2% increased Movement Speed
 8% chance to Avoid being Stunned
-+10% to all Elemental Resistances and maximum Elemental Resistances while affected by a Non-Vaal Guard Skill
-20% more Damage taken if a Non-Vaal Guard Buff was lost Recently
-20% additional Physical Damage Reduction while affected by a Non-Vaal Guard Skill
++10% to all Elemental Resistances and maximum Elemental Resistances while affected by a Non-Vaal Guard Skill 20% additional Physical Damage Reduction while affected by a Non-Vaal Guard Skill 20% more Damage taken if a Non-Vaal Guard Buff was lost Recently
++4% to Damage over Time Multiplier
 18% increased Evasion Rating
 12% increased maximum Energy Shield
 0.3% of Spell Damage Leeched as Energy Shield
@@ -2270,13 +2388,13 @@ Critical Strikes with Daggers have a 40% chance to Poison the Enemy
 20% increased Damage with Poison
 +30 to Dexterity
 Regenerate 0.5% of Life per second per Endurance Charge
-3% more Damage for each Endurance Charge lost recently, up to 15%
+15% more Damage if you've lost an Endurance Charge in the past 8 seconds
+Gain 1 Endurance Charge every second if you've used a Warcry Recently
 +1 to Maximum Endurance Charges
-Recover 25% of Life and Mana when you use a Warcry
-100% increased Warcry Duration
-100% increased Warcry Cooldown Recovery Speed
-If you've Warcried Recently, you and nearby allies have 20% increased Attack Speed
-15% chance to deal Double Damage if you've Warcried in the past 8 seconds
+Warcries grant 10 Rage per 5 Power if you have less than 25 Rage
+Warcries Sacrifice 10 Rage if you have at least 25 Rage Exerted Attacks deal 50% more Damage if a Warcry Sacrificed Rage Recently
+8% increased Armour
+Purity of Fire has 30% increased Aura Effect
 +30 to Dexterity
 14% increased Armour
 5% increased maximum Energy Shield
@@ -2288,14 +2406,14 @@ Regenerate 0.5% of Life per second
 10% increased Chaos Damage
 6% increased maximum Energy Shield
 12% increased Lightning Damage
-10% increased Trap Damage
-10% increased Mine Damage
-4% increased Trap Throwing Speed
-4% increased Mine Throwing Speed
-25% increased Cold Damage
-25% increased Lightning Damage
+8% increased Trap Damage
+8% increased Mine Damage
+3% increased Trap Throwing Speed
+3% increased Mine Throwing Speed
+30% increased Cold Damage
+30% increased Lightning Damage
 20% increased Mana Regeneration Rate
-10% increased Effect of Non-Damaging Ailments
+20% increased Effect of Non-Damaging Ailments
 12% increased Elemental Damage with Attack Skills
 12% increased Melee Physical Damage
 25% increased Defences from Equipped Shield
@@ -2304,7 +2422,7 @@ Regenerate 0.5% of Life per second
 20% increased Critical Strike Chance with Bows
 10% increased Damage Over Time with Bow Skills
 Axe Attacks deal 10% increased Damage with Hits and Ailments
-20% increased Critical Strike Chance with Axes
+25% increased Critical Strike Chance with Axes
 +10 to Dexterity
 10% increased Flask Charges gained
 Flasks applied to you have 5% increased Effect
@@ -2333,7 +2451,7 @@ Gain a Power or Frenzy Charge each second while Channelling
 14% increased Armour
 5% increased maximum Energy Shield
 +2% Chance to Block Attack Damage
-Enemies killed by your Wand Hits have a 10% chance to Explode, dealing a quarter of their Life as Chaos Damage
+Enemies Killed with Wand Hits have a 10% chance to Explode, dealing a quarter of their Life as Chaos Damage
 Gain 10% of Wand Physical Damage as Extra Chaos Damage
 +10% to Damage over Time Multiplier for Bleeding
 30% increased Physical Damage with Swords
@@ -2341,34 +2459,36 @@ Sword Attacks deal 30% increased Damage with Ailments
 Attacks have 15% chance to cause Bleeding
 Attack Skills deal 10% increased Damage while Dual Wielding
 3% increased Attack Speed while Dual Wielding
+Attack Skills deal 10% increased Damage with Ailments while Dual Wielding
 10% increased Spell Damage
 20% increased Mana Regeneration Rate
 4% increased Attack Speed
 10% increased Physical Damage
 40% increased Critical Strike Chance against Taunted Enemies
-+15% to Critical Strike Multiplier against Taunted Enemies
-15% increased Warcry Buff Effect
++10% to Critical Strike Multiplier against Taunted Enemies
 12% increased Cold Damage
-16% increased Armour
+15% increased Mana Regeneration Rate
+Discipline has 30% reduced Mana Reservation
+20% increased Armour
 6% increased maximum Life
 20% increased Life Recovery from Flasks
 12% increased Spell Damage
 +10 to Intelligence
-10% increased Projectile Speed
 10% increased Projectile Damage
+50% reduced Projectile Fork angle
 +12% to all Elemental Resistances
 12% increased Elemental Damage
-5% chance to Freeze, Shock and Ignite
+10% chance to Freeze, Shock and Ignite
 12% increased Physical Damage
 +10 to Intelligence
 Nearby Enemies have Fire Exposure
 +18% to Fire Resistance
-9% increased Attack Speed
-5% increased Cast Speed
+8% increased Attack Speed
+6% increased Cast Speed
 5% increased Movement Speed
 14% increased Evasion Rating
 3% increased Movement Speed
-Enemies you Impale have -10% to Total Physical Damage Reduction against Impale Hits
+Impale Damage dealt to Enemies Impaled by you Overwhelms 10% Physical Damage Reduction
 15% chance to Impale Enemies on Hit with Attacks
 5% increased Impale Effect
 +20 to Strength
@@ -2377,34 +2497,34 @@ Enemies you Impale have -10% to Total Physical Damage Reduction against Impale H
 You have Phasing while at maximum Frenzy Charges
 You have Phasing during Onslaught
 Gain Phasing for 4 seconds on Kill
++1% to maximum Cold Resistance
 +20% to Cold Resistance
-40% chance to Avoid being Frozen
-6% chance to Avoid Cold Damage from Hits
+30% chance to Avoid being Frozen
 Gain 5% of Maximum Mana as Extra Maximum Energy Shield
 12% increased Area of Effect of Aura Skills
 4% reduced Mana Reserved
 6% increased effect of Non-Curse Auras from your Skills
 +5% Chance to Block Attack Damage while Dual Wielding
 Attack Skills deal 20% increased Damage while Dual Wielding
-10% chance to gain an Endurance Charge when you Block
-10% chance to gain a Frenzy Charge when you Block
+15% chance to gain an Endurance Charge when you Block
+15% chance to gain a Frenzy Charge when you Block
 +10 to Strength
 5% increased maximum Life
 50% increased Critical Strike Chance with Traps
 50% increased Critical Strike Chance with Mines
-+30% to Critical Strike Multiplier with Traps
-+30% to Critical Strike Multiplier with Mines
++25% to Critical Strike Multiplier with Traps
++25% to Critical Strike Multiplier with Mines
 10% increased Totem Damage
 15% increased Critical Strike Chance with Totem Skills
-15% increased Critical Strike Chance with Brand Skills
-10% increased Damage with Brand Skills
+15% increased Brand Critical Strike Chance
+10% increased Brand Damage
 +10 to Intelligence
 6% increased maximum Energy Shield
 Grants 1 Passive Skill Point
-25% increased Critical Strike Chance
-25% increased Physical Damage
+40% increased Critical Strike Chance
+20% increased Physical Damage
 10% increased Mine Damage
-4% increased Mine Throwing Speed
+3% increased Mine Throwing Speed
 10% increased Elemental Damage
 10% increased Attack Speed while you have Fortify
 +1000 to Armour and Evasion Rating while you have Fortify
@@ -2431,7 +2551,7 @@ Minions Leech 0.2% of Damage as Life
 +10 to Strength
 +1 to Maximum Power Charges
 3% increased Attack Speed
-Enemies you Impale have -5% to Total Physical Damage Reduction against Impale Hits
+Impale Damage dealt to Enemies Impaled by you Overwhelms 5% Physical Damage Reduction
 5% increased Impale Effect
 20% increased Spell Damage
 5% increased Cast Speed
@@ -2439,8 +2559,10 @@ Enemies you Impale have -5% to Total Physical Damage Reduction against Impale Hi
 10% increased Attack Damage
 0.2% of Attack Damage Leeched as Life
 Minions have 10% increased maximum Life
-Minions have +5% Chance to Block Spell Damage
+Minions have +10% Chance to Block Spell Damage
 +10 to Strength
+15% reduced Reflected Physical Damage taken
+8% increased Physical Damage
 50% increased Totem Placement speed
 3% more Damage per Summoned Totem
 Regenerate 0.5% of Mana per second for each Summoned Totem
@@ -2454,22 +2576,23 @@ You are Unaffected by Bleeding while Leeching
 Golems have 15% increased Maximum Life
 +1 to maximum number of Golems
 10% increased Physical Damage with Bows
-Bow Attacks have 15% chance to cause Bleeding
-20% increased Damage Over Time with Bow Skills
+Bow Attacks have 10% chance to cause Bleeding
+15% increased Damage Over Time with Bow Skills
+Bleeding you inflict deals Damage 5% faster
 6% increased effect of Non-Curse Auras from your Skills
 10% increased Spell Damage while Dual Wielding
-3% increased Movement Speed
+2% increased Movement Speed
 50% increased Global Accuracy Rating
 Projectiles Pierce 2 additional Targets
 Moving while Bleeding doesn't cause you to take extra Damage
 Projectiles gain Damage as they travel farther, dealing up to 50% increased Damage with Hits to targets
 Skills fire an additional Projectile
-15% increased Critical Strike Chance
+20% increased Critical Strike Chance
 24% increased Damage over Time
 4% increased maximum Life
 Regenerate 0.6% of Life per second
 35% increased Chaos Damage
-20% increased Skill Effect Duration
+10% increased Skill Effect Duration
 +30 to Dexterity
 25% increased Fire Damage
 5% increased Cast Speed with Fire Skills
@@ -2477,8 +2600,9 @@ Regenerate 0.6% of Life per second
 25% increased Physical Damage with Two Handed Melee Weapons
 Attacks with Two Handed Melee Weapons deal 25% increased Damage with Ailments
 5% increased Attack Speed with Two Handed Melee Weapons
-12% increased Accuracy Rating with Two Handed Melee Weapons
+25% increased Stun Duration with Two Handed Melee Weapons on Enemies
 4% increased maximum Life
+4% chance to Avoid Elemental Ailments
 +3% to Chaos Damage over Time Multiplier
 10% increased Chaos Damage
 15% Chance to Block Attack Damage
@@ -2488,31 +2612,37 @@ Attacks with Two Handed Melee Weapons deal 25% increased Damage with Ailments
 25% more Damage with Bleeding
 Minions have 10% increased maximum Life
 +10 to Intelligence
-5% increased maximum Mana
-3% reduced Mana Cost of Skills
+8% increased maximum Mana
+Guard Skills have 15% increased Duration
 8% increased maximum Mana
 12% increased Physical Damage with Two Handed Melee Weapons
 Attacks with Two Handed Melee Weapons deal 12% increased Damage with Ailments
-25% increased total Recovery per second from Life Leech
+60% increased total Recovery per second from Life Leech
+Warcries Exert 1 additional Attack
++4% to Chaos Damage over Time Multiplier
+Brand Recall has 15% increased Cooldown Recovery Speed
 8% increased Physical Damage with Swords
 Sword Attacks deal 8% increased Damage with Ailments
 20% increased Critical Strike Chance with Swords
 3% increased Movement Speed
 10% increased Attack Damage
 15% increased Evasion Rating and Armour
+Herald Skills have 20% increased Area of Effect
+15% increased Damage for each Herald affecting you
+10% reduced Mana Reservation of Herald Skills
 Minions deal 10% increased Damage
-20% increased Minion Accuracy Rating
+10% increased Minion Accuracy Rating
 20% increased Critical Strike Chance
 8% increased Armour
 8% increased Chaos Damage
 +4% to Chaos Resistance
-20% increased Critical Strike Chance with Traps
-20% increased Critical Strike Chance with Mines
-10% increased Physical Damage with Two Handed Melee Weapons
-Attacks with Two Handed Melee Weapons deal 10% increased Damage with Ailments
+25% increased Critical Strike Chance with Traps
+25% increased Critical Strike Chance with Mines
+12% increased Physical Damage with Two Handed Melee Weapons
+Attacks with Two Handed Melee Weapons deal 12% increased Damage with Ailments
 5% increased Area of Effect
-+4% Chance to Block Attack Damage while Channelling
-+4% Chance to Block Spell Damage while Channelling
++3% Chance to Block Attack Damage while Channelling
++3% Chance to Block Spell Damage while Channelling
 Channelling Skills deal 25% increased Damage
 Claw Attacks deal 8% increased Damage with Hits and Ailments
 4% increased Attack Speed with Claws
@@ -2521,12 +2651,12 @@ Your Critical Strikes Knock Back Shocked Enemies
 30% increased Critical Strike Chance
 24% increased Physical Damage with Two Handed Melee Weapons
 Attacks with Two Handed Melee Weapons deal 24% increased Damage with Ailments
-Enemies have -15% to Total Physical Damage Reduction against your Hits
+Overwhelm 15% Physical Damage Reduction
 10% chance to double Stun Duration
 4% chance to deal Double Damage
 +18% to Lightning Resistance
 0.6% of Physical Attack Damage Leeched as Life
-20% increased total Recovery per second from Life Leech
+50% increased total Recovery per second from Life Leech
 +10 to Strength
 6% increased Evasion Rating and Armour
 4% increased maximum Life
@@ -2536,8 +2666,8 @@ Enemies have -15% to Total Physical Damage Reduction against your Hits
 Attacks with One Handed Melee Weapons deal 25% increased Damage with Ailments
 5% increased Attack Speed with One Handed Melee Weapons
 +20 to Strength
-Minions deal 15% increased Damage
-Minions have 10% increased Area of Effect
+Minions deal 10% increased Damage
+Minions have 15% increased Area of Effect
 Minions have 10% increased Area of Effect if you have used a Minion Skill Recently
 +10 to Intelligence
 Minions deal 10% increased Damage
@@ -2558,8 +2688,8 @@ Ignore all Movement Penalties from Armour
 20% increased Critical Strike Chance
 +10 to Dexterity and Intelligence
 10% increased Totem Life
+10% increased Totem Duration
 Totems gain +16% to all Elemental Resistances
-Brand Skills have 10% increased Duration
 20% increased Armour
 10% increased maximum Energy Shield
 10% increased Energy Shield Recharge Rate
@@ -2572,27 +2702,30 @@ You and nearby Allies deal 30% increased Damage
 You and nearby Allies have +30% to Elemental Resistances
 12% increased Armour
 4% increased maximum Life
+5% reduced Mana Reservation of Herald Skills
 15% increased Lightning Damage
+15% increased Warcry Speed
+Exerted Attacks deal 15% increased Damage
 5% increased maximum Life
-10% increased Projectile Damage
+12% increased Projectile Damage
 20% increased Critical Strike Chance with Claws
 +10% to Critical Strike Multiplier with Claws
-+5% to Cold Damage over Time Multiplier
++4% to Cold Damage over Time Multiplier
 10% increased Cold Damage
-5% chance to Freeze
+10% chance to Freeze
 8% increased Flask Effect Duration
 Flasks applied to you have 5% increased Effect
 Enemies take 5% increased Damage for each of your Brands Attached to them
 20% increased Brand Attachment range
-10% reduced Reflected Elemental Damage taken
 Damage with Weapons Penetrates 5% Elemental Resistance
 20% increased Elemental Damage during any Flask Effect
 20% increased Elemental Damage with Attack Skills
 +10 to Dexterity
 +8% to Damage over Time Multiplier for Poison
 Poisons you inflict on non-Poisoned Enemies deal 300% increased Damage
+Corpses you Spawn have 15% increased Maximum Life
 15% increased Cold Damage
-+15% to Critical Strike Multiplier for Spells
++10% to Critical Strike Multiplier for Spells
 2% increased Attack Damage per 75 Armour or Evasion Rating on Shield
 +1% to Critical Strike Multiplier per 10 Maximum Energy Shield on Shield
 Dagger Attacks deal 24% increased Damage with Hits and Ailments
@@ -2606,8 +2739,8 @@ Dagger Attacks deal 24% increased Damage with Hits and Ailments
 20% increased Critical Strike Chance with Cold Skills
 30% increased Projectile Speed
 20% increased Projectile Damage
-4% additional Physical Damage Reduction if you've Warcried in the past 8 seconds
-4% chance to deal Double Damage if you've Warcried in the past 8 seconds
+When you Warcry, you and nearby Allies gain Onslaught for 4 seconds
++10 to Strength and Dexterity
 +10 to Intelligence
 24% increased Damage with Bows
 +200 to Evasion Rating
@@ -2635,12 +2768,10 @@ Attack Skills deal 25% increased Damage while holding a Shield
 Staff Attacks deal 30% increased Damage with Hits and Ailments
 20% increased Armour
 +600 Armour if you've Blocked Recently
-+4% Chance to Block Attack Damage while wielding a Staff
++6% Chance to Block Attack Damage while wielding a Staff
 +30 to Intelligence
 14% increased Trap Damage
 +18% to Cold Resistance
-4% increased Attack Speed
-10% increased Projectile Attack Damage
 Minions have 20% increased maximum Life
 Regenerate 1% of Life per second
 Minions Regenerate 1% of Life per second
@@ -2652,19 +2783,24 @@ Minions have +10% to all Elemental Resistances
 16% increased Spell Damage
 +20 to maximum Mana
 +20 to Intelligence
+1% increased Fishing Line Strength
 10% increased Elemental Damage
 4% increased Attack and Cast Speed
 Your Curses can apply to Hexproof Enemies
 Cursed Enemies you or your Minions Kill have a 25% chance to Explode, dealing a quarter of their maximum Life as Chaos Damage
-10% increased Fire Damage
-Fire Spells have 10% of Physical Damage Converted to Fire Damage
+8% increased Fire Damage
+3% increased Cast Speed
+12% increased Physical Damage
+14% increased Damage if you have Consumed a corpse Recently
 4% increased Attack and Cast Speed
 10% increased Frenzy Charge Duration
 10% increased Power Charge Duration
 +1 to Maximum Endurance Charges
-25% increased Damage with Brand Skills
-Unattached Brands gain 20% increased Brand Attachment Range per second
+25% increased Brand Damage
+Unattached Brands gain 20% increased Brand Attachment Range per second, up to 100%
 50% increased Damage with Bleeding you inflict on Maimed Enemies
+10% increased Area Damage
+Skills supported by Intensify have +1 to maximum Intensity
 14% increased Armour
 5% increased maximum Energy Shield
 5% increased effect of Non-Curse Auras from your Skills
@@ -2678,41 +2814,40 @@ Regenerate 1% of Energy Shield per second for each Enemy you or your Minions hav
 Cannot Be Stunned while you have Energy Shield
 25% increased Melee Critical Strike Chance
 Claw Attacks deal 25% increased Damage with Hits and Ailments
-Enemies have -10% to Total Physical Damage Reduction against your Hits
+Overwhelm 10% Physical Damage Reduction
 15% increased Attack and Cast Speed if you've used a Movement Skill Recently
 +1 to Melee Strike Range with Claws
 +10 to Intelligence
-8% increased Global Accuracy Rating
+10% increased Global Accuracy Rating
 18% increased Endurance Charge Duration
 12% increased Evasion Rating
-+3% to all Elemental Resistances
++4% to all Elemental Resistances
 +2% Chance to Block Attack Damage while Dual Wielding or holding a Shield
 4% increased Attack Speed
 Staff Attacks deal 15% increased Damage with Hits and Ailments
-20% increased Stun Duration with Staves on Enemies
-30% increased Melee Critical Strike Chance
-+30% to Melee Critical Strike Multiplier
+10% increased Stun Duration with Staves on Enemies
+40% increased Melee Critical Strike Chance
++20% to Melee Critical Strike Multiplier
 20% chance to Maim Enemies on Critical Strike with Attacks
-+3% to Chaos Damage over Time Multiplier
-8% increased Chaos Damage
++6% to Chaos Damage over Time Multiplier
 +10 to Intelligence
 8% increased maximum Mana
 Claw Attacks deal 8% increased Damage with Hits and Ailments
 3% increased Attack Speed with Claws
-10% chance to Poison on Hit
+5% increased Poison Duration
+10% increased Damage with Poison
 0.6% of Physical Attack Damage Leeched as Life
 +3% Chance to Block Attack Damage while Dual Wielding
 Attack Skills deal 8% increased Damage while Dual Wielding
 12% increased Physical Damage with One Handed Melee Weapons
 Attacks with One Handed Melee Weapons deal 12% increased Damage with Ailments
 0.4% of Physical Attack Damage Leeched as Life
-10% increased total Recovery per second from Life Leech
-20% increased Warcry Buff Effect
+40% increased total Recovery per second from Life Leech
 +15% to Cold Resistance
 +10 to Intelligence
 14% increased Physical Damage with Maces or Sceptres
 Mace or Sceptre Attacks deal 14% increased Damage with Ailments
-4% reduced Enemy Stun Threshold with Maces or Sceptres
+5% reduced Enemy Stun Threshold with Maces or Sceptres
 Regenerate 0.3% of Life per second
 12% increased Attack Damage
 6% increased Global Accuracy Rating
@@ -2730,11 +2865,11 @@ Deal up to 15% more Melee Damage to Enemies, based on proximity
 5% increased maximum Energy Shield
 4% increased maximum Life
 +3% Chance to Block Attack Damage while Dual Wielding
-Attack Skills deal 16% increased Damage while Dual Wielding
+Attack Skills deal 15% increased Damage while Dual Wielding
 6% increased Attack Speed while Dual Wielding
-+10 to maximum Life
+20% increased Evasion Rating
 4% increased Attack Speed with Axes
-12% increased Evasion Rating
+You lose Rage 20% slower
 40% chance to Avoid being Stunned while Channelling
 Channelling Skills deal 25% increased Damage
 15% reduced Mana Cost of Channelling Skills
@@ -2742,16 +2877,16 @@ Channelling Skills deal 25% increased Damage
 4% increased Attack Speed
 +10 to Dexterity
 20% increased Mana Regeneration Rate
-14% increased Damage with Brand Skills
+14% increased Brand Damage
 8% increased Cast Speed
 Spell Skills have +10% to Damage over Time Multiplier for Poison
 20% chance to Poison on Hit with Spell Damage
-8% increased Area of Effect
+10% increased Area of Effect
 18% increased Endurance Charge Duration
 22% increased maximum Mana
 6% reduced Mana Cost of Skills
 6% increased Accuracy Rating with Claws
-20% increased Critical Strike Chance with Claws
++10% to Critical Strike Multiplier with Claws
 3% increased Attack and Cast Speed
 8% increased Physical Damage
 Bow Skills have +10% to Damage over Time Multiplier
@@ -2760,18 +2895,19 @@ Bow Skills have 20% increased Skill Effect Duration
 30% increased Chaos Damage
 Chaos Skills ignore interruption from Stuns
 Your Critical Strikes have a 5% chance to deal Double Damage
-40% increased Critical Strike Chance
+30% increased Critical Strike Chance
 +10 to Dexterity
 20% increased Melee Critical Strike Chance
 +2% to maximum Cold Resistance
 6% increased Movement Speed
 Grants 1 Passive Skill Point
 5% increased maximum Energy Shield
-8% increased maximum Mana
+6% increased maximum Mana
 16% increased Melee Damage
 16% increased Armour
 +16 to maximum Life
 +30 to Strength
+30% increased Cooldown Recovery Speed for Stance Skills
 Attacks with Melee Weapons deal 12% increased Damage with Ailments
 12% increased Melee Physical Damage
 +4% to Fire Damage over Time Multiplier
@@ -2788,7 +2924,6 @@ Attacks with Melee Weapons deal 12% increased Damage with Ailments
 +20% to Critical Strike Multiplier against Burning Enemies
 Dagger Attacks deal 8% increased Damage with Hits and Ailments
 4% increased Attack Speed with Daggers
-Enemies have -5% to Total Physical Damage Reduction against your Hits
 10% increased Area of Effect
 30% increased Trap Damage
 15% increased Cooldown Recovery Speed for throwing Traps
@@ -2798,10 +2933,10 @@ When your Traps Trigger, your nearby Traps also Trigger
 30% increased Stun and Block Recovery
 10% chance to gain an Endurance Charge when you Stun an Enemy with a Melee Hit
 10% chance to double Stun Duration
-10% increased Projectile Speed
-10% increased Projectile Damage
+15% increased Chaining range
+Projectiles deal 10% increased Damage with Hits and Ailments to targets they Chain from
 Minions deal 10% increased Damage
-20% increased Minion Accuracy Rating
+10% increased Minion Accuracy Rating
 8% increased Damage
 5% increased Projectile Speed
 5% increased Area of Effect
@@ -2809,22 +2944,23 @@ Minions deal 10% increased Damage
 Adds 20 to 30 Physical Damage to Attacks if you've dealt a Critical Strike Recently
 +25% to Critical Strike Multiplier
 Attacks with Axes or Swords grant 1 Rage on Hit, no more than once every second
-25% increased Melee Critical Strike Chance
+20% increased Melee Critical Strike Chance
 +10% to Melee Critical Strike Multiplier
 60% increased Main Hand Attack Damage while wielding two different Weapon Types
 30% increased Off Hand Attack Speed while wielding two different Weapon Types
 Enemies you hit with Elemental Damage temporarily get +25% Resistance to those Elements and -50% Resistance to other Elements
 14% increased Attack Physical Damage
++4% to Cold Damage over Time Multiplier
 Gain 10% of Maximum Life as Extra Armour
 Dagger Attacks deal 10% increased Damage with Hits and Ailments
-6% increased Accuracy Rating with Daggers
-4% increased Attack Speed with Claws
-4% increased Movement Speed
+10% increased Accuracy Rating with Daggers
+3% increased Attack Speed with Claws
+3% increased Movement Speed
 Wand Attacks deal 12% increased Damage with Hits and Ailments
-+12% to Damage over Time Multiplier for Ailments from Critical Strikes
++14% to Damage over Time Multiplier for Ailments from Critical Strikes
 0.8% of Attack Damage Leeched as Life
 15% increased Maximum total Recovery per second from Life Leech
-20% increased total Recovery per second from Life Leech
+60% increased total Recovery per second from Life Leech
 10% chance to Fortify on Melee hit
 Enemies Taunted by you take 10% increased Damage
 25% chance to Taunt on Hit
@@ -2839,9 +2975,10 @@ You and nearby Allies have 8% increased Movement Speed
 5% reduced Enemy Stun Threshold with Maces or Sceptres
 8% chance to gain a Power Charge when you Stun with Melee Damage
 10% increased Damage with Bows
-3% increased Attack Speed with Bows
+4% increased Attack Speed with Bows
 10% increased Damage Over Time with Bow Skills
 14% increased Armour
+Chance to Block Attack Damage is doubled Chance to Block Spell Damage is doubled You take 50% of Damage from Blocked Hits
 +10 to Dexterity
 6% increased Attack Speed
 10% increased Global Accuracy Rating
@@ -2861,8 +2998,8 @@ Attack Skills fire an additional Projectile while wielding a Claw or Dagger
 6% increased Global Accuracy Rating
 10% increased Critical Strike Chance
 6% increased Projectile Damage
-12% increased Physical Damage with One Handed Melee Weapons
-Attacks with One Handed Melee Weapons deal 12% increased Damage with Ailments
+16% increased Physical Damage with One Handed Melee Weapons
+Attacks with One Handed Melee Weapons deal 16% increased Damage with Ailments
 Consecrated Ground you create applies 10% increased Damage taken to Enemies
 You have Consecrated Ground around you while stationary
 Regenerate 15 Mana per Second while on Consecrated Ground
@@ -2879,9 +3016,8 @@ Mines Hinder Enemies near them for 2 seconds when they Land, reducing Movement S
 20% increased Cold Damage
 Freezes you inflict spread to other Enemies within a Radius of 12
 +10 to Strength
-10% increased Damage with Bows
-10% chance to Poison on Hit with Attacks
-16% increased Damage Over Time with Bow Skills
+15% increased Damage with Bows
+20% increased Damage Over Time with Bow Skills
 40% increased Area of Effect of Curse Skills
 5% increased Effect of your Curses
 Curse Skills have 80% increased Skill Effect Duration
@@ -2891,14 +3027,13 @@ Minions deal 10% increased Damage
 Nearby Enemies take 16% increased Elemental Damage
 Nearby Enemies deal 8% less Elemental Damage
 12% increased Spell Damage while wielding a Staff
-15% increased Critical Strike Chance
+20% increased Critical Strike Chance
 5% increased Effect of your Curses
 8% increased Evasion Rating
 Sword Attacks deal 14% increased Damage with Hits and Ailments
 30% chance to Avoid Elemental Ailments
 3% chance to Dodge Attack Hits
 3% chance to Dodge Spell Hits
-30% increased Warcry Duration
 12% increased Damage with Hits and Ailments against Blinded Enemies
 25% increased Critical Strike Chance against Blinded Enemies
 8% increased Fire Damage
@@ -2907,7 +3042,7 @@ Sword Attacks deal 14% increased Damage with Hits and Ailments
 +10 to Intelligence
 Minions deal 20% increased Damage while you are affected by a Herald
 Minions have 10% increased Movement Speed for each Herald affecting you
-5% increased Mine Throwing Speed
+4% increased Mine Throwing Speed
 Mines have 10% increased Detonation Speed
 8% increased Armour
 5% increased maximum Energy Shield
@@ -2929,30 +3064,31 @@ Mace or Sceptre Attacks deal 30% increased Damage with Ailments
 30% increased Chill Duration on Enemies
 20% increased Freeze Duration on Enemies
 +5% to all Elemental Resistances
++1% to all maximum Elemental Resistances
 15% chance to Avoid Elemental Ailments
-5% reduced Elemental Damage taken
 6% increased Mine Damage
 Skills used by Mines have 6% increased Area of Effect
 18% increased Endurance Charge Duration
-14% increased Damage with Brand Skills
+3% increased Cast Speed with Brand Skills
+8% increased Brand Damage
 30% increased Chaos Damage
 Chaos Skills have 50% increased Area of Effect
 When you kill a Poisoned Enemy during any Flask Effect, nearby Enemies are Poisoned
 2% increased Chaos Damage per 100 maximum Mana, up to a maximum of 80%
-Wand Attacks deal 15% increased Damage with Hits and Ailments
+Wand Attacks deal 16% increased Damage with Hits and Ailments
 10% increased Attack Physical Damage
 5% chance to Impale Enemies on Hit with Attacks
 -10 Physical Damage taken from Hits
 -1 Physical Damage taken from Hits per Level
 6% increased maximum Life
-15% increased Maximum total Recovery per second from Life Leech
+10% increased Maximum total Recovery per second from Life Leech
 6% increased Attack Speed while Leeching
 +10 to Strength
 Gain 10% of Lightning Damage as Extra Cold Damage against Chilled Enemies
 Cannot Evade enemy Attacks Cannot be Stunned
 10% increased Area of Effect
-8% increased maximum Mana
-4% reduced Mana Cost of Skills
+10% increased maximum Mana
+Guard Skills have 20% increased Cooldown Recovery Speed
 10% increased Mine Damage
 20% increased Mine Duration
 50% increased Critical Strike Chance with Wands
@@ -2960,6 +3096,7 @@ Cannot Evade enemy Attacks Cannot be Stunned
 10% increased Trap Damage
 10% increased Mine Damage
 4% increased Movement Speed
+Non-Curse Aura Skills have 30% increased Duration
 16% increased Damage with Bows
 50% increased Critical Strike Chance with Bows
 +30% to Critical Strike Multiplier with Bows
@@ -2968,19 +3105,20 @@ Flasks applied to you have 10% increased Effect
 8% increased Attack and Cast Speed during Effect of any Mana Flask
 10% increased Mana Recovery Rate during Effect of any Mana Flask
 Minions deal 12% increased Damage
+Wand Attacks deal 12% increased Damage with Hits and Ailments
 10% increased Projectile Damage
-+3% to Fire Damage over Time Multiplier
-6% increased Elemental Damage
-8% increased Effect of Non-Damaging Ailments
+10% increased Elemental Damage
+10% increased Effect of Non-Damaging Ailments
 0.8% of Attack Damage Leeched as Life
-20% increased Maximum total Recovery per second from Life Leech
-20% increased total Recovery per second from Life Leech
+25% increased Attack Damage when on Full Life
+Attacks have 10% chance to Maim on Hit
 18% increased Evasion Rating
 +12 to maximum Life
 16% increased Projectile Damage
 +30 to Dexterity
+12% increased Cold Damage
 4% increased Attack Speed with Bows
-20% increased Critical Strike Chance with Bows
+6% increased Accuracy Rating with Bows
 15% increased Evasion Rating and Armour
 8% increased Impale Effect
 +30 to maximum Life
@@ -2997,6 +3135,7 @@ Grants 1 Passive Skill Point
 30% increased Elemental Damage with Attack Skills
 15% increased Effect of Non-Damaging Ailments
 Staff Attacks deal 12% increased Damage with Hits and Ailments
+10% increased Stun Duration with Staves on Enemies
 +2% Chance to Block Attack Damage while wielding a Staff
 +10 to Intelligence
 12% increased Chaos Damage
@@ -3010,19 +3149,18 @@ Staff Attacks deal 12% increased Damage with Hits and Ailments
 8% increased maximum Mana
 10% increased Mana Recovery from Flasks
 You can't deal Damage with Skills yourself +1 to maximum number of Summoned Totems
-Minions have +1 to Minimum Power Charges
-Raised Spectres, Raised Zombies, and Summoned Skeletons have +70% to Critical Strike Multiplier
+Minions have 50% increased Critical Strike Chance
+Minions have +20% to Critical Strike Multiplier
 15% increased Evasion Rating
 10% increased maximum Energy Shield
 5% increased maximum Life
 Regenerate 0.5% of Life per second
 Grants 1 Passive Skill Point
 8% increased Mine Damage
-4% reduced Mana Reservation of Skills that throw Mines
+5% reduced Mana Reservation of Skills that throw Mines
 +150 to Armour
 30% increased Armour
 +1% to all maximum Elemental Resistances
-5% additional Physical Damage Reduction
 6% increased Attack Speed
 10% increased maximum Mana
 +3 Mana gained for each Enemy hit by your Attacks
@@ -3037,6 +3175,8 @@ Projectiles deal 15% increased Damage for each remaining Chain
 25% increased Elemental Damage if you've Shocked an Enemy Recently
 Minions have 20% increased maximum Life
 Minions created Recently cannot be Damaged
+8% increased Elemental Damage
+15% reduced Reflected Elemental Damage taken
 25% increased maximum Mana
 +1 to maximum number of Summoned Totems
 8% of Damage is taken from Mana before Life
@@ -3050,20 +3190,23 @@ Grants maximum Energy Shield equal to 10% of your Reserved Mana to you and nearb
 10% increased Attack Damage
 5% increased Attack Speed
 Enemies you Curse take 5% increased Damage
-5% chance to Dodge Attack Hits from Cursed Enemies
+Non-Cursed Enemies you inflict Non-Aura Curses on are Blinded for 4 seconds
 30% increased Evasion Rating
 +1% to all maximum Elemental Resistances
 25% increased Damage with Bleeding
 25% chance to Blind with Hits against Bleeding Enemies
--1 to maximum number of Summoned Totems. You can have an additional Brand Attached to an Enemy
+-1 to maximum number of Summoned Totems You can have an additional Brand Attached to an Enemy
 5% increased Effect of your Curses
 +1 to Maximum Frenzy Charges
 10% increased Spell Damage while wielding a Staff
 +2% Chance to Block Attack Damage while wielding a Staff
-40% reduced Ignite Duration on you
-50% reduced Extra Damage taken from Critical Strikes while Ignited
+30% reduced Ignite Duration on you
+You cannot be Ignited if you've been Ignited Recently
+Unaffected by Burning Ground
 Grants 1 Passive Skill Point
 5% increased maximum Life
+25% increased Vulnerability Curse Effect
+15% increased Physical Damage
 Dagger Attacks deal 12% increased Damage with Hits and Ailments
 0.3% of Attack Damage Leeched as Life
 20% increased total Recovery per second from Life Leech
@@ -3072,15 +3215,15 @@ Attacks with One Handed Weapons deal 20% increased Damage with Ailments
 20% increased Critical Strike Chance with Totem Skills
 +10% to Critical Strike Multiplier with Totem Skills
 5% increased Movement Speed
-20% increased Damage with Brand Skills
-10% increased Brand Activation frequency
+Brands Attach to a new Enemy each time they Activate, no more than once every 0.3 seconds
+10% increased Cast Speed with Brand Skills
 Axe Attacks deal 10% increased Damage with Hits and Ailments
 3% increased Attack Speed with Axes
 20% increased Spell Damage
 30% increased Mana Regeneration Rate
-Regenerate 1% of Energy Shield per second if you\u2019ve Cursed an Enemy Recently
-25% increased Fire Damage
-25% increased Cold Damage
+Regenerate 1% of Energy Shield per second if you’ve Cursed an Enemy Recently
+30% increased Fire Damage
+30% increased Cold Damage
 +10% to Fire and Cold Resistances
 30% increased Critical Strike Chance
 10% increased Fire Damage
@@ -3090,8 +3233,8 @@ Minions have 4% increased Cast Speed
 Grants 1 Passive Skill Point
 10% chance to Avoid Elemental Ailments
 10% increased Duration of Elemental Ailments on Enemies
-16% increased Elemental Damage
-10% increased Effect of Non-Damaging Ailments
+20% increased Elemental Damage
+20% increased Effect of Non-Damaging Ailments
 5% increased Attack Speed with Two Handed Melee Weapons
 15% increased Accuracy Rating with Two Handed Melee Weapons
 25% increased Critical Strike Chance with Two Handed Melee Weapons
@@ -3103,7 +3246,7 @@ Grants 1 Passive Skill Point
 20% increased Damage Over Time with Bow Skills
 6% increased maximum Energy Shield
 15% increased Critical Strike Chance with Mines
-+10% to Critical Strike Multiplier with Mines
++8% to Critical Strike Multiplier with Mines
 +10 to Intelligence
 18% increased maximum Energy Shield
 10% increased Energy Shield Recharge Rate
@@ -3115,23 +3258,25 @@ Recover 2% of Mana on Kill
 Regenerate 0.4% of Life per second
 12% increased Attack Physical Damage
 6% increased Attack Speed
-14% increased Totem Damage
+10% increased Totem Damage
+5% increased Totem Placement speed
 +3% to Chaos Damage over Time Multiplier
 10% increased Chaos Damage
 +10 to Strength
 +6% Chance to Block Spell Damage while wielding a Staff
 20% chance to gain a Power Charge when you Block
 +6% Chance to Block Attack Damage while wielding a Staff
-Curse Skills have 50% increased Skill Effect Duration
-25% increased Damage with Hits and Ailments against Cursed Enemies
+Curse Skills have 8% increased Cast Speed
+Enemies Cursed by you have Malediction if 33% of Curse Duration expired
 12% increased Damage with Bows
 3% increased Attack Speed with Bows
 12% increased Damage Over Time with Bow Skills
 10% increased Mana Recovery from Flasks
-10% reduced Flask Charges used from Mana Flasks
+5% increased Flask Charges gained
 10% increased Spell Damage
 5% increased maximum Mana
-+2% Chance to Block Spell Damage while holding a Shield
+30% reduced Ignite Duration on you
++3% Chance to Block Spell Damage while holding a Shield
 10% increased Spell Damage while holding a Shield
 +0.75% to Critical Strike Chance
 10% chance to gain a Power Charge on Critical Strike
@@ -3154,7 +3299,7 @@ Cannot take Reflected Physical Damage
 6% increased maximum Energy Shield
 12% increased Physical Damage with Two Handed Melee Weapons
 Attacks with Two Handed Melee Weapons deal 12% increased Damage with Ailments
-10% increased Physical Damage
+14% increased Physical Damage
 0.2% of Spell Damage Leeched as Energy Shield
 10% increased total Recovery per second from Energy Shield Leech
 Grants 1 Passive Skill Point
@@ -3174,14 +3319,16 @@ Minions have 8% increased Attack Speed
 Minions have 8% increased Cast Speed
 Increases and Reductions to Minion Attack Speed also affect you
 20% increased Minion Accuracy Rating
-Minions deal 14% increased Damage
+Minions deal 12% increased Damage
 10% increased Attack Damage
 15% increased Evasion Rating and Armour
 10% increased Global Accuracy Rating
 +4% to all Elemental Resistances
+Projectiles deal 6% increased Damage for each Enemy Pierced
 12% increased Physical Damage with Maces or Sceptres
 Mace or Sceptre Attacks deal 12% increased Damage with Ailments
 10% increased Stun Duration on Enemies
+12% increased Warcry Cooldown Recovery Speed
 20% increased maximum Mana
 Damage Penetrates 5% Lightning Resistance
 +30% to Critical Strike Multiplier against Enemies that are affected by Elemental Ailments
@@ -3190,22 +3337,23 @@ Damage Penetrates 6% of Enemy Elemental Resistances
 Immune to Elemental Ailments while on Consecrated Ground
 Nearby Enemies take 10% increased Elemental Damage
 25% increased Mine Damage
-20% increased Mine Duration
-12% reduced Mana Reservation of Skills that throw Mines
+15% reduced Mana Reservation of Skills that throw Mines
+Mines have a 10% chance to be Detonated an Additional Time
 +150 to Accuracy Rating
 15% increased Global Accuracy Rating
 +150 to Evasion Rating
 30% increased Evasion Rating
 18% increased Critical Strike Chance with Daggers
 +14% to Critical Strike Multiplier with Daggers
-10% increased Lightning Damage
+8% increased Lightning Damage
+3% increased Cast Speed
 +10 to Intelligence
 +10 to Strength
 8% increased maximum Mana
 +2% to maximum Lightning Resistance
 60% increased Block Recovery
-+20 Mana gained when you Block
-40% increased Defences from Equipped Shield
+Recover 20 Life when you Block
+60% increased Defences from Equipped Shield
 +5% Chance to Block Attack Damage while holding a Shield
 3% Chance to Block Spell Damage
 30% increased Attack Damage while holding a Shield
@@ -3216,17 +3364,18 @@ Nearby Enemies take 10% increased Elemental Damage
 30% increased Damage if you've dealt a Critical Strike in the past 8 seconds
 Gain Accuracy Rating equal to your Strength
 10% increased Projectile Speed
-10% increased Projectile Attack Damage
+10% increased Projectile Damage
 12% increased Lightning Damage with Attack Skills
 Gain 5% of Physical Damage as Extra Fire Damage
 12% increased Elemental Damage
-Fire Spells have 15% of Physical Damage Converted to Fire Damage
+Fire Spells have 25% of Physical Damage Converted to Fire Damage
 12% increased Physical Damage
 Minions have 5% increased Attack Speed
 Minions have 5% increased Cast Speed
-15% increased Chaos Damage
-4% increased Attack Speed with Claws
-20% increased Cooldown Recovery Speed of Movement Skills
+10% increased Chaos Damage
+Withered you Inflict expires 10% slower
+3% increased Attack Speed with Claws
+3% increased Movement Speed
 4% increased maximum Life
 +3% to all Elemental Resistances
 Attacks have 25% chance to cause Bleeding
@@ -3234,28 +3383,29 @@ Attacks have 25% chance to cause Bleeding
 80% increased Critical Strike Chance against Bleeding Enemies
 Moving while Bleeding doesn't cause you to take extra Damage
 Gain +30 Life when you Hit a Bleeding Enemy
+10% increased Area Damage
 6% increased Global Accuracy Rating
 4% increased Attack and Cast Speed
 20% increased Damage
 30% increased Critical Strike Chance
 100% increased Global Critical Strike Chance if you've Summoned a Totem Recently
 +20% to Critical Strike Multiplier with Totem Skills
-50% increased Critical Strike Chance with Brand Skills
-+20% to Critical Strike Multiplier with Brand Skills
+50% increased Brand Critical Strike Chance
++20% to Brand Critical Strike Multiplier
 +10 to Intelligence
 14% increased Physical Damage with Axes
 Axe Attacks deal 14% increased Damage with Ailments
 40% increased Attack Damage against Maimed Enemies
 Attacks have 10% chance to Maim on Hit
 20% increased Critical Strike Chance for Spells
-10% increased maximum Mana
+15% increased maximum Mana
 Minions deal 20% increased Damage
 15% reduced Mana Cost of Minion Skills
 10% increased Spell Damage
 20% increased Mana Regeneration Rate
 10% increased Elemental Damage
 5% increased Cast Speed while Dual Wielding
-10% increased Attack and Cast Speed if you've used a Movement Skill Recently
+5% increased Attack and Cast Speed if you've used a Movement Skill Recently
 30% increased Mana Regeneration if you've used a Movement Skill Recently
 +10 to Dexterity and Intelligence
 +10 to Strength
@@ -3289,36 +3439,42 @@ All bonuses from an Equipped Shield apply to your Minions instead of you
 1% chance to Dodge Attack Hits
 30% increased Projectile Speed
 Far Shot
-+6% to all Elemental Resistances
-20% increased Elemental Damage
-20% reduced Reflected Elemental Damage taken
+30% increased Elemental Damage
+10% chance to Freeze, Shock and Ignite
+20% increased Effect of Non-Damaging Ailments
+20% reduced Effect of Non-Damaging Ailments on you
+Projectiles deal 20% increased Damage for each time they have Chained
 Axe Attacks deal 12% increased Damage with Hits and Ailments
 8% increased Accuracy Rating with Axes
+5% chance to Impale Enemies on Hit with Attacks
 10% increased Damage with Bows
 10% chance to Poison on Hit with Attacks
 16% increased Damage Over Time with Bow Skills
+Poisons you inflict deal Damage 6% faster
 +20% to Critical Strike Multiplier with Totem Skills
-+20% to Critical Strike Multiplier with Brand Skills
++20% to Brand Critical Strike Multiplier
 +20 to Dexterity and Intelligence
 5% chance to Freeze, Shock and Ignite
 10% increased Elemental Damage with Attack Skills
 6% increased Spell Damage
 8% increased Accuracy Rating with Staves
 20% increased Critical Strike Chance with Staves
-10% increased Physical Damage with One Handed Melee Weapons
-Attacks with One Handed Melee Weapons deal 10% increased Damage with Ailments
-8% increased Evasion Rating
+Attacks with One Handed Weapons deal 10% increased Damage with Ailments
+10% increased Damage with One Handed Weapons
+10% increased Evasion Rating
 4% increased maximum Life
-20% increased Critical Strike Chance for each Mine Detonated Recently, up to 100%
-+8% to Critical Strike Multiplier for each Mine Detonated Recently, up to 40%
+10% increased Critical Strike Chance for each Mine Detonated Recently, up to 100%
++4% to Critical Strike Multiplier for each Mine Detonated Recently, up to 40%
 8% increased maximum Mana
 10% increased Attack Damage
 0.2% of Attack Damage Leeched as Life
+3% increased Cast Speed
+15% increased Damage with Poison
 16% increased Trap Damage
 16% increased Mine Damage
 +10 to Dexterity
-+1% Chance to Block Attack Damage while Dual Wielding or holding a Shield
-30% increased Block Recovery
++2% Chance to Block Attack Damage while Dual Wielding or holding a Shield
+20% increased Block Recovery
 50% increased Effect of Infusion
 5% increased Movement Speed while you have Infusion
 20% increased Evasion Rating
@@ -3329,6 +3485,7 @@ Attacks with One Handed Melee Weapons deal 10% increased Damage with Ailments
 Mace or Sceptre Attacks deal 16% increased Damage with Ailments
 20% increased Stun Duration on Enemies
 10% increased Elemental Damage
+12% increased Chaos Damage
 Channelling Skills deal 25% increased Damage
 25% chance to gain an Endurance Charge each second while Channelling
 +10 to Dexterity
@@ -3336,24 +3493,24 @@ Channelling Skills deal 25% increased Damage
 10% increased Totem Damage
 10% increased Totem Placement speed
 +10 to Intelligence
-10% increased Damage with Bows
+12% increased Damage with Bows
 3% increased Movement Speed
-10% increased Damage Over Time with Bow Skills
+12% increased Damage Over Time with Bow Skills
 20% increased Chaos Damage
 5% increased Movement Speed
 +20 to Dexterity
 20% increased Physical Damage
 10% increased Lightning Damage
 30% increased Shock Duration on Enemies
-10% increased Effect of Shock
 15% chance to Shock
-30% increased Critical Strike Chance against Shocked Enemies
+40% increased Critical Strike Chance against Shocked Enemies
 24% increased Lightning Damage with Attack Skills
 15% increased Effect of Shock
 +10 to Strength
 Channelling Skills have 4% increased Attack Speed
 10% chance to Avoid being Stunned while Channelling
-16% increased Elemental Damage with Staves
+10% increased Elemental Damage with Staves
+Damage with Weapons Penetrates 2% Elemental Resistance
 +100 to Evasion Rating
 14% increased Evasion Rating
 40% chance to Avoid Blind
@@ -3373,6 +3530,7 @@ Regenerate 0.4% of Life per second
 20% chance to Avoid Elemental Ailments while holding a Shield
 20% chance to Avoid being Stunned while holding a Shield
 +3% Chance to Block Attack Damage while holding a Shield
+12% increased Totem Damage
 +10 to Strength
 14% increased Armour
 5% increased maximum Energy Shield
@@ -3381,14 +3539,12 @@ Regenerate 0.4% of Life per second
 30% increased Mine Damage
 Can have up to 2 additional Traps placed at a time
 Can have up to 2 additional Remote Mines placed at a time
-10% increased Projectile Damage
+12% increased Projectile Damage
 8% increased Spell Damage
 +5 to Intelligence
-20% reduced Reflected Physical Damage taken
-Enemies have -5% to Total Physical Damage Reduction against your Hits
-4% chance to deal Double Damage
-+20 to Strength
-20% increased Physical Damage
+Overwhelm 10% Physical Damage Reduction
++30 to Strength
+30% increased Physical Damage
 4% increased maximum Life
 +10 to Intelligence
 +30% to Critical Strike Multiplier
@@ -3396,9 +3552,9 @@ Enemies have -5% to Total Physical Damage Reduction against your Hits
 10% increased Elemental Damage
 Claw Attacks deal 10% increased Damage with Hits and Ailments
 20% increased Critical Strike Chance with Claws
-12% increased Evasion Rating
-+12 to maximum Energy Shield
-+12 to maximum Life
+10% increased Evasion Rating
++15 to maximum Energy Shield
++15 to maximum Life
 +4% to all Elemental Resistances
 10% increased Trap Damage
 10% increased Mine Damage
@@ -3413,16 +3569,18 @@ Non-Curse Aura Skills have 20% increased Duration
 20% increased Bleeding Duration
 +10% to Damage over Time Multiplier for Bleeding you inflict on Poisoned Enemies
 +10% to Damage over Time Multiplier for Poison you inflict on Bleeding Enemies
+15% increased Warcry Duration
+12% increased Warcry Cooldown Recovery Speed
 Staff Attacks deal 15% increased Damage with Hits and Ailments
-20% increased Stun Duration with Staves on Enemies
+10% increased Stun Duration with Staves on Enemies
 8% chance to gain a Power, Frenzy or Endurance Charge on Kill
 +100 to Accuracy Rating
 15% increased Global Accuracy Rating
 +20 to Dexterity
 25% increased Critical Strike Chance
 Regenerate 0.5% of Life per second
-15% increased Endurance Charge Duration
-+15% to Critical Strike Multiplier for Spells
+5% chance to gain an Endurance Charge on Kill
++10% to Critical Strike Multiplier for Spells
 20% increased Damage during any Flask Effect
 Regenerate 2% of Life per second during any Flask Effect
 +20% to Cold Damage over Time Multiplier
@@ -3434,16 +3592,18 @@ Nearby Chilled Enemies deal 10% reduced Damage with Hits
 24% increased Damage with Bows
 6% increased Attack Speed with Bows
 16% increased Accuracy Rating with Bows
-Enemies have -10% to Total Physical Damage Reduction against your Hits
+Overwhelm 10% Physical Damage Reduction
 24% increased Damage Over Time with Bow Skills
 +6% to all Elemental Resistances
 10% increased Elemental Damage
 12% increased Chaos Damage
-4% increased Cast Speed while Dual Wielding
+3% increased Cast Speed while Dual Wielding
 15% increased Cooldown Recovery Speed of Movement Skills
 2% increased Movement Speed
 8% chance to Avoid being Stunned
 Regenerate 0.2% of Life per second per Endurance Charge
+15% reduced Reflected Physical Damage taken
+8% increased Physical Damage
 6% increased maximum Energy Shield
 15% increased Energy Shield Recharge Rate
 Critical Strikes ignore Enemy Monster Elemental Resistances
@@ -3454,7 +3614,7 @@ Non-Critical Strikes Penetrate 10% of Enemy Elemental Resistances
 30% increased Global Critical Strike Chance while wielding a Staff
 5% increased maximum Life
 10% increased maximum Energy Shield
-10% increased maximum Mana
+16% increased maximum Mana
 10% reduced Mana Cost of Skills while on Full Energy Shield
 +10 to Intelligence
 5% increased maximum Life
@@ -3474,6 +3634,7 @@ Unaffected by Ignite
 10% increased Mana Regeneration Rate
 20% increased Area Damage while wielding a Two Handed Melee Weapon
 15% increased Area of Effect while wielding a Two Handed Melee Weapon
+12% increased Area Damage
 30% increased Critical Strike Chance for Spells
 Skills supported by Unleash have +1 to maximum number of Seals
 +1 to Maximum Frenzy Charges
@@ -3481,8 +3642,8 @@ Skills supported by Unleash have +1 to maximum number of Seals
 10% increased maximum Energy Shield
 10% increased Energy Shield Recharge Rate
 +8% to all Elemental Resistances
-Minions deal 8% increased Damage
-Minions have 8% increased Area of Effect
+Minions deal 6% increased Damage
+Minions have 12% increased Area of Effect
 Your Offering Skills also affect you
 Your Offerings have 25% reduced Effect on you
 30% increased Skill Effect Duration
@@ -3492,7 +3653,7 @@ Your Offerings have 25% reduced Effect on you
 +10 to Intelligence
 +2% to maximum Fire Resistance
 Regenerate 1% of Life per second
-12% increased Attack Speed
+10% increased Attack Speed
 10% increased Global Accuracy Rating
 Ignore all Movement Penalties from Armour
 +20 to Dexterity
@@ -3500,24 +3661,26 @@ Ignore all Movement Penalties from Armour
 Attack Skills deal 12% increased Damage with Ailments while holding a Shield
 +2% Chance to Block Attack Damage while holding a Shield
 20% increased Physical Damage with Bows
-Bow Attacks have 10% chance to cause Bleeding
+Bow Attacks have 15% chance to cause Bleeding
 30% increased Damage Over Time with Bow Skills
-Bleeding you inflict deals Damage 15% faster
+Bleeding you inflict deals Damage 10% faster
 10% increased Melee Physical Damage
 +5 to Strength
-5% increased Attack Speed with Wands
+4% increased Attack Speed with Wands
 8% increased Accuracy Rating with Wands
+12% increased Trap Damage
+12% increased Mine Damage
 12% increased Attack Physical Damage
 15% increased Critical Strike Chance
 Mace, Sceptre or Staff Attacks deal 20% increased Damage with Hits and Ailments
 While stationary, gain 10% increased Area of Effect every second, up to a maximum of 50%
-Minions have 8% increased maximum Life
-Minions have +8% to all Elemental Resistances
-Minions have +8% to Chaos Resistance
+Minions have 10% increased maximum Life
+Minions have +10% to all Elemental Resistances
+Minions have +10% to Chaos Resistance
 12% increased Evasion Rating and Armour
-+3% to all Elemental Resistances
-4% additional Physical Damage Reduction while affected by a Guard Skill Buff
++4% to all Elemental Resistances
 Guard Skills have 15% increased Cooldown Recovery Speed
+Guard Skills have 15% increased Duration
 15% increased Armour
 18% increased Endurance Charge Duration
 +10 to Strength
@@ -3528,12 +3691,14 @@ Minions deal 10% increased Damage
 Chaos Skills have 10% chance to Hinder Enemies on Hit, with 30% reduced Movement Speed
 Enemies Hindered by you take 10% increased Chaos Damage
 8% increased maximum Mana
+Attacks with Two Handed Melee Weapons deal 20% increased Damage with Hits and Ailments
 10% increased Attack Speed with Two Handed Melee Weapons
 20% increased Stun Duration with Two Handed Melee Weapons on Enemies
+Minions deal 10% increased Damage
 Attack Skills deal 8% increased Damage while holding a Shield
 +2% Chance to Block Attack Damage while holding a Shield
 6% increased maximum Life
-+10 Life gained on Kill
+Recover 2% of Life on Kill
 10% increased Evasion Rating
 5% increased maximum Energy Shield
 +10 to Strength
@@ -3541,20 +3706,24 @@ Attack Skills deal 8% increased Damage while holding a Shield
 Sword Attacks deal 10% increased Damage with Ailments
 4% increased Attack Speed with Swords
 20% increased Armour
-Enemies have -5% to Total Physical Damage Reduction against your Hits
-+250 to Armour while affected by a Guard Skill Buff
-10% chance when Hit for double Armour effect
-Regenerate 0.5% of Life per second while affected by a Guard Skill Buff
++400 to Armour while affected by a Guard Skill Buff
+Regenerate 1.5% of Life per second while affected by a Guard Skill Buff
+30% increased Warcry Cooldown Recovery Speed
+20% increased total Power counted by Warcries
+Warcry Skills have 30% increased Area of Effect
 16% increased Damage with Bows
 80% increased Critical Strike Chance with Bows
 Knocks Back Enemies if you get a Critical Strike with a Bow
 16% increased Damage Over Time with Bow Skills
-0.4% of Attack Damage Leeched as Mana
-10% increased total Recovery per second from Mana Leech
+10% increased Elemental Damage
++2 Mana gained for each Enemy hit by your Attacks
+50% increased total Recovery per second from Mana Leech
+12% increased Evasion Rating
+10% increased Elusive Effect
 +2% Chance to Block Spell Damage while wielding a Staff
 10% increased Spell Damage while wielding a Staff
-Attack Skills deal 20% increased Damage while holding a Shield
-25% increased Defences from Equipped Shield
+Attack Skills deal 24% increased Damage while holding a Shield
+40% increased Defences from Equipped Shield
 +3% Chance to Block Attack Damage while holding a Shield
 Attack Skills deal 12% increased Damage while Dual Wielding
 20% increased Critical Strike Chance with Claws
@@ -3563,28 +3732,30 @@ Attack Skills deal 12% increased Damage while Dual Wielding
 Axe Attacks deal 12% increased Damage with Ailments
 3% increased Attack Speed with Axes
 10% increased Lightning Damage
-5% chance to Shock
+10% chance to Shock
 +10 to Intelligence
 5% increased Attack Speed
 +100 to Accuracy Rating
 15% increased Global Accuracy Rating
 +20 to Dexterity
+You can only have one Permanent Aura on you from your Skills Auras from your Skills do not affect Allies Auras from your Skills have 50% more Effect on you 50% more Mana Reserved
 +10 to Intelligence
 8% increased maximum Life
-2% additional Physical Damage Reduction while stationary
-While stationary, gain 2% of Life Regenerated per second every second, up to a maximum of 2%
+20% increased Armour while stationary
+Regenerate 2% of Life per second while stationary
 4% increased Attack Speed with Staves
-6% increased Accuracy Rating with Staves
+8% increased Accuracy Rating with Staves
 +40 to Strength
 8% increased Strength
-Wand Attacks deal 15% increased Damage with Hits and Ailments
+Wand Attacks deal 16% increased Damage with Hits and Ailments
 +10 to Dexterity
-8% increased Global Accuracy Rating
+10% increased Global Accuracy Rating
+12% increased Lightning Damage
 +10 to Dexterity
-+15% to Critical Strike Multiplier for Spells
++10% to Critical Strike Multiplier for Spells
 15% increased Totem Life
 Totems gain +10% to all Elemental Resistances
-10% increased Brand Attachment range
+Brand Skills have 15% increased Duration
 Mace or Sceptre Attacks deal 18% increased Damage with Hits and Ailments
 8% increased Attack Speed with Maces or Sceptres
 +200 to Accuracy Rating with Maces or Sceptres
@@ -3592,7 +3763,7 @@ Mace or Sceptre Attacks deal 18% increased Damage with Hits and Ailments
 18% increased Frenzy Charge Duration
 +10 to Dexterity
 12% increased Attack Physical Damage
-20% increased Warcry Duration
+20% increased Warcry Speed
 18% increased maximum Energy Shield
 15% increased Energy Shield Recharge Rate
 +1% to maximum Lightning Resistance
@@ -3601,8 +3772,6 @@ Mace or Sceptre Attacks deal 18% increased Damage with Hits and Ailments
 5% chance to Freeze, Shock and Ignite
 10% increased Elemental Damage with Attack Skills
 +30 to Intelligence
-10% increased Physical Damage with Maces or Sceptres
-Mace or Sceptre Attacks deal 10% increased Damage with Ailments
 +15% to Critical Strike Multiplier with Maces or Sceptres
 Regenerate 0.8% of Life per second
 6% increased Evasion Rating and Armour
@@ -3613,12 +3782,15 @@ Regenerate 0.8% of Life per second
 Axe Attacks deal 10% increased Damage with Hits and Ailments
 8% increased Accuracy Rating with Axes
 8% increased maximum Mana
+10% increased Mana Regeneration Rate
 4% increased Cast Speed while Dual Wielding
 +10 to Strength
 14% increased Damage while wielding a Wand
-4% increased Attack Speed while you have Fortify
-12% increased Attack Damage while you have Fortify
+3% increased Attack Speed while you have Fortify
+10% increased Attack Damage while you have Fortify
 +10 to Strength
+15% increased Elemental Damage
+30% reduced Reflected Elemental Damage taken
 50% of Physical Damage Converted to Fire Damage
 Every 10 seconds, gain 100% of Physical Damage as Extra Fire Damage for 4 seconds
 30% increased Armour
@@ -3628,34 +3800,36 @@ Every 10 seconds, gain 100% of Physical Damage as Extra Fire Damage for 4 second
 10% increased Attack Damage
 10% increased Endurance Charge Duration
 10% increased Frenzy Charge Duration
-10% increased Warcry Cooldown Recovery Speed
-Using Warcries is Instant
-20% increased Warcry Buff Effect
+30% increased Warcry Speed
+12% increased Warcry Cooldown Recovery Speed
+Remove an Ailment when you Warcry
 +10 to Strength
 16% increased Armour
 +16 to maximum Life
 10% increased Melee Damage
 Melee Skills have 5% increased Area of Effect
+10% increased Life Recovery from Flasks
+10% increased Mana Recovery from Flasks
 15% increased Movement Speed during any Flask Effect
 20% increased Attack Speed during any Flask Effect
 15% increased maximum Mana
 10% increased Effect of Arcane Surge on you per 200 Mana spent Recently, up to 50%
 10% chance to gain Arcane Surge when you Kill an Enemy
-5% increased Attack Speed with Wands
+4% increased Attack Speed with Wands
 8% increased Accuracy Rating with Wands
-27% increased Damage over Time
-5% increased Skill Effect Duration
+23% increased Damage over Time
+10% increased Skill Effect Duration
+5% reduced Mana Reservation of Herald Skills
 0.3% of Spell Damage Leeched as Energy Shield
 10% increased Chaos Damage
 10% increased Physical Damage
-+8% to Chaos Resistance
-8% increased Area of Effect
-Channelling Skills have 3% increased Attack and Cast Speed
-Channelling Skills deal 8% increased Damage
++12% to Chaos Resistance
+10% increased Area of Effect
+Channelling Skills deal 10% increased Damage
+10% increased Effect of Infusion
 Every 14 seconds: Gain Chilling Conflux for 4 seconds Gain Shocking Conflux for 4 seconds Gain Igniting Conflux for 4 seconds Gain Chilling, Shocking and Igniting Conflux for 2 seconds
 12% increased Cold Damage with Attack Skills
 0.4% of Attack Damage Leeched as Mana
-10% increased total Recovery per second from Mana Leech
 Regenerate 1% of Energy Shield per second
 Purity of Lightning has 30% reduced Mana Reservation
 +20 to Intelligence
@@ -3670,15 +3844,13 @@ Mines have 20% increased Detonation Speed
 20% increased Duration of Elemental Ailments on Enemies
 20% increased Damage with Hits and Ailments against Enemies affected by Ailments
 20% increased Effect of Non-Damaging Ailments
-You can Cast an additional Brand
-Enemies take 10% increased Damage for each of your Brands Attached to them
-Brand Recall has 30% increased Cooldown Recovery Speed
-14% increased Brand Attachment range
+Brands have 100% more Activation Frequency if 75% of Attached Duration expired
+Brand Recall has 100% increased Cooldown Recovery Speed
 Minions have 8% increased maximum Life
 Minions have +8% to all Elemental Resistances
 Minions have +8% to Chaos Resistance
 +3% to maximum Chaos Resistance
-5% increased Attack Speed with Wands
+4% increased Attack Speed with Wands
 8% increased Accuracy Rating with Wands
 +20% to Damage over Time Multiplier for Ignite from Critical Strikes
 20% increased Effect of Chill you inflict with Critical Strikes
@@ -3688,6 +3860,8 @@ Staff Attacks deal 30% increased Damage with Hits and Ailments
 30% increased Critical Strike Chance with Staves
 10% chance to gain an Endurance Charge on Melee Critical Strike
 +2 to Melee Strike Range with Staves
+Staff Attacks deal 12% increased Damage with Hits and Ailments
+Mace or Sceptre Attacks deal 12% increased Damage with Hits and Ailments
 15% increased maximum Mana
 10% increased Effect of your Curses if you've spent 200 total Mana Recently
 Remove a Curse when you use a Mana Flask
@@ -3695,14 +3869,17 @@ Remove a Curse when you use a Mana Flask
 10% increased Spell Damage
 Spell Skills have 5% increased Area of Effect
 12% increased Attack Physical Damage
-10% increased Effect of Auras on You for each Herald affecting you
+Aura Buffs from Skills have 8% increased Effect on you for each Herald affecting you, up to 40%
 12% increased Damage with Bows
 12% increased Attack Speed with Bows
 20% increased Global Accuracy Rating
 20% increased Arrow Speed
 12% increased Damage Over Time with Bow Skills
 +10 to Intelligence
-14% increased Damage with Brand Skills
+10% increased Projectile Damage
+50% increased Projectile Fork angle
+10% increased Brand Damage
+10% increased Brand Attachment range
 15% increased Armour
 20% increased Stun Duration on Enemies
 60% increased Critical Strike Chance with Wands
@@ -3713,22 +3890,25 @@ Spell Skills have 5% increased Area of Effect
 Gain Arcane Surge when your Mine is Detonated targeting an Enemy
 Gain Arcane Surge when your Trap is Triggered by an Enemy
 Axe Attacks deal 30% increased Damage with Hits and Ailments
-+30% to Critical Strike Multiplier with Axes
++40% to Critical Strike Multiplier with Axes
 +200 to Accuracy Rating with Axes
 Channelling Skills deal 14% increased Damage
+5% reduced Skill Effect Duration
 +10 to maximum Mana
 18% increased maximum Mana
-+5 Mana gained on Kill
-Sword Attacks deal 10% increased Damage with Hits and Ailments
-4% increased Attack Speed with Swords
++10 Mana gained on Kill
++2% Chance to Block Attack Damage while Dual Wielding or holding a Shield
+Sword Attacks deal 12% increased Damage with Hits and Ailments
 +100 to Accuracy Rating
 15% increased Global Accuracy Rating
 +10% to all Elemental Resistances
 +20 to Dexterity
 5% increased maximum Life
 Transfiguration of Body
-Minions have 10% increased maximum Life
-Minions deal 10% increased Damage
+10% reduced Projectile Speed
+10% increased Projectile Damage
+Minions have 8% increased maximum Life
+Minions deal 8% increased Damage
 12% increased Damage with Hits and Ailments against Blinded Enemies
 25% increased Critical Strike Chance against Blinded Enemies
 6% increased Elemental Damage
@@ -3741,6 +3921,7 @@ Regenerate 3.00% of Energy Shield per second while stationary
 10% reduced Physical Damage taken while at maximum Endurance Charges
 10% increased Projectile Speed
 6% increased Projectile Damage
+Brand Skills have 15% increased Duration
 +30 to Strength
 +20 to maximum Life
 10% increased maximum Life
@@ -3748,14 +3929,13 @@ Regenerate 3.00% of Energy Shield per second while stationary
 +12% to Critical Strike Multiplier with Wands
 +10 to Dexterity
 +10 to Dexterity
-10% increased Evasion Rating and Armour
-10% increased Onslaught Effect
+12% increased Evasion Rating and Armour
+15% increased Onslaught Effect
 +10% to Chaos Damage over Time Multiplier
 20% increased Chaos Damage
-4% increased Cast Speed with Chaos Skills
-+8% to Chaos Resistance
-12% increased Damage with Brand Skills
-10% increased Brand Attachment range
+4% increased Cast Speed
+10% increased Brand Damage
+Brand Skills have 10% increased Duration
 25% increased Skill Effect Duration
 Recover 50 Life when you Block
 50% increased Defences from Equipped Shield
@@ -3766,9 +3946,9 @@ Recover 50 Life when you Block
 50% increased Effect of Buffs granted by your Active Ancestor Totems
 Ancestor Totems have 100% increased Activation range
 25% increased Area of Effect while you have a Totem
-18% increased Evasion Rating
+12% increased Damage
+20% increased Evasion Rating
 8% increased maximum Life
-12% increased Physical Damage
 6% increased maximum Life
 +1% to maximum Fire Resistance
 +8% to Fire Resistance
@@ -3777,7 +3957,7 @@ Ancestor Totems have 100% increased Activation range
 +10 to Intelligence
 30% increased Projectile Damage
 8% increased Attack and Cast Speed
-10% increased Impale Effect
+5% increased Impale Effect
 30% increased Evasion Rating and Armour
 35% increased Physical Damage
 12% increased Evasion Rating
@@ -3787,20 +3967,21 @@ Ancestor Totems have 100% increased Activation range
 +10 to Intelligence
 50% increased Critical Strike Chance for Spells
 +15% to Critical Strike Multiplier for Spells
-4% increased Attack Speed while holding a Shield
-+2% Chance to Block Attack Damage while holding a Shield
++3% Chance to Block Attack Damage while holding a Shield
 15% increased Spell Damage
 10% increased Area of Effect if you've Killed Recently
 Spell Skills have 10% increased Area of Effect
 +10 to Intelligence
-+5% to Cold Damage over Time Multiplier
++4% to Cold Damage over Time Multiplier
 10% increased Cold Damage
 10% increased Effect of Chill
-30% increased Totem Damage
-15% increased Totem Placement speed
+25% increased Totem Damage
+25% increased Totem Placement speed
 Chaos Resistance is doubled
+10% increased Melee Damage
+15% increased Melee Splash Area of Effect
 +10 to Strength
-15% increased Mana Regeneration Rate
+25% increased Mana Regeneration Rate
 15% increased Flask Charges gained
 Mana Flasks gain 1 Charge every 3 seconds
 Remove a random Elemental Ailment when you use a Mana Flask
@@ -3812,14 +3993,16 @@ Armour received from Body Armour is doubled
 +45% to Critical Strike Multiplier against Enemies that are affected by Elemental Ailments
 20% increased Effect of Non-Damaging Ailments
 20% increased Global Critical Strike Chance while wielding a Staff
-+8% to Global Critical Strike Multiplier while wielding a Staff
++10% to Global Critical Strike Multiplier while wielding a Staff
+15% increased Warcry Buff Effect
 Can Allocate Passives from the Shadow's starting point
 Grants 2 Passive Skill Points
-14% increased Elemental Damage with Wands
+10% increased Elemental Damage with Wands
+Damage with Weapons Penetrates 2% Elemental Resistance
 8% increased Attack Speed
 15% increased Global Accuracy Rating
 +20 to Dexterity
-+1% Chance to Block Attack Damage while Dual Wielding
++2% Chance to Block Attack Damage while Dual Wielding
 3% increased Attack Speed while Dual Wielding
 3% increased Cast Speed while Dual Wielding
 Minions have 10% increased Movement Speed
@@ -3838,6 +4021,8 @@ Attack Skills deal 24% increased Damage while Dual Wielding
 +6% to all Elemental Resistances
 10% increased Elemental Damage
 30% Chance to Dodge Attack Hits. 50% less Armour, 30% less Energy Shield, 30% less Chance to Block Spell and Attack Damage
+15% increased Chaining range
+Projectiles deal 10% increased Damage with Hits and Ailments to targets they Chain from
 10% increased Physical Damage
 Sword Attacks deal 12% increased Damage with Hits and Ailments
 Channelling Skills deal 30% increased Damage
@@ -3849,55 +4034,50 @@ Regenerate 1.5% of Life per second while Channelling
 1% increased Cold Damage per 25 Intelligence
 1% increased Cold Damage per 25 Strength
 0.4% of Spell Damage Leeched as Energy Shield
-14% increased Trap Damage
+16% increased Trap Damage
 20% increased Armour
-Regenerate 0.2% of Life per second per Endurance Charge
-10% chance to gain an Endurance Charge when you are Hit
-Enemies have -5% to Total Physical Damage Reduction against your Hits
+Regenerate 0.3% of Life per second per Endurance Charge
+15% chance to gain an Endurance Charge when you are Hit
 30% increased Armour while stationary
 4% increased Cast Speed
 +2% Chance to Block Spell Damage while wielding a Staff
 3% increased Attack Speed with Staves
 3% increased Cast Speed while wielding a Staff
 +2% Chance to Block Attack Damage while wielding a Staff
-15% increased Spell Damage
-4% increased Cast Speed
+20% increased Spell Damage
 20% increased Critical Strike Chance for Spells
 10% increased Light Radius
 +10 to Strength and Intelligence
 Gain 4% of Physical Damage as Extra Chaos Damage
 4% increased Attack and Cast Speed
-10% reduced Physical Damage taken over time
 20% increased Physical Damage
-30% increased Mine Damage
-Can have up to 2 additional Remote Mines placed at a time
 Mines have 20% increased Detonation Speed
+Mines have a 10% chance to be Detonated an Additional Time
 30% increased Armour
 +1% to all maximum Elemental Resistances
-+10 to maximum Mana
 16% increased maximum Mana
-40% increased Mana Regeneration Rate
+30% increased Mana Regeneration Rate
 +20 to Intelligence
 Claw Attacks deal 20% increased Damage with Hits and Ailments
 10% increased Attack Speed with Claws
 25% chance to Steal Power, Frenzy, and Endurance Charges on Hit with Claws
++1% to maximum Lightning Resistance
 +20% to Lightning Resistance
-40% chance to Avoid being Shocked
-6% chance to Avoid Lightning Damage from Hits
+30% chance to Avoid being Shocked
 10% increased Damage with Bows
 16% increased Damage Over Time with Bow Skills
 0.4% of Attack Damage Leeched as Mana
-10% increased total Recovery per second from Mana Leech
+40% increased total Recovery per second from Mana Leech
 Can Allocate Passives from the Templar's starting point
 Grants 2 Passive Skill Points
 40% more chance to Evade Projectile Attacks 20% less chance to Evade Melee Attacks
 10% increased Trap Damage
-20% increased Trap Trigger Area of Effect
+30% increased Trap Trigger Area of Effect
 Minions deal 15% increased Damage
 Minions created Recently have 10% increased Attack and Cast Speed
 Minions created Recently have 30% increased Movement Speed
-12% increased Attack Damage
-10% increased Evasion Rating and Armour
+14% increased Attack Damage
+12% increased Evasion Rating and Armour
 +40 to Intelligence
 8% increased Intelligence
 25% reduced Effect of Curses on you
@@ -3946,11 +4126,10 @@ Attacks used by Totems have 4% increased Attack Speed
 4% increased maximum Life
 10% increased Power Charge Duration
 15% increased Critical Strike Chance
-50% increased Critical Strike Chance while Channelling
-+30% to Critical Strike Multiplier if you've been Channelling for at least 1 second
-+4% Elemental Resistances while holding a Shield
-30% increased Defences from Equipped Shield
-10% increased Elemental Damage with Attack Skills
+30% increased Critical Strike Chance while Channelling
++20% to Critical Strike Multiplier if you've been Channelling for at least 1 second
++6% Elemental Resistances while holding a Shield
+40% increased Defences from Equipped Shield
 10% increased Damage with Bows
 20% increased Critical Strike Chance with Bows
 10% increased Damage Over Time with Bow Skills
@@ -3965,10 +4144,10 @@ Recover 2% of Life on Kill
 Recover 2% of Energy Shield on Kill
 Recover 4% of Mana on Kill
 70% increased Recovery Rate of Life, Mana and Energy Shield if you've Killed an Enemy affected by your Damage Over Time Recently
-20% increased Warcry Duration
 Regenerate 0.4% of Life per second
 Staff Attacks deal 12% increased Damage with Hits and Ailments
-+4% Chance to Block Attack Damage while wielding a Staff
+10% increased Stun Duration with Staves on Enemies
++3% Chance to Block Attack Damage while wielding a Staff
 10% increased Projectile Damage
 10% increased Critical Strike Chance
 12% increased Elemental Damage
@@ -3985,25 +4164,23 @@ Spend Energy Shield before Mana for Skill Costs Energy Shield protects Mana inst
 5% increased maximum Energy Shield
 30% increased Elemental Damage with Staves
 Damage with Weapons Penetrates 5% Elemental Resistance
-5% reduced Elemental Damage taken while stationary
 10% increased maximum Life
 10% increased Attack Damage
 6% increased Spell Damage
 4% increased Spell Damage per Power Charge
 Dagger Attacks deal 8% increased Damage with Hits and Ailments
 4% increased Attack Speed with Daggers
-Enemies have -5% to Total Physical Damage Reduction against your Hits
 +6% to Cold Damage over Time Multiplier
 15% increased Life Recovery from Flasks
 You have Fortify during Effect of any Life Flask
 +3% Chance to Block Attack Damage while Dual Wielding
 Attack Skills deal 10% increased Damage while Dual Wielding
 Dagger Attacks deal 20% increased Damage with Hits and Ailments
-40% increased Critical Strike Chance with Daggers
 +20% to Critical Strike Multiplier with Daggers
 +150 to Accuracy Rating with Daggers
+25% increased Elusive Effect
 +10 to Intelligence
-25% increased Melee Critical Strike Chance
+20% increased Melee Critical Strike Chance
 +10% to Melee Critical Strike Multiplier
 +8% to Damage over Time Multiplier for Bleeding
 Attacks have 15% chance to cause Bleeding
@@ -4013,19 +4190,20 @@ Attacks have 15% chance to cause Bleeding
 10% increased Physical Damage with Two Handed Melee Weapons
 Attacks with Two Handed Melee Weapons deal 10% increased Damage with Ailments
 3% increased Attack Speed with Two Handed Melee Weapons
-+15% to Melee Critical Strike Multiplier
++10% to Melee Critical Strike Multiplier
 Summoned Golems are Immune to Elemental Damage
 20% increased Damage per Summoned Golem
 25% increased Effect of Buffs granted by your Golems per Summoned Golem
 +1 to maximum number of Golems
-Sword Attacks deal 10% increased Damage with Hits and Ailments
-4% increased Attack Speed with Swords
++2% Chance to Block Attack Damage while Dual Wielding or holding a Shield
+Sword Attacks deal 12% increased Damage with Hits and Ailments
 +10 to Dexterity
-10% increased Elemental Damage with Attack Skills
-Claw Attacks deal 16% increased Damage with Hits and Ailments
-12% increased Accuracy Rating with Claws
+12% increased Elemental Damage with Attack Skills
+Claw Attacks deal 25% increased Damage with Hits and Ailments
+15% increased Accuracy Rating with Claws
 +30% to Critical Strike Multiplier with Claws
-15% increased Chaos Damage
+10% increased Chaos Damage
+Withered you Inflict expires 10% slower
 30% increased Totem Life
 Totems have 10% additional Physical Damage Reduction
 Totems gain +40% to Chaos Resistance
@@ -4059,7 +4237,8 @@ Enemies Taunted by you cannot Evade Attacks
 Attack Projectiles Return to you from final Target
 Returning Projectiles Pierce all Targets
 5% increased Stun Duration on Enemies per Endurance Charge
-Channelling Skills deal 14% increased Damage
+Channelling Skills have 3% increased Attack and Cast Speed
+Channelling Skills deal 10% increased Damage
 40% increased Fire Damage
 Regenerate 2% of Life per second
 1% of Damage dealt by your Totems is Leeched to you as Life
@@ -4090,37 +4269,39 @@ Regenerate 0.5% of Life per second
 Flasks applied to you have 5% increased Effect
 4% increased Attack Speed
 4% increased Cast Speed
+When your Hits Impale Enemies, also Impale other Enemies near them Inflict 4 additional Impales on Enemies you Impale Enemies cannot be Impaled for 4 seconds after you Impale them
+8% increased Elemental Damage
+15% reduced Reflected Elemental Damage taken
 16% increased Spell Damage
 14% increased Physical Damage with Maces or Sceptres
 Mace or Sceptre Attacks deal 14% increased Damage with Ailments
-4% reduced Enemy Stun Threshold with Maces or Sceptres
+5% reduced Enemy Stun Threshold with Maces or Sceptres
 Removes all mana. Spend Life instead of Mana for Skills
 Cannot Ignite, Chill, Freeze or Shock Critical Strikes inflict Scorch, Brittle and Sapped
 25% chance to gain 25% of Non-Chaos Damage with Hits as Extra Chaos Damage
 15% chance to gain 50% of Non-Chaos Damage with Hits as Extra Chaos Damage
 5% chance to gain 100% of Non-Chaos Damage with Hits as Extra Chaos Damage
 15% increased Lightning Damage
-20% increased Totem Damage
 20% increased Totem Duration
-Attack Skills have +1 to maximum number of Summoned Ballista Totems
+You have Onslaught if you've Summoned a Totem Recently
 Grants 1 Passive Skill Point
 5% increased Evasion Rating per Frenzy Charge
 8% increased Spell Damage while Dual Wielding
-2% increased Attack Speed while Dual Wielding
-2% increased Cast Speed while Dual Wielding
+3% increased Attack Speed while Dual Wielding
+3% increased Cast Speed while Dual Wielding
 10% increased maximum Life
 Lose 0.1% of Life per second per Rage while you are not losing Rage
 Inherent effects from having Rage are Tripled
 Cannot be Stunned while you have at least 25 Rage
-5% increased maximum Mana
+8% increased maximum Mana
 Minions deal 10% increased Damage
 30% increased Armour
-Gain an Endurance Charge every second if you've been Hit Recently
-6% increased Mine Throwing Speed
+Gain 1 Endurance Charge every second if you've been Hit Recently
+5% increased Mine Throwing Speed
 6% increased effect of Non-Curse Auras from your Skills
 Channelling Skills deal 14% increased Damage
 4% increased Attack Speed with Bows
-20% increased Critical Strike Chance with Bows
+6% increased Accuracy Rating with Bows
 20% increased Physical Damage with Swords
 Sword Attacks deal 20% increased Damage with Ailments
 40% increased Critical Strike Chance with Swords
@@ -4128,8 +4309,7 @@ Sword Attacks deal 20% increased Damage with Ailments
 10% increased Damage per Summoned Golem
 40% increased Effect of Buffs granted by your Golems
 Golems have 25% increased Maximum Life
-Attack Skills deal 25% increased Damage while holding a Shield
-6% increased Attack Speed while holding a Shield
+1% increased Damage per 1% Chance to Block Attack Damage
 +3% Chance to Block Attack Damage while holding a Shield
 25% increased Stun Duration on Enemies
 12% increased Physical Damage with Axes
@@ -4137,7 +4317,15 @@ Axe Attacks deal 12% increased Damage with Ailments
 3% increased Attack Speed with Axes
 8% increased Global Accuracy Rating
 12% increased Evasion Rating
+12% increased Warcry Cooldown Recovery Speed
+Warcry Skills have 15% increased Area of Effect
+15% increased Warcry Speed
+Exerted Attacks deal 15% increased Damage
 +40 to Intelligence
+12% increased Damage with Two Handed Weapons
+Enemies Poisoned by you have -5% to Chaos Resistance
+Spell Skills have +8% to Damage over Time Multiplier for Poison
+15% chance to Poison on Hit with Spell Damage
 Attacks with One Handed Weapons deal 20% increased Damage with Ailments
 14% increased Damage with One Handed Weapons
 6% increased maximum Energy Shield
@@ -4145,20 +4333,19 @@ Axe or Sword Attacks deal 15% increased Damage with Ailments
 10% increased Impale Effect
 10% chance to Impale Enemies on Hit with Axes or Swords
 15% increased Physical Damage with Axes or Swords
-+10% to Cold Damage over Time Multiplier
-12% increased Cold Damage
+25% increased Cold Damage
 Enemies Become Chilled as they Unfreeze
-10% chance to Freeze Enemies which are Chilled
-10% increased Effect of Chill
+15% chance to Freeze Enemies which are Chilled
+20% increased Effect of Chill
 10% increased Spell Damage while holding a Shield
-8% increased maximum Life
+10% increased maximum Life
 +8% to Chaos Resistance
-+10 to Strength
-You and nearby Allies have 50% increased Critical Strike Chance
-You and nearby Allies have +15% to Critical Strike Multiplier
+You and nearby Allies have 30% increased Critical Strike Chance
+You and nearby Allies have +12% to Critical Strike Multiplier
 +10 to Intelligence
 Nearby Enemies are Chilled
 4% increased maximum Life
+4% chance to Avoid Elemental Ailments
 10% increased Totem Placement speed
 Attacks used by Totems have 5% increased Attack Speed
 +10 to Intelligence
@@ -4173,16 +4360,17 @@ Attacks used by Totems have 5% increased Attack Speed
 12% increased Cold Damage with Attack Skills
 Mace or Sceptre Attacks deal 12% increased Damage with Hits and Ailments
 8% increased maximum Mana
-8% increased Cold Damage
+10% increased Area of Effect of Aura Skills
+10% increased Cold Damage
 20% increased Chill Duration on Enemies
 20% increased Freeze Duration on Enemies
-5% increased Effect of Chill
+10% increased Effect of Chill
 12% increased Lightning Damage
 10% increased Elemental Damage
 8% increased Cold Damage
 8% increased Lightning Damage
 6% increased Accuracy Rating with Two Handed Melee Weapons
-20% increased Critical Strike Chance with Two Handed Melee Weapons
++12% to Critical Strike Multiplier with Two Handed Melee Weapons
 30% increased Area of Effect
 Damage Penetrates 8% of Enemy Elemental Resistances
 Regenerate 1% of Life per second for each Mine Detonated Recently, up to 10% per second
@@ -4195,19 +4383,20 @@ Regenerate 1% of Life per Second for each Trap Triggered Recently, up to 10% per
 8% increased Attack and Cast Speed
 20% increased Life Recovery from Flasks
 +1 to Minimum Frenzy Charges
-5% chance to gain a Frenzy Charge on Kill
-5% increased Damage per Frenzy Charge
+8% chance to gain a Frenzy Charge on Kill
+8% increased Damage per Frenzy Charge
 0.4% of Attack Damage Leeched as Life
 Regenerate 1.5% of Life per second
 +4% Chance to Block Attack Damage
 Minions Regenerate 1% of Life per second
 Minions have 10% chance to deal Double Damage while they are on Full Life
-+3% to Chaos Damage over Time Multiplier
-8% increased Chaos Damage
++6% to Chaos Damage over Time Multiplier
 10% increased Elemental Damage
 8% increased maximum Mana
 +2% Chance to Block Attack Damage while Dual Wielding
 4% increased Attack Speed while Dual Wielding
+Brand Recall has 10% increased Cooldown Recovery Speed
+10% increased Brand Attachment range
 8% increased maximum Mana
 30% increased Mana Regeneration Rate if you've Hit a Cursed Enemy Recently
 3% increased Attack Speed
@@ -4218,25 +4407,23 @@ Sword Attacks deal 20% increased Damage with Hits and Ailments
 10% chance to gain a Frenzy Charge when you Block Attack Damage
 25% increased Critical Strike Chance
 +10 to Dexterity
-You can Cast an additional Brand
-12% increased Cast Speed with Brand Skills
+8% increased Cast Speed with Brand Skills
+Skills which create Brands have 35% chance to create an additional Brand
 Purity of Elements has 30% increased Aura Effect
-Purity of Fire has 30% increased Aura Effect
-Purity of Ice has 30% increased Aura Effect
-Purity of Lightning has 30% increased Aura Effect
+Purity of Fire has 10% increased Aura Effect
+Purity of Ice has 10% increased Aura Effect
+Purity of Lightning has 10% increased Aura Effect
 +10 to Dexterity
-Regenerate 0.6% of Life per second
+Regenerate 0.8% of Life per second
 10% increased Global Accuracy Rating
 15% increased Critical Strike Chance
 20% increased Trap Damage
 30% increased Trap Trigger Area of Effect
-8% increased Trap Throwing Speed
-24% increased Trap Damage
-8% increased Area of Effect
-40% increased Trap Trigger Area of Effect
+10% increased Trap Throwing Speed
+30% increased Trap Damage
+12% increased Area of Effect
+50% increased Trap Trigger Area of Effect
 +10 to Dexterity
-10% increased Projectile Speed
-10% increased Projectile Attack Damage
 Lightning Damage with Non-Critical Strikes is Lucky
 +15 to maximum Energy Shield
 Minions have 10% increased maximum Life
@@ -4249,6 +4436,7 @@ Minions have 10% increased maximum Life
 20% increased Bleeding Duration
 Bleeding you inflict deals Damage 5% faster
 Poisons you inflict deal Damage 5% faster
+Skills Supported by Unleash have 10% increased Seal gain frequency
 10% increased Attack Damage
 Flasks applied to you have 5% increased Effect
 10% chance to Impale Enemies on Hit with Attacks
@@ -4264,15 +4452,17 @@ Sword Attacks deal 24% increased Damage with Hits and Ailments
 40% more Damage
 +10 to Strength
 10% increased Global Accuracy Rating
+10% increased Projectile Speed
 20% increased Projectile Damage
 +20 to Strength
 Axe Attacks deal 20% increased Damage with Hits and Ailments
+10% increased Attack Speed with Axes
 12% increased Accuracy Rating with Axes
-15% increased Attack Speed while Leeching
+10% increased Impale Effect
 You count as Dual Wielding while you are Unencumbered 60% more Attack Speed while you are Unencumbered 14 to 20 Added Attack Physical Damage per 10 Dexterity while you are Unencumbered
 6% increased maximum Energy Shield
-12% increased Physical Damage with Two Handed Melee Weapons
-Attacks with Two Handed Melee Weapons deal 12% increased Damage with Ailments
+16% increased Physical Damage with Two Handed Melee Weapons
+Attacks with Two Handed Melee Weapons deal 16% increased Damage with Ailments
 +30 to Intelligence
 8% increased Global Accuracy Rating
 12% increased Evasion Rating
@@ -4303,15 +4493,17 @@ Minions deal 10% increased Damage
 10% increased Area Damage
 +10% to Critical Strike Multiplier
 10% increased Accuracy Rating with Maces or Sceptres
-25% increased Elemental Damage with Maces or Sceptres
+30% increased Elemental Damage with Maces or Sceptres
 Damage with Weapons Penetrates 5% Elemental Resistance
 3% Chance to Block Spell Damage
 30% increased Armour
 +3% Chance to Block Attack Damage
 10% increased Mana Recovery from Flasks
-10% reduced Flask Charges used from Mana Flasks
+5% increased Flask Charges gained
++5% to all Elemental Resistances
+Grace has 30% reduced Mana Reservation
 Attacks with One Handed Weapons deal 30% increased Damage with Ailments
-8% increased Attack Speed with One Handed Melee Weapons
+8% increased Attack Speed with One Handed Weapons
 20% increased Damage with One Handed Weapons
 +6% to all Elemental Resistances
 10% increased Elemental Damage
@@ -4320,13 +4512,14 @@ Attacks with One Handed Weapons deal 30% increased Damage with Ailments
 20% increased Totem Damage
 30% increased Totem Duration
 30% increased Totem Damage if you haven't Summoned a Totem in the past 2 seconds
-+6% to Damage over Time Multiplier for Bleeding
+Attacks have 15% chance to cause Bleeding
 Axe or Sword Attacks deal 20% increased Damage with Ailments
 20% increased Physical Damage with Axes or Swords
 +10% to Physical Damage over Time Multiplier while wielding an Axe or Sword
 +10 to Dexterity
 14% increased Trap Damage
 14% increased Mine Damage
+10% increased Effect of Herald Buffs on you
 30% increased Totem Damage
 Attack Skills have +1 to maximum number of Summoned Ballista Totems
 50% increased Effect of Buffs granted by your Active Ancestor Totems
@@ -4335,12 +4528,12 @@ Attack Skills have +1 to maximum number of Summoned Ballista Totems
 20% increased Mana Regeneration Rate
 10% increased Physical Damage with Swords
 Sword Attacks deal 10% increased Damage with Ailments
-+16% to Critical Strike Multiplier with Swords
++10% to Critical Strike Multiplier with Swords
 +1000 to Accuracy Rating
 Cannot be Chilled
 Cannot be Stunned
 5% increased Damage per Endurance Charge
-Gain an Endurance Charge every second if you've been Hit Recently
+Gain 1 Endurance Charge every second if you've been Hit Recently
 +20 to maximum Life
 10% increased maximum Life
 +10 to Strength
@@ -4352,7 +4545,7 @@ Damage penetrates 25% Lightning Resistance while affected by Herald of Thunder
 25% reduced Mana Reservation of Herald Skills
 +10 to Strength
 10% increased Lightning Damage
-10% increased Effect of Shock
+15% increased Effect of Shock
 +10 to Dexterity
 10% increased Area of Effect
 20% increased Area Damage
@@ -4365,41 +4558,45 @@ Damage Penetrates 15% Fire Resistance
 Nearby Enemies cannot gain Power, Frenzy or Endurance Charges
 You and nearby Party Members Share Power, Frenzy and Endurance Charges with each other
 10% chance to gain a Power, Frenzy or Endurance Charge on Hit
+10% chance to Impale Enemies on Hit with Two Handed Weapons
+25% increased Impale Duration
 10% increased Attack Damage
 15% increased Critical Strike Chance
 5% increased maximum Life
 40% increased Critical Strike Chance with Two Handed Melee Weapons
-8% chance to deal Double Damage if you've dealt a Critical Strike with a Two Handed Melee Weapon Recently
+5% chance to deal Double Damage if you've dealt a Critical Strike with a Two Handed Melee Weapon Recently
 15% increased Evasion Rating and Armour
 20% increased Taunt Duration
-25% increased Area of Effect of Curse Skills
 5% increased Effect of your Curses
-Curse Skills have 5% reduced Mana Reservation
+25% increased Area of Effect of Curse Aura Skills
+4% reduced Mana Reservation of Curse Auras
+15% increased Warcry Speed
 Grace has 30% increased Aura Effect
 Determination has 30% increased Aura Effect
 Discipline has 30% increased Aura Effect
 Skills Chain +1 times
 Projectiles deal 10% more Damage for each remaining Chain
-30% increased Melee Critical Strike Chance
+25% increased Melee Critical Strike Chance
 5% increased maximum Energy Shield
 4% increased maximum Life
 +30% to Critical Strike Multiplier with Traps
 +30% to Critical Strike Multiplier with Mines
 15% chance to gain a Power Charge when your Trap is triggered by an Enemy
-15% chance to gain a Power Charge when your Mine is Detonated targeting an Enemy
+10% chance to gain a Power Charge when your Mine is Detonated targeting an Enemy
 12% increased Fire Damage
 Immune to Elemental Ailments during any Flask Effect
 40% increased Elemental Damage during any Flask Effect
 20% chance to Freeze, Shock and Ignite during any Flask Effect
+10% increased Effect of Non-Damaging Ailments
 14% increased Armour
 +3% to all Elemental Resistances
 4% increased maximum Life
-+5 Life gained on Kill
-6% increased Accuracy Rating with Maces or Sceptres
++10 Life gained on Kill
+8% increased Accuracy Rating with Maces or Sceptres
 12% increased Elemental Damage with Maces or Sceptres
 60% increased Critical Strike Chance for Spells
 +15% to Critical Strike Multiplier for Spells
-Minions have +15% to Chaos Resistance
+Minions have +20% to Chaos Resistance
 Minions have 25% chance to gain Unholy Might for 4 seconds on Kill
 Minions gain 10% of Maximum Life as Extra Maximum Energy Shield
 10% chance to Freeze, Shock and Ignite while affected by a Herald
@@ -4429,10 +4626,10 @@ Claw Attacks deal 12% increased Damage with Hits and Ailments
 20% increased total Recovery per second from Life Leech
 +2% Chance to Block Spell Damage while holding a Shield
 +6% Elemental Resistances while holding a Shield
-3% increased Attack Speed with Wands
-6% increased Accuracy Rating with Wands
-5% increased maximum Mana
-3% reduced Mana Cost of Skills
+5% increased Attack Speed with Wands
+8% increased Accuracy Rating with Wands
+8% increased maximum Mana
+4% reduced Mana Cost of Skills
 Minions have 15% increased maximum Life
 Regenerate 2% of Life per second if a Minion has Died Recently
 Minions Recover 4% of Life on Minion Death
@@ -4442,8 +4639,8 @@ Attacks with Melee Weapons deal 4% increased Damage with Ailments
 20% increased Stun Duration on Enemies
 +10 to Strength
 +10 to Strength
-Channelling Skills have 3% increased Attack and Cast Speed
-Channelling Skills deal 8% increased Damage
+Channelling Skills deal 10% increased Damage
+10% increased Effect of Infusion
 5% increased Area of Effect per Power Charge
 5% increased Spell Damage per Power Charge
 Gain a Power Charge after Spending a total of 200 Mana
@@ -4459,10 +4656,10 @@ Gain a Power Charge after Spending a total of 200 Mana
 +14 to maximum Energy Shield
 25% increased Mana Regeneration Rate
 +30 to Intelligence
-Attack Skills deal 20% increased Damage while Dual Wielding
-4% chance to Dodge Attack or Spell Hits if you've Hit an Enemy Recently
+Attack Skills deal 25% increased Damage while Dual Wielding
+3% chance to Dodge Attack or Spell Hits if you've Hit an Enemy Recently
 8% increased effect of Non-Curse Auras from your Skills
-Auras from your Skills grant 0.2% of Life Regenerated per second to you and Allies
+You and nearby Allies Regenerate 1.00% of Life per second
 8% increased Melee Physical Damage
 4% increased Attack Speed
 30% increased Shock Duration on Enemies
@@ -4470,9 +4667,8 @@ Auras from your Skills grant 0.2% of Life Regenerated per second to you and Alli
 10% increased Effect of Shock
 10% increased maximum Energy Shield
 8% increased maximum Life
-25% increased Life Recovery from Flasks
-25% increased Mana Recovery from Flasks
-3% additional Physical Damage Reduction during Effect of any Life or Mana Flask
+40% reduced Effect of Curses on you during Effect of any Life or Mana Flask
+40% reduced Effect of non-Damaging Ailments on you during Effect of any Life or Mana Flask
 10% increased Projectile Damage
 Channelling Skills deal 12% increased Attack Damage
 3% increased Attack Speed while holding a Shield
@@ -4484,8 +4680,11 @@ Cannot take Reflected Physical Damage
 20% more Damage against Unique Enemies
 10% increased Chaos Damage
 10% increased Physical Damage
-8% increased Spell Damage while holding a Shield
-3% increased Cast Speed while holding a Shield
+4% increased Cast Speed while holding a Shield
+Exerted Attacks deal 20% increased Damage
+15% increased Effect of Non-Curse Auras from your Skills on Enemies
+Placed Banners also grant 30% increased Attack Damage to you and Allies
+10% increased Effect of Herald Buffs on you
 6% increased Armour
 4% increased maximum Life
 10% increased Damage while wielding a Wand
@@ -4497,7 +4696,7 @@ Cannot take Reflected Physical Damage
 10% increased Elemental Damage with Attack Skills
 +10 to Strength
 8% reduced Enemy Stun Threshold
-+20% to Critical Strike Multiplier
++15% to Critical Strike Multiplier
 30% increased Totem Life
 Totems gain +20% to all Elemental Resistances
 Totems have 15% additional Physical Damage Reduction
@@ -4507,21 +4706,20 @@ Gain 20% of Wand Physical Damage as Extra Lightning Damage
 8% increased maximum Mana
 Channelling Skills deal 16% increased Attack Damage
 Channelling Skills have 6% increased Attack Speed
-20% chance to gain an Endurance Charge when Hit while Channelling
-20% chance to gain a Frenzy Charge when Hit while Channelling
+10% chance to gain an Endurance Charge when Hit while Channelling
+10% chance to gain a Frenzy Charge when Hit while Channelling
 +10 to Strength
 30% increased Life Recovery from Flasks
 Removes Bleeding when you use a Flask
 Gain a Flask Charge when you deal a Critical Strike
 Can Allocate Passives from the Duelist's starting point
 Grants 2 Passive Skill Points
-10% increased Warcry Cooldown Recovery Speed
 20% increased Critical Strike Chance for Spells
 15% increased Armour
 4% increased Movement Speed
 12% increased Attack Speed
 1.2% of Physical Attack Damage Leeched as Life
-20% increased total Recovery per second from Life Leech
+60% increased total Recovery per second from Life Leech
 Life Regeneration is applied to Energy Shield instead
 +15 to Dexterity
 +10 to Intelligence
@@ -4531,16 +4729,13 @@ Life Regeneration is applied to Energy Shield instead
 +1% Chance to Block Attack Damage for each time you've Blocked in the past 10 seconds
 12% increased Attack Physical Damage
 6% increased Attack Speed
-5% increased maximum Life
+8% increased maximum Life
 10% increased Area of Effect
-3% increased Character Size
 10% increased Totem Damage
 15% increased Totem Placement speed
-24% increased Totem Damage
-20% increased Totem Life
-20% increased Totem Duration
-24% increased Damage with Brand Skills
-Brand Skills have 20% increased Duration
+30% increased Totem Damage
+30% increased Totem Life
+30% increased Totem Duration
 12% increased Damage
 +10 to maximum Energy Shield
 +10 to Dexterity
@@ -4551,7 +4746,7 @@ Brand Skills have 20% increased Duration
 Attacks with One Handed Melee Weapons deal 20% increased Damage with Ailments
 0.6% of Physical Attack Damage Leeched as Life
 10% increased Maximum total Recovery per second from Life Leech
-20% increased Attack Damage while Leeching
+30% increased Attack Damage while Leeching
 +10 to Dexterity
 5% increased maximum Energy Shield
 3% increased maximum Life
@@ -4569,7 +4764,7 @@ Attacks used by Totems have 10% increased Attack Speed
 24% increased Elemental Damage with Wands
 Damage with Weapons Penetrates 5% Elemental Resistance
 10% increased Cold Damage
-Cold Spells have 10% of Physical Damage Converted to Cold Damage
+10% increased Effect of Chill
 14% increased Damage
 +14 to maximum Mana
 20% increased Area Damage
@@ -4578,18 +4773,20 @@ Cold Spells have 10% of Physical Damage Converted to Cold Damage
 Regenerate 1% of Life per second
 10% increased Physical Damage with Swords
 Sword Attacks deal 10% increased Damage with Ailments
-+16% to Critical Strike Multiplier with Swords
++10% to Critical Strike Multiplier with Swords
 8% increased Attack Speed with Staves
 12% increased Accuracy Rating with Staves
 30% increased Critical Strike Chance with Staves
 +150 to Accuracy Rating with Staves
-Enemies have -12% to Total Physical Damage Reduction against your Hits
+Overwhelm 12% Physical Damage Reduction
+12% increased Warcry Cooldown Recovery Speed
+Warcry Skills have 15% increased Area of Effect
 +10 to Intelligence
 20% chance to Avoid Physical Damage from Hits
 12% increased Armour
 10% chance to gain an Endurance Charge when you are Hit
 12% increased Evasion Rating
-+3% to all Elemental Resistances
++4% to all Elemental Resistances
 12% increased Physical Damage with Wands
 Wand Attacks deal 12% increased Damage with Ailments
 30% chance to Avoid being Chilled
@@ -4598,6 +4795,10 @@ Wand Attacks deal 12% increased Damage with Ailments
 30% increased Evasion Rating
 8% increased maximum Life
 12% increased Area of Effect of Aura Skills
+14% increased Projectile Damage
+You can Cast an additional Brand
+Brand Skills have 20% increased Duration
+Brand Recall has 20% increased Cooldown Recovery Speed
 15% increased Accuracy Rating with Staves
 40% increased Critical Strike Chance with Staves
 +20% to Critical Strike Multiplier with Staves
@@ -4625,28 +4826,29 @@ Auras from your Skills grant +1% Physical Damage Reduction to you and Allies
 Auras from your Skills grant 0.2% of Life Regenerated per second to you and Allies
 3% increased Attack Speed
 10% chance to Poison on Hit with Attacks
-6% increased maximum Energy Shield
-10% faster start of Energy Shield Recharge
+8% increased maximum Energy Shield
+5% faster start of Energy Shield Recharge
 15% increased Energy Shield Recharge Rate
 12% increased Physical Damage with Two Handed Melee Weapons
 Attacks with Two Handed Melee Weapons deal 12% increased Damage with Ailments
+0.4% of Physical Attack Damage Leeched as Life
 10% increased Trap Damage
 10% increased Mine Damage
 4% increased Movement Speed
 12% increased Elemental Damage with Attack Skills
 +1 to Minimum Endurance Charges
-5% chance to gain an Endurance Charge on Kill
-5% increased Damage per Endurance Charge
+8% chance to gain an Endurance Charge on Kill
+8% increased Damage per Endurance Charge
 +15% to Lightning Resistance
 4% increased Attack Speed
 5% increased maximum Life
 0.6% of Attack Damage Leeched as Mana
 25% increased Maximum total Recovery per second from Mana Leech
 +2 Mana gained for each Enemy hit by your Attacks
-20% increased total Recovery per second from Mana Leech
+50% increased total Recovery per second from Mana Leech
 Sword Attacks deal 24% increased Damage with Hits and Ailments
 6% increased Attack Speed with Swords
-Enemies have -10% to Total Physical Damage Reduction against your Hits
+Overwhelm 10% Physical Damage Reduction
 +1 to Melee Strike Range with Swords
 30% increased Area of Effect of Aura Skills
 6% increased effect of Non-Curse Auras from your Skills
@@ -4654,20 +4856,19 @@ Enemies have -10% to Total Physical Damage Reduction against your Hits
 6% reduced Mana Cost of Skills
 24% increased Damage over Time
 6% increased maximum Energy Shield
-Regenerate 2% of Energy Shield per second if you\u2019ve Killed an Enemy Recently
+Regenerate 2% of Energy Shield per second if you’ve Killed an Enemy Recently
 Attacks with Melee Weapons deal 12% increased Damage with Ailments
 12% increased Melee Physical Damage while you have Fortify
 5% increased Effect of Fortify on you
 8% increased Attack and Cast Speed while Channelling
-Immune to Curses while Channelling
+Remove a Curse after Channelling for 2 seconds
 12% increased Physical Damage with Axes
 Axe Attacks deal 12% increased Damage with Ailments
-5% increased Area of Effect
+6% increased Area of Effect
 10% chance to throw up to 1 additional Trap or Mine
 +2 to Level of all Minion Skill Gems
 Spells Cast by Totems have 5% increased Cast Speed
 Attacks used by Totems have 8% increased Attack Speed
-5% increased Brand Activation frequency
 5% increased maximum Life
 8% increased maximum Mana
 10% increased Mana Regeneration Rate
@@ -4691,9 +4892,11 @@ Flasks gain 3 Charges every 3 seconds
 40% increased Defences from Equipped Shield
 +8% Chance to Block Projectile Attack Damage
 +4% Chance to Block Attack Damage while holding a Shield
+12% increased Warcry Cooldown Recovery Speed
+Exerted Attacks deal 15% increased Damage
 25% increased Knockback Distance
 Regenerate 0.2% of Life per second per Endurance Charge
 +30% to Critical Strike Multiplier
 +10 to Strength
 +1% to Critical Strike Chance of Herald Skills
-+25% to Critical Strike Multiplier if you dealt a Critical Strike with a Herald Skill Recently
++15% to Critical Strike Multiplier if you dealt a Critical Strike with a Herald Skill Recently

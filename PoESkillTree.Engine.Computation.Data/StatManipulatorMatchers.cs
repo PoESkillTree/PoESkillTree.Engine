@@ -25,7 +25,7 @@ namespace PoESkillTree.Engine.Computation.Data
             new StatManipulatorMatcherCollection(_modifierBuilder)
             {
                 { "you and nearby allies (deal|have)(?! onslaught)", s => Buff.Aura(s, Self, Ally) },
-                { "you and nearby allies(?! deal| have)", s => Buff.Aura(s, Self, Ally) },
+                { "you and nearby allies(?! deal| have| gain onslaught)", s => Buff.Aura(s, Self, Ally) },
                 { "you and nearby non-minion allies have a", s => Buff.Aura(s, Self, Entity.Totem) },
                 { "you and nearby party members", s => s }, // The player character is the only party member with an Entity
                 { "you and your minions(?= take)", s => s.Concat(s.For(Entity.Minion)) },
@@ -55,12 +55,22 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "enemies near your totems (have|deal)", s => Buff.Aura(s, OpponentsOfSelf).For(Entity.Totem) },
                 { "enemies near your totems(?= take)", s => Buff.Aura(s, OpponentsOfSelf).For(Entity.Totem) },
                 { "each totem applies (?<inner>.*) to enemies near it", s => Buff.Aura(s, OpponentsOfSelf).For(Entity.Totem), "${inner} for each totem" },
+                {
+                    "gain (?<inner>.*) for # seconds when you warcry",
+                    s => Buff.Buff(s, Self).WithCondition(Skills[Keyword.Warcry].Cast.InPastXSeconds(Value)),
+                    "${inner}"
+                },
                 { "({BuffMatchers}) grants", Reference.AsBuff.AddStat },
                 { "hinder enemies with", Buff.Hinder.AddStat },
                 { "during ({SkillMatchers}) for you and allies", Reference.AsSkill.Buff.AddStat },
                 { "enemies ({AilmentMatchers}) by supported skills have", s => Reference.AsAilment.AddStat(s).For(OpponentsOfSelf) },
                 { "enemies ({BuffMatchers}) by supported skills(?= take)", s => Reference.AsBuff.AddStatForSource(s, Self).For(OpponentsOfSelf) },
                 { "elusive from supported skills also grants (?<inner>.*) for skills supported by nightblade", Buff.Elusive.AddStat, "${inner}" },
+                {
+                    "placed banners also grant (?<inner>.*) to you and allies",
+                    s => Buffs(Self, Self, Ally).With(Keyword.Banner).AddStat(s).WithCondition(Flag.IsBannerPlanted),
+                    "${inner}"
+                },
                 { @"\(AsItemProperty\)", s => s.AsItemProperty },
                 { @"\(AsPassiveNodeProperty\)", s => s.AsPassiveNodeProperty },
                 { @"\(AsPassiveNodeBaseProperty\)", s => s.AsPassiveNodeBaseProperty },

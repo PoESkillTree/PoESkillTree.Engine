@@ -10,6 +10,6 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
         {
         }
 
-        public IStatBuilder Penetration => FromIdentity(nameof(Penetration), typeof(int));
+        public IStatBuilder Overwhelm => FromIdentity(nameof(Overwhelm), typeof(int));
     }
 }

@@ -571,8 +571,8 @@ namespace PoESkillTree.Engine.Computation.Data
                 {
                     // Blood Magic
                     "spend life instead of mana for skills",
-                    (BaseAdd, 100, Mana.Cost.ConvertTo(Life.Cost), Condition.True),
-                    (TotalOverride, (int) Pool.Life, AllSkills.ReservationPool, Condition.True)
+                    (BaseAdd, 100, Mana.Cost.ConvertTo(Life.Cost)),
+                    (TotalOverride, (int) Pool.Life, AllSkills.ReservationPool)
                 },
                 {
                     // Mortal Conviction
@@ -592,6 +592,28 @@ namespace PoESkillTree.Engine.Computation.Data
                 {
                     "you can inflict bleeding on an enemy up to 8 times",
                     BaseAdd, 7, Ailment.Bleed.InstancesOn(Self).Maximum
+                },
+                {
+                    // Imbalanced Guard
+                    "maximum damage reduction for any damage type is #%",
+                    (TotalOverride, Value, AnyDamageType.DamageReduction.Maximum),
+                    (TotalOverride, Value, AnyDamageType.DamageReductionIncludingArmour.Maximum)
+                },
+                {
+                    // Eternal Youth
+                    "energy shield recharge instead applies to life",
+                    (BaseAdd, 100, EnergyShield.Recharge.ConvertTo(Life.Recharge)),
+                    (BaseAdd, 100, EnergyShield.Recharge.Start.ConvertTo(Life.Recharge.Start))
+                },
+                {
+                    // Glancing Blows
+                    "you take #% of damage from blocked hits",
+                    TotalOverride, Value, Stat.IndependentTotal("Block.PercentDamageTaken")
+                },
+                {
+                    // Supreme Ego
+                    "auras from your skills do not affect allies",
+                    TotalOverride, 0, Buffs(Self, targets: Ally).With(Keyword.Aura).Effect
                 },
                 // Ascendancies
                 // - Juggernaut
@@ -729,7 +751,7 @@ namespace PoESkillTree.Engine.Computation.Data
                     (PercentIncrease, 25, Buff.Buff(Stat.CastRate, Self), Condition.Unique("Do you have Adrenaline?")),
                     (PercentIncrease, 25, Buff.Buff(Stat.MovementSpeed, Self),
                         Condition.Unique("Do you have Adrenaline?")),
-                    (BaseAdd, 10, Buff.Buff(Physical.Resistance, Self), Condition.Unique("Do you have Adrenaline?"))
+                    (BaseAdd, 10, Buff.Buff(Physical.DamageReduction, Self), Condition.Unique("Do you have Adrenaline?"))
                 },
                 {
                     "banner skills reserve no mana",

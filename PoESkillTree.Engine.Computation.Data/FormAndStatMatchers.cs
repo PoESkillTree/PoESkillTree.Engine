@@ -182,10 +182,15 @@ namespace PoESkillTree.Engine.Computation.Data
                     "hits ignore enemy monster ({DamageTypeMatchers}) resistance",
                     TotalOverride, 1, Reference.AsDamageType.IgnoreResistance
                 },
-                { "enemies have #% to total physical damage reduction( against your hits)?", BaseAdd, Value, Physical.Penetration },
+                { "enemies have -#% to total physical damage reduction( against your hits)?", BaseAdd, Value, Physical.DamageReductionOverwhelm },
+                { "overwhelm #% physical damage reduction", BaseAdd, Value, Physical.DamageReductionOverwhelm },
                 {
-                    "enemies (you impale|impaled by supported skills) have #% to total physical damage reduction against impale hits",
-                    BaseAdd, Value, Buff.Impale.Penetration
+                    "enemies (you impale|impaled by supported skills) have -#% to total physical damage reduction against impale hits",
+                    BaseAdd, Value, Buff.Impale.Overwhelm
+                },
+                {
+                    "impale damage dealt to enemies impaled by you overwhelms #% physical damage reduction",
+                    BaseAdd, Value, Buff.Impale.Overwhelm
                 },
                 // - exposure
                 {
@@ -277,7 +282,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 // defense
                 // - life, mana, defences
-                { "maximum life becomes #", TotalOverride, Value, Life },
+                { "maximum ({PoolStatMatchers}) (becomes|is) #", TotalOverride, Value, Reference.AsPoolStat },
                 { "removes all mana", TotalOverride, 0, Mana },
                 {
                     "gain #% of maximum ({PoolStatMatchers}) as extra maximum energy shield",
@@ -297,7 +302,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 // - resistances
                 { "immune to ({DamageTypeMatchers}) damage", TotalOverride, 100, Reference.AsDamageType.Resistance },
                 { @"\+#% elemental resistances", BaseAdd, Value, Elemental.Resistance },
-                { @"\+?#% physical damage reduction", BaseAdd, Value, Physical.Resistance },
+                { @"\+?#% physical damage reduction", BaseAdd, Value, Physical.DamageReduction },
                 { @"\+#% ({DamageTypeMatchers}) resistance against damage over time", BaseAdd, Value, Reference.AsDamageType.ResistanceAgainstDoTs },
                 // - leech
                 {
@@ -373,6 +378,11 @@ namespace PoESkillTree.Engine.Computation.Data
                     "regenerate #% of ({PoolStatMatchers}) over # seconds when you consume a corpse",
                     BaseAdd, Values[0] / Values[1], Reference.AsPoolStat.Regen.Percent,
                     Action.ConsumeCorpse.InPastXSeconds(Values[1])
+                },
+                {
+                    "sacrifice #% of mana per second to recover that much life",
+                    (BaseAdd, Value.AsPercentage * Mana.Value, Life.Regen),
+                    (BaseSubtract, Value, Mana.Regen.Percent)
                 },
                 // degen
                 {
@@ -495,7 +505,7 @@ namespace PoESkillTree.Engine.Computation.Data
                     TotalOverride, 0, Buffs(Self, OpponentsOfSelf).With(Keyword.Curse).On, Flag.IgnoreHexproof.IsTrue.Not
                 },
                 {
-                    "you and nearby allies have onslaught",
+                    "you and nearby allies (have|gain) onslaught",
                     TotalOverride, 1, Buff.Onslaught.On(Self), Buff.Onslaught.On(Ally)
                 },
                 { "gain elemental conflux", TotalOverride, 1, Buff.Conflux.Elemental.On(Self) },
@@ -526,6 +536,10 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "(?<!chance to )impale enemies", TotalOverride, 100, Buff.Impale.Chance },
                 { "(?<!chance to )intimidate enemies", TotalOverride, 100, Buff.Intimidate.Chance },
                 { "(?<!chance to )hinder enemies near them", TotalOverride, 100, Buff.Hinder.Chance, OpponentsOfSelf.IsNearby },
+                {
+                    "(?<!chance to )cover rare or unique enemies in ash",
+                    TotalOverride, 100, Buff.CoveredInAsh.Chance, OpponentsOfSelf.IsRareOrUnique
+                },
                 // - duration
                 { "({BuffMatchers}) lasts # seconds", BaseSet, Value, Reference.AsBuff.Duration },
                 // - stack count
@@ -540,6 +554,9 @@ namespace PoESkillTree.Engine.Computation.Data
                     // Stat isn't useful but has to be parsed successfully because it's part of a replaced stat
                     "removes curses", BaseAdd, 0, Buff.CurseLimit, Not(Condition.True)
                 },
+                // - warcries
+                { "warcries exert # additional attacks?", BaseAdd, Value, Stat.Warcry.ExertedAttacks },
+                { "warcries have minimum of # power", BaseSet, Value, Stat.Warcry.MinimumPower },
                 // flags
                 // ailments
                 { "causes bleeding", TotalOverride, 100, Ailment.Bleed.Chance },

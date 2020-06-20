@@ -65,8 +65,8 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         public IDamageRelatedStatBuilder Damage(DamageType damageType)
             => DamageRelatedFromIdentity($"{damageType}.Damage", typeof(double));
 
-        public IDamageRelatedStatBuilder EnemyResistanceFromArmourAgainstNonCrits => DamageRelatedFromIdentity(typeof(double)).WithHits;
-        public IDamageRelatedStatBuilder EnemyResistanceFromArmourAgainstCrits => DamageRelatedFromIdentity(typeof(double)).WithHits;
+        public IDamageRelatedStatBuilder EnemyDamageReductionFromArmourAgainstNonCrits => DamageRelatedFromIdentity(typeof(double)).WithHits;
+        public IDamageRelatedStatBuilder EnemyDamageReductionFromArmourAgainstCrits => DamageRelatedFromIdentity(typeof(double)).WithHits;
 
         public IDamageRelatedStatBuilder EnemyResistanceAgainstNonCrits(DamageType damageType)
             => DamageRelatedFromIdentity($"{damageType}.EnemyResistance.NonCrits", typeof(double)).WithHits;

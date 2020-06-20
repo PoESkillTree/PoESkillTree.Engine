@@ -182,5 +182,7 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
         IFlagStatBuilders Flag { get; }
 
         IGemStatBuilders Gem { get; }
+
+        IWarcryStatBuilders Warcry { get; }
     }
 }
