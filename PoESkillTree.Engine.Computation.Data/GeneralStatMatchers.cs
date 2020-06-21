@@ -342,7 +342,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "mana reservation of ({KeywordMatchers}) (skills|auras)", Skills[Reference.AsKeyword].Reservation },
                 { "({KeywordMatchers}) skills have mana reservation", Skills[Reference.AsKeyword].Reservation },
                 { "mana reservation of skills that throw mines", Mines.Reservation },
-                { "({SkillMatchers}) has mana reservation", Reference.AsSkill.Reservation },
+                { "({SkillMatchers}) has mana reservation( if cast as an aura)?", Reference.AsSkill.Reservation },
                 { "skill effect duration", Stat.Duration },
                 { "skill duration", Stat.Duration },
                 { "(de)?buff duration", Stat.Duration },

@@ -17,7 +17,7 @@ namespace PoESkillTree.Engine.GameModel.Modifiers
         {
             var definitions = modJson.Properties()
                 .Select(Deserialize)
-                .Where(d => d.Domain != ModDomain.Area && d.Domain != ModDomain.Atlas)
+                .Where(d => d.Domain != ModDomain.Atlas)
                 .ToList();
             return new ModifierDefinitions(definitions);
         }

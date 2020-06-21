@@ -14,6 +14,7 @@ namespace PoESkillTree.Engine.GameModel.Modifiers
             {
                 "AllResistancesImplicitShield3",
                 "MovementVelocityPenaltyLightShieldImplicit",
+                "BreachDomainBossMod1",
                 "AbyssAccuracyRatingJewel1",
                 "ColdDamagePrefixOnTwoHandWeapon1",
             };

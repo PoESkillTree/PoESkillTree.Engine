@@ -23,24 +23,28 @@ namespace PoESkillTree.Engine.GameModel.StatTranslation
         Percent60OfValue,
         [EnumMember(Value = "deciseconds_to_seconds")]
         DecisecondsToSeconds,
-        [EnumMember(Value = "divide_by_one_hundred")]
-        DivideBy100,
-        [EnumMember(Value = "divide_by_one_hundred_and_negate")]
-        DivideBy100AndNegate,
-        [EnumMember(Value = "divide_by_one_hundred_2dp")]
-        DivideBy100Precision2,
+        [EnumMember(Value = "divide_by_two_0dp")]
+        DivideBy2Precision0,
+        [EnumMember(Value = "divide_by_three")]
+        DivideBy3,
+        [EnumMember(Value = "divide_by_five")]
+        DivideBy5,
         [EnumMember(Value = "divide_by_six")]
         DivideBy6,
         [EnumMember(Value = "divide_by_ten_0dp")]
         DivideBy10Precision0,
         [EnumMember(Value = "divide_by_twelve")]
         DivideBy12,
-        [EnumMember(Value = "divide_by_two_0dp")]
-        DivideBy2Precision0,
         [EnumMember(Value = "divide_by_fifteen_0dp")]
         DivideBy15Precision0,
         [EnumMember(Value = "divide_by_twenty_then_double_0dp")]
         DivideBy20ThenDoublePrecision0,
+        [EnumMember(Value = "divide_by_one_hundred")]
+        DivideBy100,
+        [EnumMember(Value = "divide_by_one_hundred_and_negate")]
+        DivideBy100AndNegate,
+        [EnumMember(Value = "divide_by_one_hundred_2dp")]
+        DivideBy100Precision2,
         [EnumMember(Value = "milliseconds_to_seconds")]
         MillisecondsToSeconds,
         [EnumMember(Value = "milliseconds_to_seconds_0dp")]
@@ -87,15 +91,17 @@ namespace PoESkillTree.Engine.GameModel.StatTranslation
                 { IndexHandler.Percent30OfValue, d => d * 0.3 },
                 { IndexHandler.Percent60OfValue, d => d * 0.6 },
                 { IndexHandler.DecisecondsToSeconds, d => d / 10 },
-                { IndexHandler.DivideBy100, d => d / 100 },
-                { IndexHandler.DivideBy100AndNegate, d => -d / 100 },
-                { IndexHandler.DivideBy100Precision2, d => Math.Round(d / 100, 2) },
+                { IndexHandler.DivideBy2Precision0, d => Math.Round(d / 2, 0) },
+                { IndexHandler.DivideBy3, d => d / 3 },
+                { IndexHandler.DivideBy5, d => d / 5 },
                 { IndexHandler.DivideBy6, d => d / 6 },
                 { IndexHandler.DivideBy10Precision0, d => Math.Round(d / 10, 0) },
                 { IndexHandler.DivideBy12, d => d / 12 },
-                { IndexHandler.DivideBy2Precision0, d => Math.Round(d / 2, 0) },
                 { IndexHandler.DivideBy15Precision0, d => Math.Round(d / 15, 0) },
                 { IndexHandler.DivideBy20ThenDoublePrecision0, d => Math.Round(d / 20, 0) * 2 },
+                { IndexHandler.DivideBy100, d => d / 100 },
+                { IndexHandler.DivideBy100AndNegate, d => -d / 100 },
+                { IndexHandler.DivideBy100Precision2, d => Math.Round(d / 100, 2) },
                 { IndexHandler.MillisecondsToSeconds, d => d / 1000 },
                 { IndexHandler.MillisecondsToSecondsPrecision0, d => Math.Round(d / 1000, 0) },
                 { IndexHandler.MillisecondsToSecondsPrecision1, d => Math.Round(d / 1000, 1) },
