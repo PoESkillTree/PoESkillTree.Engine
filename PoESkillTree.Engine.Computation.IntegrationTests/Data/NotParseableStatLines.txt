@@ -242,8 +242,10 @@ Lose 1 Stage every 0.2 seconds while not Channelling
 Every third successive strike Freezes enemies as though dealing 390% more Damage
 75% of Damage from Hits is taken from the Buff before your Life or Energy Shield Buff can take Damage equal to 20% of your Armour, up to a maximum of 10000
 80% of Damage from Hits is taken from the Buff before your Life or Energy Shield Buff can take Damage equal to 60% of your Armour, up to a maximum of 30000
+35% of Damage from Hits is taken from the Buff before your Life or Energy Shield Buff can take Damage equal to 30% of your Armour, up to a maximum of 30000
 Reflects 3000% of Damage taken from Buff as Fire Damage when Buff expires or is depleted
 Reflects 3000% of Damage taken from Buff as Fire Damage each second, or when Buff expires or is depleted
+Reflects 9000% of Damage taken from Buff as Fire Damage each second, or when Buff expires or is depleted
 70% of Damage from Hits is taken from the Buff before Life or Energy Shield Buff can take 2209 Damage
 Maximum of 3 Bladestorms at a time
 At least 5 Rage required to start Berserking
@@ -299,8 +301,22 @@ Modifiers which would cause projectiles to Fork instead cause them to change dir
 20% more Area of Effect per Blade Vortex blade detonated
 Supported Non-Instant Skills have +1 Cooldown Use
 Trigger Supported Spells when you fire Projectiles from a Wand Attack
+Trigger Supported Spells when you fire Projectiles from a Non-Triggered Wand Attack
 This Skill's Mana Reservation is the total of the Mana Reservations of Supported Skills, and cannot be further modified
 A Rune is Improved for each 24 Mana Spent
+Creates 7 Spikes
+Creates 2 additional Spikes if you've changed Stance Recently
+Can be Detached for a total Duration of 6 seconds
++5% fissure branching chance per Endurance Charge
+30% fissure branching chance
+Projectiles gain Radius as they travel farther, up to +9 Radius
+Creates a storm when you Kill a Shocked Enemy
+Wave gains +2 to radius with each Area in the Sequence
+Wave Damages 5 Areas
+Wave cannot stop before Damaging 2 Areas
+Wave causes Shockwaves from up to 5 Enemies in each Area
+Wave has 25% reduced delay between Areas
+Projectiles leave Shocked Ground
 // passive skills: =====================================================================================================
 10% Chance for Traps to Trigger an additional time
 Share Endurance, Frenzy and Power Charges with nearby party members

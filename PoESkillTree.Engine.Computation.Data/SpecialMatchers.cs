@@ -291,6 +291,11 @@ namespace PoESkillTree.Engine.Computation.Data
                     BaseAdd, Value.AsPercentage * Skills.ModifierSourceSkill.Cost.Value, Lightning.Damage.WithHits
                 },
                 {
+                    // Armageddon Brand
+                    "your skills can have an additional brand attached to an enemy",
+                    BaseAdd, 1, Stat.AttachedBrands.For(OpponentsOfSelf).Maximum
+                },
+                {
                     // Bane
                     "this curse is applied by bane",
                     BaseAdd, 1, Stat.CursesLinkedToBane

@@ -189,7 +189,7 @@ namespace PoESkillTree.Engine.Computation.Data
                     BaseAdd, Value, Buff.Impale.Overwhelm
                 },
                 {
-                    "impale damage dealt to enemies impaled by you overwhelms #% physical damage reduction",
+                    "impale damage dealt to enemies impaled by (you|supported skills) overwhelms #% physical damage reduction",
                     BaseAdd, Value, Buff.Impale.Overwhelm
                 },
                 // - exposure

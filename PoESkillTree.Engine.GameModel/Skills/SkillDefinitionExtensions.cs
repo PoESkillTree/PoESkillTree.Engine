@@ -409,6 +409,9 @@ namespace PoESkillTree.Engine.GameModel.Skills
             },
             {
                 "HeraldOfThunder",
+                new SkillPartDefinitionExtension(
+                    RemoveStat("base_skill_show_average_damage_instead_of_dps"),
+                    ReplaceStat("herald_of_thunder_bolt_base_frequency", "hit_rate_ms")),
                 SelfBuff("herald_of_thunder_lightning_damage_+%",
                     "spell_minimum_added_lightning_damage", "spell_maximum_added_lightning_damage",
                     "attack_minimum_added_lightning_damage", "attack_maximum_added_lightning_damage")
@@ -481,7 +484,11 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 new SkillPartDefinitionExtension(ReplaceStat("lightning_tower_trap_base_interval_duration_ms", "hit_rate_ms"))
             },
             { "MoltenShell", SelfBuff("base_physical_damage_reduction_rating") },
-            { "VaalMoltenShell", SelfBuff("base_physical_damage_reduction_rating") },
+            {
+                "VaalMoltenShell",
+                new SkillPartDefinitionExtension(ReplaceStat("vaal_molten_shall_armour_+%_final", "armour_+%_final")),
+                SelfBuff("base_physical_damage_reduction_rating", "armour_+%_final")
+            },
             {
                 "MoltenStrike",
                 ("Melee Attack", new SkillPartDefinitionExtension(
@@ -496,6 +503,11 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 "NewShieldCharge", // Shield Charge
                 ("Unspecified Charge Distance", new SkillPartDefinitionExtension()),
                 ("Maximum Charge Distance", new SkillPartDefinitionExtension())
+            },
+            {
+                "NewSunder", // Sunder
+                ("Initial Hit", new SkillPartDefinitionExtension()),
+                ("Shockwave", new SkillPartDefinitionExtension())
             },
             {
                 "OrbOfStorms",
@@ -676,11 +688,6 @@ namespace PoESkillTree.Engine.GameModel.Skills
                     ReplaceStat("stone_golem_grants_base_life_regeneration_rate_per_minute",
                         "base_life_regeneration_rate_per_minute")),
                 SelfBuff("base_life_regeneration_rate_per_minute")
-            },
-            {
-                "Sunder",
-                ("Initial Hit", new SkillPartDefinitionExtension()),
-                ("Shockwave", new SkillPartDefinitionExtension())
             },
             { "TempestShield", SelfBuff("shield_block_%", "shield_spell_block_%") },
             {

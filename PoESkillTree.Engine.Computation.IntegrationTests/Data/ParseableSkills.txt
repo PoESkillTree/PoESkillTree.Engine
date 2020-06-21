@@ -134,6 +134,7 @@ MoltenStrike
 MortarBarrageMine
 NewPhaseRun
 NewShieldCharge
+NewSunder
 OrbOfStorms
 PhysCascadeTrap
 PhysicalDamageAura
@@ -187,7 +188,6 @@ SummonFireGolem
 SummonIceGolem
 SummonLightningGolem
 SummonRockGolem
-Sunder
 SupportAddedChaosDamage
 SupportAddedChaosDamagePlus
 SupportAddedColdDamage
