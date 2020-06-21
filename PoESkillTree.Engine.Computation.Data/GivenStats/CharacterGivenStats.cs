@@ -45,7 +45,6 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             // while Dual Wielding
             "10% more Attack Speed while Dual Wielding",
             "+15% chance to block attack damage while Dual Wielding",
-            "20% more Attack Physical Damage while Dual Wielding",
             // charges
             "4% additional Physical Damage Reduction per Endurance Charge",
             "+4% to all Elemental Resistances per Endurance Charge",
