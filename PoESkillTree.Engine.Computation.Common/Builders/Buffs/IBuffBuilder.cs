@@ -40,6 +40,12 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Buffs
         IStatBuilder StackCount { get; }
 
         /// <summary>
+        /// The "power" of the buff, which modifies its effects in more specific ways than <see cref="Effect"/>. As opposed to
+        /// <see cref="StackCount"/>, this is not user-specified. Used e.g. for Warcries.
+        /// </summary>
+        IStatBuilder Power { get; }
+
+        /// <summary>
         /// If this is a curse, whether this buff ignores <see cref="IBuffBuilders.CurseLimit"/>.
         /// </summary>
         IStatBuilder IgnoresCurseLimit { get; }

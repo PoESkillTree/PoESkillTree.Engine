@@ -30,9 +30,11 @@ namespace PoESkillTree.Engine.GameModel.Skills
         private static SkillDefinitionExtensionCollection CreateCollection() => new SkillDefinitionExtensionCollection
         {
             {
-                "AbyssalCry",
-                EnemyBuff("base_movement_velocity_+%",
-                    "abyssal_cry_movement_velocity_+%_per_one_hundred_nearby_enemies")
+                "AbyssalCry", // Infernal Cry
+                EnemyBuff("abyssal_cry_movement_velocity_+%_per_one_hundred_nearby_enemies",
+                    "infernal_cry_covered_in_ash_fire_damage_taken_%_per_5_monster_power"),
+                Passive("warcry_count_power_from_enemies",
+                    "infernal_cry_empowered_attacks_trigger_combust_display")
             },
             {
                 "AccuracyAndCritsAura", // Precision
@@ -275,7 +277,12 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 ("Lightning", new SkillPartDefinitionExtension())
             },
             { "ElementalWeakness", EnemyBuff("base_resist_all_elements_%") },
-            { "EnduringCry", SelfBuff("base_life_regeneration_rate_per_minute") },
+            {
+                "EnduringCry",
+                SelfBuff("resist_all_elements_%_per_endurance_charge",
+                    "physical_damage_reduction_%_per_endurance_charge"),
+                Passive("warcry_count_power_from_enemies")
+            },
             {
                 "Enfeeble",
                 new SkillPartDefinitionExtension(
@@ -572,8 +579,11 @@ namespace PoESkillTree.Engine.GameModel.Skills
             { "RainOfSpores", SkillDotIsAreaDamageExtension }, // Toxic Rain
             {
                 "RallyingCry",
-                Aura("inspiring_cry_damage_+%_per_one_hundred_nearby_enemies", "damage_+%",
-                    "base_mana_regeneration_rate_per_minute")
+                Aura("rallying_cry_weapon_damage_%_for_allies_per_5_monster_power"),
+                Passive("rallying_cry_damage_+%_final_from_osm_per_nearby_ally",
+                    "rallying_cry_buff_effect_on_minions_+%_final",
+                    "warcry_gain_mp_from_allies",
+                    "warcry_count_power_from_enemies")
             },
             { "RejuvenationTotem", Aura("base_mana_regeneration_rate_per_minute") },
             { "RighteousFire", SkillDotIsAreaDamageExtension, SelfBuff("righteous_fire_spell_damage_+%_final") },

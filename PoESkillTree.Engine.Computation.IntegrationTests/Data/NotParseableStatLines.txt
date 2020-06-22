@@ -317,6 +317,7 @@ Wave cannot stop before Damaging 2 Areas
 Wave causes Shockwaves from up to 5 Enemies in each Area
 Wave has 25% reduced delay between Areas
 Projectiles leave Shocked Ground
+Regenerate 1976 Life over 1 second
 // passive skills: =====================================================================================================
 10% Chance for Traps to Trigger an additional time
 Share Endurance, Frenzy and Power Charges with nearby party members

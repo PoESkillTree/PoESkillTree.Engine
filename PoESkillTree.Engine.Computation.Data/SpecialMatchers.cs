@@ -17,6 +17,7 @@ using PoESkillTree.Engine.GameModel;
 using PoESkillTree.Engine.GameModel.Items;
 using PoESkillTree.Engine.GameModel.PassiveTree;
 using PoESkillTree.Engine.Utils.Extensions;
+using static PoESkillTree.Engine.Computation.Common.Builders.Values.ValueBuilderUtils;
 
 namespace PoESkillTree.Engine.Computation.Data
 {
@@ -364,7 +365,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 {
                     "additional debuff stages add #% of damage",
                     PercentMore,
-                    ValueBuilderUtils.PerStatAfterFirst(Skills.ModifierSourceSkill.Buff.StackCount.For(MainOpponentOfSelf))(Value),
+                    PerStatAfterFirst(Skills.ModifierSourceSkill.Buff.StackCount.For(MainOpponentOfSelf))(Value),
                     Damage
                 },
                 {
@@ -525,6 +526,52 @@ namespace PoESkillTree.Engine.Computation.Data
                     (PercentLess, Values[0] * Stat.AdditionalCastRate.Value
                                   / (Stat.AdditionalCastRate.Value + Stat.CastRate.With(DamageSource.Secondary).Value),
                         Damage.With(DamageSource.Secondary))
+                },
+                // Warcries
+                {
+                    // Abyssal Cry
+                    "covers enemies in ash, causing #% increased fire damage taken per # power, up to #%",
+                    (PercentIncrease,
+                        ValueFactory.Minimum(
+                            PerStat(Skills.ModifierSourceSkill.Buff.Power.For(MainOpponentOfSelf), divideBy: Values[1])(Values[0]),
+                            Values[2]),
+                        Fire.Damage.Taken),
+                    (PercentReduce, ValueFactory.Create(20), Fire.Damage.Taken) // Offset the default Covered in Ash value
+                },
+                {
+                    // Enduring Cry
+                    "gain # endurance charge per # power, minimum # charge",
+                    BaseAdd,
+                    100 * ValueFactory.Minimum(PerStat(Skills.ModifierSourceSkill.Buff.Power, divideBy: Values[1])(Values[0]), Values[2]),
+                    Charge.Endurance.ChanceToGain,
+                    Skills.ModifierSourceSkill.Cast.On
+                },
+                {
+                    // Rallying Cry
+                    "buff grants added attack damage equal to #% of the damage of your main hand weapon per # power, up to a maximum of #%",
+                    ElementalDamageTypes.Append(Physical).Append(Chaos)
+                        .Select(RallyingCryAddedAttackDamageFor)
+                        .ToArray()
+                },
+                {
+                    "buff has #% more effect on your minions",
+                    PercentMore, Value, Skills.ModifierSourceSkill.Buff.EffectOn(Entity.Minion)
+                },
+                {
+                    "exerts the next # melee attacks you perform",
+                    BaseSet, Value, Stat.Warcry.ExertedAttacks
+                },
+                {
+                    "counts total power of enemies in range",
+                    (BaseSet, Stat.Warcry.EnemyPower, Skills.ModifierSourceSkill.Buff.Power),
+                    (PercentMore, 100 * Stat.Warcry.PowerMultiplier.Value, Skills.ModifierSourceSkill.Buff.Power),
+                    (TotalOverride, Stat.Warcry.MinimumPower.Value, Skills.ModifierSourceSkill.Buff.Power.Minimum)
+                },
+                {
+                    "counts total power of enemies and allies in range",
+                    (BaseSet, Stat.Warcry.EnemyPower + Stat.Warcry.AllyPower, Skills.ModifierSourceSkill.Buff.Power),
+                    (PercentMore, 100 * Stat.Warcry.PowerMultiplier.Value, Skills.ModifierSourceSkill.Buff.Power),
+                    (TotalOverride, Stat.Warcry.MinimumPower.Value, Skills.ModifierSourceSkill.Buff.Power.Minimum)
                 },
                 // Keystones
                 {
@@ -899,6 +946,20 @@ namespace PoESkillTree.Engine.Computation.Data
                 .Aggregate((l, r) => l + r);
         }
 
+        private (IFormBuilder form, IValueBuilder value, IStatBuilder stat) RallyingCryAddedAttackDamageFor(IDamageTypeBuilder damageType)
+        {
+            var damage = damageType.Damage.WithSkills;
+            var mainHandDamage = damage.With(AttackDamageHand.MainHand)
+                .AsItemPropertyForSlot(ItemSlot.MainHand)
+                .For(Entity.Character)
+                .Value;
+            return (BaseAdd,
+                ValueFactory.Minimum(
+                    Values[0].AsPercentage * mainHandDamage * (Skills.ModifierSourceSkill.Buff.Power.Value / Values[1]),
+                    Values[2]),
+                damage.With(DamageSource.Attack));
+        }
+
         private IConditionBuilder CombatFocusCondition(string skillId, int skillPart)
             => And(With(Skills.FromId(skillId)), Stat.MainSkillPart.Value.Eq(skillPart),
                 (PassiveTree.TotalInModifierSourceJewelRadius(References[0].AsStat)
@@ -912,7 +973,7 @@ namespace PoESkillTree.Engine.Computation.Data
             foreach (var hand in Enums.GetValues<AttackDamageHand>())
             {
                 IValueBuilder PerAccuracy(ValueBuilder value) =>
-                    ValueBuilderUtils.PerStat(Stat.Accuracy.With(hand), Values[1])(value);
+                    PerStat(Stat.Accuracy.With(hand), Values[1])(value);
 
                 yield return (PercentIncrease, PerAccuracy(Values[0]), attackSpeed.With(hand));
             }

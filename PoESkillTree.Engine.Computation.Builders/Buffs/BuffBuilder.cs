@@ -47,6 +47,8 @@ namespace PoESkillTree.Engine.Computation.Builders.Buffs
             => FromIdentity("StackCount", typeof(uint),
                 ExplicitRegistrationTypes.UserSpecifiedValue(double.PositiveInfinity));
 
+        public IStatBuilder Power => FromIdentity("Power", typeof(uint));
+
         public IStatBuilder IgnoresCurseLimit => FromIdentity("IgnoresCurseLimit", typeof(bool));
 
         public override IStatBuilder On(IEntityBuilder target) =>

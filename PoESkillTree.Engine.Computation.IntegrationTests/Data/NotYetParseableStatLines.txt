@@ -187,6 +187,7 @@ Triggers Level 7 Abberath's Fury when Equipped
 Drops Burning Ground while moving, dealing 2500 Fire Damage per second
 Your Hits inflict Decay, dealing 500 Chaos Damage per second for 8 seconds
 Trigger Level 20 Tawhoa's Chosen when you Attack with a Non-Vaal Slam Skill near an Enemy
+Exerted Attacks Trigger Combust the first time they deal a Melee Hit
 // Minions
 10% increased area of effect for each Summoned Sentinel of Purity
 Grants 50% of Life Recovery to Minions

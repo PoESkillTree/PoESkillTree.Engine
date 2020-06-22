@@ -236,6 +236,10 @@ namespace PoESkillTree.Engine.Computation.Data
                     "while stationary, gain (?<inner>#% .*) every second, up to a maximum of #%",
                     CappedMultiplier(Stat.UniqueAmount("# of seconds you've been stationary for"), Values[1] / Values[0]), "${inner}"
                 },
+                {
+                    "per affected ally, to a maximum of #%",
+                    CappedMultiplier(Stat.UniqueAmount("Warcry.AffectedAllies"), Value)
+                },
             }; // add
 
         private ValueBuilder MineAura()
