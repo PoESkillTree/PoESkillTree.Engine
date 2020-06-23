@@ -24,7 +24,13 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Values
             PerStat(stat.Value, divideBy);
 
         public static Func<ValueBuilder, ValueBuilder> PerStat(ValueBuilder statValue, ValueBuilder divideBy) =>
-            v => v * (statValue / divideBy).Floor();
+            v => PerStat(v, statValue, divideBy);
+
+        public static ValueBuilder PerStat(this ValueBuilder value, IStatBuilder multiplier, ValueBuilder divideBy) =>
+            value.PerStat(multiplier.Value, divideBy);
+
+        public static ValueBuilder PerStat(this ValueBuilder value, ValueBuilder multiplierValue, ValueBuilder divideBy) =>
+            value * (multiplierValue / divideBy).Floor();
 
         /// <summary>
         /// Returns a value converter multiplying values by <c>(stat.Value / divideBy).Ceiling</c>.

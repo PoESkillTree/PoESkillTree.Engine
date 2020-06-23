@@ -47,6 +47,16 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 SelfBuff("slam_ancestor_totem_grant_owner_melee_damage_+%_final")
             },
             {
+                "AncestralCry",
+                new SkillPartDefinitionExtension(
+                    RemoveStat("skill_empower_limitation_specifier_for_stat_description")),
+                SelfBuff("ancestral_cry_x_melee_range_per_5_monster_power",
+                    "ancestral_cry_physical_damage_reduction_rating_per_5_MP",
+                    "ancestral_cry_max_physical_damage_reduction_rating"),
+                Passive("ancestral_cry_empowered_attacks_strike_X_additional_enemies",
+                    "warcry_count_power_from_enemies")
+            },
+            {
                 "VaalAncestralWarchief",
                 new SkillPartDefinitionExtension(
                     ReplaceStat("slam_ancestor_totem_grant_owner_melee_damage_+%_final", "melee_damage_+%_final")),
@@ -373,6 +383,11 @@ namespace PoESkillTree.Engine.GameModel.Skills
                     ReplaceStat("frost_fury_base_fire_interval_ms", "hit_rate_ms")
                         .AndThen(ReplaceStat("frost_fury_max_number_of_stages", "maximum_stages")))
             },
+            {
+                "GeneralsCry",
+                Passive("warcry_gain_mp_from_corpses",
+                    "warcry_count_power_from_enemies")
+            },
             { "Grace", Aura("base_evasion_rating") },
             { "VaalGrace", Aura("base_chance_to_dodge_%", "base_chance_to_dodge_spells_%") },
             {
@@ -463,6 +478,13 @@ namespace PoESkillTree.Engine.GameModel.Skills
                     AddStats(
                         ("display_skill_deals_secondary_damage", 1),
                         ("base_skill_show_average_damage_instead_of_dps", 1))))
+            },
+            {
+                "IntimidatingCry",
+                SelfBuff("intimidating_cry_enemy_phys_reduction_%_penalty_vs_hit_per_5_MP"),
+                Passive("warcry_count_power_from_enemies",
+                    "intimidating_cry_empowerd_attacks_deal_double_damage_display",
+                    "enemies_taunted_by_your_warcies_are_intimidated")
             },
             {
                 "LancingSteel",
@@ -608,6 +630,16 @@ namespace PoESkillTree.Engine.GameModel.Skills
                     AddStat("always_pierce", 1))),
                 ("Thorn Arrows", new SkillPartDefinitionExtension(
                     ReplaceStat("virulent_arrow_pod_projectile_damage_+%_final", "damage_+%_final")))
+            },
+            {
+                "SeismicCry",
+                new SkillPartDefinitionExtension(
+                    RemoveStat("skill_empower_limitation_specifier_for_stat_description")),
+                SelfBuff("seismic_cry_+%_enemy_stun_threshold_per_5_MP"),
+                Passive("seismic_cry_base_slam_skill_area_+%",
+                    "seismic_cry_base_slam_skill_damage_+%_final",
+                    "seismic_cry_slam_skill_area_+%_increase_per_repeat",
+                    "warcry_count_power_from_enemies")
             },
             {
                 "ShatteringSteel",
@@ -789,6 +821,12 @@ namespace PoESkillTree.Engine.GameModel.Skills
                     "spell_lightning_damage_+%_final")
             },
 
+            {
+                "GeneralsCrySupport",
+                new SkillPartDefinitionExtension(
+                    RemoveStat("triggered_by_spiritual_cry"),
+                    addedKeywords: new []{Keyword.Triggered})
+            },
             {
                 // The Arcane Surge buff always has added stats. Modify the ones granted by the support so the resulting
                 // values end up being the same as with just the (unmodified) support and no stats added outside of it.

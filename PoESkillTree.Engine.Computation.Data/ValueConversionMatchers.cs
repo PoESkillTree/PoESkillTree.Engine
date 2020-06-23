@@ -240,6 +240,10 @@ namespace PoESkillTree.Engine.Computation.Data
                     "per affected ally, to a maximum of #%",
                     CappedMultiplier(Stat.UniqueAmount("Warcry.AffectedAllies"), Value)
                 },
+                {
+                    "per previous attack exerted by this warcry",
+                    Stat.UniqueAmount("Warcry.AttacksExertedPreviously")
+                },
             }; // add
 
         private ValueBuilder MineAura()

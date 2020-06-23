@@ -531,20 +531,33 @@ namespace PoESkillTree.Engine.Computation.Data
                 {
                     // Abyssal Cry
                     "covers enemies in ash, causing #% increased fire damage taken per # power, up to #%",
-                    (PercentIncrease,
-                        ValueFactory.Minimum(
-                            PerStat(Skills.ModifierSourceSkill.Buff.Power.For(MainOpponentOfSelf), divideBy: Values[1])(Values[0]),
-                            Values[2]),
-                        Fire.Damage.Taken),
+                    (PercentIncrease, ValuePerPowerUpTo(), Fire.Damage.Taken),
                     (PercentReduce, ValueFactory.Create(20), Fire.Damage.Taken) // Offset the default Covered in Ash value
+                },
+                {
+                    // Ancestral Cry
+                    @"buff grants \+#( to)? ({StatMatchers}) per # power, up to a maximum of \+#",
+                    BaseAdd, ValuePerPowerUpTo(), Reference.AsStat
                 },
                 {
                     // Enduring Cry
                     "gain # endurance charge per # power, minimum # charge",
-                    BaseAdd,
-                    100 * ValueFactory.Minimum(PerStat(Skills.ModifierSourceSkill.Buff.Power, divideBy: Values[1])(Values[0]), Values[2]),
-                    Charge.Endurance.ChanceToGain,
-                    Skills.ModifierSourceSkill.Cast.On
+                    BaseAdd, 100 * ValuePerPowerUpTo(), Charge.Endurance.ChanceToGain, Skills.ModifierSourceSkill.Cast.On
+                },
+                {
+                    // General's Cry
+                    "summons mirage warriors from # corpses per # power maximum # summoned mirage warriors",
+                    (BaseSet, ValuePerPower(), Skills.ModifierSourceSkill.Instances),
+                    (BaseSet, Values[2], Skills.ModifierSourceSkill.Instances.Maximum)
+                },
+                {
+                    "attacks with supported skills count as exerted",
+                    TotalOverride, 1, Stat.Warcry.AttackAreExerted
+                },
+                {
+                    // Initimidating Cry
+                    "buff causes your hits to overwhelm #% physical damage reduction per # power, up to #%",
+                    BaseAdd, ValuePerPowerUpTo(), Physical.DamageReductionOverwhelm
                 },
                 {
                     // Rallying Cry
@@ -558,8 +571,17 @@ namespace PoESkillTree.Engine.Computation.Data
                     PercentMore, Value, Skills.ModifierSourceSkill.Buff.EffectOn(Entity.Minion)
                 },
                 {
+                    "exerted attacks deal double damage",
+                    TotalOverride, 100, Damage.ChanceToDouble
+                },
+                {
+                    // Seismic Cry
+                    "buff grants #% reduced enemy stun threshold per # power, up to a maximum of #%",
+                    PercentReduce, ValuePerPowerUpTo(), Effect.Stun.Threshold.For(OpponentsOfSelf)
+                },
+                {
                     "exerts the next # melee attacks you perform",
-                    BaseSet, Value, Stat.Warcry.ExertedAttacks
+                    BaseSet, Value, Stat.Warcry.ExertedAttackCount
                 },
                 {
                     "counts total power of enemies in range",
@@ -570,6 +592,12 @@ namespace PoESkillTree.Engine.Computation.Data
                 {
                     "counts total power of enemies and allies in range",
                     (BaseSet, Stat.Warcry.EnemyPower + Stat.Warcry.AllyPower, Skills.ModifierSourceSkill.Buff.Power),
+                    (PercentMore, 100 * Stat.Warcry.PowerMultiplier.Value, Skills.ModifierSourceSkill.Buff.Power),
+                    (TotalOverride, Stat.Warcry.MinimumPower.Value, Skills.ModifierSourceSkill.Buff.Power.Minimum)
+                },
+                {
+                    "counts total power of enemies and corpses in range",
+                    (BaseSet, Stat.Warcry.EnemyPower + Stat.Warcry.CorpsePower, Skills.ModifierSourceSkill.Buff.Power),
                     (PercentMore, 100 * Stat.Warcry.PowerMultiplier.Value, Skills.ModifierSourceSkill.Buff.Power),
                     (TotalOverride, Stat.Warcry.MinimumPower.Value, Skills.ModifierSourceSkill.Buff.Power.Minimum)
                 },
@@ -953,12 +981,16 @@ namespace PoESkillTree.Engine.Computation.Data
                 .AsItemPropertyForSlot(ItemSlot.MainHand)
                 .For(Entity.Character)
                 .Value;
-            return (BaseAdd,
-                ValueFactory.Minimum(
-                    Values[0].AsPercentage * mainHandDamage * (Skills.ModifierSourceSkill.Buff.Power.Value / Values[1]),
-                    Values[2]),
-                damage.With(DamageSource.Attack));
+            return (BaseAdd, ValuePerPowerUpTo(Values[0].AsPercentage * mainHandDamage), damage.With(DamageSource.Attack));
         }
+
+        private ValueBuilder ValuePerPowerUpTo() => ValuePerPowerUpTo(Values[0]);
+
+        private ValueBuilder ValuePerPowerUpTo(ValueBuilder value) => ValueFactory.Minimum(ValuePerPower(value), Values[2]);
+
+        private ValueBuilder ValuePerPower() => ValuePerPower(Values[0]);
+
+        private ValueBuilder ValuePerPower(ValueBuilder value) => value.PerStat(Skills.ModifierSourceSkill.Buff.Power, divideBy: Values[1]);
 
         private IConditionBuilder CombatFocusCondition(string skillId, int skillPart)
             => And(With(Skills.FromId(skillId)), Stat.MainSkillPart.Value.Eq(skillPart),
@@ -973,7 +1005,7 @@ namespace PoESkillTree.Engine.Computation.Data
             foreach (var hand in Enums.GetValues<AttackDamageHand>())
             {
                 IValueBuilder PerAccuracy(ValueBuilder value) =>
-                    PerStat(Stat.Accuracy.With(hand), Values[1])(value);
+                    value.PerStat(Stat.Accuracy.With(hand), Values[1]);
 
                 yield return (PercentIncrease, PerAccuracy(Values[0]), attackSpeed.With(hand));
             }

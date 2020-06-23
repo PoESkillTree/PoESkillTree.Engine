@@ -514,7 +514,12 @@ namespace PoESkillTree.Engine.Computation.Data
                 {
                     "enemies taunted by your warcries are ({BuffMatchers})",
                     TotalOverride, 1, Reference.AsBuff.On(MainOpponentOfSelf),
-                    And(Buff.Taunt.IsOn(MainOpponentOfSelf), Buffs(Self, MainOpponentOfSelf).With(Keyword.Warcry).Any())
+                    And(Buff.Taunt.IsOn(MainOpponentOfSelf), Skills[Keyword.Warcry].Cast.InPastXSeconds(Buff.Taunt.Duration.Value))
+                },
+                {
+                    "enemies taunted by this warcry are ({BuffMatchers})",
+                    TotalOverride, 1, Reference.AsBuff.On(MainOpponentOfSelf),
+                    And(Buff.Taunt.IsOn(MainOpponentOfSelf), Skills.ModifierSourceSkill.Cast.InPastXSeconds(Buff.Taunt.Duration.Value))
                 },
                 {
                     "enemies you curse are ({BuffMatchers})",
@@ -555,7 +560,7 @@ namespace PoESkillTree.Engine.Computation.Data
                     "removes curses", BaseAdd, 0, Buff.CurseLimit, Not(Condition.True)
                 },
                 // - warcries
-                { "warcries exert # additional attacks?", BaseAdd, Value, Stat.Warcry.ExertedAttacks },
+                { "warcries exert # additional attacks?", BaseAdd, Value, Stat.Warcry.ExertedAttackCount },
                 { "warcries have minimum of # power", BaseSet, Value, Stat.Warcry.MinimumPower },
                 // flags
                 // ailments

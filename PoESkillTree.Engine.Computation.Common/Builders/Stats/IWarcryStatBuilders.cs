@@ -7,7 +7,8 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
         public IStatBuilder PowerMultiplier { get; }
         public IStatBuilder MinimumPower { get; }
 
-        public IStatBuilder ExertedAttacks { get; }
+        public IStatBuilder AttackAreExerted { get; }
+        public IStatBuilder ExertedAttackCount { get; }
 
         public ValueBuilder AllyPower { get; }
         public ValueBuilder EnemyPower { get; }

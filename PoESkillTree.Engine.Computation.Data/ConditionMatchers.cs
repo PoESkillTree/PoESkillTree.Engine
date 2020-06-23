@@ -528,6 +528,8 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "against targets they pierce", Projectile.PierceCount.Value >= 1 },
                 { "while stationary", Flag.AlwaysStationary },
                 { "while moving", Flag.AlwaysMoving },
+                { "exerted attacks deal", And(Condition.With(DamageSource.Attack), Stat.Warcry.AttackAreExerted.IsTrue) },
+                { "exerted attacks have", And(Condition.WithAttacks, Stat.Warcry.AttackAreExerted.IsTrue) },
                 // unique
                 { "against burning enemies", Or(Ailment.Ignite.IsOn(MainOpponentOfSelf), Condition.Unique("Is the Enemy Burning?")) },
                 { "while( you are)? burning", Or(Ailment.Ignite.IsOn(Self), Condition.Unique("Are you Burning?")) },
@@ -562,7 +564,6 @@ namespace PoESkillTree.Engine.Computation.Data
                         OffHand.Has(Tags.Mace), OffHand.Has(Tags.Sceptre), OffHand.Has(Tags.Staff)),
                         Condition.Unique("Did you hit an enemy with a melee attack in the past 6 seconds?"))
                 },
-                { "exerted attacks (deal|have)", And(Condition.With(DamageSource.Attack), Condition.Unique("Warcry.AttacksAreExerted")) },
                 { "if a warcry sacrificed rage recently", Condition.Unique("Warcry.SacrificedRageRecently") },
                 // support gem mod clarifications. Irrelevant for parsing.
                 {

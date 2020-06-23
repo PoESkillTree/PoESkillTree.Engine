@@ -352,7 +352,8 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
 
         public IStatBuilder PowerMultiplier => FromIdentity(typeof(double));
         public IStatBuilder MinimumPower => FromIdentity(typeof(uint));
-        public IStatBuilder ExertedAttacks => FromIdentity(typeof(uint));
+        public IStatBuilder AttackAreExerted => FromIdentity(typeof(bool), UserSpecifiedValue(false));
+        public IStatBuilder ExertedAttackCount => FromIdentity(typeof(uint));
 
         public ValueBuilder AllyPower => FromIdentity(typeof(int), UserSpecifiedValue(0)).Value;
         public ValueBuilder EnemyPower => FromIdentity(typeof(int), UserSpecifiedValue(0)).Value;
