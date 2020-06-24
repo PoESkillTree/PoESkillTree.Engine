@@ -9,6 +9,7 @@ using PoESkillTree.Engine.Computation.Common.Builders.Skills;
 using PoESkillTree.Engine.Computation.Common.Builders.Stats;
 using PoESkillTree.Engine.Computation.Common.Parsing;
 using PoESkillTree.Engine.GameModel.Items;
+using PoESkillTree.Engine.GameModel.Skills;
 using PoESkillTree.Engine.Utils;
 
 namespace PoESkillTree.Engine.Computation.Builders.Conditions
@@ -49,6 +50,12 @@ namespace PoESkillTree.Engine.Computation.Builders.Conditions
                 d => d.With(damageSource),
                 _ => throw new ParseException(
                     $"IConditionBuilders.{nameof(With)} only works with damage related stats")));
+
+        public IConditionBuilder WithAttacks =>
+            new StatConvertingConditionBuilder(IfIsDamageStat(
+                d => d.With(DamageSource.Attack),
+                s => s.WithCondition(new ValueConditionBuilder(
+                    ps => new StatValue(_statFactory.MainSkillPartHasKeyword(ps.ModifierSourceEntity, Keyword.Attack))))));
 
         private static StatConverter IfIsDamageStat(Func<IDamageRelatedStatBuilder, IStatBuilder> then) =>
             IfIsDamageStat(then, Funcs.Identity);

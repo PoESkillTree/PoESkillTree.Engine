@@ -17,6 +17,7 @@ using PoESkillTree.Engine.GameModel;
 using PoESkillTree.Engine.GameModel.Items;
 using PoESkillTree.Engine.GameModel.PassiveTree;
 using PoESkillTree.Engine.Utils.Extensions;
+using static PoESkillTree.Engine.Computation.Common.Builders.Values.ValueBuilderUtils;
 
 namespace PoESkillTree.Engine.Computation.Data
 {
@@ -291,6 +292,11 @@ namespace PoESkillTree.Engine.Computation.Data
                     BaseAdd, Value.AsPercentage * Skills.ModifierSourceSkill.Cost.Value, Lightning.Damage.WithHits
                 },
                 {
+                    // Armageddon Brand, Wintertide Brand, Runebinder
+                    "(your skills |you )?can have an additional brand attached to an enemy",
+                    BaseAdd, 1, Stat.AttachedBrands.For(OpponentsOfSelf).Maximum
+                },
+                {
                     // Bane
                     "this curse is applied by bane",
                     BaseAdd, 1, Stat.CursesLinkedToBane
@@ -359,7 +365,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 {
                     "additional debuff stages add #% of damage",
                     PercentMore,
-                    ValueBuilderUtils.PerStatAfterFirst(Skills.ModifierSourceSkill.Buff.StackCount.For(MainOpponentOfSelf))(Value),
+                    PerStatAfterFirst(Skills.ModifierSourceSkill.Buff.StackCount.For(MainOpponentOfSelf))(Value),
                     Damage
                 },
                 {
@@ -437,6 +443,11 @@ namespace PoESkillTree.Engine.Computation.Data
                     "increases and reductions to cast speed also apply to projectile frequency",
                     TotalOverride, 1,
                     Flag.IncreasesToSourceApplyToTarget(Stat.CastRate.With(DamageSource.Spell), Stat.HitRate)
+                },
+                {
+                    // Wintertide Brand
+                    "debuff deals #% more damage per stage",
+                    PercentMore, Value * Stat.SkillStage.Value, Damage
                 },
                 {
                     // Archmage Support
@@ -521,6 +532,80 @@ namespace PoESkillTree.Engine.Computation.Data
                                   / (Stat.AdditionalCastRate.Value + Stat.CastRate.With(DamageSource.Secondary).Value),
                         Damage.With(DamageSource.Secondary))
                 },
+                // Warcries
+                {
+                    // Abyssal Cry
+                    "covers enemies in ash, causing #% increased fire damage taken per # power, up to #%",
+                    (PercentIncrease, ValuePerPowerUpTo(), Fire.Damage.Taken),
+                    (PercentReduce, ValueFactory.Create(20), Fire.Damage.Taken) // Offset the default Covered in Ash value
+                },
+                {
+                    // Ancestral Cry
+                    @"buff grants \+#( to)? ({StatMatchers}) per # power, up to a maximum of \+#",
+                    BaseAdd, ValuePerPowerUpTo(), Reference.AsStat
+                },
+                {
+                    // Enduring Cry
+                    "gain # endurance charge per # power, minimum # charge",
+                    BaseAdd, 100 * ValuePerPowerUpTo(), Charge.Endurance.ChanceToGain, Skills.ModifierSourceSkill.Cast.On
+                },
+                {
+                    // General's Cry
+                    "summons mirage warriors from # corpses per # power maximum # summoned mirage warriors",
+                    (BaseSet, ValuePerPower(), Skills.ModifierSourceSkill.Instances),
+                    (BaseSet, Values[2], Skills.ModifierSourceSkill.Instances.Maximum)
+                },
+                {
+                    "attacks with supported skills count as exerted",
+                    TotalOverride, 1, Stat.Warcry.AttackAreExerted
+                },
+                {
+                    // Initimidating Cry
+                    "buff causes your hits to overwhelm #% physical damage reduction per # power, up to #%",
+                    BaseAdd, ValuePerPowerUpTo(), Physical.DamageReductionOverwhelm
+                },
+                {
+                    // Rallying Cry
+                    "buff grants added attack damage equal to #% of the damage of your main hand weapon per # power, up to a maximum of #%",
+                    ElementalDamageTypes.Append(Physical).Append(Chaos)
+                        .Select(RallyingCryAddedAttackDamageFor)
+                        .ToArray()
+                },
+                {
+                    "buff has #% more effect on your minions",
+                    PercentMore, Value, Skills.ModifierSourceSkill.Buff.EffectOn(Entity.Minion)
+                },
+                {
+                    "exerted attacks deal double damage",
+                    TotalOverride, 100, Damage.ChanceToDouble
+                },
+                {
+                    // Seismic Cry
+                    "buff grants #% reduced enemy stun threshold per # power, up to a maximum of #%",
+                    PercentReduce, ValuePerPowerUpTo(), Effect.Stun.Threshold.For(OpponentsOfSelf)
+                },
+                {
+                    "exerts the next # melee attacks you perform",
+                    BaseSet, Value, Stat.Warcry.ExertedAttackCount
+                },
+                {
+                    "counts total power of enemies in range",
+                    (BaseSet, Stat.Warcry.EnemyPower, Skills.ModifierSourceSkill.Buff.Power),
+                    (PercentMore, 100 * Stat.Warcry.PowerMultiplier.Value, Skills.ModifierSourceSkill.Buff.Power),
+                    (TotalOverride, Stat.Warcry.MinimumPower.Value, Skills.ModifierSourceSkill.Buff.Power.Minimum)
+                },
+                {
+                    "counts total power of enemies and allies in range",
+                    (BaseSet, Stat.Warcry.EnemyPower + Stat.Warcry.AllyPower, Skills.ModifierSourceSkill.Buff.Power),
+                    (PercentMore, 100 * Stat.Warcry.PowerMultiplier.Value, Skills.ModifierSourceSkill.Buff.Power),
+                    (TotalOverride, Stat.Warcry.MinimumPower.Value, Skills.ModifierSourceSkill.Buff.Power.Minimum)
+                },
+                {
+                    "counts total power of enemies and corpses in range",
+                    (BaseSet, Stat.Warcry.EnemyPower + Stat.Warcry.CorpsePower, Skills.ModifierSourceSkill.Buff.Power),
+                    (PercentMore, 100 * Stat.Warcry.PowerMultiplier.Value, Skills.ModifierSourceSkill.Buff.Power),
+                    (TotalOverride, Stat.Warcry.MinimumPower.Value, Skills.ModifierSourceSkill.Buff.Power.Minimum)
+                },
                 // Keystones
                 {
                     // Point Blank
@@ -564,15 +649,10 @@ namespace PoESkillTree.Engine.Computation.Data
                     TotalOverride, 0, Damage, Not(Or(With(Keyword.Totem), With(Keyword.Trap), With(Keyword.Mine)))
                 },
                 {
-                    // Runebinder
-                    "you can have an additional brand attached to an enemy",
-                    BaseAdd, 1, Stat.AttachedBrands.For(OpponentsOfSelf).Maximum
-                },
-                {
                     // Blood Magic
                     "spend life instead of mana for skills",
-                    (BaseAdd, 100, Mana.Cost.ConvertTo(Life.Cost), Condition.True),
-                    (TotalOverride, (int) Pool.Life, AllSkills.ReservationPool, Condition.True)
+                    (BaseAdd, 100, Mana.Cost.ConvertTo(Life.Cost)),
+                    (TotalOverride, (int) Pool.Life, AllSkills.ReservationPool)
                 },
                 {
                     // Mortal Conviction
@@ -592,6 +672,28 @@ namespace PoESkillTree.Engine.Computation.Data
                 {
                     "you can inflict bleeding on an enemy up to 8 times",
                     BaseAdd, 7, Ailment.Bleed.InstancesOn(Self).Maximum
+                },
+                {
+                    // Imbalanced Guard
+                    "maximum damage reduction for any damage type is #%",
+                    (TotalOverride, Value, AnyDamageType.DamageReduction.Maximum),
+                    (TotalOverride, Value, AnyDamageType.DamageReductionIncludingArmour.Maximum)
+                },
+                {
+                    // Eternal Youth
+                    "energy shield recharge instead applies to life",
+                    (BaseAdd, 100, EnergyShield.Recharge.ConvertTo(Life.Recharge)),
+                    (BaseAdd, 100, EnergyShield.Recharge.Start.ConvertTo(Life.Recharge.Start))
+                },
+                {
+                    // Glancing Blows
+                    "you take #% of damage from blocked hits",
+                    TotalOverride, Value, Stat.IndependentTotal("Block.PercentDamageTaken")
+                },
+                {
+                    // Supreme Ego
+                    "auras from your skills do not affect allies",
+                    TotalOverride, 0, Buffs(Self, targets: Ally).With(Keyword.Aura).Effect
                 },
                 // Ascendancies
                 // - Juggernaut
@@ -729,7 +831,7 @@ namespace PoESkillTree.Engine.Computation.Data
                     (PercentIncrease, 25, Buff.Buff(Stat.CastRate, Self), Condition.Unique("Do you have Adrenaline?")),
                     (PercentIncrease, 25, Buff.Buff(Stat.MovementSpeed, Self),
                         Condition.Unique("Do you have Adrenaline?")),
-                    (BaseAdd, 10, Buff.Buff(Physical.Resistance, Self), Condition.Unique("Do you have Adrenaline?"))
+                    (BaseAdd, 10, Buff.Buff(Physical.DamageReduction, Self), Condition.Unique("Do you have Adrenaline?"))
                 },
                 {
                     "banner skills reserve no mana",
@@ -872,6 +974,24 @@ namespace PoESkillTree.Engine.Computation.Data
                 .Aggregate((l, r) => l + r);
         }
 
+        private (IFormBuilder form, IValueBuilder value, IStatBuilder stat) RallyingCryAddedAttackDamageFor(IDamageTypeBuilder damageType)
+        {
+            var damage = damageType.Damage.WithSkills;
+            var mainHandDamage = damage.With(AttackDamageHand.MainHand)
+                .AsItemPropertyForSlot(ItemSlot.MainHand)
+                .For(Entity.Character)
+                .Value;
+            return (BaseAdd, ValuePerPowerUpTo(Values[0].AsPercentage * mainHandDamage), damage.With(DamageSource.Attack));
+        }
+
+        private ValueBuilder ValuePerPowerUpTo() => ValuePerPowerUpTo(Values[0]);
+
+        private ValueBuilder ValuePerPowerUpTo(ValueBuilder value) => ValueFactory.Minimum(ValuePerPower(value), Values[2]);
+
+        private ValueBuilder ValuePerPower() => ValuePerPower(Values[0]);
+
+        private ValueBuilder ValuePerPower(ValueBuilder value) => value.PerStat(Skills.ModifierSourceSkill.Buff.Power, divideBy: Values[1]);
+
         private IConditionBuilder CombatFocusCondition(string skillId, int skillPart)
             => And(With(Skills.FromId(skillId)), Stat.MainSkillPart.Value.Eq(skillPart),
                 (PassiveTree.TotalInModifierSourceJewelRadius(References[0].AsStat)
@@ -885,7 +1005,7 @@ namespace PoESkillTree.Engine.Computation.Data
             foreach (var hand in Enums.GetValues<AttackDamageHand>())
             {
                 IValueBuilder PerAccuracy(ValueBuilder value) =>
-                    ValueBuilderUtils.PerStat(Stat.Accuracy.With(hand), Values[1])(value);
+                    value.PerStat(Stat.Accuracy.With(hand), Values[1]);
 
                 yield return (PercentIncrease, PerAccuracy(Values[0]), attackSpeed.With(hand));
             }

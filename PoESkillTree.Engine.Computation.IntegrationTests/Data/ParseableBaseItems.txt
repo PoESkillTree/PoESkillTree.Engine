@@ -107,3 +107,10 @@ Metadata/Items/Weapons/OneHandWeapons/Wands/WandM1
 Metadata/Items/Weapons/TwoHandWeapons/Bows/Bow14
 Metadata/Items/Weapons/TwoHandWeapons/Bows/Bow15
 Metadata/Items/Weapons/TwoHandWeapons/Staves/Staff1
+Metadata/Items/Weapons/TwoHandWeapons/Staves/Staff19
+Metadata/Items/Weapons/TwoHandWeapons/TwoHandAxes/TwoHandAxe15
+Metadata/Items/Weapons/TwoHandWeapons/TwoHandAxes/TwoHandAxe17
+Metadata/Items/Weapons/TwoHandWeapons/TwoHandMaces/TwoHandMace15
+Metadata/Items/Weapons/TwoHandWeapons/TwoHandMaces/TwoHandMace17
+Metadata/Items/Weapons/TwoHandWeapons/TwoHandMaces/TwoHandMace18
+Metadata/Items/Weapons/TwoHandWeapons/TwoHandMaces/TwoHandMace19

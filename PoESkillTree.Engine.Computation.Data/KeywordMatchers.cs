@@ -39,6 +39,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "guard", Keyword.From(GameModel.Skills.Keyword.Guard) },
                 { "triggered", Keyword.Triggered },
                 { "travel", Keyword.From(GameModel.Skills.Keyword.Travel) },
+                { "stance", Keyword.From(GameModel.Skills.Keyword.Stance) },
             };
     }
 }

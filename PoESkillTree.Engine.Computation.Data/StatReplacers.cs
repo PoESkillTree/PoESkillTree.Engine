@@ -34,6 +34,11 @@ namespace PoESkillTree.Engine.Computation.Data
                 "$1", "$2", "$3", "$4", "$5", "$6", "$7"
             },
             {
+                // Fevered Mind Jewel
+                @"notable passive skills in radius are transformed to instead grant: (\d+% .+) and (\d+% .+)",
+                "notable passive skills in radius grant nothing", "$1 per notable allocated in radius", "$2 per notable allocated in radius"
+            },
+            {
                 // Flask suffixes
                 @"(?<stat1>(immune|immunity) to (?<effect>.+) during flask effect) (?<stat2>removes? (\k<effect>|burning) on use)",
                 "${stat1}", "${stat2}"
@@ -62,6 +67,10 @@ namespace PoESkillTree.Engine.Computation.Data
             {
                 @"(you can only have one herald) (\d+% .* herald buffs on you) (\d+% .* herald skills) (\d+% .* herald skills) (minions from herald skills deal \d+% more damage) (your aura skills are disabled)",
                 "$2", "$3", "$4", "$5"
+            },
+            {
+                @"(.+ while affected by a non-vaal guard skill) (.+ while affected by a non-vaal guard skill) (.+ if a non-vaal guard buff was lost recently)",
+                "$1", "$2", "$3"
             },
             // keystones
             {
@@ -109,7 +118,7 @@ namespace PoESkillTree.Engine.Computation.Data
             },
             {
                 // Runebinder
-                @"(.* of summoned totems)\. (you can have an additional brand attached to an enemy)",
+                @"(.* of summoned totems)\.? (you can have an additional brand attached to an enemy)",
                 "$1", "$2"
             },
             {
@@ -124,7 +133,7 @@ namespace PoESkillTree.Engine.Computation.Data
             },
             {
                 // Elemental Overload
-                @"(\d+% more elemental damage if you've dealt a crit in the past \d+ seconds) (no critical strike multiplier) (ailments never count as being from critical strikes)",
+                @"(\d+% more elemental damage if you've dealt a crit in the past \d+ seconds) (your critical strikes do not deal extra damage) (ailments never count as being from critical strikes)",
                 "$1", "$2", "$3"
             },
             {
@@ -157,6 +166,47 @@ namespace PoESkillTree.Engine.Computation.Data
                 @"(energy shield recharge is not interrupted by damage if recharge began recently) (\d+% less .*) (\d+% less .*)",
                 "$2", "$3"
             },
+            {
+                // Imbalanced Guard
+                @"(\d+% chance to defend with double armour) (maximum damage reduction for any damage type is \d+%)",
+                "$1", "$2"
+            },
+            {
+                // Wind Dancer
+                @"(.+ if you haven't been hit recently) (.+ if you haven't been hit recently) (.+ if you've been hit recently)",
+                "$1", "$2", "$3"
+            },
+            {
+                // Eternal Youth
+                @"(\d+% less life regeneration rate) (\d+% less maximum total recovery per second from life leech) (energy shield recharge instead applies to life)",
+                "$1", "$2", "$3"
+            },
+            {
+                // Glancing Blows
+                @"(.+ is doubled) (.+ is doubled) (you take \d+% of damage from blocked hits)",
+                "$1", "$2", "$3"
+            },
+            {
+                // The Agnostic
+                @"(maximum energy shield is 0) (while not on full life, .+)",
+                "$1", "$2"
+            },
+            {
+                // Call to Arms
+                @"(using warcries is instant) (warcries share their cooldown)",
+                "$1"
+            },
+            {
+                // Supreme Ego
+                @"(you can only have one permanent aura on you from your skills) (auras from your skills .+) (auras from your skills .+) (\d+% more mana reserved)",
+                "$2", "$3", "$4"
+            },
+            // Ascendancies
+            {
+                // Berserker
+                @"(warcries sacrifice \d+ rage if you have at least \d+ rage) (exerted attacks deal \d+% more damage if a warcry sacrificed rage recently)",
+                "$2"
+            },
             // Skills
             {
                 // Arcane Surge Support
@@ -167,6 +217,11 @@ namespace PoESkillTree.Engine.Computation.Data
                 // Storm Barrier Support
                 "(.* while channelling supported skills) (.* while channelling supported skills) (.* while channelling supported skills)",
                 "$1", "$2", "$3"
+            },
+            {
+                // Penance Brand
+                @"(\+\d+ to explosion radius per energy) (pulse deals .*)",
+                "$1", "$2"
             },
         }.ToList();
     }

@@ -30,9 +30,11 @@ namespace PoESkillTree.Engine.GameModel.Skills
         private static SkillDefinitionExtensionCollection CreateCollection() => new SkillDefinitionExtensionCollection
         {
             {
-                "AbyssalCry",
-                EnemyBuff("base_movement_velocity_+%",
-                    "abyssal_cry_movement_velocity_+%_per_one_hundred_nearby_enemies")
+                "AbyssalCry", // Infernal Cry
+                EnemyBuff("abyssal_cry_movement_velocity_+%_per_one_hundred_nearby_enemies",
+                    "infernal_cry_covered_in_ash_fire_damage_taken_%_per_5_monster_power"),
+                Passive("warcry_count_power_from_enemies",
+                    "infernal_cry_empowered_attacks_trigger_combust_display")
             },
             {
                 "AccuracyAndCritsAura", // Precision
@@ -43,6 +45,16 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 new SkillPartDefinitionExtension(
                     ReplaceStat("slam_ancestor_totem_grant_owner_melee_damage_+%_final", "melee_damage_+%_final")),
                 SelfBuff("slam_ancestor_totem_grant_owner_melee_damage_+%_final")
+            },
+            {
+                "AncestralCry",
+                new SkillPartDefinitionExtension(
+                    RemoveStat("skill_empower_limitation_specifier_for_stat_description")),
+                SelfBuff("ancestral_cry_x_melee_range_per_5_monster_power",
+                    "ancestral_cry_physical_damage_reduction_rating_per_5_MP",
+                    "ancestral_cry_max_physical_damage_reduction_rating"),
+                Passive("ancestral_cry_empowered_attacks_strike_X_additional_enemies",
+                    "warcry_count_power_from_enemies")
             },
             {
                 "VaalAncestralWarchief",
@@ -157,6 +169,10 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 ("Self Explosion", new SkillPartDefinitionExtension()),
                 ("Corpse Explosion", new SkillPartDefinitionExtension(
                     AddStat("display_skill_deals_secondary_damage", 1)))
+            },
+            {
+                "BrandSupport", // Arcanist Brand
+                BrandExtension
             },
             { "CataclysmSigil", BrandExtension }, // Armageddon Brand
             {
@@ -275,7 +291,12 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 ("Lightning", new SkillPartDefinitionExtension())
             },
             { "ElementalWeakness", EnemyBuff("base_resist_all_elements_%") },
-            { "EnduringCry", SelfBuff("base_life_regeneration_rate_per_minute") },
+            {
+                "EnduringCry",
+                SelfBuff("resist_all_elements_%_per_endurance_charge",
+                    "physical_damage_reduction_%_per_endurance_charge"),
+                Passive("warcry_count_power_from_enemies")
+            },
             {
                 "Enfeeble",
                 new SkillPartDefinitionExtension(
@@ -305,8 +326,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
             {
                 "ExplosiveArrow",
                 ("Attack", new SkillPartDefinitionExtension()),
-                ("Explosion", new SkillPartDefinitionExtension(
-                    AddStat("base_skill_show_average_damage_instead_of_dps", 1)))
+                ("Explosion", AddShowAverageDamageExtension)
             },
             { "Fireball", SecondaryExplosionProjectileParts },
             { "VaalFireball", SecondaryExplosionProjectileParts },
@@ -366,6 +386,11 @@ namespace PoESkillTree.Engine.GameModel.Skills
                     ReplaceStat("frost_fury_base_fire_interval_ms", "hit_rate_ms")
                         .AndThen(ReplaceStat("frost_fury_max_number_of_stages", "maximum_stages")))
             },
+            {
+                "GeneralsCry",
+                Passive("warcry_gain_mp_from_corpses",
+                    "warcry_count_power_from_enemies")
+            },
             { "Grace", Aura("base_evasion_rating") },
             { "VaalGrace", Aura("base_chance_to_dodge_%", "base_chance_to_dodge_spells_%") },
             {
@@ -409,6 +434,9 @@ namespace PoESkillTree.Engine.GameModel.Skills
             },
             {
                 "HeraldOfThunder",
+                new SkillPartDefinitionExtension(
+                    RemoveStat("base_skill_show_average_damage_instead_of_dps"),
+                    ReplaceStat("herald_of_thunder_bolt_base_frequency", "hit_rate_ms")),
                 SelfBuff("herald_of_thunder_lightning_damage_+%",
                     "spell_minimum_added_lightning_damage", "spell_maximum_added_lightning_damage",
                     "attack_minimum_added_lightning_damage", "attack_maximum_added_lightning_damage")
@@ -426,7 +454,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
             },
             {
                 "IceDash", // Frostblink
-                new SkillPartDefinitionExtension(AddStat("base_skill_show_average_damage_instead_of_dps", 1))
+                AddShowAverageDamageExtension
             },
             {
                 "IceShot",
@@ -442,6 +470,10 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 ("Second Form (All Projectiles)", IceSpearSecondFormExtension)
             },
             {
+                "ImmolationSigil", // Wintertide Brand
+                BrandExtension
+            },
+            {
                 "InfernalBlow",
                 ("Attack", new SkillPartDefinitionExtension()),
                 ("Corpse Explosion", new SkillPartDefinitionExtension(
@@ -453,6 +485,13 @@ namespace PoESkillTree.Engine.GameModel.Skills
                     AddStats(
                         ("display_skill_deals_secondary_damage", 1),
                         ("base_skill_show_average_damage_instead_of_dps", 1))))
+            },
+            {
+                "IntimidatingCry",
+                SelfBuff("intimidating_cry_enemy_phys_reduction_%_penalty_vs_hit_per_5_MP"),
+                Passive("warcry_count_power_from_enemies",
+                    "intimidating_cry_empowerd_attacks_deal_double_damage_display",
+                    "enemies_taunted_by_your_warcies_are_intimidated")
             },
             {
                 "LancingSteel",
@@ -480,8 +519,18 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 "LightningTowerTrap", // Lightning Spire Trap
                 new SkillPartDefinitionExtension(ReplaceStat("lightning_tower_trap_base_interval_duration_ms", "hit_rate_ms"))
             },
+            {
+                "MagmaSigil", // Penance Brand
+                BrandExtension,
+                ("Pulse", new SkillPartDefinitionExtension()),
+                ("Explosion", new SkillPartDefinitionExtension())
+            },
             { "MoltenShell", SelfBuff("base_physical_damage_reduction_rating") },
-            { "VaalMoltenShell", SelfBuff("base_physical_damage_reduction_rating") },
+            {
+                "VaalMoltenShell",
+                new SkillPartDefinitionExtension(ReplaceStat("vaal_molten_shall_armour_+%_final", "armour_+%_final")),
+                SelfBuff("base_physical_damage_reduction_rating", "armour_+%_final")
+            },
             {
                 "MoltenStrike",
                 ("Melee Attack", new SkillPartDefinitionExtension(
@@ -496,6 +545,11 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 "NewShieldCharge", // Shield Charge
                 ("Unspecified Charge Distance", new SkillPartDefinitionExtension()),
                 ("Maximum Charge Distance", new SkillPartDefinitionExtension())
+            },
+            {
+                "NewSunder", // Sunder
+                ("Initial Hit", new SkillPartDefinitionExtension()),
+                ("Shockwave", new SkillPartDefinitionExtension())
             },
             {
                 "OrbOfStorms",
@@ -560,8 +614,11 @@ namespace PoESkillTree.Engine.GameModel.Skills
             { "RainOfSpores", SkillDotIsAreaDamageExtension }, // Toxic Rain
             {
                 "RallyingCry",
-                Aura("inspiring_cry_damage_+%_per_one_hundred_nearby_enemies", "damage_+%",
-                    "base_mana_regeneration_rate_per_minute")
+                Aura("rallying_cry_weapon_damage_%_for_allies_per_5_monster_power"),
+                Passive("rallying_cry_damage_+%_final_from_osm_per_nearby_ally",
+                    "rallying_cry_buff_effect_on_minions_+%_final",
+                    "warcry_gain_mp_from_allies",
+                    "warcry_count_power_from_enemies")
             },
             { "RejuvenationTotem", Aura("base_mana_regeneration_rate_per_minute") },
             { "RighteousFire", SkillDotIsAreaDamageExtension, SelfBuff("righteous_fire_spell_damage_+%_final") },
@@ -586,6 +643,16 @@ namespace PoESkillTree.Engine.GameModel.Skills
                     AddStat("always_pierce", 1))),
                 ("Thorn Arrows", new SkillPartDefinitionExtension(
                     ReplaceStat("virulent_arrow_pod_projectile_damage_+%_final", "damage_+%_final")))
+            },
+            {
+                "SeismicCry",
+                new SkillPartDefinitionExtension(
+                    RemoveStat("skill_empower_limitation_specifier_for_stat_description")),
+                SelfBuff("seismic_cry_+%_enemy_stun_threshold_per_5_MP"),
+                Passive("seismic_cry_base_slam_skill_area_+%",
+                    "seismic_cry_base_slam_skill_damage_+%_final",
+                    "seismic_cry_slam_skill_area_+%_increase_per_repeat",
+                    "warcry_count_power_from_enemies")
             },
             {
                 "ShatteringSteel",
@@ -629,6 +696,11 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 new SkillPartDefinitionExtension(
                     ReplaceStat("spell_damage_aura_spell_damage_+%_final", "spell_damage_+%_final")),
                 Aura("spell_damage_+%_final", "spell_critical_strike_chance_+%")
+            },
+            {
+                "SpikeSlam", // Earthshatter
+                ("Slam", new SkillPartDefinitionExtension()),
+                ("Shattering Spikes", AddShowAverageDamageExtension)
             },
             {
                 "StaticStrike",
@@ -676,11 +748,6 @@ namespace PoESkillTree.Engine.GameModel.Skills
                     ReplaceStat("stone_golem_grants_base_life_regeneration_rate_per_minute",
                         "base_life_regeneration_rate_per_minute")),
                 SelfBuff("base_life_regeneration_rate_per_minute")
-            },
-            {
-                "Sunder",
-                ("Initial Hit", new SkillPartDefinitionExtension()),
-                ("Shockwave", new SkillPartDefinitionExtension())
             },
             { "TempestShield", SelfBuff("shield_block_%", "shield_spell_block_%") },
             {
@@ -773,6 +840,19 @@ namespace PoESkillTree.Engine.GameModel.Skills
             },
 
             {
+                "AncestralSlamSupport", // Fist of War Support
+                new SkillPartDefinitionExtension(AddStat("base_skill_show_average_damage_instead_of_dps", 1),
+                    ReplaceStat("support_ancestral_slam_big_hit_hit_damage_+%_final", "hit_damage_+%_final")
+                        .AndThen(ReplaceStat("support_ancestral_slam_big_hit_ailment_damage_+%_final", "support_better_ailments_ailment_damage_+%_final"))
+                        .AndThen(ReplaceStat("support_ancestral_slam_big_hit_area_+%", "base_skill_area_of_effect_+%")))
+            },
+            {
+                "GeneralsCrySupport",
+                new SkillPartDefinitionExtension(
+                    RemoveStat("triggered_by_spiritual_cry"),
+                    addedKeywords: new []{Keyword.Triggered})
+            },
+            {
                 // The Arcane Surge buff always has added stats. Modify the ones granted by the support so the resulting
                 // values end up being the same as with just the (unmodified) support and no stats added outside of it.
                 // For BaseAdd and Increase that is just a reduction. For More, the multiplier has to be adjusted.
@@ -845,6 +925,9 @@ namespace PoESkillTree.Engine.GameModel.Skills
         private static SkillPartDefinitionExtension RemoveShowAverageDamageExtension
             => new SkillPartDefinitionExtension(RemoveStat("base_skill_show_average_damage_instead_of_dps"));
 
+        private static SkillPartDefinitionExtension AddShowAverageDamageExtension =>
+            new SkillPartDefinitionExtension(AddStat("base_skill_show_average_damage_instead_of_dps", 1));
+
         private static (string name, SkillPartDefinitionExtension extension)[] CorpseExplodingSpellParts
             => new[]
             {
@@ -881,8 +964,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
             => new[]
             {
                 ("Initial Hit", new SkillPartDefinitionExtension()),
-                ("Aftershock", new SkillPartDefinitionExtension(
-                    AddStat("base_skill_show_average_damage_instead_of_dps", 1)))
+                ("Aftershock", AddShowAverageDamageExtension)
             };
 
         private static SkillPartDefinitionExtension IceSpearFirstFormExtension

@@ -1,6 +1,8 @@
 ﻿AbyssalCry
 AccuracyAndCritsAura
 AncestorTotemSlam
+AncestralCry
+AncestralSlamSupport
 Anger
 Arc
 ArcaneCloak
@@ -24,6 +26,7 @@ BloodSpears
 BloodstainedBanner
 Blight
 BlinkArrow
+BrandSupport
 BoneLance
 BurningArrow
 CataclysmSigil
@@ -96,6 +99,8 @@ FrostFury
 FrostWall
 Frostbite
 GemDetonateMines
+GeneralsCry
+GeneralsCrySupport
 GlacialCascade
 GlacialHammer
 Grace
@@ -112,8 +117,10 @@ IceNova
 IceShot
 IceSpear
 IceTrap
+ImmolationSigil
 ImmortalCall
 InfernalBlow
+IntimidatingCry
 KineticBolt
 LancingSteel
 LeapSlam
@@ -127,6 +134,7 @@ LightningTowerTrap
 LightningTrap
 LightningWarp
 MagmaOrb
+MagmaSigil
 MambaStrike
 MirrorArrow
 MoltenShell
@@ -134,6 +142,7 @@ MoltenStrike
 MortarBarrageMine
 NewPhaseRun
 NewShieldCharge
+NewSunder
 OrbOfStorms
 PhysCascadeTrap
 PhysicalDamageAura
@@ -162,6 +171,7 @@ RuneBlast
 Sanctify
 ScourgeArrow
 SearingBond
+SeismicCry
 ShatteringSteel
 ShockNova
 ShockwaveTotem
@@ -177,6 +187,7 @@ Soulrend
 Spark
 SpellDamageAura
 Spellslinger
+SpikeSlam
 SplitArrow
 StaticStrike
 Stormbind
@@ -187,7 +198,6 @@ SummonFireGolem
 SummonIceGolem
 SummonLightningGolem
 SummonRockGolem
-Sunder
 SupportAddedChaosDamage
 SupportAddedChaosDamagePlus
 SupportAddedColdDamage
@@ -216,6 +226,7 @@ SupportBloodlust
 SupportBluntWeapon
 SupportBluntWeaponShockwave
 SupportBonechill
+SupportBrandSupport
 SupportBrutality
 SupportBrutalityPlus
 SupportCastOnCrit
@@ -330,6 +341,7 @@ SupportPulverise
 SupportPuncturingWeapon
 SupportRage
 SupportRangedAttackTotem
+SupportRapidActivation
 SupportRapidDecay
 SupportRuthless
 SupportSwiftAfflictionPlus
@@ -351,6 +363,7 @@ SupportSummonElementalResistances
 SupportTrap
 SupportTrapAndMineDamage
 SupportTrapCooldown
+SupportUrgentOrders
 SupportVoidManipulation
 SupportVoidManipulationPlus
 SupportWeaponElementalDamage

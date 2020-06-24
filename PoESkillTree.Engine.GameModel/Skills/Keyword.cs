@@ -165,6 +165,11 @@ namespace PoESkillTree.Engine.GameModel.Skills
         /// Equivalent to the ActiveSkillType.
         /// </summary>
         Travel,
+
+        /// <summary>
+        /// Equivalent to the gem tag.
+        /// </summary>
+        Stance,
     }
 
     public static class KeywordExtensions
@@ -209,6 +214,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 { Keyword.Ballista, (_, types, __) => types.Contains(ActiveSkillType.Ballista) },
                 { Keyword.Triggered, (_, types, __) => types.Contains(ActiveSkillType.Triggered) },
                 { Keyword.Travel, (_, types, __) => types.Contains(ActiveSkillType.Travel) },
+                { Keyword.Stance, (_, __, tags) => tags.Contains("stance") },
             };
 
         public static bool IsOnSkill(this Keyword @this,

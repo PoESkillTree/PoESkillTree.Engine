@@ -43,22 +43,30 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                     BaseSet, dt => DamageTypeBuilders.From(dt).ResistanceAgainstDoTs,
                     dt => DamageTypeBuilders.From(dt).Resistance.Value
                 },
-                { BaseSet, Physical.ResistanceAgainstHits.Maximum, 90 },
+                // damage reduction
                 {
-                    BaseAdd, Physical.ResistanceAgainstHits,
-                    PhysicalDamageReductionFromArmour(Armour.Value,
+                    BaseSet, dt => DamageTypeBuilders.From(dt).DamageReductionIncludingArmour,
+                    dt => DamageTypeBuilders.From(dt).DamageReduction.Value
+                },
+                {
+                    BaseAdd, Physical.DamageReductionIncludingArmour,
+                    PhysicalDamageReductionFromArmour(Armour,
                         Physical.Damage.WithSkills.With(AttackDamageHand.MainHand).For(Enemy).Value)
                 },
-                // damage mitigation (1 - (1 - resistance / 100) * damage taken)
+                // damage mitigation (resistance, damage reduction, damage taken)
                 {
                     TotalOverride, MetaStats.MitigationAgainstHits,
-                    dt => 1 - DamageTakenMultiplier(DamageTypeBuilders.From(dt).ResistanceAgainstHits,
-                              DamageTaken(dt).WithSkills(DamageSource.Secondary))
+                    dt => 1 - DamageTakenMultiplier(
+                        DamageTypeBuilders.From(dt).ResistanceAgainstHits,
+                        DamageTypeBuilders.From(dt).DamageReductionIncludingArmour,
+                        DamageTaken(dt).WithSkills(DamageSource.Secondary))
                 },
                 {
                     TotalOverride, MetaStats.MitigationAgainstDoTs,
-                    dt => 1 - DamageTakenMultiplier(DamageTypeBuilders.From(dt).ResistanceAgainstDoTs,
-                              DamageTaken(dt).WithSkills(DamageSource.OverTime))
+                    dt => 1 - DamageTakenMultiplier(
+                        DamageTypeBuilders.From(dt).ResistanceAgainstDoTs,
+                        DamageTypeBuilders.From(dt).DamageReduction,
+                        DamageTaken(dt).WithSkills(DamageSource.OverTime))
                 },
                 // chance to evade
                 {

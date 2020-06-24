@@ -42,7 +42,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                 { BaseSet, Stat.Totem.Speed, Stat.Totem.BaseTime.Value.Invert },
                 { BaseSet, Stat.Trap.Speed, Stat.Trap.BaseTime.Value.Invert },
                 { BaseSet, Stat.Mine.Speed, Stat.Mine.BaseTime.Value.Invert },
-                // resistances/damage reduction
+                // resistances
                 {
                     BaseAdd, dt => DamageTypeBuilders.From(dt).Resistance,
                     dt => DamageTypeBuilders.From(dt).Exposure.Value

@@ -32,9 +32,9 @@ namespace PoESkillTree.Engine.Computation.Data
             {
                 // actions
                 // - generic
-                { @"if you('ve|\\u2019ve| have) ({ActionMatchers})( an enemy)? recently", Reference.AsAction.Recently },
-                { @"if you haven('|\\u2019)t ({ActionMatchers}) recently", Not(Reference.AsAction.Recently) },
-                { @"if you('|\\u2019)ve ({ActionMatchers}) in the past # seconds", Reference.AsAction.InPastXSeconds(Value) },
+                { @"if you('ve|\\u2019ve|’ve| have) ({ActionMatchers})( an enemy)? recently", Reference.AsAction.Recently },
+                { @"if you haven('|\\u2019|’)t ({ActionMatchers}) recently", Not(Reference.AsAction.Recently) },
+                { @"if you('|\\u2019|’)ve ({ActionMatchers}) in the past # seconds", Reference.AsAction.InPastXSeconds(Value) },
                 { "for # seconds on ({ActionMatchers})", Reference.AsAction.InPastXSeconds(Value) },
                 { "on ({ActionMatchers}) for # seconds", Reference.AsAction.InPastXSeconds(Value) },
                 {
@@ -265,6 +265,7 @@ namespace PoESkillTree.Engine.Computation.Data
                     Reference.AsChargeType.Amount.Value >= Reference.AsChargeType.Amount.Maximum.Value
                 },
                 { "lose a ({ChargeTypeMatchers}) and", Reference.AsChargeType.Amount.Value > 0 },
+                { "if you've lost an? ({ChargeTypeMatchers}) in the past # seconds", Reference.AsChargeType.LoseAction.InPastXSeconds(Value) },
                 // - other
                 { "if you have at least # ({AttributeStatMatchers})", Reference.AsStat.Value >= Value },
                 {
@@ -303,6 +304,12 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "while elusive", Buff.Elusive.IsOn(Self) },
                 { "if you've ({BuffMatchers}) an enemy recently,?", Reference.AsBuff.InflictionAction.Recently },
                 { "enemies you taunt( deal)?", And(For(MainOpponentOfSelf), Buff.Taunt.IsOn(Self, MainOpponentOfSelf)) },
+                {
+                    "enemies taunted by your warcries",
+                    And(For(MainOpponentOfSelf),
+                        Buff.Taunt.IsOn(Self, MainOpponentOfSelf),
+                        Skills[Keyword.Warcry].Cast.InPastXSeconds(Buff.Taunt.Duration.Value))
+                },
                 { "enemies ({BuffMatchers}) by you", And(For(MainOpponentOfSelf), Reference.AsBuff.IsOn(Self, MainOpponentOfSelf)) },
                 { "enemies you curse( have)?", And(For(MainOpponentOfSelf), Buffs(Self, MainOpponentOfSelf).With(Keyword.Curse).Any()) },
                 { "({BuffMatchers}) enemies", And(For(MainOpponentOfSelf), Reference.AsBuff.IsOn(Self, MainOpponentOfSelf)) },
@@ -340,6 +347,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 { "enemies ({AilmentMatchers}) by (supported skills|you)( have)?", Reference.AsAilment.IsOn(MainOpponentOfSelf) },
                 { "against enemies affected by ailments", Ailment.All.Any(a => a.IsOn(MainOpponentOfSelf)) },
+                { "if you've been ({AilmentMatchers}) recently", Reference.AsAilment.InflictionAction.By(MainOpponentOfSelf).Recently },
                 // ground effects
                 { "while on consecrated ground", Ground.Consecrated.IsOn(Self) },
                 // skills
@@ -358,6 +366,10 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "(supported )?({KeywordMatchers}) spells (have|deal)", And(With(Reference.AsKeyword), With(Keyword.Spell)) },
                 {
                     "({KeywordMatchers}) ({KeywordMatchers}) skills (have|deal)",
+                    And(With(References[0].AsKeyword), With(References[1].AsKeyword))
+                },
+                {
+                    "(with|of|for|from) ({KeywordMatchers}) ({KeywordMatchers}) skills",
                     And(With(References[0].AsKeyword), With(References[1].AsKeyword))
                 },
                 { "caused by melee hits", Condition.WithPart(Keyword.Melee) },
@@ -391,7 +403,8 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "if (you've|you have) used a minion skill recently", Minions.Cast.Recently },
                 { "if you've used a warcry recently", Skills[Keyword.Warcry].Cast.Recently },
                 { "if you've warcried recently", Skills[Keyword.Warcry].Cast.Recently },
-                { @"if you('ve|\\u2019ve) cursed an enemy recently", Skills[Keyword.Curse].Cast.Recently },
+                { "when you warcry, for # seconds", Skills[Keyword.Warcry].Cast.InPastXSeconds(Value) },
+                { @"if you('ve|\\u2019ve|’ve) cursed an enemy recently", Skills[Keyword.Curse].Cast.Recently },
                 { "if you've warcried in the past # seconds", Skills[Keyword.Warcry].Cast.InPastXSeconds(Value) },
                 {
                     "if you've used a ({DamageTypeMatchers}) skill in the past # seconds",
@@ -400,7 +413,11 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "if you summoned a golem in the past # seconds", Golems.Cast.InPastXSeconds(Value) },
                 // - by skill part
                 {
-                    "(beams?|final wave|shockwaves?|cone|aftershock|explosion) (has a|deals?|will have)",
+                    "pulse deals",
+                    Stat.MainSkillPart.Value.Eq(0)
+                },
+                {
+                    "(beams?|final wave|shockwaves?|cone|aftershock|explosions?|shattering spikes) (has a|deals?|will have)",
                     Stat.MainSkillPart.Value.Eq(1)
                 },
                 { "if consuming a corpse", Stat.MainSkillPart.Value.Eq(1) }, // Bodyswap
@@ -504,6 +521,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 // stance
                 { "(while )?in blood stance", Flag.InBloodStance },
                 { "(while )?in sand stance", Flag.InSandStance },
+                { "if you(’|')ve changed stance recently", Condition.Unique("Stance.ChangedRecently") },
                 // enemy
                 { "enemies have", For(OpponentsOfSelf) },
                 { "to normal or magic enemies", And(For(OpponentsOfSelf), Not(OpponentsOfSelf.IsRareOrUnique)) },
@@ -514,9 +532,11 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "against targets they pierce", Projectile.PierceCount.Value >= 1 },
                 { "while stationary", Flag.AlwaysStationary },
                 { "while moving", Flag.AlwaysMoving },
+                { "exerted attacks deal", And(Condition.With(DamageSource.Attack), Stat.Warcry.AttackAreExerted.IsTrue) },
+                { "exerted attacks have", And(Condition.WithAttacks, Stat.Warcry.AttackAreExerted.IsTrue) },
                 // unique
                 { "against burning enemies", Or(Ailment.Ignite.IsOn(MainOpponentOfSelf), Condition.Unique("Is the Enemy Burning?")) },
-                { "while burning", Or(Ailment.Ignite.IsOn(Self), Condition.Unique("Are you Burning?")) },
+                { "while( you are)? burning", Or(Ailment.Ignite.IsOn(Self), Condition.Unique("Are you Burning?")) },
                 { "while leeching", Condition.Unique("Leech.IsActive") },
                 {
                     "if you've killed an enemy affected by your damage over time recently",
@@ -548,6 +568,7 @@ namespace PoESkillTree.Engine.Computation.Data
                         OffHand.Has(Tags.Mace), OffHand.Has(Tags.Sceptre), OffHand.Has(Tags.Staff)),
                         Condition.Unique("Did you hit an enemy with a melee attack in the past 6 seconds?"))
                 },
+                { "if a warcry sacrificed rage recently", Condition.Unique("Warcry.SacrificedRageRecently") },
                 // support gem mod clarifications. Irrelevant for parsing.
                 {
                     "((a|for|with|from) )?supported (skill|spell|attack skill|attack)s?'?( (have|deal))?",

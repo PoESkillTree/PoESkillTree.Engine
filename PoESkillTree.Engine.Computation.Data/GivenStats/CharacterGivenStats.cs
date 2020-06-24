@@ -45,7 +45,6 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             // while Dual Wielding
             "10% more Attack Speed while Dual Wielding",
             "+15% chance to block attack damage while Dual Wielding",
-            "20% more Attack Physical Damage while Dual Wielding",
             // charges
             "4% additional Physical Damage Reduction per Endurance Charge",
             "+4% to all Elemental Resistances per Endurance Charge",
@@ -89,7 +88,8 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             { BaseSet, CriticalStrike.Multiplier, 150 },
             { BaseAdd, Ground.Consecrated.AddStat(Life.Regen), 6 },
             // resistances
-            { BaseSet, Physical.Resistance.Maximum, 90 },
+            { BaseSet, AnyDamageType.DamageReduction.Maximum, 90 },
+            { BaseSet, AnyDamageType.DamageReductionIncludingArmour.Maximum, 90 },
             // traps, mines and totems
             { BaseSet, Traps.CombinedInstances.Maximum, 15 },
             { BaseSet, Mines.CombinedInstances.Maximum, 15 },

@@ -150,15 +150,15 @@ namespace PoESkillTree.Engine.GameModel.Skills
             var (commonStats, additionalStatsPerPart) = SplitStatsIntoParts(nonPassiveStats);
 
             return new SkillLevelDefinition(
-                Value<int?>("damage_effectiveness") / 100D + 1,
-                Value<int?>("damage_multiplier") / 10000D + 1,
-                Value<int?>("crit_chance") / 100D,
-                Value<int?>("attack_speed_multiplier"),
-                Value<int?>("mana_cost"),
-                Value<int?>("mana_multiplier") / 100D,
-                Value<int?>("mana_reservation_override"),
-                Value<int?>("cooldown"),
-                Value<string>("cooldown_bypass_type") != null,
+                NullableValue<int>("damage_effectiveness") / 100D + 1,
+                NullableValue<int>("damage_multiplier") / 10000D + 1,
+                NullableValue<int>("crit_chance") / 100D,
+                NullableValue<int>("attack_speed_multiplier"),
+                NullableValue<int>("mana_cost"),
+                NullableValue<int>("mana_multiplier") / 100D,
+                NullableValue<int>("mana_reservation_override"),
+                NullableValue<int>("cooldown"),
+                GetValue<string?>("cooldown_bypass_type", levelJson, staticJson) != null,
                 Value<int>("required_level"),
                 NestedValue<int>("stat_requirements", "dex"),
                 NestedValue<int>("stat_requirements", "int"),
@@ -172,15 +172,20 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 passiveStats,
                 tooltip);
 
-            T NestedValue<T>(string propertyName, string nestedPropertyName)
+            T NestedValue<T>(string propertyName, string nestedPropertyName) where T: struct
                 => GetValue<T>(nestedPropertyName, levelJson[propertyName]!, staticJson[propertyName]!);
 
-            T Value<T>(string propertyName) => GetValue<T>(propertyName, levelJson, staticJson);
+            // two functions required because local functions can't have attributes (MaybeNull)
+            T Value<T>(string propertyName) where T: struct
+                => GetValue<T>(propertyName, levelJson, staticJson);
+            T? NullableValue<T>(string propertyName) where T: struct
+                => GetValue<T?>(propertyName, levelJson, staticJson);
 
             IReadOnlyList<UntranslatedStat> Stats(string propertyName)
             {
                 var stats = DeserializeStats(
-                    Value<JArray>(propertyName), staticJson.Value<JArray>(propertyName), DeserializeUntranslatedStat);
+                    GetValue<JArray>(propertyName, levelJson, staticJson)!,
+                    staticJson.Value<JArray>(propertyName), DeserializeUntranslatedStat);
                 return _definitionExtension!.CommonExtension.ModifyStats(stats).ToList();
             }
         }

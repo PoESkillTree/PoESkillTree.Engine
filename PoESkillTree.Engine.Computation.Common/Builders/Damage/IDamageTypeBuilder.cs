@@ -44,6 +44,10 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Damage
         IStatBuilder ResistanceAgainstHits { get; }
         IStatBuilder ResistanceAgainstDoTs { get; }
 
+        IStatBuilder DamageReduction { get; }
+        IStatBuilder DamageReductionIncludingArmour { get; }
+        IDamageRelatedStatBuilder DamageReductionOverwhelm { get; }
+
         /// <summary>
         /// Gets a damage stat representing the damage of the damage types in this collection.
         /// </summary>

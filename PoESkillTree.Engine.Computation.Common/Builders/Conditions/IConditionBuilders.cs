@@ -48,6 +48,12 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Conditions
         /// </summary>
         IConditionBuilder With(DamageSource damageSource);
 
+        /// <summary>
+        /// Returns a condition that is satisfied if the stat is damage related and is done with <see cref="DamageSource.Attack"/>
+        /// or it is not damage related and the main skill part has the Attack keyword.
+        /// </summary>
+        IConditionBuilder WithAttacks { get; }
+
         IConditionBuilder DamageTaken { get; }
 
         /// <summary>

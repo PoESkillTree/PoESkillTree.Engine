@@ -39,6 +39,12 @@ Cannot Ignite, Chill, Freeze or Shock Critical Strikes inflict Scorch, Brittle a
 Gain 2 Grasping Vines each second while stationary 2% chance to deal Double Damage per Grasping Vine 1% less Damage taken per Grasping Vine
 // - Unencumbered
 You count as Dual Wielding while you are Unencumbered 60% more Attack Speed while you are Unencumbered 14 to 20 Added Attack Physical Damage per 10 Dexterity while you are Unencumbered
+// - expiration modifier per buff
+Debuffs on you expire 15% faster
+Withered you Inflict expires 10% slower
+// - other
+Gain Alchemist's Genius when you use a Flask
+Warcries Debilitate Enemies for 1 second
 // BaseSet Exposure via a new UserSpecifiedValue stat?
 13% chance to inflict Cold Exposure on Hit
 13% chance to inflict Fire Exposure on Hit
@@ -47,6 +53,9 @@ Cold Skills have a 25% chance to apply Cold Exposure on Hit
 Fire Skills have a 25% chance to apply Fire Exposure on Hit
 Lightning Skills have a 25% chance to apply Lightning Exposure on Hit
 Nearby Enemies have Fire Exposure
+Nearby Enemies have Cold Exposure while you are affected by Herald of Ice
+Nearby Enemies have Fire Exposure while you are affected by Herald of Ash
+Nearby Enemies have Lightning Exposure while you are affected by Herald of Thunder
 // More calculations for non-damaging ailments (shock, chill, freeze)
 Chills Enemies as though dealing 195% more Damage
 Shocks Enemies as though dealing 195% more Damage
@@ -57,10 +66,13 @@ Life Flasks gain 1 Charge every 3 seconds
 You have Fortify during Effect of any Life Flask
 Remove a Curse when you use a Mana Flask
 Remove a random Elemental Ailment when you use a Mana Flask
+25% chance to gain a Power Charge when you use a Mana Flask
 // Requires averaging of damage per damage type in DamageMechanics
 Lightning Damage with Non-Critical Strikes is Lucky
 // Requires Damage.ChanceToDouble being split into crit and non-crit
 Your Critical Strikes have a 5% chance to deal Double Damage
+// Complex mechanics
+When your Hits Impale Enemies, also Impale other Enemies near them Inflict 4 additional Impales on Enemies you Impale Enemies cannot be Impaled for 4 seconds after you Impale them
 // Item-inherent skills
 Curse Enemies with Level 10 Flammability on Hit
 Curse Enemies with Level 8 Assassin's Mark on Hit
@@ -171,13 +183,20 @@ Triggers Level 20 Cold Aegis when Equipped
 Triggers Level 7 Abberath's Fury when Equipped
 10% chance to Trigger Level 1 Blood Rage when you Kill an Enemy
 10% Chance to Trigger Level 18 Summon Spectral Wolf on Kill
+10% Chance to Trigger Level 10 Summon Spectral Wolf on Kill
 10% chance to Cast Level 20 Fire Burst on Hit
 Drops Burning Ground while moving, dealing 2500 Fire Damage per second
+Drops Burning Ground while moving, dealing 2500 Fire Damage per second for 1 second
 Your Hits inflict Decay, dealing 500 Chaos Damage per second for 8 seconds
+Trigger Level 20 Tawhoa's Chosen when you Attack with a Non-Vaal Slam Skill near an Enemy
+Exerted Attacks Trigger Combust the first time they deal a Melee Hit
 // Minions
 10% increased area of effect for each Summoned Sentinel of Purity
 Grants 50% of Life Recovery to Minions
 +5 to Maximum Virulence
+Summoned Phantasms have 5% chance to refresh their Duration when they Hit a Unique Enemy
+Summoned Raging Spirits have 5% chance to refresh their Duration when they Hit a Unique Enemy
+Summoned Sentinels have 25% increased Cooldown Recovery Speed
 // - modifies minion skill
 With at least 40 Intelligence in Radius, Raised Zombies' Slam Attack deals 30% increased Damage
 Raised Zombies' Slam Attack has 100% increased Area of Effect
@@ -188,7 +207,7 @@ Summoned Sentinels of Purity have 50% increased Area of effect
 With at least 40 Intelligence in Radius, Summon Skeletons can Summon up to 15 Skeleton Mages
 summon 4 additional skeleton warriors with summon skeleton
 With at least 40 Dexterity in Radius, Animate Weapon can Animate up to 12 Ranged Weapons
-Minions explode when reduced to Low Life, dealing 33% of their maximum Life as Fire Damage to surrounding Enemies
+Minions Explode when reduced to Low Life, dealing 33% of their Life as Fire Damage to surrounding Enemies
 Your Raised Zombies spread Caustic Ground on Death, dealing 50% of their maximum Life as Chaos Damage per second
 Summoned Sentinels use Crusade Slam
 // - corpses
@@ -207,3 +226,4 @@ Supported Skills deal 33% less Damage to surrounding targets
 Supported Skills deal 41% less Damage to surrounding targets
 Supported Skills have 57% more Melee Splash Area of Effect
 Supported Skills have 97% more Melee Splash Area of Effect
+15% increased Melee Splash Area of Effect

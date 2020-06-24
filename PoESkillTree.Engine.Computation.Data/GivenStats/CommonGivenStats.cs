@@ -163,6 +163,7 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
             { BaseSet, Stat.SkillStage.Minimum, 0 },
             { BaseSet, Stat.AttachedBrands.Maximum, 1 },
             { BaseSet, Stat.BannerStage.Maximum, 50 },
+            { BaseSet, Stat.Warcry.PowerMultiplier, 1 },
         };
     }
 }

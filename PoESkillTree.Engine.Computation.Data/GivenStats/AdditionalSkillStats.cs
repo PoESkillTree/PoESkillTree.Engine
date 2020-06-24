@@ -95,6 +95,8 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                 IsMainSkill("IceSpear", 3)
             },
 
+            { TotalOverride, Stat.SkillStage.Maximum, 20, IsMainSkill("MagmaSigil") },
+
             {
                 // Reduce cast rate proportional to the time spent channeling
                 PercentLess, Stat.CastRate,

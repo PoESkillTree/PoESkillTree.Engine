@@ -60,6 +60,7 @@ namespace PoESkillTree.Engine.GameModel.Items
         Currency,
         StackableCurrency,
         DivinationCard,
+        Map,
     }
 
     public static class ItemClassEx
@@ -106,6 +107,7 @@ namespace PoESkillTree.Engine.GameModel.Items
             { ItemClass.Currency, Tags.Default },
             { ItemClass.StackableCurrency, Tags.Default },
             { ItemClass.DivinationCard, Tags.Default },
+            { ItemClass.Map, Tags.Default },
         };
 
         /// <returns>the Tags an item with this ItemClass always has</returns>

@@ -140,7 +140,8 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                     BaseSet, dt => MetaStats.EnemyResistanceAgainstNonCrits(dt),
                     dt => DamageTypeBuilders.From(dt).IgnoreResistanceWithNonCrits,
                     dt => DamageTypeBuilders.From(dt).PenetrationWithNonCrits,
-                    _ => MetaStats.EnemyResistanceFromArmourAgainstNonCrits,
+                    dt => DamageTypeBuilders.From(dt).DamageReductionOverwhelm,
+                    _ => MetaStats.EnemyDamageReductionFromArmourAgainstNonCrits,
                     EnemyResistanceAgainstHits
                 },
                 { TotalOverride, MetaStats.EnemyResistanceAgainstNonCrits(DamageType.Physical).Minimum, 0 },
@@ -149,27 +150,28 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                     BaseSet, dt => MetaStats.EnemyResistanceAgainstCrits(dt),
                     dt => DamageTypeBuilders.From(dt).IgnoreResistanceWithCrits,
                     dt => DamageTypeBuilders.From(dt).PenetrationWithCrits,
-                    _ => MetaStats.EnemyResistanceFromArmourAgainstCrits,
+                    dt => DamageTypeBuilders.From(dt).DamageReductionOverwhelm,
+                    _ => MetaStats.EnemyDamageReductionFromArmourAgainstCrits,
                     EnemyResistanceAgainstHits
                 },
                 { TotalOverride, MetaStats.EnemyResistanceAgainstCrits(DamageType.Physical).Minimum, 0 },
                 { TotalOverride, MetaStats.EnemyResistanceAgainstCrits(DamageType.Physical).Maximum, 100 },
                 // - enemy resistance from armour against crit/non-crit hits per source (physical damage only)
                 {
-                    TotalOverride, MetaStats.EnemyResistanceFromArmourAgainstNonCrits,
+                    TotalOverride, MetaStats.EnemyDamageReductionFromArmourAgainstNonCrits,
                     Physical.Damage.WithHits,
                     DamageMultiplierWithNonCrits(DamageType.Physical).WithHits,
                     (damage, multi) =>
-                        PhysicalDamageReductionFromArmour(Armour.For(Enemy).Value,
+                        PhysicalDamageReductionFromArmour(Armour.For(Enemy),
                             damage.Value * multi.Value.AsPercentage)
                 },
                 {
-                    TotalOverride, MetaStats.EnemyResistanceFromArmourAgainstCrits,
+                    TotalOverride, MetaStats.EnemyDamageReductionFromArmourAgainstCrits,
                     Physical.Damage.WithHits,
                     DamageMultiplierWithCrits(DamageType.Physical).WithHits,
                     CriticalStrike.Multiplier.WithHits,
                     (damage, multi, critMulti) =>
-                        PhysicalDamageReductionFromArmour(Armour.For(Enemy).Value,
+                        PhysicalDamageReductionFromArmour(Armour.For(Enemy),
                             damage.Value * multi.Value.AsPercentage * EffectiveCriticalStrikeMultiplier(critMulti))
                 },
 
@@ -372,9 +374,10 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                     DamageMultiplierWithNonCrits(DamageType.Physical).WithHits,
                     (damage, multi) =>
                         DamageTypeBuilders.From(DamageType.Physical).Resistance.For(Enemy).Value
-                        + PhysicalDamageReductionFromArmour(Armour.For(Enemy).Value,
-                            MetaStats.ImpaleRecordedDamage.Value * damage.Value * multi.Value.AsPercentage)
-                        - Buff.Impale.Penetration.Value
+                        + EnemyDamageReductionAgainstHits(DamageType.Physical,
+                            Buff.Impale.Overwhelm.Value,
+                            PhysicalDamageReductionFromArmour(Armour.For(Enemy),
+                                MetaStats.ImpaleRecordedDamage.Value * damage.Value * multi.Value.AsPercentage))
                 },
                 {
                     BaseSet, MetaStats.EnemyResistanceAgainstCritImpales,
@@ -383,9 +386,11 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
                     CriticalStrike.Multiplier.WithHits,
                     (damage, multi, critMulti) =>
                         DamageTypeBuilders.From(DamageType.Physical).Resistance.For(Enemy).Value
-                        + PhysicalDamageReductionFromArmour(Armour.For(Enemy).Value,
-                            MetaStats.ImpaleRecordedDamage.Value * damage.Value * multi.Value.AsPercentage * EffectiveCriticalStrikeMultiplier(critMulti))
-                        - Buff.Impale.Penetration.Value
+                        + EnemyDamageReductionAgainstHits(DamageType.Physical,
+                            Buff.Impale.Overwhelm.Value,
+                            PhysicalDamageReductionFromArmour(Armour.For(Enemy),
+                                MetaStats.ImpaleRecordedDamage.Value * damage.Value * multi.Value.AsPercentage
+                                * EffectiveCriticalStrikeMultiplier(critMulti)))
                 },
                 { TotalOverride, MetaStats.EnemyResistanceAgainstNonCritImpales.Minimum, 0 },
                 { TotalOverride, MetaStats.EnemyResistanceAgainstNonCritImpales.Maximum, 100 },
@@ -427,19 +432,30 @@ namespace PoESkillTree.Engine.Computation.Data.GivenStats
         }
 
         private ValueBuilder EnemyResistanceAgainstHits(
-            DamageType dt, IStatBuilder ignoreResistance, IStatBuilder penetration, IStatBuilder resistanceFromArmour)
+            DamageType dt, IStatBuilder ignoreResistance, IStatBuilder penetration, IStatBuilder overwhelm, IStatBuilder damageReductionFromArmour)
         {
-            var resistance = DamageTypeBuilders.From(dt).Resistance.For(Enemy).Value - penetration.Value;
+            var resistance = ValueFactory.If(ignoreResistance.IsTrue).Then(0)
+                .Else(DamageTypeBuilders.From(dt).Resistance.For(Enemy).Value - penetration.Value);
+            var reduction = EnemyDamageReductionAgainstHits(dt, overwhelm.Value, damageReductionFromArmour.Value);
+            return resistance + reduction;
+        }
+
+        private ValueBuilder EnemyDamageReductionAgainstHits(DamageType dt, ValueBuilder overwhelm, ValueBuilder damageReductionFromArmour)
+        {
+            var damageType = DamageTypeBuilders.From(dt);
+            var damageReduction = damageType.DamageReduction.For(Enemy).Value - overwhelm;
             if (dt == DamageType.Physical)
             {
-                resistance += resistanceFromArmour.Value;
+                damageReduction += damageReductionFromArmour;
             }
-            return ValueFactory.If(ignoreResistance.IsTrue).Then(0)
-                .Else(resistance);
+
+            return ValueFactory.Minimum(ValueFactory.Maximum(damageReduction, 0), damageType.DamageReduction.Maximum.For(Enemy).Value);
         }
 
         private ValueBuilder EnemyDamageTakenMultiplier(DamageType resistanceType, IStatBuilder damageTaken)
-            => DamageTakenMultiplier(DamageTypeBuilders.From(resistanceType).Resistance.For(Enemy),
+            => DamageTakenMultiplier(
+                DamageTypeBuilders.From(resistanceType).Resistance.For(Enemy),
+                DamageTypeBuilders.From(resistanceType).DamageReduction.For(Enemy),
                 damageTaken.For(Enemy));
 
         private IDamageRelatedStatBuilder DamageMultiplierWithCrits(DamageType damageType)

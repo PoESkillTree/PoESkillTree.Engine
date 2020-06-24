@@ -46,12 +46,10 @@
   </Unique>
   <Unique Name="Moonbender's Wing" Level="39" BaseMetadataId="Metadata/Items/Weapons/OneHandWeapons/OneHandAxes/OneHandAxe10">
     <Explicit>
-      <string>LightningWarpSkillUniqueOneHandAxe8</string>
+      <string>TriggeredLightningWarpUnique__1__</string>
       <string>LocalIncreasedPhysicalDamagePercentUniqueOneHandAxe8</string>
-      <string>LocalAddedPhysicalDamageUniqueOneHandAxe8</string>
       <string>LocalCriticalStrikeChanceUniqueOneHandAxe8_</string>
-      <string>ConvertPhysicalToColdUniqueOneHandAxe8</string>
-      <string>ConvertPhysicalToLightningUniqueOneHandAxe8</string>
+      <string>WeaponPhysicalDamageAddedAsColdOrLightningUnique__1</string>
     </Explicit>
     <Properties />
   </Unique>
@@ -285,7 +283,7 @@
     </Explicit>
     <Properties />
   </Unique>
-  <Unique Name="Wings of Entropy" Level="60" BaseMetadataId="Metadata/Items/Weapons/TwoHandWeapons/TwoHandAxes/TwoHandAxe15">
+  <Unique Name="Wings of Entropy" Level="62" BaseMetadataId="Metadata/Items/Weapons/TwoHandWeapons/TwoHandAxes/TwoHandAxe16">
     <Explicit>
       <string>SpellBlockPercentageUniqueTwoHandAxe6</string>
       <string>BlockWhileDualWieldingUniqueTwoHandAxe6</string>
@@ -851,17 +849,6 @@
     </Explicit>
     <Properties />
   </Unique>
-  <Unique Name="Bino's Kitchen Knife" Level="65" BaseMetadataId="Metadata/Items/Weapons/OneHandWeapons/Daggers/Dagger17">
-    <Explicit>
-      <string>DegenerationDamageUniqueDagger8</string>
-      <string>LocalAddedPhysicalDamageUniqueDagger8</string>
-      <string>LocalCriticalStrikeChanceUniqueDagger8</string>
-      <string>CriticalMultiplierUniqueDagger8</string>
-      <string>ChaosResistUniqueDagger8</string>
-      <string>PoisonSpreadAndHealOnPoisonedKillUniqueDagger8</string>
-    </Explicit>
-    <Properties />
-  </Unique>
   <Unique Name="Cold Iron Point" Level="62" BaseMetadataId="Metadata/Items/Weapons/OneHandWeapons/Daggers/Dagger19">
     <Explicit>
       <string>GlobalPhysicalSpellGemsLevelUnique__1</string>
@@ -887,6 +874,41 @@
       <string>ReducedEnergyShieldDelayUniqueDagger4</string>
       <string>IncreasedManaUniqueDagger4</string>
       <string>SpellsHaveCullingStrikeUniqueDagger4</string>
+    </Explicit>
+    <Properties />
+  </Unique>
+  <Unique Name="Vulconus" Level="68" BaseMetadataId="Metadata/Items/Weapons/OneHandWeapons/Daggers/Dagger22">
+    <Explicit>
+      <string>LocalAddedPhyiscalDamageUnique__39</string>
+      <string>LocalAddedFireDamageUnique__5__</string>
+      <string>LocalChanceToBleedUnique__1__</string>
+      <string>FireDamageVersusBleedingEnemiesUnique__1</string>
+      <string>PhysicalDamageVersusIgnitedEnemiesUnique__1</string>
+      <string>GainAvatarOfFireEvery8SecondsUnique__1</string>
+      <string>IncreasedCriticalStrikeChanceWithAvatarOfFireUnique__1</string>
+      <string>ConvertPhysicalToFireWithAvatarOfFireUnique__1</string>
+      <string>ArmourWithoutAvatarOfFireUnique__1</string>
+    </Explicit>
+    <Properties />
+  </Unique>
+  <Unique Name="White Wind" Level="66" BaseMetadataId="Metadata/Items/Weapons/OneHandWeapons/Daggers/Dagger21">
+    <Explicit>
+      <string>LocalAddedColdDamageUnique__7</string>
+      <string>LocalIncreasedAttackSpeedUnique__23</string>
+      <string>IncreasedEvasionRatingUnique__3</string>
+      <string>ChanceToDodgeWhileOffhandIsEmpty</string>
+      <string>IncreasedColdDamageWhileOffhandIsEmpty_</string>
+    </Explicit>
+    <Properties />
+  </Unique>
+  <Unique Name="Bino's Kitchen Knife" Level="65" BaseMetadataId="Metadata/Items/Weapons/OneHandWeapons/Daggers/Dagger17">
+    <Explicit>
+      <string>DegenerationDamageUniqueDagger8</string>
+      <string>LocalAddedPhysicalDamageUniqueDagger8</string>
+      <string>LocalCriticalStrikeChanceUniqueDagger8</string>
+      <string>CriticalMultiplierUniqueDagger8</string>
+      <string>ChaosResistUniqueDagger8</string>
+      <string>PoisonSpreadAndHealOnPoisonedKillUniqueDagger8</string>
     </Explicit>
     <Properties />
   </Unique>
@@ -919,30 +941,6 @@
       <string>AddedLightningDamageUniqueDagger3</string>
       <string>LocalIncreasedAttackSpeedUniqueDagger3</string>
       <string>CriticalStrikeChanceUniqueDagger3</string>
-    </Explicit>
-    <Properties />
-  </Unique>
-  <Unique Name="Vulconus" Level="68" BaseMetadataId="Metadata/Items/Weapons/OneHandWeapons/Daggers/Dagger22">
-    <Explicit>
-      <string>LocalAddedPhyiscalDamageUnique__39</string>
-      <string>LocalAddedFireDamageUnique__5__</string>
-      <string>LocalChanceToBleedUnique__1__</string>
-      <string>FireDamageVersusBleedingEnemiesUnique__1</string>
-      <string>PhysicalDamageVersusIgnitedEnemiesUnique__1</string>
-      <string>GainAvatarOfFireEvery8SecondsUnique__1</string>
-      <string>IncreasedCriticalStrikeChanceWithAvatarOfFireUnique__1</string>
-      <string>ConvertPhysicalToFireWithAvatarOfFireUnique__1</string>
-      <string>ArmourWithoutAvatarOfFireUnique__1</string>
-    </Explicit>
-    <Properties />
-  </Unique>
-  <Unique Name="White Wind" Level="66" BaseMetadataId="Metadata/Items/Weapons/OneHandWeapons/Daggers/Dagger21">
-    <Explicit>
-      <string>LocalAddedColdDamageUnique__7</string>
-      <string>LocalIncreasedAttackSpeedUnique__23</string>
-      <string>IncreasedEvasionRatingUnique__3</string>
-      <string>ChanceToDodgeWhileOffhandIsEmpty</string>
-      <string>IncreasedColdDamageWhileOffhandIsEmpty_</string>
     </Explicit>
     <Properties />
   </Unique>
@@ -1118,10 +1116,10 @@
   </Unique>
   <Unique Name="Bitterdream" Level="32" BaseMetadataId="Metadata/Items/Weapons/OneHandWeapons/OneHandMaces/Sceptre8">
     <Explicit>
+      <string>DisplaySupportedByBonechillUnique__1</string>
       <string>DisplaySupportedByHypothermiaUnique__1</string>
       <string>DisplaySupportedByIceBiteUnique__1</string>
       <string>DisplaySupportedByColdPenetrationUnique__1</string>
-      <string>DisplaySupportedByManaLeechUnique__1</string>
       <string>DisplaySupportedByAddedColdDamageUnique__1</string>
       <string>DisplaySupportedByReducedManaUnique__1</string>
     </Explicit>
@@ -1619,6 +1617,17 @@
     </Explicit>
     <Properties />
   </Unique>
+  <Unique Name="The Yielding Mortality" Level="66" BaseMetadataId="Metadata/Items/Weapons/TwoHandWeapons/Staves/Staff18">
+    <Explicit>
+      <string>SupportedByChanceToBleedUnique__1</string>
+      <string>HarbingerSkillOnEquipUnique2_6</string>
+      <string>StaffBlockPercentUnique__4_</string>
+      <string>CriticalBleedDotMultiplierUnique__1_</string>
+      <string>LocalAddedPhysicalDamageUnique__28</string>
+      <string>LocalCriticalStrikeChanceUnique__10</string>
+    </Explicit>
+    <Properties />
+  </Unique>
   <Unique Name="Vestige of Divinity" Level="4" DropDisabled="true" BaseMetadataId="Metadata/Items/Weapons/TwoHandWeapons/Staves/Staff1">
     <Explicit>
       <string>LocalAddedPhysicalDamageUniqueDescentStaff1</string>
@@ -1626,6 +1635,13 @@
       <string>BlockPercentUniqueDescentStaff1</string>
       <string>ReflectDamageToAttackersOnBlockUniqueDescentStaff1</string>
       <string>LocalIncreasedMeleeWeaponRangeUniqueDescentStaff1</string>
+    </Explicit>
+    <Properties />
+  </Unique>
+  <Unique Name="Witchhunter's Judgment" Level="68" BaseMetadataId="Metadata/Items/Weapons/TwoHandWeapons/Staves/Staff12">
+    <Explicit>
+      <string>GrantsBrandDetonateUnique__1</string>
+      <string>BrandDurationUnique__1</string>
     </Explicit>
     <Properties />
   </Unique>
@@ -1665,18 +1681,6 @@
     </Explicit>
     <Properties />
   </Unique>
-  <Unique Name="Dying Breath" Level="13" BaseMetadataId="Metadata/Items/Weapons/TwoHandWeapons/Staves/Staff4">
-    <Explicit>
-      <string>IncreasedCastSpeedUniqueStaff5</string>
-      <string>MaximumManaUniqueStaff5</string>
-      <string>AuraIncreasedIncreasedAreaOfEffectUniqueStaff5</string>
-      <string>CurseAreaOfEffectUniqueStaff5</string>
-      <string>UndyingBreathCurseAuraDisplayUniqueStaff5</string>
-      <string>UndyingBreathDamageAuraDisplayUniqueStaff5</string>
-      <string>DamageTakenUniqueStaff5</string>
-    </Explicit>
-    <Properties />
-  </Unique>
   <Unique Name="Hegemony's Era" Level="68" BaseMetadataId="Metadata/Items/Weapons/TwoHandWeapons/Staves/Staff19">
     <Explicit>
       <string>StaffBlockPercentUniqueStaff7</string>
@@ -1693,37 +1697,6 @@
       <string>WeaponPhysicalDamagePerStrength</string>
       <string>AttackSpeedPerDexterity</string>
       <string>IncreasedAreaOfEffectPerIntelligence</string>
-    </Explicit>
-    <Properties />
-  </Unique>
-  <Unique Name="Pledge of Hands" Level="68" BaseMetadataId="Metadata/Items/Weapons/TwoHandWeapons/Staves/Staff19">
-    <Explicit>
-      <string>SupportedByEchoUniqueStaff6</string>
-      <string>SpellDamageUniqueStaff6</string>
-      <string>MaximumManaUniqueStaff6</string>
-    </Explicit>
-    <Properties />
-  </Unique>
-  <Unique Name="Realm Ender" Level="40" BaseMetadataId="Metadata/Items/Weapons/TwoHandWeapons/Staves/Staff4">
-    <Explicit>
-      <string>LocalIncreaseSocketedFireGemLevelUniqueStaff13</string>
-      <string>LocalIncreaseSocketedColdGemLevelUniqueStaff13</string>
-      <string>LocalIncreaseSocketedElementalGemUnique___1</string>
-      <string>ItemActsAsColdToFireSupportUniqueStaff13</string>
-      <string>LocalAddedFireDamageUniqueStaff13</string>
-      <string>LocalAddedColdDamageUniqueStaff13</string>
-      <string>ElementalDamageUniqueStaff13</string>
-    </Explicit>
-    <Properties />
-  </Unique>
-  <Unique Name="Realmshaper" Level="13" BaseMetadataId="Metadata/Items/Weapons/TwoHandWeapons/Staves/Staff4">
-    <Explicit>
-      <string>LocalIncreaseSocketedFireGemLevelUniqueStaff13</string>
-      <string>LocalIncreaseSocketedColdGemLevelUniqueStaff13</string>
-      <string>ItemActsAsColdToFireSupportUniqueStaff13</string>
-      <string>LocalAddedFireDamageUniqueStaff13</string>
-      <string>LocalAddedColdDamageUniqueStaff13</string>
-      <string>ElementalDamageUniqueStaff13</string>
     </Explicit>
     <Properties />
   </Unique>
@@ -1746,17 +1719,6 @@
       <string>ManaRegenerationUnique__9___</string>
       <string>MinionAddedPhysicalDamageUnique__1</string>
       <string>LifeRegenerationIfCorpseConsumedRecentlyUnique__1</string>
-    </Explicit>
-    <Properties />
-  </Unique>
-  <Unique Name="Taryn's Shiver" Level="64" BaseMetadataId="Metadata/Items/Weapons/TwoHandWeapons/Staves/Staff17">
-    <Explicit>
-      <string>LocalIncreaseSocketedColdGemLevelUniqueStaff2</string>
-      <string>SpellDamageUniqueStaff2</string>
-      <string>ColdDamagePercentUniqueStaff2</string>
-      <string>IncreasedCastSpeedUniqueStaff2</string>
-      <string>ChanceToFreezeUniqueStaff2</string>
-      <string>FrozenMonstersTakeIncreasedDamage</string>
     </Explicit>
     <Properties />
   </Unique>
@@ -1797,6 +1759,60 @@
       <string>IncreasedEnergyShieldUnique__3</string>
       <string>AttackerTakesLightningDamageUnique___1</string>
       <string>EnergyShieldRechargeOnBlockUnique__1</string>
+    </Explicit>
+    <Properties />
+  </Unique>
+  <Unique Name="Dying Breath" Level="13" BaseMetadataId="Metadata/Items/Weapons/TwoHandWeapons/Staves/Staff4">
+    <Explicit>
+      <string>IncreasedCastSpeedUniqueStaff5</string>
+      <string>MaximumManaUniqueStaff5</string>
+      <string>AuraIncreasedIncreasedAreaOfEffectUniqueStaff5</string>
+      <string>CurseAreaOfEffectUniqueStaff5</string>
+      <string>UndyingBreathCurseAuraDisplayUniqueStaff5</string>
+      <string>UndyingBreathDamageAuraDisplayUniqueStaff5</string>
+      <string>DamageTakenUniqueStaff5</string>
+    </Explicit>
+    <Properties />
+  </Unique>
+  <Unique Name="Pledge of Hands" Level="68" BaseMetadataId="Metadata/Items/Weapons/TwoHandWeapons/Staves/Staff19">
+    <Explicit>
+      <string>SupportedByEchoUniqueStaff6</string>
+      <string>SpellDamageUniqueStaff6</string>
+      <string>MaximumManaUniqueStaff6</string>
+    </Explicit>
+    <Properties />
+  </Unique>
+  <Unique Name="Realm Ender" Level="40" BaseMetadataId="Metadata/Items/Weapons/TwoHandWeapons/Staves/Staff4">
+    <Explicit>
+      <string>LocalIncreaseSocketedFireGemLevelUniqueStaff13</string>
+      <string>LocalIncreaseSocketedColdGemLevelUniqueStaff13</string>
+      <string>LocalIncreaseSocketedElementalGemUnique___1</string>
+      <string>ItemActsAsColdToFireSupportUniqueStaff13</string>
+      <string>LocalAddedFireDamageUniqueStaff13</string>
+      <string>LocalAddedColdDamageUniqueStaff13</string>
+      <string>ElementalDamageUniqueStaff13</string>
+    </Explicit>
+    <Properties />
+  </Unique>
+  <Unique Name="Realmshaper" Level="13" BaseMetadataId="Metadata/Items/Weapons/TwoHandWeapons/Staves/Staff4">
+    <Explicit>
+      <string>LocalIncreaseSocketedFireGemLevelUniqueStaff13</string>
+      <string>LocalIncreaseSocketedColdGemLevelUniqueStaff13</string>
+      <string>ItemActsAsColdToFireSupportUniqueStaff13</string>
+      <string>LocalAddedFireDamageUniqueStaff13</string>
+      <string>LocalAddedColdDamageUniqueStaff13</string>
+      <string>ElementalDamageUniqueStaff13</string>
+    </Explicit>
+    <Properties />
+  </Unique>
+  <Unique Name="Taryn's Shiver" Level="64" BaseMetadataId="Metadata/Items/Weapons/TwoHandWeapons/Staves/Staff17">
+    <Explicit>
+      <string>LocalIncreaseSocketedColdGemLevelUniqueStaff2</string>
+      <string>SpellDamageUniqueStaff2</string>
+      <string>ColdDamagePercentUniqueStaff2</string>
+      <string>IncreasedCastSpeedUniqueStaff2</string>
+      <string>ChanceToFreezeUniqueStaff2</string>
+      <string>FrozenMonstersTakeIncreasedDamage</string>
     </Explicit>
     <Properties />
   </Unique>
@@ -1919,7 +1935,6 @@
       <string>ChaosDamageLifeLeechPermyriadUnique__1</string>
       <string>PhysicalDamageConvertedToChaosUnique__1</string>
       <string>LocalMaimOnHitUnique__1</string>
-      <string>DamnedWeaponEffectsUnique__1</string>
     </Explicit>
     <Properties />
   </Unique>
@@ -2092,6 +2107,18 @@
       <string>LocalAddedPhyiscalDamageUnique__40__</string>
       <string>LocalIncreasedAttackSpeedUnique__31</string>
       <string>LocalCriticalStrikeChanceUnique__16</string>
+    </Explicit>
+    <Properties />
+  </Unique>
+  <Unique Name="The Surging Thoughts" Level="62" BaseMetadataId="Metadata/Items/Weapons/OneHandWeapons/OneHandSwords/OneHandSword19">
+    <Explicit>
+      <string>HarbingerSkillOnEquipUnique2_1</string>
+      <string>LocalGrantsStormCascadeOnAttackUnique__1</string>
+      <string>SpellDamageUnique__5</string>
+      <string>LocalIncreasedPhysicalDamagePercentUnique__27</string>
+      <string>LocalAddedLightningDamageUnique__5</string>
+      <string>SpellAddedLightningDamageUnique__4</string>
+      <string>AreaOfEffectUnique__3</string>
     </Explicit>
     <Properties />
   </Unique>
@@ -2410,7 +2437,8 @@
   <Unique Name="Corona Solaris" Level="63" BaseMetadataId="Metadata/Items/Weapons/OneHandWeapons/Wands/Wand9">
     <Explicit>
       <string>BlindingAuraSkillUnique__1</string>
-      <string>LocalAddedPhysicalDamageUnique__4</string>
+      <string>LocalAddedFireDamageUnique__6</string>
+      <string>LocalIncreasedAttackSpeedUnique__32</string>
       <string>CriticalMultiplierUnique__1</string>
       <string>LightRadiusUnique__1</string>
       <string>CriticalChanceAgainstBlindedEnemiesUnique__1</string>
@@ -2421,7 +2449,8 @@
   </Unique>
   <Unique Name="Eclipse Solaris" Level="45" BaseMetadataId="Metadata/Items/Weapons/OneHandWeapons/Wands/Wand9">
     <Explicit>
-      <string>LocalAddedPhysicalDamageUnique__4</string>
+      <string>LocalAddedFireDamageUnique__6</string>
+      <string>LocalIncreasedAttackSpeedUnique__32</string>
       <string>CriticalMultiplierUnique__1</string>
       <string>LightRadiusUnique__1</string>
       <string>DisplayBlindAuraUnique__1</string>
@@ -2621,6 +2650,7 @@
       <string>DexterityUnique__12</string>
       <string>GlobalEvasionRatingPercentUnique__1</string>
       <string>IncreasedLifeUnique__83</string>
+      <string>NearbyEnemiesGrantIncreasedFlaskChargesUnique__1</string>
     </Explicit>
     <Properties />
   </Unique>
@@ -2763,7 +2793,7 @@
     </Explicit>
     <Properties />
   </Unique>
-  <Unique Name="Fury Valve" Level="40" BaseMetadataId="Metadata/Items/Amulets/Amulet4">
+  <Unique Name="Fury Valve" Level="40" BaseMetadataId="Metadata/Items/Amulets/Amulet8">
     <Explicit>
       <string>IncreasedEvasionRatingPercentUnique__2</string>
       <string>AllResistancesUnique__17</string>
@@ -2922,7 +2952,7 @@
     </Explicit>
     <Properties />
   </Unique>
-  <Unique Name="Night's Hold" Level="25" BaseMetadataId="Metadata/Items/Amulets/Talismans/Talisman1_1">
+  <Unique Name="Night's Hold" Level="12" BaseMetadataId="Metadata/Items/Amulets/Talismans/Talisman1_1">
     <Explicit>
       <string>LocalIncreaseSocketedGemLevelUnique__1</string>
       <string>SocketedGemsHaveAddedChaosDamageUnique__1</string>
@@ -2961,6 +2991,16 @@
     </Explicit>
     <Properties />
   </Unique>
+  <Unique Name="Retaliation Charm" Level="30" BaseMetadataId="Metadata/Items/Amulets/Amulet10">
+    <Explicit>
+      <string>IncreaseDamageOnBlindedEnemiesUnique__1</string>
+      <string>CriticalChanceAgainstBlindedEnemiesUnique__2__</string>
+      <string>ChanceToBlindOnCriticalStrikesUnique__2_</string>
+      <string>BlindDoesNotAffectLightRadiusUnique__1</string>
+      <string>BlindReflectedToSelfUnique__1</string>
+    </Explicit>
+    <Properties />
+  </Unique>
   <Unique Name="Rigwald's Curse" Level="28" BaseMetadataId="Metadata/Items/Amulets/Talismans/Talisman2_3">
     <Explicit>
       <string>BaseUnarmedCriticalStrikeChanceUnique__1</string>
@@ -2993,10 +3033,9 @@
   <Unique Name="Sidhebreath" Level="1" BaseMetadataId="Metadata/Items/Amulets/Amulet1">
     <Explicit>
       <string>ColdResistUniqueAmulet3</string>
-      <string>ManaLeechPermyriadUniqueAmulet3</string>
       <string>MinionLifeUniqueAmulet3</string>
       <string>MinionRunSpeedUniqueAmulet3</string>
-      <string>MinionDamageUniqueAmulet3</string>
+      <string>MinionAddedColdDamageUnique__1</string>
       <string>MinionSkillManaCostUnique__1_</string>
     </Explicit>
     <Properties />
@@ -3101,6 +3140,17 @@
     </Explicit>
     <Properties />
   </Unique>
+  <Unique Name="The Felbog Fang" Level="61" BaseMetadataId="Metadata/Items/Amulets/Amulet10">
+    <Explicit>
+      <string>IntelligenceUnique__22_</string>
+      <string>IncreasedCastSpeedUnique__20</string>
+      <string>AreaOfEffectUnique__6</string>
+      <string>Curse25PercentHinderEnemyUnique__1</string>
+      <string>Curse50PercentCurseEffectUnique__1</string>
+      <string>Curse75PercentEnemyDamageTakenUnique__1__</string>
+    </Explicit>
+    <Properties />
+  </Unique>
   <Unique Name="The Halcyon" Level="35" BaseMetadataId="Metadata/Items/Amulets/Amulet4">
     <Explicit>
       <string>ColdDamagePercentUnique___10</string>
@@ -3155,10 +3205,10 @@
     </Explicit>
     <Properties />
   </Unique>
-  <Unique Name="Ungil's Harmony" Level="23" BaseMetadataId="Metadata/Items/Amulets/Amulet8">
+  <Unique Name="Ungil's Harmony" Level="16" BaseMetadataId="Metadata/Items/Amulets/Amulet8">
     <Explicit>
       <string>CriticalStrikeChanceUniqueAmulet18</string>
-      <string>CriticalMultiplierUniqueAmulet18</string>
+      <string>NoBonusesFromCriticalStrikes</string>
       <string>IncreasedLifeUniqueAmulet18</string>
       <string>IncreasedManaUniqueAmulet18</string>
       <string>StunRecoveryUniqueAmulet18</string>
@@ -3301,6 +3351,16 @@
       <string>IncreasedEnergyShieldUniqueBelt11</string>
       <string>IncreasedEnergyShieldPercentUnique__1</string>
       <string>ReducedEnergyShieldDelayUniqueBelt11</string>
+    </Explicit>
+    <Properties />
+  </Unique>
+  <Unique Name="Bear's Girdle" Level="68" BaseMetadataId="Metadata/Items/Belts/Belt3">
+    <Explicit>
+      <string>AddedPhysicalDamageUnique__9_</string>
+      <string>StunDurationUnique__1</string>
+      <string>EnemiesCrushedWithRageUnique__1_</string>
+      <string>PhysicalDamagePerRageUnique__1</string>
+      <string>MaximumRageUnique__1</string>
     </Explicit>
     <Properties />
   </Unique>
@@ -3679,6 +3739,16 @@
     </Explicit>
     <Properties />
   </Unique>
+  <Unique Name="The Torrent's Reclamation" Level="60" BaseMetadataId="Metadata/Items/Belts/Belt5">
+    <Explicit>
+      <string>HarbingerSkillOnEquipUnique2_2</string>
+      <string>AttackAndCastSpeedUnique__1</string>
+      <string>LifeAndEnergyShieldRecoveryRateUnique_1</string>
+      <string>GlobalCooldownRecoveryUnique__1</string>
+      <string>DebuffTimePassedUnique__1</string>
+    </Explicit>
+    <Properties />
+  </Unique>
   <Unique Name="Umbilicus Immortalis" Level="30" BaseMetadataId="Metadata/Items/Belts/Belt3">
     <Explicit>
       <string>MaximumLifeUnique__1</string>
@@ -3753,7 +3823,7 @@
       <string>IncreasedEvasionRatingUniqueQuiver3_</string>
       <string>IncreasedLifeUniqueQuiver3</string>
       <string>AddedPhysicalDamageUniqueQuiver3</string>
-      <string>ArrowPierceAppliesToProjectileDamageUniqueQuiver3</string>
+      <string>ArrowDamageAgainstPiercedTargetsUnique__1</string>
     </Explicit>
     <Properties />
   </Unique>
@@ -3835,6 +3905,17 @@
     </Explicit>
     <Properties />
   </Unique>
+  <Unique Name="Scorpion's Call" Level="57" BaseMetadataId="Metadata/Items/Quivers/Quiver11">
+    <Explicit>
+      <string>DexterityUnique__18</string>
+      <string>LifeRegenerationBloodStanceUnique__1</string>
+      <string>ProjectileDamageBloodStanceUnique__1</string>
+      <string>EvasionRatingSandStanceUnique__1</string>
+      <string>AreaOfEffectSandStanceUnique__1</string>
+      <string>AttackSpeedChangedStanceUnique__1</string>
+    </Explicit>
+    <Properties />
+  </Unique>
   <Unique Name="Skirmish" Level="19" BaseMetadataId="Metadata/Items/Quivers/Quiver7">
     <Explicit>
       <string>IntelligenceUniqueQuiver6</string>
@@ -3871,6 +3952,16 @@
       <string>AddedFireDamageUnique__2</string>
       <string>AddedColdDamageUnique__3</string>
       <string>HybridStrDexUnique__1</string>
+      <string>FireAndColdResistUnique__1</string>
+    </Explicit>
+    <Properties />
+  </Unique>
+  <Unique Name="The Shattered Spinner" Level="60" BaseMetadataId="Metadata/Items/Quivers/Quiver9">
+    <Explicit>
+      <string>HarbingerSkillOnEquipUnique2_4</string>
+      <string>HybridStrDexUnique__1</string>
+      <string>AddedFireDamageUnique__2</string>
+      <string>AddedColdDamageUnique__3</string>
       <string>FireAndColdResistUnique__1</string>
     </Explicit>
     <Properties />
@@ -4388,6 +4479,15 @@
     </Explicit>
     <Properties />
   </Unique>
+  <Unique Name="Profane Proxy" Level="52" BaseMetadataId="Metadata/Items/Rings/Ring15">
+    <Explicit>
+      <string>IncreaseSocketedCurseGemLevelUnique__2</string>
+      <string>ColdResistUnique__32</string>
+      <string>LightningResistUnique__22</string>
+      <string>SupportSkitterBotAilmentAuraReplaceWithCurse____1</string>
+    </Explicit>
+    <Properties />
+  </Unique>
   <Unique Name="Putembo's Meadow" Level="49" BaseMetadataId="Metadata/Items/Rings/Ring5">
     <Explicit>
       <string>IntelligenceUnique__13</string>
@@ -4435,7 +4535,7 @@
   </Unique>
   <Unique Name="Rigwald's Crest" Level="49" BaseMetadataId="Metadata/Items/Rings/Ring14">
     <Explicit>
-      <string>SummonWolfOnKillUnique__1</string>
+      <string>SummonWolfOnKillUnique__1New</string>
       <string>FireDamagePercentUnique___5</string>
       <string>ColdDamagePercentUnique__7</string>
       <string>ManaRegenerationUnique__2</string>
@@ -4484,6 +4584,17 @@
       <string>RightRingSpellProjectilesChainUnique__1</string>
       <string>RightRingSpellProjectilesCannotForkUnique__1</string>
       <string>SpellsCannotPierceUnique__1__</string>
+    </Explicit>
+    <Properties />
+  </Unique>
+  <Unique Name="Storm Secret" Level="56" BaseMetadataId="Metadata/Items/Rings/Ring5">
+    <Explicit>
+      <string>IntelligenceUnique__20</string>
+      <string>LightningDamagePercentUnique__7</string>
+      <string>ChanceToShockUnique__4_</string>
+      <string>ActivateHeraldOfThunderOnShockUnique__1</string>
+      <string>HeraldOfThunderBoltFrequencyUnique__1</string>
+      <string>TakeDamageWhenHeraldOfThunderHitsUnique__1__</string>
     </Explicit>
     <Properties />
   </Unique>
@@ -5011,6 +5122,17 @@
     </Explicit>
     <Properties />
   </Unique>
+  <Unique Name="Doryani's Prototype" Level="67" BaseMetadataId="Metadata/Items/Armours/BodyArmours/BodyStrInt16">
+    <Explicit>
+      <string>LocalIncreasedArmourAndEnergyShieldUnique__21</string>
+      <string>IncreasedLifeUnique__101</string>
+      <string>DealNoNonLightningDamageUnique__1_</string>
+      <string>ArmourAppliesToLightningDamageUnique__1_</string>
+      <string>LightningResistNoReductionUnique__1_</string>
+      <string>NearbyEnemyLightningResistanceEqualUnique__1</string>
+    </Explicit>
+    <Properties />
+  </Unique>
   <Unique Name="Farrul's Fur" Level="69" BaseMetadataId="Metadata/Items/Armours/BodyArmours/BodyStrDex17">
     <Explicit>
       <string>LocalIncreasedArmourAndEvasionUnique__7</string>
@@ -5030,6 +5152,16 @@
       <string>DamageDealtByWebbedEnemiesUnique__1</string>
       <string>ResistancesOfWebbedEnemiesUnique__1</string>
       <string>AreaOfEffectAspectOfSpiderUnique__1</string>
+    </Explicit>
+    <Properties />
+  </Unique>
+  <Unique Name="Fleshcrafter" Level="59" BaseMetadataId="Metadata/Items/Armours/BodyArmours/BodyInt14">
+    <Explicit>
+      <string>LocalIncreasedEnergyShieldPercentUnique__28__</string>
+      <string>MinionLifeConvertedToEnergyShieldUnique__1</string>
+      <string>MinionChaosDamageDoesNotBypassESUnique__1</string>
+      <string>MinionEnergyShieldRechargeDelayUnique__1</string>
+      <string>MinionHitsIgnoreResistanceWithESUnique__1_</string>
     </Explicit>
     <Properties />
   </Unique>
@@ -5076,7 +5208,7 @@
     <Explicit>
       <string>LocalIncreasedArmourAndEnergyShieldUnique__2</string>
       <string>LocalIncreasedEnergySheildUnique__2_</string>
-      <string>IncreasedLifeUnique___7</string>
+      <string>IncreasedLifeUnique__32</string>
       <string>AllResistancesUnique__3</string>
       <string>EnergyShieldPer5StrengthUnique__1</string>
       <string>ZealotsOathUnique__1</string>
@@ -5248,7 +5380,14 @@
     <Properties />
   </Unique>
   <Unique Name="Perfidy" Level="68" BaseMetadataId="Metadata/Items/Armours/BodyArmours/BodyStr17">
-    <Explicit />
+    <Explicit>
+      <string>MeleeDamageUnique__2</string>
+      <string>IncreasedLifeUnique__100</string>
+      <string>Allow2ActiveBannersUnique__1</string>
+      <string>Add1StageToBannersOnMeleeHitUpTo5PerSecondUnique__1</string>
+      <string>BannerAdrenalineDurationUnique__1</string>
+      <string>BannerFortifyDurationUnique__1</string>
+    </Explicit>
     <Properties />
   </Unique>
   <Unique Name="Queen of the Forest" Level="59" BaseMetadataId="Metadata/Items/Armours/BodyArmours/BodyDex14">
@@ -5289,6 +5428,7 @@
     <Explicit>
       <string>DisplayHasAdditionalModUnique__1</string>
       <string>AllAttributesUnique__8_</string>
+      <string>LocalIncreasedArmourEvasionEnergyShieldUnique__1_</string>
       <string>MaximumLifeOnKillPercentUnique__3__</string>
       <string>MaximumEnergyShieldOnKillPercentUnique__1</string>
       <string>AllResistancesPerCorruptedItemUnique__1</string>
@@ -5499,7 +5639,7 @@
       <string>FireResistUnique__11</string>
       <string>MovementVelocityUniqueBodyStrDex5_</string>
       <string>IncreasedFireDamageTakenUniqueBodyStrDex5</string>
-      <string>FireDamageTakenConvertedToPhysicalUniqueBodyStrDex5</string>
+      <string>FireDamageTakenConvertedToPhysicalUnique__1</string>
       <string>SqueakingWhenTakingFireDamageUniqueBodyStrDex5</string>
     </Explicit>
     <Properties />
@@ -5697,15 +5837,33 @@
     <Properties />
   </Unique>
   <Unique Name="Beacon of Madness" Level="70" BaseMetadataId="Metadata/Items/Armours/Boots/BootsAtlas1">
-    <Explicit />
+    <Explicit>
+      <string>GrantEmbraceMadnessSkillUnique1</string>
+      <string>IncreasedChaosDamageUnique__5</string>
+      <string>MovementSpeedUnique_42</string>
+      <string>AllDamageCanPoisonGloriousMadnessUnique___1</string>
+      <string>EnemiesExplodeOnDeathChaosGloriousMadnessUnique1</string>
+    </Explicit>
     <Properties />
   </Unique>
   <Unique Name="Beacon of Madness" Level="70" BaseMetadataId="Metadata/Items/Armours/Boots/BootsAtlas2">
-    <Explicit />
+    <Explicit>
+      <string>GrantEmbraceMadnessSkillUnique1</string>
+      <string>LocalIncreasedArmourAndEvasionUnique__13</string>
+      <string>MovementSpeedUnique_42</string>
+      <string>DoubleDamageChanceGloriousMadnessUnique_1</string>
+      <string>FortifyEffectSelfGloriousMadnessUnique1</string>
+    </Explicit>
     <Properties />
   </Unique>
   <Unique Name="Beacon of Madness" Level="70" BaseMetadataId="Metadata/Items/Armours/Boots/BootsAtlas3">
-    <Explicit />
+    <Explicit>
+      <string>GrantEmbraceMadnessSkillUnique1</string>
+      <string>MovementSpeedUnique_42</string>
+      <string>IncreasedAilmentEffectOnEnemiesUnique_2</string>
+      <string>ElementalConfluxesGloriousMadnessUnique1</string>
+      <string>ElementalAilmentImmunityGloriousMadnessUnique1</string>
+    </Explicit>
     <Properties />
   </Unique>
   <Unique Name="Bones of Ullr" Level="22" BaseMetadataId="Metadata/Items/Armours/Boots/BootsInt3">
@@ -5814,8 +5972,6 @@
   </Unique>
   <Unique Name="Doryani's Delusion" Level="68" BaseMetadataId="Metadata/Items/Armours/Boots/BootsStr9">
     <Explicit>
-      <string>GrantsPurityOfFireUnique__1</string>
-      <string>AddedFireDamageUnique__3</string>
       <string>LocalIncreasedPhysicalDamageReductionRatingPercentUnique__13</string>
       <string>IncreasedLifeUniqueBootsStr3_</string>
       <string>MovementVelocityUnique__35</string>
@@ -5824,8 +5980,6 @@
   </Unique>
   <Unique Name="Doryani's Delusion" Level="67" BaseMetadataId="Metadata/Items/Armours/Boots/BootsInt9">
     <Explicit>
-      <string>GrantsPurityOfLightningUnique__1</string>
-      <string>AddedLightningDamageUnique__2_</string>
       <string>LocalIncreasedEnergyShieldPercentUnique__13</string>
       <string>IncreasedLifeUniqueBootsStr3_</string>
       <string>MovementVelocityUnique__35</string>
@@ -5834,8 +5988,6 @@
   </Unique>
   <Unique Name="Doryani's Delusion" Level="69" BaseMetadataId="Metadata/Items/Armours/Boots/BootsDex9">
     <Explicit>
-      <string>GrantsPurityOfIceUnique__1</string>
-      <string>AddedColdDamageUnique__4</string>
       <string>LocalIncreasedEvasionRatingPercentUnique__10</string>
       <string>IncreasedLifeUniqueBootsStr3_</string>
       <string>MovementVelocityUnique__35</string>
@@ -5844,13 +5996,14 @@
   </Unique>
   <Unique Name="Duskblight" Level="40" BaseMetadataId="Metadata/Items/Armours/Boots/BootsStrDex2">
     <Explicit>
-      <string>SocketedGemsHaveAddedChaosDamageUnique__2</string>
+      <string>StalkingPustuleOnKillUnique__1</string>
       <string>LocalIncreasedArmourAndEvasionUnique__5_</string>
       <string>IncreasedLifeUnique__68_</string>
       <string>MovementVelocityUnique__25</string>
       <string>StunRecoveryUniqueBootsStrDex3</string>
       <string>LightRadiusUniqueBootsStrDex3</string>
       <string>ChaosResistanceWhileUsingFlaskUniqueBootsStrDex3</string>
+      <string>AddedChaosDamageWhileUsingAFlaskUnique__2</string>
     </Explicit>
     <Properties />
   </Unique>
@@ -6217,9 +6370,8 @@
       <string>DexterityUniqueBootsDex3</string>
       <string>IntelligenceUniqueBootsDex3</string>
       <string>LocalIncreasedEvasionRatingPercentUniqueBootsDex3</string>
-      <string>MovementVelocityUnique__3</string>
+      <string>MovementVelocityUnique__7</string>
       <string>PercentDamageGoesToManaUniqueBootsDex3</string>
-      <string>NearbyAlliesMovementVelocityUnique__1</string>
     </Explicit>
     <Properties />
   </Unique>
@@ -6241,7 +6393,7 @@
       <string>LocalIncreasedArmourAndEnergyShieldUniqueBootsStrInt1</string>
       <string>LifeGainedFromEnemyDeathUniqueBootsStrInt1</string>
       <string>MovementVelocityUnique__16</string>
-      <string>HitsCauseMonsterFleeUniqueBootsStrInt1</string>
+      <string>ShockedGroundWhileMovingUnique__1_</string>
     </Explicit>
     <Properties />
   </Unique>
@@ -6341,7 +6493,15 @@
     <Properties />
   </Unique>
   <Unique Name="Assailum" Level="64" BaseMetadataId="Metadata/Items/Armours/Helmets/HelmetDex9">
-    <Explicit />
+    <Explicit>
+      <string>GrantsLevel20SnipeUnique__1</string>
+      <string>GrantsLevel20SnipeSupportUnique__1</string>
+      <string>SupportedBowSkillsDealMoreDamageUnique__1</string>
+      <string>IncreasedAccuracyUnique__8</string>
+      <string>LocalIncreasedEvasionRatingUnique__4</string>
+      <string>ChanceToDodgeAttacksWhileChannellingUnique__1</string>
+      <string>ChanceToDodgeSpellsWhileChannellingUnique__1</string>
+    </Explicit>
     <Properties />
   </Unique>
   <Unique Name="Black Sun Crest" Level="51" BaseMetadataId="Metadata/Items/Armours/Helmets/HelmetStrDex7">
@@ -6495,7 +6655,10 @@
     <Properties />
   </Unique>
   <Unique Name="Demigod's Immortality" Level="12" DropDisabled="true" BaseMetadataId="Metadata/Items/Armours/Helmets/HelmetDemigods1">
-    <Explicit />
+    <Explicit>
+      <string>AllAttributesUnique__19</string>
+      <string>ActorSizeUnique__3</string>
+    </Explicit>
     <Properties />
   </Unique>
   <Unique Name="Demigod's Triumph" Level="12" DropDisabled="true" BaseMetadataId="Metadata/Items/Armours/Helmets/HelmetWreath1">
@@ -6606,6 +6769,12 @@
       <string>ElementalDamageUnique__3</string>
       <string>AlternateFireAilmentUnique__1</string>
       <string>ElementalDamagePerSextantUnique__1</string>
+    </Explicit>
+    <Properties />
+  </Unique>
+  <Unique Name="Forbidden Shako" Level="68" BaseMetadataId="Metadata/Items/Armours/Helmets/HelmetStrInt7">
+    <Explicit>
+      <string>AllAttributesUnique__21</string>
     </Explicit>
     <Properties />
   </Unique>
@@ -6928,11 +7097,13 @@
   <Unique Name="Mind of the Council" Level="57" BaseMetadataId="Metadata/Items/Armours/Helmets/HelmetDexInt9">
     <Explicit>
       <string>LocalIncreasedEvasionAndEnergyShieldUnique__3</string>
+      <string>LocalIncreasedEnergyShieldUnique__29</string>
       <string>MaximumManaUnique___2</string>
       <string>ChanceToShockUnique__1</string>
       <string>ChanceToBeShockedUnique__1</string>
       <string>PercentLightningDamageTakenFromManaBeforeLifeUnique__1</string>
-      <string>PercentManaRecoveredWhenYouShockUnique__1</string>
+      <string>AttackLightningDamageMaximumManaUnique__1__</string>
+      <string>LoseManaOnAttackSkillUnique__1</string>
     </Explicit>
     <Properties />
   </Unique>
@@ -6954,6 +7125,16 @@
       <string>LocalIncreasedEvasionRatingPercentUnique__3</string>
       <string>IncreasedLifeUnique__23</string>
       <string>IncreaseProjectileAttackDamagePerAccuracyUnique__1</string>
+    </Explicit>
+    <Properties />
+  </Unique>
+  <Unique Name="Plume of Pursuit" Level="64" BaseMetadataId="Metadata/Items/Armours/Helmets/HelmetInt5">
+    <Explicit>
+      <string>ReducedCastSpeedUnique__1_</string>
+      <string>LocalIncreasedEnergyShieldPercentUnique__29</string>
+      <string>NonCriticalStrikesLessDamageUnique__1</string>
+      <string>SpellsAlwaysCritFinalRepeatUnique__1_</string>
+      <string>SpellsNeverCritExceptFinalRepeatUnique__1</string>
     </Explicit>
     <Properties />
   </Unique>
@@ -7045,7 +7226,6 @@
   <Unique Name="The Baron" Level="26" BaseMetadataId="Metadata/Items/Armours/Helmets/HelmetStr4">
     <Explicit>
       <string>LocalIncreaseSocketedMinionGemLevelUnique__2_</string>
-      <string>StrengthUnique__10</string>
       <string>MinionLifeUnique__2</string>
       <string>MinionsGainYourStrengthUnique__1</string>
       <string>AdditionalZombiesPerXStrengthUnique__1</string>
@@ -7160,6 +7340,18 @@
     </Explicit>
     <Properties />
   </Unique>
+  <Unique Name="The Tempest's Liberation" Level="60" BaseMetadataId="Metadata/Items/Armours/Helmets/HelmetDexInt7">
+    <Explicit>
+      <string>SupportedByIceBiteUnique__1</string>
+      <string>SupportedByInnervateUnique__1</string>
+      <string>HarbingerSkillOnEquipUnique2_5</string>
+      <string>LocalIncreasedEvasionRatingUnique__1</string>
+      <string>LocalIncreasedEnergyShieldUnique__12</string>
+      <string>IncreasedLifeUnique__56</string>
+      <string>AllResistancesUnique__9</string>
+    </Explicit>
+    <Properties />
+  </Unique>
   <Unique Name="The Three Dragons" Level="35" BaseMetadataId="Metadata/Items/Armours/Helmets/HelmetDexInt5">
     <Explicit>
       <string>AllResistancesUniqueHelmetDexInt4</string>
@@ -7240,8 +7432,24 @@
     </Explicit>
     <Properties />
   </Unique>
+  <Unique Name="Abhorrent Interrogation" Level="45" BaseMetadataId="Metadata/Items/Armours/Gloves/GlovesDexInt5">
+    <Explicit>
+      <string>LocalIncreasedEvasionAndEnergyShieldUnique__26</string>
+      <string>AttackAndCastSpeedUnique__6</string>
+      <string>WitherOnHitChanceUnique__1</string>
+      <string>WitherGrantsElementalDamageTakenUnique__1__</string>
+      <string>CannotPenetrateResistancesUnique__1</string>
+    </Explicit>
+    <Properties />
+  </Unique>
   <Unique Name="Algor Mortis" Level="50" BaseMetadataId="Metadata/Items/Armours/Gloves/GlovesDexInt6">
-    <Explicit />
+    <Explicit>
+      <string>LocalIncreasedEnergyShieldUnique__28</string>
+      <string>ColdAndLightningResistUnique__2</string>
+      <string>ChanceToSapVsEnemiesInChillingAreasUnique__1</string>
+      <string>ChillingAreasAlsoGrantLightningDamageTakenUnique__1</string>
+      <string>IncreasedAilmentEffectOnEnemiesUnique__1</string>
+    </Explicit>
     <Properties />
   </Unique>
   <Unique Name="Allelopathy" Level="69" BaseMetadataId="Metadata/Items/Armours/Gloves/GlovesInt9">
@@ -7402,6 +7610,7 @@
       <string>AddedLightningDamageWhileUnarmedUniqueGlovesStr4_</string>
       <string>AddedLightningDamagetoSpellsWhileUnarmedUniqueGlovesStr4</string>
       <string>GainEnergyShieldOnKillShockedEnemyUniqueGlovesStr4</string>
+      <string>ShockEffectUnique__3</string>
     </Explicit>
     <Properties />
   </Unique>
@@ -7461,6 +7670,15 @@
       <string>AddedPhysicalDamageUnique__5</string>
       <string>LocalIncreasedPhysicalDamageReductionRatingPercentUnique__12</string>
       <string>KeystoneIronGripUnique__1</string>
+    </Explicit>
+    <Properties />
+  </Unique>
+  <Unique Name="Great Old One's Tentacles" Level="38" BaseMetadataId="Metadata/Items/Armours/Gloves/GlovesDex5">
+    <Explicit>
+      <string>AddedPhysicalDamageUnique__8</string>
+      <string>IncreasedLifeUnique__102</string>
+      <string>AttackImpaleChanceUnique__1</string>
+      <string>EnemiesKilledApplyImpaleDamageUnique__1</string>
     </Explicit>
     <Properties />
   </Unique>
@@ -8093,6 +8311,17 @@
     </Explicit>
     <Properties />
   </Unique>
+  <Unique Name="Emperor's Vigilance" Level="46" BaseMetadataId="Metadata/Items/Armours/Shields/ShieldStrInt7">
+    <Explicit>
+      <string>SpellBlockPercentageUnique__3_</string>
+      <string>LocalIncreasedArmourAndEnergyShieldUnique__22</string>
+      <string>MaximumLifeUnique__20___</string>
+      <string>CannotBlockWithNoEnergyShieldUnique__1</string>
+      <string>DamageBypassEnergyShieldBlockUnique__1</string>
+      <string>KeystoneGlancingBlowsUnique__1___</string>
+    </Explicit>
+    <Properties />
+  </Unique>
   <Unique Name="Esh's Mirror" Level="53" BaseMetadataId="Metadata/Items/Armours/Shields/ShieldInt11">
     <Explicit>
       <string>IntelligenceUnique__4</string>
@@ -8278,9 +8507,9 @@
       <string>LocalIncreaseSocketedMinionGemLevelUniqueShieldInt2</string>
       <string>LocalIncreasedEnergyShieldPercentUniqueShieldInt2</string>
       <string>IncreasedManaUniqueShieldInt2</string>
-      <string>AuraEffectUniqueShieldInt2</string>
       <string>AuraEffectOnMinionsUniqueShieldInt2</string>
       <string>GroundTarOnCritTakenUniqueShieldInt2</string>
+      <string>AuraEffectUniqueShieldInt2</string>
     </Explicit>
     <Properties />
   </Unique>
@@ -8302,6 +8531,7 @@
       <string>AreaOfEffectUniqueShieldDex7</string>
       <string>OnslaughtOnUsingWarcryUnique__1</string>
       <string>WarcryEffectUnique__1</string>
+      <string>KeystoneCallToArmsUnique__1</string>
     </Explicit>
     <Properties />
   </Unique>
@@ -8356,7 +8586,7 @@
       <string>IncreasedTauntDurationUniqueShieldStr4</string>
       <string>AdditionalBlockChanceUniqueShieldStr4</string>
       <string>WarcryCooldownSpeedUnique__1</string>
-      <string>AttackLeechAgainstTauntedEnemyUnique__1</string>
+      <string>WarcryInfiniteEnemyPowerUnique__1__</string>
     </Explicit>
     <Properties />
   </Unique>
@@ -8444,6 +8674,17 @@
       <string>LoseEnduranceChargesOnMaxEnduranceChargesUnique__1_</string>
       <string>NeverBlockUnique__1</string>
       <string>WarcryCooldownSpeedUnique__2</string>
+    </Explicit>
+    <Properties />
+  </Unique>
+  <Unique Name="The Immortal Will" Level="68" BaseMetadataId="Metadata/Items/Armours/Shields/ShieldStrInt13">
+    <Explicit>
+      <string>HarbingerSkillOnEquipUnique2__3</string>
+      <string>IncreasedLifeUnique__52</string>
+      <string>AllResistancesUnique__9</string>
+      <string>GainManaOnBlockUnique__1</string>
+      <string>AdditionalBlockChanceUnique__5</string>
+      <string>ChannelledSkillDamageUnique__1</string>
     </Explicit>
     <Properties />
   </Unique>
@@ -8539,7 +8780,7 @@
     <Explicit>
       <string>CommandmentOfInfernoOnCritUnique__1</string>
       <string>CriticalStrikeChanceUnique__3</string>
-      <string>IncreasedLifeUnique__83</string>
+      <string>IncreasedLifeUnique__58</string>
       <string>FireResistUnique__19</string>
       <string>AttackSpeedIfCriticalStrikeDealtRecentlyUnique__1</string>
       <string>CastSpeedIfCriticalStrikeDealtRecentlyUnique__1</string>
@@ -8573,8 +8814,8 @@
       <string>LocalIncreasedEnergyShieldUnique__26</string>
       <string>LocalIncreasedEnergyShieldPercentUniqueShieldInt2</string>
       <string>IncreasedManaUniqueShieldInt2</string>
-      <string>AuraEffectUnique__1</string>
       <string>AuraEffectOnMinionsUnique__1_</string>
+      <string>AuraEffectUnique__1</string>
       <string>GroundTarOnBlockUnique__1</string>
       <string>LifeRegenerationIfBlockedRecentlyUnique__1</string>
     </Explicit>
@@ -8745,18 +8986,18 @@
   <Unique Name="Soul Catcher" Level="27" BaseMetadataId="Metadata/Items/Flasks/FlaskUtility8">
     <Explicit>
       <string>NoManaRecoveryDuringFlaskEffectUnique__1_</string>
+      <string>FlaskVaalSkillCriticalStrikeChanceUnique__1</string>
       <string>FlaskVaalSkillDamageUnique__1</string>
-      <string>FlaskVaalSkillCostUnique__1</string>
       <string>FlaskVaalSoulPreventionDurationUnique__1_</string>
     </Explicit>
     <Properties />
   </Unique>
   <Unique Name="Soul Ripper" Level="27" BaseMetadataId="Metadata/Items/Flasks/FlaskUtility8">
     <Explicit>
-      <string>FlaskChargesUsedUnique__7</string>
-      <string>FlaskVaalSkillDamageUnique__2</string>
-      <string>FlaskVaalNoSoulPreventionUnique__1</string>
-      <string>CannotGainFlaskChargesDuringEffectUnique__1</string>
+      <string>FlaskExtraChargesUnique__2_</string>
+      <string>FlaskLoseChargesOnNewAreaUnique__1</string>
+      <string>FlaskVaalConsumeMaximumChargesUnique__1</string>
+      <string>FlaskVaalGainSoulsAsChargesUnique__1_</string>
     </Explicit>
     <Properties />
   </Unique>
@@ -8797,37 +9038,6 @@
       <string>FlaskChargesUsedUnique___2</string>
       <string>ShockNearbyEnemiesDuringFlaskEffect___1</string>
       <string>ShockSelfDuringFlaskEffect__1</string>
-      <string>AddedLightningDamageDuringFlaskEffect__1</string>
-      <string>LightningLifeLeechDuringFlaskEffect__1</string>
-    </Explicit>
-    <Properties />
-  </Unique>
-  <Unique Name="Vessel of Vinktar" Level="68" BaseMetadataId="Metadata/Items/Flasks/FlaskUtility4">
-    <Explicit>
-      <string>FlaskChargesUsedUnique___2</string>
-      <string>ShockNearbyEnemiesDuringFlaskEffect___1</string>
-      <string>ShockSelfDuringFlaskEffect__1</string>
-      <string>AddedSpellLightningDamageDuringFlaskEffect__1</string>
-      <string>LightningLifeLeechDuringFlaskEffect__1</string>
-    </Explicit>
-    <Properties />
-  </Unique>
-  <Unique Name="Vessel of Vinktar" Level="68" BaseMetadataId="Metadata/Items/Flasks/FlaskUtility4">
-    <Explicit>
-      <string>FlaskChargesUsedUnique___2</string>
-      <string>ShockNearbyEnemiesDuringFlaskEffect___1</string>
-      <string>ShockSelfDuringFlaskEffect__1</string>
-      <string>LightningPenetrationDuringFlaskEffect__1</string>
-      <string>LightningLifeLeechDuringFlaskEffect__1</string>
-    </Explicit>
-    <Properties />
-  </Unique>
-  <Unique Name="Vessel of Vinktar" Level="68" BaseMetadataId="Metadata/Items/Flasks/FlaskUtility4">
-    <Explicit>
-      <string>FlaskChargesUsedUnique___2</string>
-      <string>ShockNearbyEnemiesDuringFlaskEffect___1</string>
-      <string>ShockSelfDuringFlaskEffect__1</string>
-      <string>PhysicalToLightningDuringFlaskEffect__1</string>
       <string>LightningLifeLeechDuringFlaskEffect__1</string>
     </Explicit>
     <Properties />
@@ -8914,9 +9124,7 @@
     <Properties />
   </Unique>
   <Unique Name="Brutal Restraint" Level="1" BaseMetadataId="Metadata/Items/Jewels/JewelTimeless">
-    <Explicit>
-      <string>UniqueJewelAlternateTreeInRadiusMaraketh</string>
-    </Explicit>
+    <Explicit />
     <Properties>
       <string>Limited to: 1</string>
     </Properties>
@@ -9109,9 +9317,7 @@
     <Properties />
   </Unique>
   <Unique Name="Elegant Hubris" Level="1" BaseMetadataId="Metadata/Items/Jewels/JewelTimeless">
-    <Explicit>
-      <string>UniqueJewelAlternateTreeInRadiusEternal</string>
-    </Explicit>
+    <Explicit />
     <Properties>
       <string>Limited to: 1</string>
     </Properties>
@@ -9180,10 +9386,12 @@
   </Unique>
   <Unique Name="Fevered Mind" Level="1" BaseMetadataId="Metadata/Items/Jewels/JewelInt">
     <Explicit>
-      <string>SpellDamageUniqueCorruptedJewel3_</string>
-      <string>ManaCostIncreasedUniqueCorruptedJewel3</string>
+      <string>IntelligenceUnique__21</string>
+      <string>NotablesGrantManaCostAndSpellDamageUnique1</string>
     </Explicit>
-    <Properties />
+    <Properties>
+      <string>Limited to: 1</string>
+    </Properties>
   </Unique>
   <Unique Name="Fight for Survival" Level="1" BaseMetadataId="Metadata/Items/Jewels/JewelDex">
     <Explicit>
@@ -9268,16 +9476,14 @@
     </Properties>
   </Unique>
   <Unique Name="Glorious Vanity" Level="1" BaseMetadataId="Metadata/Items/Jewels/JewelTimeless">
-    <Explicit>
-      <string>UniqueJewelAlternateTreeInRadiusVaal</string>
-    </Explicit>
+    <Explicit />
     <Properties>
       <string>Limited to: 1</string>
     </Properties>
   </Unique>
   <Unique Name="Grand Spectrum" Level="1" BaseMetadataId="Metadata/Items/Jewels/JewelInt">
     <Explicit>
-      <string>ManaPerStackableJewelUnique__1</string>
+      <string>CriticalStrikeChancePerStackableJewelUnique__1</string>
     </Explicit>
     <Properties>
       <string>Limited to: 3</string>
@@ -9285,7 +9491,7 @@
   </Unique>
   <Unique Name="Grand Spectrum" Level="1" BaseMetadataId="Metadata/Items/Jewels/JewelStr">
     <Explicit>
-      <string>ArmourPerStackableJewelUnique__1</string>
+      <string>AllResistancePerStackableJewelUnique__1</string>
     </Explicit>
     <Properties>
       <string>Limited to: 3</string>
@@ -9343,7 +9549,7 @@
       <string>Limited to: 1</string>
     </Properties>
   </Unique>
-  <Unique Name="Hotfooted" Level="1" BaseMetadataId="Metadata/Items/Jewels/JewelDex">
+  <Unique Name="Hotheaded" Level="1" BaseMetadataId="Metadata/Items/Jewels/JewelDex">
     <Explicit>
       <string>MovementVelocityWhileIgnitedUniqueJewel20</string>
     </Explicit>
@@ -9397,9 +9603,7 @@
     <Properties />
   </Unique>
   <Unique Name="Lethal Pride" Level="1" BaseMetadataId="Metadata/Items/Jewels/JewelTimeless">
-    <Explicit>
-      <string>UniqueJewelAlternateTreeInRadiusKarui</string>
-    </Explicit>
+    <Explicit />
     <Properties>
       <string>Limited to: 1</string>
     </Properties>
@@ -9461,9 +9665,7 @@
     <Properties />
   </Unique>
   <Unique Name="Militant Faith" Level="1" BaseMetadataId="Metadata/Items/Jewels/JewelTimeless">
-    <Explicit>
-      <string>UniqueJewelAlternateTreeInRadiusTemplar</string>
-    </Explicit>
+    <Explicit />
     <Properties>
       <string>Limited to: 1</string>
     </Properties>
@@ -9518,7 +9720,7 @@
   </Unique>
   <Unique Name="Poacher's Aim" Level="1" BaseMetadataId="Metadata/Items/Jewels/JewelDex">
     <Explicit>
-      <string>PierceChanceUniqueJewel41</string>
+      <string>AdditionalPierceUniqueJewel__1</string>
       <string>ProjectileDamageJewelUniqueJewel41</string>
     </Explicit>
     <Properties>
@@ -9665,7 +9867,7 @@
     </Explicit>
     <Properties />
   </Unique>
-  <Unique Name="Shattered Chains" Level="1" BaseMetadataId="Metadata/Items/Jewels/JewelStr">
+  <Unique Name="Shattered Chains" Level="1" DropDisabled="true" BaseMetadataId="Metadata/Items/Jewels/JewelStr">
     <Explicit>
       <string>ColdDamagePercentUnique__1</string>
       <string>GlacialHammerThresholdJewel__1</string>
@@ -9706,7 +9908,7 @@
       <string>AnimateBowsAndWandsUnique____70</string>
     </Explicit>
     <Properties>
-      <string>Limited to: 2</string>
+      <string>Limited to: 1</string>
     </Properties>
   </Unique>
   <Unique Name="Spirited Response" Level="1" BaseMetadataId="Metadata/Items/Jewels/JewelInt">
@@ -9721,7 +9923,7 @@
   <Unique Name="Spreading Rot" Level="1" BaseMetadataId="Metadata/Items/Jewels/JewelInt">
     <Explicit>
       <string>IncreasedChaosDamageUnique__3</string>
-      <string>BlightThresholdJewel_2</string>
+      <string>BlightThresholdJewel_3</string>
     </Explicit>
     <Properties>
       <string>Limited to: 2</string>
@@ -9795,21 +9997,21 @@
   <Unique Name="Tempered Flesh" Level="1" BaseMetadataId="Metadata/Items/Jewels/JewelStr">
     <Explicit>
       <string>AdditionalStrengthPerAllocatedStrengthJewelUnique__1_</string>
-      <string>CriticalStrikeMultiplierPerUnallocatedStrengthJewelUnique__1_</string>
+      <string>LifeRecoveryRatePerAllocatedStrengthUnique__1_</string>
     </Explicit>
     <Properties />
   </Unique>
   <Unique Name="Tempered Mind" Level="1" BaseMetadataId="Metadata/Items/Jewels/JewelInt">
     <Explicit>
       <string>AdditionalIntelligencePerAllocatedIntelligenceJewelUnique__1__</string>
-      <string>AccuracyRatingPerUnallocatedIntelligenceJewelUnique__1</string>
+      <string>ManaRecoveryRatePerAllocatedIntelligenceUnique__1</string>
     </Explicit>
     <Properties />
   </Unique>
   <Unique Name="Tempered Spirit" Level="1" BaseMetadataId="Metadata/Items/Jewels/JewelDex">
     <Explicit>
       <string>AdditionalDexterityPerAllocatedDexterityJewelUnique__1</string>
-      <string>FlatManaPerUnallocatedDexterityJewelUnique__1</string>
+      <string>MovementSpeedPerAllocatedDexterityUnique__1</string>
     </Explicit>
     <Properties />
   </Unique>
@@ -9916,7 +10118,6 @@
   </Unique>
   <Unique Name="Thread of Hope" Level="1" BaseMetadataId="Metadata/Items/Jewels/JewelStr">
     <Explicit>
-      <string>JewelRingRadiusValuesUnique__1</string>
       <string>AllocateDisconnectedPassivesDonutUnique__1</string>
       <string>AllResistancesUnique__18</string>
     </Explicit>
@@ -9926,31 +10127,36 @@
     <Explicit>
       <string>SkeletonDurationUniqueJewel1_</string>
       <string>MinionDamageUniqueJewel1</string>
-      <string>MaximumMinionCountUniqueJewel1</string>
+      <string>SkeletonAttackSpeedUniqueJewel1</string>
+      <string>SkeletonCastSpeedUniqueJewel1</string>
+      <string>SkeletonMovementSpeedUniqueJewel1</string>
     </Explicit>
     <Properties />
   </Unique>
   <Unique Name="Transcendent Flesh" Level="1" BaseMetadataId="Metadata/Items/Jewels/JewelStr">
     <Explicit>
       <string>AdditionalStrengthPerAllocatedStrengthJewelUnique__1_</string>
-      <string>AdditionalPhysicalReductionPerAllocatedStrengthJewelUnique__1</string>
       <string>CriticalStrikeMultiplierPerUnallocatedStrengthJewelUnique__1_</string>
+      <string>LifeRecoveryRatePerAllocatedStrengthUnique__2</string>
+      <string>LifeRecoveryRatePerUnallocatedStrengthUnique__1_</string>
     </Explicit>
     <Properties />
   </Unique>
   <Unique Name="Transcendent Mind" Level="1" BaseMetadataId="Metadata/Items/Jewels/JewelInt">
     <Explicit>
       <string>AdditionalIntelligencePerAllocatedIntelligenceJewelUnique__1__</string>
-      <string>EnergyShieldRegenPerAllocatedIntelligenceJewelUnique__1_</string>
-      <string>AccuracyRatingPerUnallocatedIntelligenceJewelUnique__1</string>
+      <string>DamageOverTimeMultiplierPerUnallocatedIntelligenceUnique__1___</string>
+      <string>ManaRecoveryRatePerAllocatedIntelligenceUnique__2</string>
+      <string>ManaRecoveryRatePerUnallocatedIntelligenceUnique__1</string>
     </Explicit>
     <Properties />
   </Unique>
   <Unique Name="Transcendent Spirit" Level="1" BaseMetadataId="Metadata/Items/Jewels/JewelDex">
     <Explicit>
       <string>AdditionalDexterityPerAllocatedDexterityJewelUnique__1</string>
-      <string>MovementSpeedPerAllocatedDexterityJewelUnique__1</string>
-      <string>FlatManaPerUnallocatedDexterityJewelUnique__1</string>
+      <string>MovementSpeedPerAllocatedDexterityUnique__2</string>
+      <string>AccuracyRatingPerUnallocatedDexterityUnique__1_</string>
+      <string>MovementSpeedPerUnallocatedDexterityUnique__1_</string>
     </Explicit>
     <Properties />
   </Unique>
