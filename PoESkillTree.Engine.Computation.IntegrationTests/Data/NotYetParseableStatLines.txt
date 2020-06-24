@@ -183,8 +183,10 @@ Triggers Level 20 Cold Aegis when Equipped
 Triggers Level 7 Abberath's Fury when Equipped
 10% chance to Trigger Level 1 Blood Rage when you Kill an Enemy
 10% Chance to Trigger Level 18 Summon Spectral Wolf on Kill
+10% Chance to Trigger Level 10 Summon Spectral Wolf on Kill
 10% chance to Cast Level 20 Fire Burst on Hit
 Drops Burning Ground while moving, dealing 2500 Fire Damage per second
+Drops Burning Ground while moving, dealing 2500 Fire Damage per second for 1 second
 Your Hits inflict Decay, dealing 500 Chaos Damage per second for 8 seconds
 Trigger Level 20 Tawhoa's Chosen when you Attack with a Non-Vaal Slam Skill near an Enemy
 Exerted Attacks Trigger Combust the first time they deal a Melee Hit

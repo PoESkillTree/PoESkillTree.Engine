@@ -39,7 +39,9 @@
 25% chance to cause Bleeding on Hit
 32% chance to Chill Attackers for 4 seconds on Block
 10% chance to deal Double Damage
+6% chance to deal Double Damage if you have Stunned an Enemy Recently
 8% chance to deal Double Damage while Focussed
+15% chance to Defend with Double Armour
 2% chance to Dodge Attack and Spell Hits if you've been Hit Recently
 2% chance to Dodge Attack Hits
 4% chance to Dodge Attack Hits if you have Blocked Recently
@@ -86,9 +88,8 @@
 32% chance to Shock Attackers for 4 seconds on Block
 4% chance to Taunt Enemies on Hit with Attacks
 10% chance to Trigger Level 1 Blood Rage when you Kill an Enemy
-10% Chance to Trigger Level 18 Summon Spectral Wolf on Kill
+10% Chance to Trigger Level 10 Summon Spectral Wolf on Kill
 8% chance to Unnerve Enemies for 4 seconds on Hit
-15% chance when Hit for double Armour effect
 9% faster start of Energy Shield Recharge
 5% Global chance to Blind Enemies on hit
 25% increased Accuracy Rating if you haven't Killed Recently
@@ -223,10 +224,10 @@
 11% increased Duration of Ailments on Enemies
 90% increased Duration of Ailments you inflict while Focussed
 25% increased effect
-17% increased Effect of Auras on you
 8% increased Effect of Chill
 15% increased Effect of Fortify on you
 80% increased Effect of Fortify on you while Focussed
+17% increased effect of Non-Curse Auras from your Skills
 17% increased Effect of Non-Damaging Ailments
 18% increased effect of Offerings
 8% increased Effect of Shock
@@ -332,7 +333,9 @@
 15% increased Trap Damage
 18% increased Trap Duration
 9% increased Trap Throwing Speed
+19% increased Warcry Buff Effect
 19% increased Warcry Cooldown Recovery Speed
+17% increased Warcry Speed
 525% more Physical Damage with Unarmed Attacks
 0.4% of Attack Damage Leeched as Life during Flask effect
 0.4% of Chaos Damage Leeched as Life
@@ -374,6 +377,8 @@
 5% reduced Damage taken from Damage Over Time
 30% reduced Duration
 27% reduced Effect of Curses on you
+17% reduced Effect of Non-Damaging Ailments on you
+33% reduced Effect of Shock on you
 5% reduced Elemental Damage Taken while stationary
 12% reduced Enemy Block Chance
 7% reduced Enemy Stun Threshold
@@ -382,6 +387,8 @@
 22% reduced Fishing Pool Consumption
 20% reduced Flask Charges gained
 15% reduced Flask Charges used
+33% reduced Freeze Duration on you
+33% reduced Ignite Duration on you
 5% reduced Lightning Damage taken
 3% reduced Mana Cost of Skills
 12% reduced Mana Cost of Skills during Flask Effect
@@ -664,17 +671,17 @@ Damage Penetrates 5% Fire Resistance
 Damage Penetrates 5% Lightning Resistance
 Determination has 22% reduced Mana Reservation
 Discipline has 27% reduced Mana Reservation
-Drops Burning Ground while moving, dealing 2500 Fire Damage per second
+Drops Burning Ground while moving, dealing 2500 Fire Damage per second for 1 second
 Enemies have 20% reduced Evasion if you have Hit them Recently
-Enemies have -14% to Total Physical Damage Reduction against this Weapon's Hits
-Enemies have -9% to Total Physical Damage Reduction against your Hits
 Enemies Killed with Attack or Spell Hits Explode, dealing 5% of their Life as Fire Damage
 Enemies you Kill Explode, dealing 3% of their Life as Physical Damage
 Every 5 seconds, Regenerate 15% of Life over one second
+Exerted Attacks deal 26% increased Damage
 Ezomyte Shell Hook
 Flask Effect is not removed at Full Mana Flask Effect does not Queue
 Flasks applied to you have 5% increased Effect
 Gain 1 Charge when you are Hit by an Enemy
+Gain 1 Endurance Charge every second if you've been Hit Recently
 Gain 4% of Cold Damage as Extra Chaos Damage
 Gain 11% of Elemental Damage as Extra Chaos Damage
 Gain 4% of Fire Damage as Extra Chaos Damage
@@ -691,7 +698,6 @@ Gain a Flask Charge when you deal a Critical Strike
 Gain a Power Charge after Spending a total of 200 Mana
 Gain Accuracy Rating equal to your Strength
 Gain an Endurance Charge every 4 seconds while Stationary
-Gain an Endurance Charge every second if you've been Hit Recently
 Gain an Endurance, Frenzy or Power charge when you Block
 Gain Onslaught for 3 seconds when Hit
 Grace has 22% reduced Mana Reservation
@@ -721,6 +727,7 @@ Hatred has 30% increased Aura Effect
 Hatred has 22% reduced Mana Reservation
 Hits can't be Evaded
 Hits with this Weapon have Culling Strike against Bleeding Enemies
+Hits with this Weapon Overwhelm 14% Physical Damage Reduction
 Ignites you inflict deal Damage 10% faster
 Immune to Curses during Flask effect Removes Curses on use
 Immune to Poison during Flask Effect Removes Poison on use
@@ -732,6 +739,7 @@ Instant Recovery
 Instant Recovery when on Low Life
 Item drops on Death if Equipped by an Animated Guardian
 Items and Gems have 7% reduced Attribute Requirements
+Light Radius is based on Energy Shield instead of Life
 Malevolence has 30% increased Aura Effect
 Malevolence has 22% reduced Mana Reservation
 Mana Recovery occurs instantly at the end of the Flask effect
@@ -772,6 +780,7 @@ Nearby Enemies take 6% increased Elemental Damage
 Nearby Enemies take 9% increased Physical Damage
 Non-Channelling Skills have -7 to Total Mana Cost
 Non-Vaal Skills deal 35% increased Damage during Soul Gain Prevention
+Overwhelm 9% Physical Damage Reduction
 Poisons you inflict deal Damage 10% faster
 Prefixes Cannot Be Changed
 Pride has 22% reduced Mana Reservation
@@ -912,6 +921,8 @@ Unaffected by Burning Ground
 Unaffected by Chilled Ground
 Unaffected by Desecrated Ground
 Unaffected by Shocked Ground
+Warcries cannot Exert Travel Skills
+Warcry Skills have 23% increased Area of Effect
 When you Kill a Rare Monster, 25% chance to gain one of its Modifiers for 10 seconds
 Wrath has 30% increased Aura Effect
 Wrath has 22% reduced Mana Reservation

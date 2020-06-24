@@ -11,6 +11,7 @@ using PoESkillTree.Engine.Computation.Common.Builders.Values;
 using PoESkillTree.Engine.Computation.Common.Parsing;
 using PoESkillTree.Engine.GameModel;
 using PoESkillTree.Engine.GameModel.PassiveTree;
+using PoESkillTree.Engine.Utils;
 
 namespace PoESkillTree.Engine.Computation.Builders.Stats
 {
@@ -35,10 +36,18 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         public IStatBuilder ConnectsToClass(CharacterClass characterClass)
             => FromIdentity($"{characterClass}.TreeConnectedTo", typeof(bool));
 
-        public ValueBuilder AllocatedNodeInModifierSourceJewelRadiusCount =>
+        public ValueBuilder AllocatedNodeCountInModifierSourceJewelRadius =>
             new ValueBuilder(new ValueBuilderImpl(
-                ps => BuildInModifierSourceJewelRadiusValue(ps, _ => new ValueBuilder(new ValueBuilderImpl(1)), v => v),
-                c => AllocatedNodeInModifierSourceJewelRadiusCount));
+                ps => BuildInModifierSourceJewelRadiusValue(ps, _ => CreateValue(1), Funcs.Identity),
+                _ => AllocatedNodeCountInModifierSourceJewelRadius));
+
+        public ValueBuilder AllocatedNotableCountInModifierSourceJewelRadius =>
+            new ValueBuilder(new ValueBuilderImpl(
+                ps => BuildCountNodeValue(ps,
+                    GetNodesInRadius(ps).Where(d => d.Type == PassiveNodeType.Notable),
+                    _ => CreateValue(1),
+                    Funcs.Identity),
+                _ => AllocatedNodeCountInModifierSourceJewelRadius));
 
         public ValueBuilder TotalInModifierSourceJewelRadius(IStatBuilder stat)
             => new ValueBuilder(new ValueBuilderImpl(
@@ -47,7 +56,7 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
 
         public ValueBuilder AllocatedInModifierSourceJewelRadius(IStatBuilder stat)
             => new ValueBuilder(new ValueBuilderImpl(
-                ps => BuildInModifierSourceJewelRadiusValue(ps, stat, v => v),
+                ps => BuildInModifierSourceJewelRadiusValue(ps, stat, Funcs.Identity),
                 c => AllocatedInModifierSourceJewelRadius(stat.Resolve(c))));
 
         public ValueBuilder UnallocatedInModifierSourceJewelRadius(IStatBuilder stat)
@@ -63,14 +72,24 @@ namespace PoESkillTree.Engine.Computation.Builders.Stats
         private IValue BuildInModifierSourceJewelRadiusValue(
             BuildParameters parameters, Func<PassiveNodeDefinition, ValueBuilder> value, Func<IValue, IValue> condition)
         {
-            return GetNodesInRadius(parameters)
+            return BuildCountNodeValue(parameters, GetNodesInRadius(parameters), value, condition);
+        }
+
+        private IValue BuildCountNodeValue(
+            BuildParameters parameters, IEnumerable<PassiveNodeDefinition> nodes,
+            Func<PassiveNodeDefinition, ValueBuilder> value, Func<IValue, IValue> condition)
+        {
+            return nodes
                 .Select(GetValue)
-                .Aggregate(new ValueBuilder(new ValueBuilderImpl(0)), (l, r) => l + r)
+                .Aggregate(CreateValue(0), (l, r) => l + r)
                 .Build(parameters);
 
             ValueBuilder GetValue(PassiveNodeDefinition d)
                 => value(d).If(condition(NodeAllocated(d.Id).Value.Build(parameters)));
         }
+
+        private static ValueBuilder CreateValue(double? value) =>
+            new ValueBuilder(new ValueBuilderImpl(value));
 
         public IStatBuilder MultipliedAttributeForNodesInModifierSourceJewelRadius(
             IStatBuilder sourceAttribute, IStatBuilder targetAttribute)

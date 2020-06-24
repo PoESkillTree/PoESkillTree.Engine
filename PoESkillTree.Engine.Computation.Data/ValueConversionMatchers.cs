@@ -186,7 +186,11 @@ namespace PoESkillTree.Engine.Computation.Data
                 },
                 {
                     "passive skills in radius also grant:",
-                    PassiveTree.AllocatedNodeInModifierSourceJewelRadiusCount
+                    PassiveTree.AllocatedNodeCountInModifierSourceJewelRadius
+                },
+                {
+                    "per notable allocated in radius",
+                    PassiveTree.AllocatedNotableCountInModifierSourceJewelRadius
                 },
                 // unique
                 {

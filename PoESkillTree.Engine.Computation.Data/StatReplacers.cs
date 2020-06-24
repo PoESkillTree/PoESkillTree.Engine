@@ -34,6 +34,11 @@ namespace PoESkillTree.Engine.Computation.Data
                 "$1", "$2", "$3", "$4", "$5", "$6", "$7"
             },
             {
+                // Fevered Mind Jewel
+                @"notable passive skills in radius are transformed to instead grant: (\d+% .+) and (\d+% .+)",
+                "notable passive skills in radius grant nothing", "$1 per notable allocated in radius", "$2 per notable allocated in radius"
+            },
+            {
                 // Flask suffixes
                 @"(?<stat1>(immune|immunity) to (?<effect>.+) during flask effect) (?<stat2>removes? (\k<effect>|burning) on use)",
                 "${stat1}", "${stat2}"

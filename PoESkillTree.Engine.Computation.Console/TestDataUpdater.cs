@@ -35,7 +35,7 @@ namespace PoESkillTree.Engine.Computation.Console
             var seenImplicits = new HashSet<string>();
             var seenBuffs = new HashSet<string>();
             var baseIds = baseItemDefinitions.BaseItems
-                .Where(d => d.ReleaseState != ReleaseState.Unreleased)
+                .Where(d => d.ReleaseState != ReleaseState.Unreleased && d.ItemClass != ItemClass.Map)
                 .Where(d => d.ImplicitModifiers.Any(s => seenImplicits.Add(s.StatId))
                             || d.BuffStats.Any(s => seenBuffs.Add(s.StatId)))
                 .Select(d => d.MetadataId);

@@ -15,7 +15,8 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Stats
 
         IStatBuilder ConnectsToClass(CharacterClass characterClass);
 
-        ValueBuilder AllocatedNodeInModifierSourceJewelRadiusCount { get; }
+        ValueBuilder AllocatedNodeCountInModifierSourceJewelRadius { get; }
+        ValueBuilder AllocatedNotableCountInModifierSourceJewelRadius { get; }
 
         ValueBuilder TotalInModifierSourceJewelRadius(IStatBuilder stat);
         ValueBuilder AllocatedInModifierSourceJewelRadius(IStatBuilder stat);
