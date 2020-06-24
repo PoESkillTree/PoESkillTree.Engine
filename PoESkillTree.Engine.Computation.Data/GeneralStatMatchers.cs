@@ -284,6 +284,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "hit rate", Stat.HitRate },
                 { "projectile frequency", Stat.HitRate },
                 { "brand activation frequency", Stat.HitRate, With(Keyword.Brand) },
+                { "activation frequency", Stat.HitRate },
                 { "attack time", Stat.BaseCastTime.With(DamageSource.Attack) },
                 // regen and recharge
                 { "({PoolStatMatchers}) regeneration( rate)?", Reference.AsPoolStat.Regen },
@@ -349,6 +350,8 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "warcry duration", Stat.Duration, With(Keyword.Warcry) },
                 { "curse duration", Stat.Duration, With(Keyword.Curse) },
                 { "({SkillMatchers}) duration", Stat.Duration, With(Reference.AsSkill) },
+                { "attached duration", Stat.Duration },
+                { "detached duration", Stat.SecondaryDuration },
                 { "seal gain frequency", Stat.SealGainFrequency },
                 { "total power counted by warcries", Stat.Warcry.PowerMultiplier },
                 // traps, mines, totems

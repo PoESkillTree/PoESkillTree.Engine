@@ -452,6 +452,7 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "base duration is # seconds", BaseSet, Value, Stat.Duration },
                 { @"\+# seconds? to base duration", BaseAdd, Value, Stat.Duration },
                 { "base secondary duration is # seconds", BaseSet, Value, Stat.SecondaryDuration },
+                { "can be detached for a total duration of # seconds", BaseSet, Value, Stat.SecondaryDuration },
                 {
                     "#% increased duration(?! of)",
                     PercentIncrease, Value, ApplyOnce(Stat.Duration, Stat.SecondaryDuration)

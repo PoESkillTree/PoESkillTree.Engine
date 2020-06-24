@@ -413,7 +413,11 @@ namespace PoESkillTree.Engine.Computation.Data
                 { "if you summoned a golem in the past # seconds", Golems.Cast.InPastXSeconds(Value) },
                 // - by skill part
                 {
-                    "(beams?|final wave|shockwaves?|cone|aftershock|explosion) (has a|deals?|will have)",
+                    "pulse deals",
+                    Stat.MainSkillPart.Value.Eq(0)
+                },
+                {
+                    "(beams?|final wave|shockwaves?|cone|aftershock|explosions?) (has a|deals?|will have)",
                     Stat.MainSkillPart.Value.Eq(1)
                 },
                 { "if consuming a corpse", Stat.MainSkillPart.Value.Eq(1) }, // Bodyswap

@@ -292,8 +292,8 @@ namespace PoESkillTree.Engine.Computation.Data
                     BaseAdd, Value.AsPercentage * Skills.ModifierSourceSkill.Cost.Value, Lightning.Damage.WithHits
                 },
                 {
-                    // Armageddon Brand
-                    "your skills can have an additional brand attached to an enemy",
+                    // Armageddon Brand, Wintertide Brand, Runebinder
+                    "(your skills |you )?can have an additional brand attached to an enemy",
                     BaseAdd, 1, Stat.AttachedBrands.For(OpponentsOfSelf).Maximum
                 },
                 {
@@ -443,6 +443,11 @@ namespace PoESkillTree.Engine.Computation.Data
                     "increases and reductions to cast speed also apply to projectile frequency",
                     TotalOverride, 1,
                     Flag.IncreasesToSourceApplyToTarget(Stat.CastRate.With(DamageSource.Spell), Stat.HitRate)
+                },
+                {
+                    // Wintertide Brand
+                    "debuff deals #% more damage per stage",
+                    PercentMore, Value * Stat.SkillStage.Value, Damage
                 },
                 {
                     // Archmage Support
@@ -642,11 +647,6 @@ namespace PoESkillTree.Engine.Computation.Data
                     // Ancestral Bond
                     "you can't deal damage with skills yourself",
                     TotalOverride, 0, Damage, Not(Or(With(Keyword.Totem), With(Keyword.Trap), With(Keyword.Mine)))
-                },
-                {
-                    // Runebinder
-                    "you can have an additional brand attached to an enemy",
-                    BaseAdd, 1, Stat.AttachedBrands.For(OpponentsOfSelf).Maximum
                 },
                 {
                     // Blood Magic

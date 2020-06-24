@@ -216,7 +216,6 @@ Can explode from up to 5 Frostbolt Projectiles
 Can expand from up to 2 Frostbolt Projectiles
 Charged Slam Deals 60% more Damage
 35% chance to consume an Endurance Charge to create a Charged Slam
-Can be Detached for a total Duration of 10 seconds
 Sends beams to 3 Enemies, including the Branded Enemy
 Gain Fortify for 0.05 seconds per Stage on Placing the Banner
 Gain 1 Stage when you Impale an Enemy while carrying the Banner, up to 5 per second
@@ -306,7 +305,6 @@ This Skill's Mana Reservation is the total of the Mana Reservations of Supported
 A Rune is Improved for each 24 Mana Spent
 Creates 7 Spikes
 Creates 2 additional Spikes if you've changed Stance Recently
-Can be Detached for a total Duration of 6 seconds
 +5% fissure branching chance per Endurance Charge
 30% fissure branching chance
 Projectiles gain Radius as they travel farther, up to +9 Radius
@@ -321,6 +319,11 @@ Regenerate 1976 Life over 1 second
 Supported Strike Skills cannot target additional Enemies
 Knocks back and Interrupts Enemies in a smaller Area
 Exerted Strikes target 2 additional Enemies
+Up to +9 to Energy spread radius, scaled by distance from Brand
+Base Debuff Duration is 1 seconds
+Supported Skills have 40% reduced Chaining range
+Supported Skills have limited Projectile Range
+Supported Skills are Triggered by Arcanist Brand, from the Brand's location
 // passive skills: =====================================================================================================
 10% Chance for Traps to Trigger an additional time
 Share Endurance, Frenzy and Power Charges with nearby party members

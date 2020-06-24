@@ -213,6 +213,11 @@ namespace PoESkillTree.Engine.Computation.Data
                 "(.* while channelling supported skills) (.* while channelling supported skills) (.* while channelling supported skills)",
                 "$1", "$2", "$3"
             },
+            {
+                // Penance Brand
+                @"(\+\d+ to explosion radius per energy) (pulse deals .*)",
+                "$1", "$2"
+            },
         }.ToList();
     }
 }

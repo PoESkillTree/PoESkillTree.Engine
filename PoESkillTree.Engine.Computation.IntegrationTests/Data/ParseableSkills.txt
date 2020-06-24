@@ -25,6 +25,7 @@ BloodSpears
 BloodstainedBanner
 Blight
 BlinkArrow
+BrandSupport
 BoneLance
 BurningArrow
 CataclysmSigil
@@ -115,6 +116,7 @@ IceNova
 IceShot
 IceSpear
 IceTrap
+ImmolationSigil
 ImmortalCall
 InfernalBlow
 IntimidatingCry
@@ -131,6 +133,7 @@ LightningTowerTrap
 LightningTrap
 LightningWarp
 MagmaOrb
+MagmaSigil
 MambaStrike
 MirrorArrow
 MoltenShell
@@ -221,6 +224,7 @@ SupportBloodlust
 SupportBluntWeapon
 SupportBluntWeaponShockwave
 SupportBonechill
+SupportBrandSupport
 SupportBrutality
 SupportBrutalityPlus
 SupportCastOnCrit
@@ -335,6 +339,7 @@ SupportPulverise
 SupportPuncturingWeapon
 SupportRage
 SupportRangedAttackTotem
+SupportRapidActivation
 SupportRapidDecay
 SupportRuthless
 SupportSwiftAfflictionPlus

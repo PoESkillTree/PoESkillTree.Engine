@@ -170,6 +170,10 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 ("Corpse Explosion", new SkillPartDefinitionExtension(
                     AddStat("display_skill_deals_secondary_damage", 1)))
             },
+            {
+                "BrandSupport", // Arcanist Brand
+                BrandExtension
+            },
             { "CataclysmSigil", BrandExtension }, // Armageddon Brand
             {
                 "ChargedDash",
@@ -467,6 +471,10 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 ("Second Form (All Projectiles)", IceSpearSecondFormExtension)
             },
             {
+                "ImmolationSigil", // Wintertide Brand
+                BrandExtension
+            },
+            {
                 "InfernalBlow",
                 ("Attack", new SkillPartDefinitionExtension()),
                 ("Corpse Explosion", new SkillPartDefinitionExtension(
@@ -511,6 +519,12 @@ namespace PoESkillTree.Engine.GameModel.Skills
             {
                 "LightningTowerTrap", // Lightning Spire Trap
                 new SkillPartDefinitionExtension(ReplaceStat("lightning_tower_trap_base_interval_duration_ms", "hit_rate_ms"))
+            },
+            {
+                "MagmaSigil", // Penance Brand
+                BrandExtension,
+                ("Pulse", new SkillPartDefinitionExtension()),
+                ("Explosion", new SkillPartDefinitionExtension())
             },
             { "MoltenShell", SelfBuff("base_physical_damage_reduction_rating") },
             {
