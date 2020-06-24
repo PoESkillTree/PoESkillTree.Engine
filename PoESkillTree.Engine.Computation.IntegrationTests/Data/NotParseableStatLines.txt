@@ -324,6 +324,9 @@ Base Debuff Duration is 1 seconds
 Supported Skills have 40% reduced Chaining range
 Supported Skills have limited Projectile Range
 Supported Skills are Triggered by Arcanist Brand, from the Brand's location
+Creates 5 fissures
+Maximum 15 Spikes
+Attacks with Supported Skill are Ancestrally Boosted, no more than once every 1.8 seconds Ancestral Boost does not apply to repeats of the Attack
 // passive skills: =====================================================================================================
 10% Chance for Traps to Trigger an additional time
 Share Endurance, Frenzy and Power Charges with nearby party members

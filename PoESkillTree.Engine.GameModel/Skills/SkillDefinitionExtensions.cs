@@ -326,8 +326,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
             {
                 "ExplosiveArrow",
                 ("Attack", new SkillPartDefinitionExtension()),
-                ("Explosion", new SkillPartDefinitionExtension(
-                    AddStat("base_skill_show_average_damage_instead_of_dps", 1)))
+                ("Explosion", AddShowAverageDamageExtension)
             },
             { "Fireball", SecondaryExplosionProjectileParts },
             { "VaalFireball", SecondaryExplosionProjectileParts },
@@ -455,7 +454,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
             },
             {
                 "IceDash", // Frostblink
-                new SkillPartDefinitionExtension(AddStat("base_skill_show_average_damage_instead_of_dps", 1))
+                AddShowAverageDamageExtension
             },
             {
                 "IceShot",
@@ -699,6 +698,11 @@ namespace PoESkillTree.Engine.GameModel.Skills
                 Aura("spell_damage_+%_final", "spell_critical_strike_chance_+%")
             },
             {
+                "SpikeSlam", // Earthshatter
+                ("Slam", new SkillPartDefinitionExtension()),
+                ("Shattering Spikes", AddShowAverageDamageExtension)
+            },
+            {
                 "StaticStrike",
                 new SkillPartDefinitionExtension(
                     AddStat("maximum_stages", 3)),
@@ -836,6 +840,13 @@ namespace PoESkillTree.Engine.GameModel.Skills
             },
 
             {
+                "AncestralSlamSupport", // Fist of War Support
+                new SkillPartDefinitionExtension(AddStat("base_skill_show_average_damage_instead_of_dps", 1),
+                    ReplaceStat("support_ancestral_slam_big_hit_hit_damage_+%_final", "hit_damage_+%_final")
+                        .AndThen(ReplaceStat("support_ancestral_slam_big_hit_ailment_damage_+%_final", "support_better_ailments_ailment_damage_+%_final"))
+                        .AndThen(ReplaceStat("support_ancestral_slam_big_hit_area_+%", "base_skill_area_of_effect_+%")))
+            },
+            {
                 "GeneralsCrySupport",
                 new SkillPartDefinitionExtension(
                     RemoveStat("triggered_by_spiritual_cry"),
@@ -914,6 +925,9 @@ namespace PoESkillTree.Engine.GameModel.Skills
         private static SkillPartDefinitionExtension RemoveShowAverageDamageExtension
             => new SkillPartDefinitionExtension(RemoveStat("base_skill_show_average_damage_instead_of_dps"));
 
+        private static SkillPartDefinitionExtension AddShowAverageDamageExtension =>
+            new SkillPartDefinitionExtension(AddStat("base_skill_show_average_damage_instead_of_dps", 1));
+
         private static (string name, SkillPartDefinitionExtension extension)[] CorpseExplodingSpellParts
             => new[]
             {
@@ -950,8 +964,7 @@ namespace PoESkillTree.Engine.GameModel.Skills
             => new[]
             {
                 ("Initial Hit", new SkillPartDefinitionExtension()),
-                ("Aftershock", new SkillPartDefinitionExtension(
-                    AddStat("base_skill_show_average_damage_instead_of_dps", 1)))
+                ("Aftershock", AddShowAverageDamageExtension)
             };
 
         private static SkillPartDefinitionExtension IceSpearFirstFormExtension

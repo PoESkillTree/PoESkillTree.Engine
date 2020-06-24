@@ -417,7 +417,7 @@ namespace PoESkillTree.Engine.Computation.Data
                     Stat.MainSkillPart.Value.Eq(0)
                 },
                 {
-                    "(beams?|final wave|shockwaves?|cone|aftershock|explosions?) (has a|deals?|will have)",
+                    "(beams?|final wave|shockwaves?|cone|aftershock|explosions?|shattering spikes) (has a|deals?|will have)",
                     Stat.MainSkillPart.Value.Eq(1)
                 },
                 { "if consuming a corpse", Stat.MainSkillPart.Value.Eq(1) }, // Bodyswap

@@ -2,6 +2,7 @@
 AccuracyAndCritsAura
 AncestorTotemSlam
 AncestralCry
+AncestralSlamSupport
 Anger
 Arc
 ArcaneCloak
@@ -186,6 +187,7 @@ Soulrend
 Spark
 SpellDamageAura
 Spellslinger
+SpikeSlam
 SplitArrow
 StaticStrike
 Stormbind
@@ -361,6 +363,7 @@ SupportSummonElementalResistances
 SupportTrap
 SupportTrapAndMineDamage
 SupportTrapCooldown
+SupportUrgentOrders
 SupportVoidManipulation
 SupportVoidManipulationPlus
 SupportWeaponElementalDamage

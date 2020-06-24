@@ -449,6 +449,10 @@ namespace PoESkillTree.Engine.Computation.Data
                     @"\+# seconds? to ({SkillMatchers}) cooldown",
                     BaseAdd, Value, Stat.Cooldown, With(Reference.AsSkill)
                 },
+                {
+                    @"\+# seconds? to cooldown",
+                    BaseAdd, Value, Stat.Cooldown
+                },
                 { "base duration is # seconds", BaseSet, Value, Stat.Duration },
                 { @"\+# seconds? to base duration", BaseAdd, Value, Stat.Duration },
                 { "base secondary duration is # seconds", BaseSet, Value, Stat.SecondaryDuration },
