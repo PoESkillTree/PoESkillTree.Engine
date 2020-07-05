@@ -22,6 +22,6 @@ build:
 deploy:
   - provider: NuGet
     api_key:
-      secure: 1z0h8dmXeM50sfHXJxYicoRjAE41R/3P86KUzDM4fe5WJlLURhM7HaAP+vcDUbLY
+      secure: SBoWmhdeizdgzq8iC+rRWP/UqrfjczKbwbPFCu/udNJydSGSRvPT6H5oxUtF2s+V
     on:
       APPVEYOR_REPO_TAG: true
