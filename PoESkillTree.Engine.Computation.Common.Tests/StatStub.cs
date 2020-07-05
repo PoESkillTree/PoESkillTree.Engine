@@ -20,7 +20,7 @@ namespace PoESkillTree.Engine.Computation.Common
             Maximum = maximum;
         }
 
-        public bool Equals(IStat other) => Equals((object) other);
+        public bool Equals(IStat? other) => Equals((object?) other);
 
         public IStat? Minimum { get; }
         public IStat? Maximum { get; }

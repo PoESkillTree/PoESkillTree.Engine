@@ -18,7 +18,7 @@ namespace PoESkillTree.Engine.Computation.Data.Collections
 
         public IReadOnlyList<IntermediateModifierEntry> Entries => throw new InvalidOperationException();
 
-#pragma warning disable 8613 // This class changes the interface's contract to simplify testing
+#pragma warning disable 8613, 8766 // This class changes the interface's contract to simplify testing
         public StatConverter? StatConverter { get; private set; }
         public ValueConverter? ValueConverter { get; private set; }
 #pragma warning restore

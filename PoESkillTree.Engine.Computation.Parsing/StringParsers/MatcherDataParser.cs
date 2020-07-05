@@ -61,8 +61,8 @@ namespace PoESkillTree.Engine.Computation.Parsing.StringParsers
                 return (false, modifierLine, null);
 
             return (true,
-                GetRemaining(matchingData, modifierLine, longestMatch),
-                new MatcherDataParseResult(matchingData.Modifier, SelectGroups(matchingRegex!, longestMatch.Groups)));
+                GetRemaining(matchingData!, modifierLine, longestMatch),
+                new MatcherDataParseResult(matchingData!.Modifier, SelectGroups(matchingRegex!, longestMatch.Groups)));
         }
 
         private static string GetRemaining(MatcherData matcherData, string stat, Match match)
