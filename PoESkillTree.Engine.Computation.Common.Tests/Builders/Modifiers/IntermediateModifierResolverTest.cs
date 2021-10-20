@@ -66,10 +66,10 @@ namespace PoESkillTree.Engine.Computation.Common.Builders.Modifiers
             (Func<IReadOnlyList<object>> expectedSelector, Func<IntermediateModifierEntry, object?> actualSelector)[]
             ResolveReturnsCorrectEntryElementsCases =
             {
-                (() => DefaultValues, e => e.Value),
-                (() => DefaultForms, e => e.Form),
-                (() => DefaultStats, e => e.Stat),
-                (() => DefaultConditions, e => e.Condition),
+                (() => DefaultValues!, e => e.Value),
+                (() => DefaultForms!, e => e.Form),
+                (() => DefaultStats!, e => e.Stat),
+                (() => DefaultConditions!, e => e.Condition),
             };
 
         [TestCase(0, TestName = "ResolveReturnsCorrectValues")]
