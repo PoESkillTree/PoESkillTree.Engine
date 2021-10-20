@@ -38,7 +38,7 @@ namespace PoESkillTree.Engine.Utils.Extensions
         }
 
         public static TValue GetValueOrDefault<TKey, TValue>(this IReadOnlyDictionary<TKey, TValue> dict,
-            TKey key, TValue defaultValue = default)
+            TKey key, TValue defaultValue = default!)
             => dict.TryGetValue(key, out var value) ? value : defaultValue;
 
         public static TValue GetValueOrDefault<TKey, TValue>(this IReadOnlyDictionary<TKey, TValue> dict,

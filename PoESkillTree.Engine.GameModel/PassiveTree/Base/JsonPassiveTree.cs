@@ -11,6 +11,9 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
     [JsonConverter(typeof(PassiveTreeJsonConverter))]
     public class JsonPassiveTree
     {
+        [JsonProperty("tree")]
+        public string Tree { get; set; } = "Default";
+
         [JsonProperty("classes")]
         public List<JsonPassiveTreeCharacterClass> CharacterClasses { get; } = new List<JsonPassiveTreeCharacterClass>();
 

@@ -11,12 +11,16 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree
         [TestCase("skilltree_3.10.0.new.min.json")]
         [TestCase("skilltree_3.10.0.old.min.json")]
         [TestCase("skilltree_3.8.0.min.json")]
+        [TestCase("skilltree_3.15.0.min.json")]
         public void JsonPassiveTree_Deserialization_Serialization_Deserialization(string fileName)
         {
             var orignalJson = TestUtils.ReadDataFile(fileName);
             Assert.IsNotEmpty(orignalJson);
+            
+            var settings = new JsonSerializerSettings();
+            settings.MissingMemberHandling = MissingMemberHandling.Error;
+            var deserialized1 = JsonConvert.DeserializeObject<JsonPassiveTree>(orignalJson, settings);
 
-            var deserialized1 = JsonConvert.DeserializeObject<JsonPassiveTree>(orignalJson);
             var serialized1 = JsonConvert.SerializeObject(deserialized1);
             Assert.IsNotEmpty(serialized1);
 
