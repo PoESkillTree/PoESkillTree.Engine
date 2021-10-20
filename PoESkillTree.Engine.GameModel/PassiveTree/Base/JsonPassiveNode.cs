@@ -16,6 +16,18 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
         [JsonProperty("icon")]
         public string Icon { get; set; } = string.Empty;
 
+        [JsonProperty("inactiveIcon")]
+        public string? InactiveIcon { get; set; } = null;
+
+        [JsonProperty("activeIcon")]
+        public string? ActiveIcon { get; set; } = null;
+
+        [JsonProperty("activeEffectImage")]
+        public string? ActiveEffectImage { get; set; } = null;
+        
+        [JsonProperty("masteryEffects")]
+        public JsonPassiveNodeMasterEffect[] MasteryEffects { get; set; } = new JsonPassiveNodeMasterEffect[0];
+        
         [JsonProperty("name")]
         public string Name { get; set; } = string.Empty;
 
@@ -80,6 +92,9 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
 
         [JsonProperty("reminderText")]
         public string[] ReminderText { get; set; } = new string[0];
+
+        [JsonProperty("flavourText")]
+        public string[] FlavourText { get; set; } = new string[0];
 
         [JsonProperty("group", NullValueHandling = NullValueHandling.Ignore)]
         public ushort? PassiveNodeGroupId { get; set; }

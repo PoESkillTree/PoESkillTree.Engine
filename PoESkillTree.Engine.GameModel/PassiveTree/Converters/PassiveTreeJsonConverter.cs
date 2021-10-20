@@ -92,7 +92,10 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Converters
             // The PassiveNodeInIds are always the Id of the "Current Node" instead of the Id of the "In Node"
             foreach (var passiveNode in passiveTree.PassiveNodes.Values)
             {
-                passiveNode.InPassiveNodeIds.Clear();
+                if (passiveNode.InPassiveNodeIds.Contains(passiveNode.Id))
+                {
+                    passiveNode.InPassiveNodeIds.Clear();
+                }
             }
 
             // Hydrate Extra Images
