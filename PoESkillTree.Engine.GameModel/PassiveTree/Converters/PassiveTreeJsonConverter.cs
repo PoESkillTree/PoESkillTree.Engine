@@ -89,15 +89,6 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Converters
 
             serializer.Populate(jObject.CreateReader(), passiveTree);
 
-            // The PassiveNodeInIds are always the Id of the "Current Node" instead of the Id of the "In Node"
-            foreach (var passiveNode in passiveTree.PassiveNodes.Values)
-            {
-                if (passiveNode.InPassiveNodeIds.Contains(passiveNode.Id))
-                {
-                    passiveNode.InPassiveNodeIds.Clear();
-                }
-            }
-
             // Hydrate Extra Images
             foreach (var characterClass in passiveTree.ExtraImages.Keys)
             {
@@ -123,6 +114,11 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Converters
                 {
                     passiveNode.PassiveNodeGroup = passiveTree.PassiveNodeGroups[passiveNode.PassiveNodeGroupId.Value];
                     passiveNode.PassiveNodeGroup.PassiveNodes[passiveNode.Id] = passiveNode;
+                }
+
+                if (passiveNode.InPassiveNodeIds.Contains(passiveNode.Id))
+                {
+                    passiveNode.InPassiveNodeIds.Remove(passiveNode.Id);
                 }
 
                 // Populate proper "In Nodes"

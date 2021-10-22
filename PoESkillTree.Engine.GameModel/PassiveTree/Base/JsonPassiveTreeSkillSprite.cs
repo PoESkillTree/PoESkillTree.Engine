@@ -17,9 +17,9 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
     public class JsonPassiveTreeOldSkillSprite : JsonPassiveTreeSkillSprite
     {
         [JsonProperty("notableCoords", ItemConverterType = typeof(PassiveTreeRectangleFConverter))]
-        public Dictionary<string, RectangleF> NotableCoords { get; } = new Dictionary<string, RectangleF>();
+        public Dictionary<string, RectangleF> NotableCoords { get; private set; } = new Dictionary<string, RectangleF>();
 
         [JsonProperty("keystoneCoords", ItemConverterType = typeof(PassiveTreeRectangleFConverter))]
-        public Dictionary<string, RectangleF> KeystoneCoords { get; } = new Dictionary<string, RectangleF>();
+        public Dictionary<string, RectangleF> KeystoneCoords { get; private set; } = new Dictionary<string, RectangleF>();
     }
 }

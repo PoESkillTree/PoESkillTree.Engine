@@ -112,13 +112,13 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
         public JsonExpansionJewelSocket? ExpansionJewelSocket { get; set; }
 
         [JsonProperty("out")]
-        public HashSet<ushort> OutPassiveNodeIds { get; } = new HashSet<ushort>();
+        public HashSet<ushort> OutPassiveNodeIds { get; private set; } = new HashSet<ushort>();
 
         [JsonProperty("in")]
-        public HashSet<ushort> InPassiveNodeIds { get; } = new HashSet<ushort>();
+        public HashSet<ushort> InPassiveNodeIds { get; private set; } = new HashSet<ushort>();
 
         [JsonIgnore]
-        public Dictionary<ushort, JsonPassiveNode> NeighborPassiveNodes { get; } = new Dictionary<ushort, JsonPassiveNode>();
+        public Dictionary<ushort, JsonPassiveNode> NeighborPassiveNodes { get; private set; } = new Dictionary<ushort, JsonPassiveNode>();
 
         #region Assigned Properties
         [JsonIgnore]
