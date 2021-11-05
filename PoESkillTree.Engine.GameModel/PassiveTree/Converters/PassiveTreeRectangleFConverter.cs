@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace PoESkillTree.Engine.GameModel.PassiveTree.Converters
 {
-    public class PassiveTreeRectangleFConverter : JsonConverter
+    public abstract class PassiveTreeRectangleFConverter : JsonConverter
     {
         public override bool CanConvert(Type objectType) => typeof(RectangleF).IsAssignableFrom(objectType);
         public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
@@ -30,20 +30,6 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Converters
             }
 
             return RectangleF.Empty;
-        }
-
-        public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
-        {
-            var jObject = new JObject();
-            if (value is RectangleF rectangle)
-            {
-                jObject.Add("x", rectangle.X);
-                jObject.Add("y", rectangle.Y);
-                jObject.Add("width", rectangle.Width);
-                jObject.Add("height", rectangle.Height);
-            }
-
-            jObject.WriteTo(writer);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
         public string FlavourText { get; set; } = string.Empty;
 
         [JsonProperty("flavourTextRect")]
-        [JsonConverter(typeof(PassiveTreeRectangleFConverter))]
+        [JsonConverter(typeof(PassiveTreeFlavourTextBoundsConverter))]
         public RectangleF FlavourTextBounds { get; set; } = RectangleF.Empty;
 
         [JsonProperty("flavourTextColour")]
