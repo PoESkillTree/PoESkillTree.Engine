@@ -104,9 +104,10 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Converters
             }
 
             // Hydrate Passive Nodes
+            var angles = passiveTree.Constants.OrbitAngles;
             foreach (var passiveNode in passiveTree.PassiveNodes.Values)
             {
-                passiveNode.SkillsPerOrbit = passiveTree.Constants.SkillsPerOrbit;
+                passiveNode.OrbitAngles = angles;
                 passiveNode.OrbitRadii = passiveTree.Constants.OrbitRadii;
                 passiveNode.ZoomLevel = passiveTree.MaxImageZoomLevel;
 

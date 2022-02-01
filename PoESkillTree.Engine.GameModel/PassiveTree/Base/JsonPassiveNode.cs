@@ -100,10 +100,10 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
         public ushort? PassiveNodeGroupId { get; set; }
 
         [JsonProperty("orbit")]
-        public int OrbitRadiiIndex { get; set; } = 0;
+        public int Orbit { get; set; } = 0;
 
         [JsonProperty("orbitIndex")]
-        public int SkillsPerOrbitIndex { get; set; } = 0;
+        public int OrbitIndex { get; set; } = 0;
 
         [JsonProperty("recipe", NullValueHandling = NullValueHandling.Ignore)]
         public string[]? Recipe { get; set; }
@@ -125,7 +125,7 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
         public bool IsSkilled { get; set; } = false;
 
         [JsonIgnore]
-        public float[] SkillsPerOrbit { get; set; } = new float[] { 1f, 6f, 12f, 12f, 40f };
+        public Dictionary<int, float[]> OrbitAngles { get; set; } = new Dictionary<int, float[]>();
 
         [JsonIgnore]
         public float[] OrbitRadii { get; set; } = new float[] { 0f, 82f, 162f, 335f, 493f };
@@ -182,10 +182,10 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
         }
 
         [JsonIgnore]
-        private double? _arc = null;
+        private float? _arc = null;
 
         [JsonIgnore]
-        public double Arc => _arc ??= 2 * Math.PI * SkillsPerOrbitIndex / SkillsPerOrbit[OrbitRadiiIndex];
+        public float Arc => _arc ??= OrbitAngles[Orbit][OrbitIndex];
 
         [JsonIgnore]
         public override Vector2 Position
@@ -208,8 +208,8 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
                 return Vector2.Zero;
             }
 
-            var orbitRadius = OrbitRadii[OrbitRadiiIndex] * zoomLevel;
-            return PassiveNodeGroup.Position - new Vector2(orbitRadius * (float)Math.Sin(-Arc), orbitRadius * (float)Math.Cos(-Arc));
+            var orbitRadius = OrbitRadii[Orbit] * zoomLevel;
+            return PassiveNodeGroup.Position - new Vector2(orbitRadius * MathF.Sin(-Arc), orbitRadius * MathF.Cos(-Arc));
         }
         #endregion
 
@@ -250,10 +250,10 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
         private ushort? __g { set { PassiveNodeGroupId = value; } }
 
         [JsonProperty("o")]
-        private int __o { set { OrbitRadiiIndex = value; } }
+        private int __o { set { Orbit = value; } }
 
         [JsonProperty("oidx")]
-        private int __oidx { set { SkillsPerOrbitIndex = value; } }
+        private int __oidx { set { OrbitIndex = value; } }
 #pragma warning restore IDE1006 // Naming Styles
 #pragma warning restore IDE0051 // Remove unused private members
         #endregion
