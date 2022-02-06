@@ -1,4 +1,5 @@
 ﻿using EnumsNET;
+using MoreLinq.Extensions;
 using Newtonsoft.Json;
 using PoESkillTree.Engine.GameModel.PassiveTree.Converters;
 using System;
@@ -50,8 +51,11 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
         [JsonProperty("skillSprites")]
         public Dictionary<string, List<JsonPassiveTreeSkillSprite>> SkillSprites { get; private set; } = new Dictionary<string, List<JsonPassiveTreeSkillSprite>>();
 
+        [JsonIgnore]
+        public Dictionary<CharacterClass, JsonPassiveTreeExtraImage> ExtraImages => _extraImages.ToDictionary(k => (CharacterClass)k.Key, k => k.Value);
+        
         [JsonProperty("extraImages")]
-        public Dictionary<CharacterClass, JsonPassiveTreeExtraImage> ExtraImages { get; private set; } = new Dictionary<CharacterClass, JsonPassiveTreeExtraImage>();
+        private Dictionary<int, JsonPassiveTreeExtraImage> _extraImages = new Dictionary<int, JsonPassiveTreeExtraImage>();
 
         [JsonProperty("jewelSlots")]
         public List<ushort> JewelSocketPassiveNodeIds { get; private set; } = new List<ushort>();
