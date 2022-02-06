@@ -8,24 +8,10 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
     public class JsonPassiveTreeConstants
     {
         [JsonProperty("classes")]
-        public Dictionary<string, CharacterClass> Classes { get; private set; } = new Dictionary<string, CharacterClass>()
-        {
-            { "StrDexIntClass", CharacterClass.Scion },
-            { "StrClass", CharacterClass.Marauder },
-            { "DexClass", CharacterClass.Ranger },
-            { "IntClass", CharacterClass.Witch },
-            { "StrDexClass", CharacterClass.Duelist },
-            { "StrIntClass", CharacterClass.Templar },
-            { "DexIntClass", CharacterClass.Shadow },
-        };
+        public Dictionary<string, CharacterClass> Classes { get; set; } = new Dictionary<string, CharacterClass>();
 
         [JsonProperty("characterAttributes")]
-        public Dictionary<string, int> CharacterAttributes { get; private set; } = new Dictionary<string, int>()
-        {
-            { "Strength", 0 },
-            { "Dexterity", 1 },
-            { "Intelligence", 2 },
-        };
+        public Dictionary<string, int> CharacterAttributes { get; set; } = new Dictionary<string, int>();
 
         [JsonProperty("PSSCentreInnerRadius")]
         public int PSSCentreInnerRadius { get; set; } = 130;

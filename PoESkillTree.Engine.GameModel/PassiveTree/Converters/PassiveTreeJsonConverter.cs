@@ -34,7 +34,8 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Converters
                 else
                 {
                     var nodes = nodesToken.ToObject<Dictionary<string, JsonPassiveNode>>() ?? new Dictionary<string, JsonPassiveNode>();
-                    if (nodes.FirstOrDefault(kvp => kvp.Key == "root") is { Value: JsonPassiveNode root }) {
+                    if (nodes.FirstOrDefault(kvp => kvp.Key == "root") is { Value: JsonPassiveNode root })
+                    {
                         passiveTree.Root = root;
                     }
                 }
@@ -123,6 +124,33 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Converters
                             passiveTree.PassiveNodes[passiveNodeOutId].NeighborPassiveNodes[passiveNode.Id] = passiveNode;
                         }
                     }
+                }
+            }
+
+            if (passiveTree.Tree == "Default")
+            {
+                if (passiveTree.Constants.CharacterAttributes.Count == 0)
+                {
+                    passiveTree.Constants.CharacterAttributes = new Dictionary<string, int>()
+                    {
+                        { "Strength", 0 },
+                        { "Dexterity", 1 },
+                        { "Intelligence", 2 },
+                    };
+                }
+
+                if (passiveTree.Constants.Classes.Count == 0)
+                {
+                    passiveTree.Constants.Classes = new Dictionary<string, CharacterClass>()
+                    {
+                        { "StrDexIntClass", CharacterClass.Scion },
+                        { "StrClass", CharacterClass.Marauder },
+                        { "DexClass", CharacterClass.Ranger },
+                        { "IntClass", CharacterClass.Witch },
+                        { "StrDexClass", CharacterClass.Duelist },
+                        { "StrIntClass", CharacterClass.Templar },
+                        { "DexIntClass", CharacterClass.Shadow },
+                    };
                 }
             }
 

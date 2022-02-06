@@ -102,6 +102,12 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
         [JsonProperty("points", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public JsonPassiveTreePoints? Points { get; set; } = null;
 
+        [JsonProperty("uiArt", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public Dictionary<string, string>? UIArt = null;
+
+        [JsonProperty("uiArtOptions")]
+        public JsonPassiveTreeUIArtOptions UIArtOptions { get; set; } = new JsonPassiveTreeUIArtOptions();
+
         #region Calculated Properties
         [JsonIgnore]
         public int MaxImageZoomLevelIndex => ImageZoomLevels.Length - 1;

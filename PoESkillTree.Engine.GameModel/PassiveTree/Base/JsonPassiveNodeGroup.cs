@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using PoESkillTree.Engine.GameModel.PassiveTree.Converters;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
@@ -10,6 +11,10 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
     {
         [JsonProperty("orbits")]
         public List<ushort> OccupiedOrbits { get; private set; } = new List<ushort>();
+
+        [JsonProperty("backgroundOverride", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [DefaultValue(0)]
+        public ushort BackgroundOverride { get; private set; } = 0;
 
         [JsonIgnore]
         public HashSet<ushort>? _passiveNodeIds = null;
