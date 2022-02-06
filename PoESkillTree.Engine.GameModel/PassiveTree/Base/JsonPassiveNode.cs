@@ -128,7 +128,7 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
         public Dictionary<int, float[]> OrbitAngles { get; set; } = new Dictionary<int, float[]>();
 
         [JsonIgnore]
-        public float[] OrbitRadii { get; set; } = new float[] { 0f, 82f, 162f, 335f, 493f };
+        public int[] OrbitRadii { get; set; } = new int[] { 0, 82, 162, 335, 493 };
 
         [JsonIgnore]
         public JsonPassiveNodeGroup? PassiveNodeGroup { get; set; } = null;

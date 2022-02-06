@@ -34,7 +34,7 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
         public int[] SkillsPerOrbit { get; private set; } = new int[] { 1, 6, 12, 12, 40 };
 
         [JsonProperty("orbitRadii")]
-        public float[] OrbitRadii { get; private set; } = new float[] { 0f, 82f, 162f, 335f, 493f };
+        public int[] OrbitRadii { get; private set; } = new int[] { 0, 82, 162, 335, 493 };
 
         [JsonIgnore]
         public Dictionary<int, float[]> OrbitAngles
