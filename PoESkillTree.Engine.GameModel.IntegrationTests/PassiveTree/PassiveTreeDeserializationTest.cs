@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using NUnit.Framework;
 using PoESkillTree.Engine.GameModel.PassiveTree.Base;
+using System.IO;
 
 namespace PoESkillTree.Engine.GameModel.PassiveTree
 {
@@ -13,6 +14,8 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree
         [TestCase("skilltree_3.8.0.min.json")]
         [TestCase("skilltree_3.15.0.min.json")]
         [TestCase("skilltree_3.16.0.min.json")]
+        [TestCase("skilltree_3.17.0.min.json")]
+        [TestCase("skilltree_3.17.0_atlas.min.json")]
         public void JsonPassiveTree_Deserialization_Serialization_Deserialization(string fileName)
         {
             var orignalJson = TestUtils.ReadDataFile(fileName);
