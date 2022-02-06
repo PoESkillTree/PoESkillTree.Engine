@@ -1,8 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System;
 using System.Drawing;
-using System.Linq;
 
 namespace PoESkillTree.Engine.GameModel.PassiveTree.Converters
 {
@@ -13,10 +11,10 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Converters
             var jObject = new JObject();
             if (value is RectangleF rectangle)
             {
-                jObject.Add("x", rectangle.X);
-                jObject.Add("y", rectangle.Y);
-                jObject.Add("width", rectangle.Width);
-                jObject.Add("height", rectangle.Height);
+                jObject.Add("x", (int)rectangle.X);
+                jObject.Add("y", (int)rectangle.Y);
+                jObject.Add("width", (int)rectangle.Width);
+                jObject.Add("height", (int)rectangle.Height);
             }
 
             jObject.WriteTo(writer);

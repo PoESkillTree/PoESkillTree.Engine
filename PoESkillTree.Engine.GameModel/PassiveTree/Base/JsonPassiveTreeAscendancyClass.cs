@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using PoESkillTree.Engine.GameModel.PassiveTree.Converters;
+using System.ComponentModel;
 using System.Drawing;
 
 namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
@@ -12,16 +13,17 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
         [JsonProperty("name")]
         public string Name { get; set; } = string.Empty;
 
-        [JsonProperty("flavourText")]
+        [JsonProperty("flavourText", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [DefaultValue("")]
         public string FlavourText { get; set; } = string.Empty;
 
-        [JsonProperty("flavourTextRect")]
+        [JsonProperty("flavourTextRect", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [JsonConverter(typeof(PassiveTreeFlavourTextBoundsConverter))]
         public RectangleF FlavourTextBounds { get; set; } = RectangleF.Empty;
 
-        [JsonProperty("flavourTextColour")]
+        [JsonProperty("flavourTextColour", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [JsonConverter(typeof(PassiveTreeColorConverter))]
-        public Color FlavourTextColour { get; set; }
+        public Color FlavourTextColour { get; set; } = Color.Empty;
 
         #region Legacy Parsing Purposes
 #pragma warning disable IDE0051 // Remove unused private members

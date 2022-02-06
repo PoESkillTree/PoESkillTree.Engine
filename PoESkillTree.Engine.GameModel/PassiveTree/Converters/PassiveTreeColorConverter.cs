@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Drawing;
 using System.Globalization;
@@ -41,7 +42,12 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Converters
             return Color.Empty;
         }
 
-        public override bool CanWrite => false;
-        public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer) => throw new NotImplementedException($"{nameof(CanWrite)} should be false (is {CanWrite}). There is no need for write converter.");
+        public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+        {
+            if (value is Color color)
+            {
+                serializer.Serialize(writer, $"{color.R:X2}{color.G:X2}{color.B:X2}");
+            }
+        }
     }
 }
