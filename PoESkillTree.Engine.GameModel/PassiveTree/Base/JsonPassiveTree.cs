@@ -99,6 +99,9 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
         [JsonProperty("jewelSlots")]
         public List<ushort> JewelSocketPassiveNodeIds { get; private set; } = new List<ushort>();
 
+        [JsonProperty("points", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public JsonPassiveTreePoints? Points { get; set; } = null;
+
         #region Calculated Properties
         [JsonIgnore]
         public int MaxImageZoomLevelIndex => ImageZoomLevels.Length - 1;

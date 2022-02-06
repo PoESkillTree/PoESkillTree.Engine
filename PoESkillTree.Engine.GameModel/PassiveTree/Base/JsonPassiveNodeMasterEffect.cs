@@ -9,5 +9,9 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
 
         [JsonProperty("stats")]
         public string[] StatDescriptions { get; set; } = new string[0];
+
+        [JsonProperty("reminderText")]
+        public string[] ReminderText { get; set; } = new string[0];
+        public bool ShouldSerializeReminderText() => ReminderText.Length > 0;
     }
 }
