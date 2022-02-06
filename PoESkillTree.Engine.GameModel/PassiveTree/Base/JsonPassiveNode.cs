@@ -1,34 +1,40 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using System.Numerics;
 
 namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
 {
     public class JsonPassiveNode : JsonPassiveTreePosition
     {
-        [JsonProperty("id")]
+        [JsonProperty("id", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public ushort Id { get; set; } = 0;
+        public bool ShouldSerializeId() => false;
 
-        [JsonProperty("skill")]
+        [JsonProperty("skill", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public ushort Skill { get; set; } = 0;
 
-        [JsonProperty("icon")]
+        [JsonProperty("icon", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [DefaultValue("")]
         public string Icon { get; set; } = string.Empty;
 
-        [JsonProperty("inactiveIcon")]
+        [JsonProperty("inactiveIcon", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string? InactiveIcon { get; set; } = null;
 
-        [JsonProperty("activeIcon")]
+        [JsonProperty("activeIcon", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string? ActiveIcon { get; set; } = null;
 
-        [JsonProperty("activeEffectImage")]
+        [JsonProperty("activeEffectImage", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string? ActiveEffectImage { get; set; } = null;
-        
+
         [JsonProperty("masteryEffects")]
         public JsonPassiveNodeMasterEffect[] MasteryEffects { get; set; } = new JsonPassiveNodeMasterEffect[0];
-        
-        [JsonProperty("name")]
+        public bool ShouldSerializeMasteryEffects() => MasteryEffects.Length > 0;
+
+        [JsonProperty("name", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [DefaultValue("")]
         public string Name { get; set; } = string.Empty;
 
         [JsonProperty("ascendancyName", NullValueHandling = NullValueHandling.Ignore)]
@@ -89,21 +95,26 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
 
         [JsonProperty("stats")]
         public string[] StatDescriptions { get; set; } = new string[0];
+        public bool ShouldSerializeStatDescriptions() => !(PassiveNodeGroupId == 0 && StatDescriptions.Length == 0);
 
         [JsonProperty("reminderText")]
         public string[] ReminderText { get; set; } = new string[0];
+        public bool ShouldSerializeReminderText() => ReminderText.Length > 0;
 
         [JsonProperty("flavourText")]
         public string[] FlavourText { get; set; } = new string[0];
+        public bool ShouldSerializeFlavourText() => FlavourText.Length > 0;
 
         [JsonProperty("group", NullValueHandling = NullValueHandling.Ignore)]
         public ushort? PassiveNodeGroupId { get; set; }
 
         [JsonProperty("orbit")]
         public int Orbit { get; set; } = 0;
+        public bool ShouldSerializeOrbit() => ShouldSerializeOrbitData();
 
         [JsonProperty("orbitIndex")]
         public int OrbitIndex { get; set; } = 0;
+        public bool ShouldSerializeOrbitIndex() => ShouldSerializeOrbitData();
 
         [JsonProperty("recipe", NullValueHandling = NullValueHandling.Ignore)]
         public string[]? Recipe { get; set; }
@@ -111,11 +122,47 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
         [JsonProperty("expansionJewel", NullValueHandling = NullValueHandling.Ignore)]
         public JsonExpansionJewelSocket? ExpansionJewelSocket { get; set; }
 
+        [JsonIgnore]
+        public HashSet<ushort>? _outPassiveNodeIds = null;
+
+        [JsonIgnore]
+        public HashSet<ushort> OutPassiveNodeIds
+        {
+            get
+            {
+                if (_outPassiveNodeIds == null)
+                {
+                    _outPassiveNodeIds = new HashSet<ushort>(__out.Select(x => ushort.Parse(x)));
+                }
+
+                return _outPassiveNodeIds;
+            }
+        }
+
         [JsonProperty("out")]
-        public HashSet<ushort> OutPassiveNodeIds { get; private set; } = new HashSet<ushort>();
+        private HashSet<string> __out = new HashSet<string>();
+        public bool ShouldSerialize__out() => ShouldSerializeOrbitData();
+
+        [JsonIgnore]
+        public HashSet<ushort>? _inPassiveNodeIds = null;
+
+        [JsonIgnore]
+        public HashSet<ushort> InPassiveNodeIds
+        {
+            get
+            {
+                if (_inPassiveNodeIds == null)
+                {
+                    _inPassiveNodeIds = new HashSet<ushort>(__in.Select(x => ushort.Parse(x)));
+                }
+
+                return _inPassiveNodeIds;
+            }
+        }
 
         [JsonProperty("in")]
-        public HashSet<ushort> InPassiveNodeIds { get; private set; } = new HashSet<ushort>();
+        private HashSet<string> __in = new HashSet<string>();
+        public bool ShouldSerialize__in() => ShouldSerializeOrbitData();
 
         [JsonIgnore]
         public Dictionary<ushort, JsonPassiveNode> NeighborPassiveNodes { get; private set; } = new Dictionary<ushort, JsonPassiveNode>();
@@ -132,6 +179,8 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
 
         [JsonIgnore]
         public JsonPassiveNodeGroup? PassiveNodeGroup { get; set; } = null;
+
+        private bool ShouldSerializeOrbitData() => !(Orbit == 0 && OrbitIndex == 0 && OutPassiveNodeIds.Count == 0 && InPassiveNodeIds.Count == 0 && IsBlighted == false);
         #endregion
 
         #region Calculated Properties
@@ -267,10 +316,44 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
         [JsonProperty("index")]
         public int Index { get; set; }
 
+        [JsonIgnore]
+        private ushort? _proxyPassiveNodeId = null;
+
+        [JsonIgnore]
+        private ushort ProxyPassiveNodeId
+        {
+            get
+            {
+                if (_proxyPassiveNodeId == null && !string.IsNullOrWhiteSpace(_proxy))
+                {
+                    _proxyPassiveNodeId = ushort.Parse(_proxy);
+                }
+
+                return _proxyPassiveNodeId ?? ushort.MinValue;
+            }
+        }
+
         [JsonProperty("proxy")]
-        private ushort ProxyPassiveNodeId { get; set; }
+        private string _proxy = string.Empty;
+
+        [JsonIgnore]
+        private ushort? _parentPassiveNodeId = null;
+
+        [JsonIgnore]
+        private ushort? ParentPassiveNodeId
+        {
+            get
+            {
+                if (_parentPassiveNodeId == null && !string.IsNullOrWhiteSpace(_parent))
+                {
+                    _parentPassiveNodeId = ushort.Parse(_parent);
+                }
+
+                return _parentPassiveNodeId;
+            }
+        }
 
         [JsonProperty("parent", NullValueHandling = NullValueHandling.Ignore)]
-        public ushort? ParentPassiveNodeId { get; set; }
+        private string? _parent;
     }
 }
