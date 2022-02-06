@@ -21,35 +21,23 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Converters
             {
                 if (nodesToken.Type == JTokenType.Array)
                 {
+                    var nodes = new Dictionary<ushort, JsonPassiveNode>();
                     foreach (var item in nodesToken.ToObject<List<JsonPassiveNode>>() ?? new List<JsonPassiveNode>())
                     {
                         item.Skill = item.Id;
-                        passiveTree.PassiveNodes.Add(item.Id, item);
+                        nodes.Add(item.Id, item);
                     }
+                    jObject.Remove("nodes");
+                    passiveTree.PassiveNodes = nodes;
+                    passiveTree.__nodes.Add("root", passiveTree.Root);
                 }
                 else
                 {
                     var nodes = nodesToken.ToObject<Dictionary<string, JsonPassiveNode>>() ?? new Dictionary<string, JsonPassiveNode>();
-                    var maxLength = nodes.Max(x => x.Key.Length);
-                    foreach (var node in nodes.OrderBy(x => x.Key.PadLeft(maxLength, '0')))
-                    {
-                        if (ushort.TryParse(node.Key, out var id))
-                        {
-                            if (node.Value.Skill == 0)
-                            {
-                                node.Value.Skill = id;
-                            }
-                            node.Value.Id = id;
-                            passiveTree.PassiveNodes[id] = node.Value;
-                        }
-                        else if (node.Key == "root")
-                        {
-                            passiveTree.Root = node.Value;
-                        }
+                    if (nodes.FirstOrDefault(kvp => kvp.Key == "root") is { Value: JsonPassiveNode root }) {
+                        passiveTree.Root = root;
                     }
                 }
-
-                jObject.Remove("nodes");
             }
 
             if (jObject.GetValue("skillSprites") is JToken spritesToken)
