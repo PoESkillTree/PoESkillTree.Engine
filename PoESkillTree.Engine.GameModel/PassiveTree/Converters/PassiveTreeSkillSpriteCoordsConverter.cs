@@ -13,10 +13,10 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Converters
             var jObject = new JObject();
             if (value is RectangleF rectangle)
             {
-                jObject.Add("x", rectangle.X);
-                jObject.Add("y", rectangle.Y);
-                jObject.Add("w", rectangle.Width);
-                jObject.Add("h", rectangle.Height);
+                jObject.Add("x", (int)rectangle.X);
+                jObject.Add("y", (int)rectangle.Y);
+                jObject.Add("w", (int)rectangle.Width);
+                jObject.Add("h", (int)rectangle.Height);
             }
 
             jObject.WriteTo(writer);
