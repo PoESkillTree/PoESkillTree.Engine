@@ -11,8 +11,30 @@ namespace PoESkillTree.Engine.GameModel.PassiveTree.Base
         [JsonProperty("orbits")]
         public List<ushort> OccupiedOrbits { get; private set; } = new List<ushort>();
 
+        [JsonIgnore]
+        public HashSet<ushort>? _passiveNodeIds = null;
+
+        [JsonIgnore]
+        public HashSet<ushort> PassiveNodeIds
+        {
+            get
+            {
+                if (_passiveNodeIds == null)
+                {
+                    _passiveNodeIds = new HashSet<ushort>(__nodes.Select(x => ushort.Parse(x)));
+                }
+
+                return _passiveNodeIds;
+            }
+            set
+            {
+                _passiveNodeIds = value;
+                __nodes = _passiveNodeIds.Select(x => x.ToString()).ToHashSet();
+            }
+        }
+
         [JsonProperty("nodes")]
-        public HashSet<ushort> PassiveNodeIds { get; private set; } = new HashSet<ushort>();
+        private HashSet<string> __nodes = new HashSet<string>();
 
         [JsonProperty("isProxy", NullValueHandling = NullValueHandling.Ignore)]
         public bool? IsProxy { get; set; }
